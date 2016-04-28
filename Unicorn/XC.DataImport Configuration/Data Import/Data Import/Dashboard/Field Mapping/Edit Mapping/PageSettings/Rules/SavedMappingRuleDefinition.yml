@@ -1,0 +1,32 @@
+﻿---
+ID: "238706c0-6bc0-4fb7-bf78-4accb8e75cbf"
+Parent: "6691eef4-3b03-4f5c-94b4-d29991b81063"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Field Mapping/Edit Mapping/PageSettings/Rules/SavedMappingRuleDefinition
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions />
+        <actions>
+          <action
+            id="{38241354-31DD-4169-ACA5-A99351FC58B2}"
+            uid="{D813604B-F4EF-4DE8-A699-B488ECEA4AD0}"
+            targetControlId="SaveButton"
+            propertyName="IsEnabled"
+            value="true" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160315T224912Z

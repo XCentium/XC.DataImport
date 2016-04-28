@@ -1,0 +1,27 @@
+﻿---
+ID: "000b9b9a-45ef-4557-8f7a-a8bd231d54a3"
+Parent: "16ba5010-2e42-40ed-af91-8073d8104243"
+Template: "99f8905d-4a87-4eb8-9f8b-a9bebfb3add6"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/ItemTreeView
+DB: core
+SharedFields:
+- ID: "51b435bc-f7b9-478a-9c51-52916af96ff5"
+  Hint: Path
+  Value: /sitecore/shell/client/Applications/XCDataImport/TreeView/ItemTreeView.cshtml
+- ID: "7d24e54f-5c16-4314-90c9-6051aa1a7da1"
+  Hint: Parameters Template
+  Value: "{C4578627-A913-440D-9BB7-FAF43C482790}"
+- ID: "ddab263e-b42e-419a-aa6f-081b7393ca38"
+  Hint: Model
+  Value: XC.DataImport.Repositories.Models.XcItemTreeViewRenderingModel,XC.DataImport.Repositories
+- ID: "ef7c5528-7307-4e19-863b-da19eed6a9ed"
+  Hint: Open Properties after Add
+  Value: "-"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160307T142521Z
