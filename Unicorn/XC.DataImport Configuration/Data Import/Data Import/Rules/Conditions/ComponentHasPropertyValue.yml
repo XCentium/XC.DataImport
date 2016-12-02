@@ -18,7 +18,8 @@ Languages:
       Value: 20151207T115227Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "af321234-4eb9-4ef5-9197-65903351939c"
       Hint: Text
       Value: "hvor komponenten [targetControlId,,,name] egenskaben [propertyName,,,propertyName]  [operatorid,StringOperator,,compares to] [value,,,value]"
@@ -35,7 +36,8 @@ Languages:
       Value: 20151207T115355Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "af321234-4eb9-4ef5-9197-65903351939c"
       Hint: Text
       Value: "wo Komponente [targetControlId,,,name] property [propertyName,,,propertyName]  [operatorid,StringOperator,,compares to] [value,,,value]"
@@ -48,7 +50,8 @@ Languages:
       Value: 20130320T095022
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "af321234-4eb9-4ef5-9197-65903351939c"
       Hint: Text
       Value: "where component [targetControlId,,,name] property [propertyName,,,propertyName]  [operatorid,StringOperator,,compares to] [value,,,value]"
@@ -65,7 +68,8 @@ Languages:
       Value: 20151207T115516Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "af321234-4eb9-4ef5-9197-65903351939c"
       Hint: Text
       Value: "条件： （コンポーネント） [targetControlId,,,コンポーネント名] コンポーネントの [propertyName,,,プロパティ名] プロパティ： [value,,,特定の値] [operatorid,StringOperator,,と比較する] 場合"

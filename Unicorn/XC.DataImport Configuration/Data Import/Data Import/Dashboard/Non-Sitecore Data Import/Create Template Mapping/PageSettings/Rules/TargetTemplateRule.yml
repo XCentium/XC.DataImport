@@ -1,0 +1,41 @@
+﻿---
+ID: "b45e4524-df77-4085-9939-0c7459c99c02"
+Parent: "32ca4ba1-dd3b-48ad-949b-e0de0a38660c"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Template Mapping/PageSettings/Rules/TargetTemplateRule"
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{AAC7A8EC-8760-4850-8130-9E06FFCB3365}"
+            uid="CDE97E314C1E4D3A9A70BF5655F4E29F"
+            targetControlId="TargetTemplates"
+            propertyName="SelectedItem"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{B9E39442-1843-47A5-8728-1CC6CD9EB8B1}"
+            uid="{56B44838-2772-43EC-945A-AE8E086170D5}"
+            targetControlId="TargetFieldDatasource"
+            functionName="change:Parameters"
+            sourceControlId="TargetTemplates"
+            sourceProperty="SelectedItem" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160306T012050Z

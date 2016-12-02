@@ -16,6 +16,7 @@ SharedFields:
   Value: "Apps/32x32/Magic-cube.png"
 - ID: "dc0c067b-8d1a-4aca-9852-e6b29139a63d"
   Hint: OpenNewTab
+  Type: Checkbox
   Value: 1
 Languages:
 - Language: en

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Sitecore.Diagnostics;
-using XC.DataImport.Repositories.Databases;
+using XC.DataImport.Repositories.Repositories;
 using XC.DataImport.Repositories.Diagnostics;
 using XC.DataImport.Repositories.Migration;
 using XC.DataImport.Repositories.Models;
+using XC.DataImport.Repositories.History;
 
 namespace XC.DataImport.Controllers
 {
-    public class ImportProcessingController : Controller
+    public class ImportProcessingController : ImportController
     {
-        delegate string ProcessTask(string id);
-        ImportManager _importManager = new ImportManager();
+        SitecoreImportManager _importManager = new SitecoreImportManager();
 
         /// <summary>
         /// Imports the specified mapping.
@@ -22,48 +22,42 @@ namespace XC.DataImport.Controllers
         /// <param name="taskId"></param>
         /// <returns></returns>
         [HttpGet]
-        public void StartImport(string mapping, string taskId)
+        public ActionResult StartImport(string mapping, string taskId)
         {
+            Response.Buffer = false;
+            var statusFileName = HistoryLogging.GetStatusFilePath(mapping);
+            WriteStatus("<h1>Import Started</h1>", statusFileName);
+            WriteStatus(mapping, statusFileName);
+            
             if (mapping == null)
-                return;
+                return PartialView("ResponseWrite", "Mapping is null");
 
             try
             {
                 var mappingContent = System.IO.File.ReadAllText(mapping);
                 var mappingObject = (MappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(MappingModel));
-                if (mappingObject == null) return;
+                if (mappingObject == null)
+                {
+                    WriteStatus("MappingObject is null", statusFileName);
+                }
 
                 _importManager =
-                    new ImportManager
+                    new SitecoreImportManager
                     {
                         SourceRepository = new SitecoreDatabaseRepository(mappingObject.Databases.Source, mappingObject),
                         TargetRepository = new SitecoreDatabaseRepository(mappingObject.Databases.Target, mappingObject),
                         Mapping = mappingObject
                     };
 
-                _importManager.Add(taskId);
-                var processTask = new ProcessTask(_importManager.Run);
-                processTask.BeginInvoke(taskId, EndLongRunningProcess, processTask);
-
+                _importManager.StartJob(mappingObject.Name, WriteStatus, statusFileName);
+                Sitecore.Caching.CacheManager.ClearAllCaches();
             }
             catch (Exception ex)
             {
+                WriteStatus(string.Format("<span style=\"color:red\">{0}</span>", ex.Message), statusFileName);
                 DataImportLogger.Log.Error(ex.Message, ex);
             }
-        }
-
-        /// <summary>
-        /// Ends the long running process.
-        /// </summary>
-        /// <param name="result">The result.</param>
-        public void EndLongRunningProcess(IAsyncResult result)
-        {
-            var processTask = (ProcessTask)result.AsyncState;
-            var id = processTask.EndInvoke(result);
-            if (_importManager != null)
-            {
-                _importManager.Remove(id);
-            }
+            return Redirect(HistoryLogging.GetRelativePath(statusFileName));
         }
 
         /// <summary>
@@ -84,5 +78,6 @@ namespace XC.DataImport.Controllers
                 messages
             }, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

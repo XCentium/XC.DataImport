@@ -11,6 +11,10 @@ SharedFields:
 - ID: "d25b56d4-23b6-4462-be25-b6a6d7f38e13"
   Hint: Icon
   Value: Apps/32x32/social.png
+- ID: "dc0c067b-8d1a-4aca-9852-e6b29139a63d"
+  Hint: OpenNewTab
+  Type: Checkbox
+  Value: 0
 Languages:
 - Language: da
   Fields:
@@ -25,7 +29,8 @@ Languages:
       Value: 20151207T115240Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "aa4a4643-5bfc-45a7-b9d9-5183a5211d99"
       Hint: Text
       Value: Social, leveret af Komfo
@@ -42,7 +47,8 @@ Languages:
       Value: 20151207T115408Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "aa4a4643-5bfc-45a7-b9d9-5183a5211d99"
       Hint: Text
       Value: Social, betrieben von Komfo
@@ -52,13 +58,15 @@ Languages:
     Fields:
     - ID: "012a2076-c940-435e-82f3-910e7af891e2"
       Hint: OpenIframe
+      Type: Checkbox
       Value: 1
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20141031T133313Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "aa4a4643-5bfc-45a7-b9d9-5183a5211d99"
       Hint: Text
       Value: Komfo Social
@@ -75,7 +83,8 @@ Languages:
       Value: 20151207T115530Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
     - ID: "aa4a4643-5bfc-45a7-b9d9-5183a5211d99"
       Hint: Text
       Value: ソーシャル powered by Komfo

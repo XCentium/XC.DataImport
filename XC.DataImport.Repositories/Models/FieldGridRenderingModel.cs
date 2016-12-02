@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sitecore.Speak.Components.Models.Containers.Forms.FormPanels;
+using Sitecore.Speak.Components.Models.Forms.FormPanels;
 
 namespace XC.DataImport.Repositories.Models
 {

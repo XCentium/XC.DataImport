@@ -7,6 +7,7 @@ DB: core
 SharedFields:
 - ID: "3a67ad0f-9530-4b1b-9b70-9230c36ae8d6"
   Hint: UseFullWidth
+  Type: Checkbox
   Value: 1
 - ID: "5e642935-a6fc-48e9-b039-fe1136ced488"
   Hint: Theme
@@ -62,7 +63,7 @@ SharedFields:
           uid="{51582F48-338E-45E1-A39A-6F70898ACDC0}" />
         <r
           id="{32865DBA-6067-4282-8681-0A10CAB13329}"
-          par="Id=Navigation&amp;StaticData=%7bE68E4405-8539-40A8-B5D4-C4DBD7EBBCEC%7d"
+          par="StaticData=%257bE68E4405-8539-40A8-B5D4-C4DBD7EBBCEC%257d&amp;Id=Navigation&amp;NavigationRoot=%7bE68E4405-8539-40A8-B5D4-C4DBD7EBBCEC%7d"
           ph="ApplicationContent.Navigation"
           uid="{5E0F128F-D942-45B0-B592-B004B2536F22}" />
         <r

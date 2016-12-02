@@ -1,0 +1,98 @@
+﻿---
+ID: "316fe2b5-36fc-4c59-94b2-6d8286737d7b"
+Parent: "4cf256dc-bfde-446e-a59a-cbb6f01d3836"
+Template: "d7cf8b7e-083d-4351-aef2-2bcd2d794826"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Import/Existing Mappings/Existing Batch Mappings
+DB: core
+SharedFields:
+- ID: "3a67ad0f-9530-4b1b-9b70-9230c36ae8d6"
+  Hint: UseFullWidth
+  Type: Checkbox
+  Value: 1
+- ID: "5e642935-a6fc-48e9-b039-fe1136ced488"
+  Hint: Theme
+  Value: Harvard
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: "-150"
+- ID: "f1a1fe9e-a60c-4ddb-a3a0-bb5b29fe732e"
+  Hint: __Renderings
+  Type: layout
+  Value: |
+    <r>
+      <d
+        id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"
+        l="{4F72A793-BDBC-4262-9523-6AADD8FEA487}">
+        <r
+          id="{DAFAFFB8-74AF-4141-A96A-70B16834CEC6}"
+          par="SpeakCoreVersion=%7b3F937240-C16E-4229-9641-4CE5B4CB4ABA%7d&amp;PageCodeScriptFileName=%2fsitecore%2fshell%2fclient%2fApplications%2fXCDataImport%2fExistingMappings.js"
+          ph="Page.Code"
+          uid="{8DB21A53-AA7A-47BA-9778-0AAB08F047A0}" />
+        <r
+          id="{B2CCC7CC-3E61-4ACC-86D3-DC9B423C94D7}"
+          ph="Page.Body"
+          uid="{979F4CA2-5631-49E6-9457-030DD871EF31}" />
+        <r
+          id="{78D8260C-4FF9-4627-BF64-0B884ACA4BA1}"
+          ph="GlobalHeader"
+          uid="{59D3EC9F-E47B-42A8-BB5B-BB4C0AC9A2E9}" />
+        <r
+          id="{C220369A-84A3-482B-A936-F75CDCB23736}"
+          par="Id=GlobalLogo1"
+          ph="GlobalHeader.StartButton"
+          uid="{8A64B81F-34C3-4079-81E7-4CB4BC4566B5}" />
+        <r
+          id="{0DD00367-0B7D-4955-BB70-397523711B6D}"
+          par="Id=AccountInformation1"
+          ph="GlobalHeader.LoginInfo"
+          uid="{8E26DA63-5A8B-4E3C-98E3-E2AD53E059CB}" />
+        <r
+          id="{047F31EF-7D7D-42E5-BC9B-F39FEAB0B83B}"
+          ph="ApplicationHeader"
+          uid="{9EFBAE9B-126B-4591-8405-BB611AC68F7C}" />
+        <r
+          id="{78E022DA-DD10-47C8-A843-F7A1F18D0A87}"
+          ph="ApplicationContent"
+          uid="{3BE701CC-9851-452D-88F9-1C8E09E1A61F}" />
+        <r
+          id="{EFCD0AB0-5B9D-4F1D-AB81-BE0336CD273C}"
+          par="Id=PageTitle&amp;Text=Existing+Mappings"
+          ph="ApplicationHeader.Title"
+          uid="{80CE80BE-F186-4D37-B067-E5A604ED1407}" />
+        <r
+          id="{32865DBA-6067-4282-8681-0A10CAB13329}"
+          par="Id=NavigationMenu&amp;StaticData=%7bE68E4405-8539-40A8-B5D4-C4DBD7EBBCEC%7d"
+          ph="ApplicationContent.Navigation"
+          uid="{180CCE75-A041-4064-B6B0-248A3D9E0031}" />
+        <r
+          id="{08994B8F-7BF1-4963-815D-0FA8D75B3D86}"
+          par="Id=MappingNameBorder&amp;PaddingType=Bottom&amp;UsePadding=1"
+          ph="ApplicationContent.Main"
+          uid="{F09359F0-ECF0-4F07-82A7-DE1849C4F8F2}" />
+        <r
+          id="{E5760C8F-8346-44B6-BE16-E84228BC1617}"
+          par="Id=MappingDatasource&amp;ServiceUrl=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdatabases%2f-%2fBatchNonScMappings"
+          ph="ApplicationContent.Main"
+          uid="{E54ABE1A-31B2-422B-98D5-BED77B7B63FF}" />
+        <r
+          id="{6F8AB6DD-9307-4AD3-964E-5B84F0B9B4F0}"
+          par="Id=ListControl1&amp;ColumnDefinitionItems=%7bC4539F07-227F-412B-BB34-53C148A4DC99%7d%7c%7b64838505-DE5B-4689-BC44-5D48AA94BACF%7d%7c%7bE5B3345F-E526-4E0C-97D4-9802EAC6ACF2%7d%7c%7b0026C112-4D24-4974-93A3-A9D638936DC5%7d&amp;DynamicData=%7bBinding+MappingDatasource.DynamicData%7d&amp;ValueFieldName=Path"
+          ph="ApplicationContent.Main"
+          uid="{A5E87E8F-46AE-46B2-803E-38F3D9302281}" />
+        <r
+          id="{A9C1F47A-1E2B-4852-946F-6F9FAB939056}"
+          ph="GlobalFooter"
+          uid="{3BA77C8F-B42E-434A-812E-32FED2C2240C}" />
+      </d>
+    </r>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160303T223532Z
+    - ID: "7205a57f-93b4-413a-aa9a-6b16bbc59565"
+      Hint: BrowserTitle
+      Value: Existing Mappings

@@ -1,0 +1,31 @@
+﻿---
+ID: "0c39f566-1c42-4266-ba8b-180c74c5aee9"
+Parent: "fd2d8080-128f-4d22-9f19-3edecb8f9eb7"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Run Batch Import/PageSettings/StartButtonRuleDefinition
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <actions>
+          <action
+            id="{38241354-31DD-4169-ACA5-A99351FC58B2}"
+            uid="{2B8922EC-91B6-47EF-AE7D-8648AEAE05AB}"
+            targetControlId="StartButton"
+            propertyName="IsEnabled"
+            value="false" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160310T224523Z

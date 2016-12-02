@@ -23,19 +23,21 @@
           mapping["Paths"]["Target"] = this.TargetPath.SelectedItemPath;
 
           mapping["MigrateAllFields"] = this.MigrateAllFields.IsChecked;
+          mapping["MigrateDescendants"] = this.MigrateDescendants.IsChecked;
           mapping["FieldMapping"] = this.FieldGridView.getFormData();
 
 
           var serverRequestParameters = null,
             serverRequestOnSuccess = null,
-            serverRequestUrl = this.MappingDatasource.ServiceUrl;
+            serverRequestUrl = this.MappingSaveDatasource.ServiceUrl;
 
           var providerItemProperties = {
               "mapping": mapping
           };
 
-          this.MappingDatasource.performRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
+          this.MappingSaveDatasource.performPostRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
       },
+      
       populateMapping: function () {
           "use strict";
 

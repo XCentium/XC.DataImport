@@ -1,0 +1,25 @@
+﻿---
+ID: "5215989c-1e9a-46f0-bc68-d982af48fbed"
+Parent: "0172828f-240d-49d9-9ab2-11e58b145f71"
+Template: "cd8b9663-036a-4c69-bb29-156b8c1b185e"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Edit Template Mapping/PageSettings/ListControl Parameters
+DB: core
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 0
+- ID: "c3ca613a-45c9-4800-97bd-3f53554c7121"
+  Hint: ViewMode
+  Value: DetailList
+- ID: "d794a96f-7211-412d-bb5a-4df141d9a3f4"
+  Hint: HasScroll
+  Type: Checkbox
+  Value: 1
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160304T222959Z

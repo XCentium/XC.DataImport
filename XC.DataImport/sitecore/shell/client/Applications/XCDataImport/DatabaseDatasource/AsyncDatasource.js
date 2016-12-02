@@ -14,7 +14,7 @@
                 this.DynamicData = [];
                 this.Progress = 0;
             },
-            startImport: function (taskId) {
+            startImport: function (taskId, frameControl) {
                 "use strict";
 
                 var serverRequestParameters = null,
@@ -25,8 +25,8 @@
                     "mapping": speak.utils.url.parameterByName("mapping"),
                     "taskId": taskId
                 };
-
-                this.performRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
+                frameControl.SourceUrl = serverRequestUrl + "?" + "mapping=" + speak.utils.url.parameterByName("mapping") + "&taskId=" + taskId;
+                //this.performRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
             },
             getStatus: function (taskId) {
                 "use strict";

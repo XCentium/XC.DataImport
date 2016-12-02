@@ -14,5 +14,10 @@ namespace XC.DataImport.Repositories.Models
         public string EditLabel { get; set; }
         public string RunLink { get; set; }
         public string EditLink { get; set; }
+        public string LastRun { get; set; }
+        public string NumberOfItemsProcessed { get; set; }
+        public string FileName { get; set; }
+        public string DeleteLink { get; set; }
+        public string DeleteLabel { get; set; }
     }
 }

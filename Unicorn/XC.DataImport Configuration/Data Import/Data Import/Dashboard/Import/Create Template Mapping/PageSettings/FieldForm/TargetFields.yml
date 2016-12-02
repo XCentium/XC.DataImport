@@ -1,0 +1,37 @@
+﻿---
+ID: "f7e5c0c3-4882-4089-9f44-81b58fef7d09"
+Parent: "25472067-bd5d-4a7d-81de-9a945550d87f"
+Template: "4640f8f6-ff25-4615-8a40-fe9f0c87225e"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Import/Create Template Mapping/PageSettings/FieldForm/TargetFields
+DB: core
+SharedFields:
+- ID: "0b6b2d34-5308-4aa8-b59d-85ba47e8b8aa"
+  Hint: ValueFieldName
+  Value: Id
+- ID: "179a7734-1c9e-481c-9f20-bc2ff5095665"
+  Hint: DynamicData
+  Value: "{Binding TargetFieldDatasource.DynamicData}"
+- ID: "3e079fc3-6b2d-41c9-9204-374a786fc761"
+  Hint: BindingConfiguration
+  Value: TargetFields_0=
+- ID: "a176e7b0-1c0b-4f2e-a494-2df342a75c0e"
+  Hint: IsLabelOnTop
+  Type: Checkbox
+  Value: 1
+- ID: "ae95c662-af6a-4156-862d-82924ab52c42"
+  Hint: DisplayFieldName
+  Value: Name
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 600
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160308T212820Z
+    - ID: "3885a716-2eed-47ae-9132-32225f0458ff"
+      Hint: FormLabel
+      Value: Target Field

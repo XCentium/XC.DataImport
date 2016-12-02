@@ -8,8 +8,15 @@ SharedFields:
 - ID: "024d9d7a-ccda-4dd1-a9d2-73fd3a27507c"
   Hint: ColumnAlignment
   Value: Left
+- ID: "397eeb87-8bb7-4442-ac86-325dce1339e6"
+  Hint: ColumnMinWidth
+  Value: 
+- ID: "3f25f389-1900-4c5e-b60e-a1f7a10f8b46"
+  Hint: ColumnWidth
+  Value: 5
 - ID: "57cb9e5d-b881-4e0e-a507-554fb5285f1d"
   Hint: IsBold
+  Type: Checkbox
   Value: 1
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
@@ -30,4 +37,5 @@ Languages:
       Value: Name
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin

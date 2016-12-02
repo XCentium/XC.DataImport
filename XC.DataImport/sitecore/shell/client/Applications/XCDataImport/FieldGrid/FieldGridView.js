@@ -13,13 +13,14 @@
                         if (indexedNodes[k]) {
                             var keyName = indexedNodes[k].attributes["data-sc-id"].value.split("_");
                             var key = keyName[0];
-                            var fieldValue = {};
+                            var fieldValue;
                             switch (indexedNodes[k].localName) {
                                 case "label":
                                     var nestedInput = $(indexedNodes[k]).find("input").get(0);
-                                    fieldValue = nestedInput.type === "checkbox" ? nestedInput.checked : nestedInput.value;
+                                    fieldValue = nestedInput.type === "checkbox" || nestedInput.type === "radio" ? nestedInput.checked : nestedInput.value;
                                     break;
                                 case "input":
+                                    fieldValue = $(indexedNodes[k]).val();
                                     break;
                                 case "select":
                                     if (indexedNodes[k].selectedIndex > -1) {
@@ -54,19 +55,7 @@
         processBinding = function () {
             var self = this;
             if (this.FormData.FieldMapping) {
-                for (var i = 0; i < this.FormData.FieldMapping.length; i++) {
-                    var binding = {};
-                    var entry = this.FormData.FieldMapping[0];
-                    for (var property in entry) {
-                        if (entry.hasOwnProperty(property)) {
-                            binding[property + "_" + i] = property + "." + i;
-                           
-                            this[property + "_0"].on("change:Items", function (data) {
-                                self.renderFormData();
-                            });
-                        }
-                    }
-                }
+                self.renderFormData();
             }
         },
         
@@ -120,11 +109,10 @@
                     $(this.FormData.FieldMapping).each(function (i) {
                         var mappingRow = self.FormData.FieldMapping[i];
                         var row = $(self.el).find("div[class*='row_"+i+"']");
-                        if (row && row.length === 1) {
+                        if (row && row.length > 0) {
                             self.populateRow(row, i, mappingRow);
                         } else {
-                            row = self.insertRow(i);
-                            self.populateRow(row, i, mappingRow);
+                            row = self.insertRow(function () { self.populateRow(row, i, mappingRow); });                            
                         }
                     });
                 }
@@ -143,6 +131,7 @@
                                     }
                                     break;
                                 case "input":
+                                    $(indexedNodes[k]).val(mappingRow[fieldName]);
                                     break;
                                 case "select":
                                     $(indexedNodes[k]).val(mappingRow[fieldName]);
@@ -152,7 +141,7 @@
                     }
                 }
             },
-            insertRow: function () {
+            insertRow: function (callBack) {
                 var firstRow = $(this.el).find("div[class*='row_']").last();
                 var newRow = $(firstRow).clone(true);
                 var indexedNodes = $(newRow).find("*[data-sc-id*='_']");
@@ -175,11 +164,10 @@
                         }
                     }
                 }
-                //_sc.app.insertRendering(id, { el: $(firstRow).parent(), html: $(newRow).html() }, function () {
-                //    //component.IsBusy = false;
-                //});
 
                 newRow.insertAfter($(this.el).find("div[class*='row_']").last());
+                _sc.app.insertMarkups(newRow, { el: this.el, parse: true }, callBack);
+
                 return newRow;
             }
             

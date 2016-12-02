@@ -1,0 +1,51 @@
+﻿---
+ID: "a2bf2adf-db6c-4030-9f5c-40d8c323d537"
+Parent: "158de70a-f879-4ebe-a804-96a36dd965f0"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/PageSettings/Rules/MappingSaveDatasourceRule
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{AAC7A8EC-8760-4850-8130-9E06FFCB3365}"
+            uid="EB2FAE481E1B4CEEB4F832F9F4896B5A"
+            targetControlId="MappingSaveDatasource"
+            propertyName="DynamicData"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{38241354-31DD-4169-ACA5-A99351FC58B2}"
+            uid="{E01AB17F-2608-441D-8C44-D91BE0A71713}"
+            targetControlId="SaveButton"
+            propertyName="IsEnabled"
+            value="true" />
+          <action
+            id="{EDBDD646-30EE-4A94-88DF-92B70534C8D5}"
+            uid="{C012A4DB-A36C-4856-8C99-8A5E51C07512}"
+            targetControlId="MessageBar"
+            propertyName="DynamicData"
+            sourceControlId="MappingSaveDatasource"
+            sourceProperty="Messages" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160330T125550Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\julia

@@ -1,0 +1,32 @@
+﻿---
+ID: "d7abf827-01d8-429c-a80e-111cec053e15"
+Parent: "25472067-bd5d-4a7d-81de-9a945550d87f"
+Template: "ad75c314-f983-4c56-81d5-dc10d5ccf4ef"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Template Mapping/PageSettings/FieldForm/Overwrite"
+DB: core
+SharedFields:
+- ID: "3dfbacc5-ae5c-43ec-add2-d69ef05ad2e7"
+  Hint: IsChecked
+  Type: Checkbox
+  Value: 1
+- ID: "3e079fc3-6b2d-41c9-9204-374a786fc761"
+  Hint: BindingConfiguration
+  Value: Overwrite_0=1
+- ID: "a176e7b0-1c0b-4f2e-a494-2df342a75c0e"
+  Hint: IsLabelOnTop
+  Type: Checkbox
+  Value: 1
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 800
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160308T213005Z
+    - ID: "3885a716-2eed-47ae-9132-32225f0458ff"
+      Hint: FormLabel
+      Value: Overwrite on update

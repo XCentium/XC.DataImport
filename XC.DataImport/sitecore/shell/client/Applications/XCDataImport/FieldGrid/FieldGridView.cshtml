@@ -17,8 +17,10 @@
 <form @Model.HtmlAttributes>
 
     <div class="header">
-        @foreach (FormDressingItem child in Model.FormDressingItems)
+        @foreach (FormSection section in Model.FormSections)
         {
+            foreach (FormDressingItem child in section.FormFields)
+            {
             <div class="@Html.GetColumnsClass(Model.GridAttributes, Model.GridCellSizes, Model.PaddingClass, index)">
                 <div title="@child.FormLabel">
                     <div class="sc-formlabeltop">
@@ -27,7 +29,8 @@
                 </div>
             </div>
             @Html.RenderClearFix(Model.GridAttributes, index)
-            index++;
+                index++;
+            }
         }
     </div>
     <div class="row row_0">
@@ -35,20 +38,23 @@
             index = 0;
             var row = 0;
 
-            foreach (FormDressingItem child in Model.FormDressingItems)
+            foreach (FormSection section in Model.FormSections)
             {
+                foreach (FormDressingItem child in section.FormFields)
+                {
                 <div class="@Html.GetColumnsClass(Model.GridAttributes, Model.GridCellSizes, Model.PaddingClass, index)">
                     <div class="sc-formcomponent">
-                        @Html.RenderView(child.ParentId.ToString(), new { Id = child.ItemName + "_" + row, ConfigurationItem = child.Id.ToString() })
+                        @Html.RenderView(child.RenderingItemId.ToString(), new { Id = child.ItemName + "_" + row, ConfigurationItem = child.Id.ToString() })
                         <div class="sc-formhelptext" title="@child.HelpText">
                             <span>@child.HelpText</span>
                         </div>
                     </div>
                 </div>
             @Html.RenderClearFix(Model.GridAttributes, index)
-            index++;
+                        index++;
+                    }
+                }
             }
-        }
     </div>
 @if (!string.IsNullOrEmpty(Model.Text))
 {

@@ -1,0 +1,62 @@
+﻿---
+ID: "d20ee9c9-5bd3-4d96-8903-2e3c3386eb72"
+Parent: "cbdbe53f-54e9-4008-8c42-e981a21be03d"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Batch Mapping/PageSettings/Rules/MappingViewDatasourceRuleDefinition"
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{AAC7A8EC-8760-4850-8130-9E06FFCB3365}"
+            uid="0105E6F81B2548C59DFCBABF49F1124A"
+            targetControlId="MappingViewDatasource"
+            propertyName="DynamicData"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{61BDD2FB-31FA-49EA-8F62-B1FDBBBFA712}"
+            targetControlId="MappingName"
+            propertyName="Value"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Name" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{10EAB59F-905C-4EFD-BB68-475B704559B5}"
+            targetControlId="MappingDescription"
+            propertyName="Value"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Description" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{8B743BB0-9FDC-483D-9D16-B87AEB973BF8}"
+            targetControlId="ListControl1"
+            propertyName="CheckedValues"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Files" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160330T124342Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\julia

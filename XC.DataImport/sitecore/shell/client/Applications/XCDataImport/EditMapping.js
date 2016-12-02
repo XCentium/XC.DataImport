@@ -1,8 +1,10 @@
 ﻿define(["sitecore"], function (Sitecore) {
   var CreatenewMapping = Sitecore.Definitions.App.extend({
       initialized: function () {
-          this.MappingViewDatasource.loadMapping();
           this.DatabaseDatasource.loadData();
+          this.on("app:loaded", function () {
+              this.MappingViewDatasource.loadMapping();
+          }, this);
       },
 
       saveMapping: function () {
@@ -25,17 +27,18 @@
 
           mapping["MigrateAllFields"] = this.MigrateAllFields.IsChecked;
           mapping["FieldMapping"] = this.FieldGridView.getFormData();
+          mapping["MigrateDescendants"] = this.MigrateDescendants.IsChecked;
 
 
           var serverRequestParameters = null,
             serverRequestOnSuccess = null,
-            serverRequestUrl = this.MappingDatasource.ServiceUrl;
+            serverRequestUrl = this.MappingSaveDatasource.ServiceUrl;
 
           var providerItemProperties = {
               "mapping": mapping
           };
 
-          this.MappingDatasource.performRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
+          this.MappingSaveDatasource.performPostRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
       }
   });
 

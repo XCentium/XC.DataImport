@@ -13,6 +13,7 @@ SharedFields:
   Value: "Single-Line Text"
 - ID: "be351a73-fcb0-4213-93fa-c302d8ab4f51"
   Hint: Shared
+  Type: checkbox
   Value: 1
 Languages:
 - Language: da
@@ -31,7 +32,8 @@ Languages:
       Value: 20151207T115243Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
 - Language: "de-DE"
   Fields:
   - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
@@ -48,7 +50,8 @@ Languages:
       Value: 20151207T115411Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
 - Language: en
   Versions:
   - Version: 1
@@ -58,7 +61,8 @@ Languages:
       Value: 20150423T140928Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin
 - Language: "ja-JP"
   Fields:
   - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
@@ -75,4 +79,5 @@ Languages:
       Value: 20151207T115534Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value: sitecore\admin
+      Value: |
+        sitecore\admin

@@ -13,6 +13,7 @@
 
             initialized: function () {
                 this.DynamicData = [];
+                this.Messages = [];
                 this.on("change:Parameters", this.reloadData, this);
             },
 
@@ -43,7 +44,37 @@
 
                 this.performRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
             },
-            
+            performPostRequest: function (serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess) {
+                "use strict";
+
+                var self = this;
+                this.IsBusy = true;
+
+                if (this.QueryParameters) {
+                    serverRequestUrl += (serverRequestUrl.match(/\?/) ? '&' : '?') + this.QueryParameters;
+                }
+
+                var ajaxOptions = {
+                    method : 'POST',
+                    dataType: 'json',
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    headers: {},
+                    data: this.getRequestDataString(providerItemProperties),
+                    url: serverRequestUrl,
+                    success: function (data) {
+                        self.baseSuccessHandler(data, serverRequestOnSuccess);
+                    },
+                    error: function (response) {
+                        self.IsBusy = false;
+                        self.handleError({ name: "Error", message: "Server returned" + ": " + response.status + " (" + response.statusText + ")", response: response });
+                    }
+                };
+
+                var token = speak.utils.security.antiForgery.getAntiForgeryToken();
+                ajaxOptions.headers[token.headerKey] = token.value;
+
+                $.ajax(ajaxOptions);
+            },
             loadData: function (serverRequestOptions) {
                 "use strict";
 
@@ -60,7 +91,8 @@
                 var providerItemProperties = {
                     "serverSorting": this.ServerSorting,
                     "pageSize": this.PageSize === 0 ? "" : this.PageSize,
-                    "pageIndex": this.PageSize === 0 ? "" : this.PageIndex // if Page.Size==0 then PageIndex has no meaning
+                    "pageIndex": this.PageSize === 0 ? "" : this.PageIndex, // if Page.Size==0 then PageIndex has no meaning
+                    "mapping": speak.utils.url.parameterByName("mapping")
                 };
 
                 this.performRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
@@ -78,6 +110,9 @@
                 }
                 if (jsonData.data) {
                     this.DynamicData = jsonData.data;
+                }
+                if (jsonData.messages) {
+                    this.Messages = jsonData.messages;
                 }
             },
 

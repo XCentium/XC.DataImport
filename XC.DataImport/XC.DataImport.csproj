@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,8 +44,8 @@
       <HintPath>..\packages\Kamsar.WebConsole.1.2.2.0\lib\net40\Kamsar.WebConsole.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MicroCHAP, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicroCHAP.1.2.1.0\lib\net45\MicroCHAP.dll</HintPath>
+    <Reference Include="MicroCHAP, Version=1.2.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroCHAP.1.2.2.2\lib\net45\MicroCHAP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -52,59 +53,101 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Neb.Sitecore81\References\Sitecore\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\References\Sitecore\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Rainbow, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rainbow.Core.1.2.0\lib\net45\Rainbow.dll</HintPath>
+    <Reference Include="Rainbow, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rainbow.Core.1.4.1\lib\net452\Rainbow.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rainbow.Storage.Sc, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rainbow.Storage.Sc.1.2.0\lib\net45\Rainbow.Storage.Sc.dll</HintPath>
+    <Reference Include="Rainbow.Storage.Sc, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rainbow.Storage.Sc.1.4.1\lib\net452\Rainbow.Storage.Sc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rainbow.Storage.Yaml, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rainbow.Storage.Yaml.1.2.0\lib\net45\Rainbow.Storage.Yaml.dll</HintPath>
+    <Reference Include="Rainbow.Storage.Yaml, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rainbow.Storage.Yaml.1.4.1\lib\net452\Rainbow.Storage.Yaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Kernel, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Buckets, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.Buckets.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Client, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Logging.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.Client.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.ContentSearch, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Mvc.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.ContentSearch.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Client">
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Services.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Services.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.ContentSearch.Linq, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Services.Core.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.ContentSearch.Linq.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Services.Infrastructure.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Client, Version=2.0.812.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Logging, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Speak.Client.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.Logging.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Components, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Speak.Components.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Components.Guidance, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sitecore.Services.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Speak.Components.Guidance.dll</HintPath>
+      <HintPath>..\References\Sitecore\Sitecore.Services.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Speak.Mvc">
-      <HintPath>..\..\..\Users\Julia.Gavrilova\Downloads\Sitecore\Sitecore 8.1 rev. 160302\Sitecore 8.1 rev. 160302\Website\bin\Sitecore.Speak.Mvc.dll</HintPath>
+    <Reference Include="Sitecore.Services.Infrastructure, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Services.Infrastructure.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Applications, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.Applications.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Client, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Components, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.Components.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Components.Guidance, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.Components.Guidance.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Components.Web, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.Components.Web.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.ItemWebApi, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.ItemWebApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Speak.Web, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Sitecore\Sitecore.Speak.Web.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
@@ -116,31 +159,32 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Neb.Sitecore81\References\Sitecore\System.Web.Http.dll</HintPath>
+      <HintPath>..\References\Sitecore\System.Web.Http.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -149,14 +193,18 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Unicorn, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unicorn.Core.3.1.4\lib\net45\Unicorn.dll</HintPath>
+    <Reference Include="Unicorn, Version=3.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unicorn.Core.3.3.2\lib\net452\Unicorn.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BatchImportProcessingController.cs" />
+    <Compile Include="Controllers\BatchNonScImportProcessingController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\ImportProcessingController.cs" />
     <Compile Include="Controllers\DataImportController.cs" />
+    <Compile Include="Controllers\NonScImportProcessingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +215,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\XCDataImport\Assets\lib\jQueryPresenter.js" />
+    <Content Include="sitecore\shell\client\Applications\XCDataImport\CreateNewBatchMapping.js" />
+    <Content Include="sitecore\shell\client\Applications\XCDataImport\CreateNewNonScMapping.js" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\EditMapping.js" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\DatabaseDatasource\AsyncDatasource.js" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\RunImport.js" />
@@ -183,25 +233,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="App_Config\Include\xc.DataImport\xc.DataImport.Master65.config" />
+    <None Include="App_Config\Include\xc.DataImport\xc.DataImport.Master65.config.d" />
     <Content Include="App_Config\Include\Rainbow.config" />
-    <Content Include="App_Config\Include\Unicorn\Unicorn.UI.config" />
-    <Content Include="App_Config\Include\Unicorn\Unicorn.Remote.config.disabled" />
-    <Content Include="App_Config\Include\Unicorn\Unicorn.Deployed.config.disabled" />
-    <Content Include="App_Config\Include\Unicorn\Unicorn.DataProvider.config" />
-    <None Include="App_Config\Include\Unicorn\Unicorn.Configs.XC.DataImport.config" />
-    <None Include="App_Config\Include\Unicorn\Unicorn.CustomSerializationFolder.config" />
-    <Content Include="App_Config\Include\Unicorn\Unicorn.Configs.NewItemsOnly.example" />
     <Content Include="App_Config\Include\Unicorn\Unicorn.Configs.Dependency.config.example" />
     <Content Include="App_Config\Include\Unicorn\Unicorn.Configs.Default.example" />
     <Content Include="App_Config\Include\Unicorn\Unicorn.config" />
     <Content Include="App_Config\Include\Unicorn\Unicorn.AutoPublish.config" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.Configs.XC.DataImport.config" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.CustomSerializationFolder.config" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.Configs.NewItemsOnly.example" />
     <Content Include="App_Config\Include\xc.DataImport\xc.DataImport.config" />
+    <Content Include="App_Config\Include\xc.DataImport\xc.DataImport.DataFolder.config.d" />
+    <Content Include="App_Config\Include\xc.DataImport\xc.DataImport.Masterold.config.d" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.zSharedSecret.config.example" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.UI.config" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.Remote.config.disabled" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.Deployed.config.disabled" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.DataProvider.config" />
+    <Content Include="App_Config\Include\Unicorn\Unicorn.CustomSerializationFolder.config.example" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\DatabaseDatasource\DatabaseDatasource.cshtml" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\TreeView\ItemTreeView.cshtml" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\FieldGrid\FieldGridView.cshtml" />
+    <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetComponentPropertyToValue.js" />
+    <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToComplexProperty.js" />
+    <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToOtherProperty.js" />
     <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasComplexPropertyValue.js" />
+    <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasComplexValue.js" />
+    <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasPropertyValue.js" />
+    <Content Include="sitecore\shell\client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\True.js" />
     <Content Include="web.config" />
     <Content Include="sitecore\shell\client\Applications\XCDataImport\DatabaseDatasource\AsyncDatasource.cshtml" />
     <None Include="web.Debug.config">
