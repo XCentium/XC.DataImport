@@ -97,28 +97,6 @@
         <member name="F:Sitecore.Social.Twitter.Connector.Paths.TwitterPathsFactory.Twitter">
             <summary>Twitter paths.</summary>
         </member>
-        <member name="T:Sitecore.Social.Twitter.Installation.PostStepActions">
-            <summary>
-            Post step actions for module installation.
-            </summary>
-        </member>
-        <member name="F:Sitecore.Social.Twitter.Installation.PostStepActions.TwitterMessageReviewerRoleName">
-            <summary>
-            Twitter Message Reviewer role name.
-            </summary>
-        </member>
-        <member name="M:Sitecore.Social.Twitter.Installation.PostStepActions.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Runs this post step
-            </summary>
-            <param name="output">The output.</param>
-            <param name="metaData">The meta data.</param>
-        </member>
-        <member name="M:Sitecore.Social.Twitter.Installation.PostStepActions.InstallTwitterReviewerRole">
-            <summary>
-            Installs "Twitter Message Reviewer" role.
-            </summary>
-        </member>
         <member name="T:Sitecore.Social.Twitter.Networks.Accounts.TwitterAccount">
             <summary>
             The class represents a Twitter network account

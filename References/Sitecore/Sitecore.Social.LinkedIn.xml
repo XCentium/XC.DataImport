@@ -125,18 +125,6 @@
             Initializes a new instance of the <see cref="T:Sitecore.Social.LinkedIn.Exceptions.Analyzers.LinkedInExceptionAnalyzer"/> class.
             </summary>
         </member>
-        <member name="T:Sitecore.Social.LinkedIn.Installation.PostStepActions">
-            <summary>
-            Post step actions for module installation.
-            </summary>
-        </member>
-        <member name="M:Sitecore.Social.LinkedIn.Installation.PostStepActions.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Runs this post step
-            </summary>
-            <param name="output">The output.</param>
-            <param name="metaData">The meta data.</param>
-        </member>
         <member name="T:Sitecore.Social.LinkedIn.Networks.Providers.LinkedInProvider">
             <summary>
             LinkedIn provider

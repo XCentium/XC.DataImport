@@ -25,6 +25,30 @@ namespace XC.DataImport.Controllers
     [ServicesController("speak.dataimport/databases")]
     public class DataImportController : ServicesApiController
     {
+        [HttpGet]
+        public string PingMds()
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mds"].ConnectionString))
+                {
+                    conn.Open();
+
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT TOP 1 [ID] FROM [MDS].[mdm].[vw_product_class]";
+                        cmd.CommandType = System.Data.CommandType.Text;
+                        var result = cmd.ExecuteReader();
+                        return "success";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.StackTrace;
+            }
+        }
+
         /// <summary>
         /// Alls this instance.
         /// </summary>

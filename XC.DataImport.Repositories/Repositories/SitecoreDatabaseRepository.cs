@@ -33,8 +33,8 @@ using XC.DataImport.Repositories.Disablers;
 
 namespace XC.DataImport.Repositories.Repositories
 {
-    public class SitecoreDatabaseRepository : ISitecoreDatabaseRepository
-    {
+    public class SitecoreDatabaseRepository : BaseDatabaseRepository, ISitecoreDatabaseRepository
+  {
         private readonly string _databaseName;
         private readonly IMappingModel _mapping;
 
@@ -293,16 +293,6 @@ namespace XC.DataImport.Repositories.Repositories
             else
             {
                 statusMethod("<span style=\"color:red\"><strong>[FAILURE] Stream is null</strong></span>", statusFilename);
-            }
-        }
-
-        private void DetachMedia(MediaItem mediaItem)
-        {
-            MediaUri mediaUri = MediaUri.Parse(mediaItem);
-            Media media = MediaManager.GetMedia(mediaUri);
-            if (media != null)
-            {
-                media.ReleaseStream();
             }
         }
 

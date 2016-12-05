@@ -106,18 +106,6 @@
         <member name="F:Sitecore.Social.GooglePlus.Connector.Paths.GooglePathsFactory.Google">
             <summary>Google paths.</summary>
         </member>
-        <member name="T:Sitecore.Social.GooglePlus.Installation.PostStepActions">
-            <summary>
-            Post step actions for module installation.
-            </summary>
-        </member>
-        <member name="M:Sitecore.Social.GooglePlus.Installation.PostStepActions.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Runs this post step
-            </summary>
-            <param name="output">The output.</param>
-            <param name="metaData">The meta data.</param>
-        </member>
         <member name="F:Sitecore.Social.GooglePlus.Networks.Providers.GooglePlusProvider._provider">
             <summary> Application client provider. </summary>
         </member>

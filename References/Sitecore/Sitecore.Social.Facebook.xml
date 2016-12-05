@@ -47,6 +47,14 @@
             With this permission, you can post a content to the user's timeline at any time, without requesting offline_access.
             </remarks>
         </member>
+        <member name="P:Sitecore.Social.Facebook.Configuration.SettingsConfiguration.IsOfflineAccess">
+            <summary>
+            Gets or sets the value that indicates whether Social Connector will request the Facebook “offline_access” permission or not.
+            </summary>
+            <value>
+            <c>true</c> to get offline access token; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="T:Sitecore.Social.Facebook.Configuration.SettingsConfigurationManager">
             <summary>
             Defines methods to get Facebook settings configuration.
@@ -57,19 +65,6 @@
             Gets the configuration data.
             </summary>
             <returns>The <see cref="T:Sitecore.Social.Facebook.Configuration.SettingsConfiguration"/>.</returns>
-        </member>
-        <member name="T:Sitecore.Social.Facebook.Connector.ContentSearch.Analytics.Pipelines.ContactIndexableLoadFields.LoadFacebookFields">
-            <summary>
-            Loads Facebook fields.
-            </summary>
-            <seealso cref="T:Sitecore.ContentSearch.Analytics.Pipelines.ContactIndexableLoadFields.ContactIndexableLoadFieldsProcessor"/>
-        </member>
-        <member name="M:Sitecore.Social.Facebook.Connector.ContentSearch.Analytics.Pipelines.ContactIndexableLoadFields.LoadFacebookFields.GetFields(Sitecore.ContentSearch.Analytics.Pipelines.ContactIndexableLoadFields.ContactIndexableLoadFieldsPipelineArgs)">
-            <summary>
-            Gets the fields.
-            </summary>
-            <param name="args">The args.</param>
-            <returns>The fields to be indexed.</returns>
         </member>
         <member name="T:Sitecore.Social.Facebook.Connector.Managers.WebRequestManager">
             <summary>
@@ -163,7 +158,7 @@
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.IdsForBusiness">
             <summary>
             The ids for business
-            https://developers.facebook.com/docs/graph-api/reference/v2.5/user/ids_for_business
+            https://developers.facebook.com/docs/graph-api/reference/v2.2/user/ids_for_business
             </summary>
         </member>
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.Oauth">
@@ -175,31 +170,31 @@
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.Accounts">
             <summary>
             The accounts link.
-            https://developers.facebook.com/docs/graph-api/reference/v2.5/user/accounts?locale=en_GB
+            https://developers.facebook.com/docs/graph-api/reference/v2.2/user/accounts?locale=en_GB
             </summary>
         </member>
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.Feed">
             <summary>
             The feed link.
-            https://developers.facebook.com/docs/graph-api/reference/v2.5/user/feed?locale=en_GB
+            https://developers.facebook.com/docs/graph-api/reference/v2.2/user/feed?locale=en_GB
             </summary>
         </member>
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.User">
             <summary>
             The user link.
-            https://developers.facebook.com/docs/graph-api/reference/v2.5/user?locale=en_GB
+            https://developers.facebook.com/docs/graph-api/reference/v2.2/user?locale=en_GB
             </summary>
         </member>
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.Post">
             <summary>
             The post link.
-            https://developers.facebook.com/docs/graph-api/reference/v2.5/post?locale=en_GB
+            https://developers.facebook.com/docs/graph-api/reference/v2.2/post?locale=en_GB
             </summary>
         </member>
         <member name="F:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.Comments">
             <summary>
             The comments link.
-            https://developers.facebook.com/docs/graph-api/reference/v2.5/object/comments?locale=en_GB
+            https://developers.facebook.com/docs/graph-api/reference/v2.2/object/comments?locale=en_GB
             </summary>
         </member>
         <member name="M:Sitecore.Social.Facebook.Connector.Paths.FacebookPaths.Links.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
@@ -321,28 +316,6 @@
             <param name="context">
             The context.
             </param>
-        </member>
-        <member name="T:Sitecore.Social.Facebook.Installation.PostStepActions">
-            <summary>
-            Post step actions for module installation.
-            </summary>
-        </member>
-        <member name="F:Sitecore.Social.Facebook.Installation.PostStepActions.FacebookMessageReviewerRoleName">
-            <summary>
-            Facebook Message Reviewer role name.
-            </summary>
-        </member>
-        <member name="M:Sitecore.Social.Facebook.Installation.PostStepActions.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Runs this post step
-            </summary>
-            <param name="output">The output.</param>
-            <param name="metaData">The meta data.</param>
-        </member>
-        <member name="M:Sitecore.Social.Facebook.Installation.PostStepActions.InstallFacebookReviewerRole">
-            <summary>
-            Installs "Facebook Message Reviewers" role.
-            </summary>
         </member>
         <member name="T:Sitecore.Social.Facebook.IoC.IoCInitialization">
             <summary>

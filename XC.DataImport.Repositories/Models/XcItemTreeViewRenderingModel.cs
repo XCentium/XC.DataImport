@@ -9,50 +9,25 @@ using Sitecore.Resources;
 using Sitecore.Speak.Components.Models;
 using Sitecore.Speak.Components.Models.ListsAndGrids.ItemTreeViews;
 using Sitecore.Web.UI;
-using Sitecore.Data;
-using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 
 namespace XC.DataImport.Repositories.Models
 {
-  public class XcItemTreeViewRenderingModel : ItemTreeViewRenderingModel
-  {
-    public override void Initialize(Sitecore.Mvc.Presentation.Rendering rendering)
+    public class XcItemTreeViewRenderingModel : ItemTreeViewRenderingModel
     {
-      base.Initialize(rendering);
-      Requires.Clear();
-      Requires.Script("client", "Applications/XCDataImport/TreeView/ItemTreeView.js");
-      Presenter = "jQueryPresenter";
+        public override void Initialize(Sitecore.Mvc.Presentation.Rendering rendering)
+        {
+            base.Initialize(rendering);
+            Requires.Clear();
+            Requires.Script("client", "Applications/XCDataImport/TreeView/ItemTreeView.js");
 
-      Database database = this.GetDatabase();
-      Item rootItem = this.GetRootItem(database);
-
-      Properties["RootItem"] = rootItem.DisplayName + "," + rootItem.Database.Name + "," + rootItem.ID + "," + Images.GetThemedImageSource(!string.IsNullOrEmpty(rootItem.Appearance.Icon) ? rootItem.Appearance.Icon : "Applications/16x16/documents.png", ImageDimension.id16x16);
-      Properties["Database"] = Database != null ? Database.Name : ClientHost.Databases.ContentDatabase.Name;
+            Contentlanguage = Context.Language.CultureInfo.TwoLetterISOLanguageName;
+            Presenter = "jQueryPresenter";
+            if (!string.IsNullOrEmpty(RootItem))
+                CurrentRootItem = Database.GetItem(RootItem, Language.Parse(this.Contentlanguage));
+            if (CurrentRootItem == null)
+                CurrentRootItem = ClientHost.Databases.ContentDatabase.GetRootItem();
+            Properties["RootItem"] = CurrentRootItem.DisplayName + "," + CurrentRootItem.Database.Name + "," + CurrentRootItem.ID + "," + Images.GetThemedImageSource(!string.IsNullOrEmpty(CurrentRootItem.Appearance.Icon) ? CurrentRootItem.Appearance.Icon : "Applications/16x16/documents.png", ImageDimension.id16x16);
+            Properties["Database"] = Database != null ? Database.Name : ClientHost.Databases.ContentDatabase.Name;
+        }
     }
-
-    private Database GetDatabase()
-    {
-      string stringNonEmpty = this.GetStringNonEmpty("Database", "$context_contentdatabase");
-      switch (stringNonEmpty.ToLower())
-      {
-        case "$context_database":
-          return ClientHost.Databases.Database;
-        case "$context_contentdatabase":
-          return ClientHost.Databases.ContentDatabase;
-        default:
-          return Database.GetDatabase(stringNonEmpty);
-      }
-    }
-
-    private Item GetRootItem(Database database)
-    {
-      Assert.ArgumentNotNull((object)database, "database");
-      Item obj = (Item)null;
-      string path = this.GetString("StaticData", "");
-      if (!string.IsNullOrEmpty(path))
-        obj = database.GetItem(path);
-      return obj ?? database.GetRootItem();
-    }
-  }
 }
