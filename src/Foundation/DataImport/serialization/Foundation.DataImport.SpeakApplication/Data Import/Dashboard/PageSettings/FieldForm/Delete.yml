@@ -1,0 +1,37 @@
+﻿---
+ID: "24bd99a0-d010-4674-968f-3c8733608311"
+Parent: "72fe1b5a-0bd4-44ba-8988-415541c9949d"
+Template: "52695bda-bf4d-465b-9dd6-d4fb5047705c"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/PageSettings/FieldForm/Delete
+DB: core
+SharedFields:
+- ID: "024d9d7a-ccda-4dd1-a9d2-73fd3a27507c"
+  Hint: ColumnAlignment
+  Value: Center
+- ID: "02ff1c07-2a59-485a-b495-a3573355b3e3"
+  Hint: LinkUrlFieldName
+  Value: DeleteLink
+- ID: "3f25f389-1900-4c5e-b60e-a1f7a10f8b46"
+  Hint: ColumnWidth
+  Value: 1
+- ID: "a83dd535-7cfd-4902-8e31-a7e6ca76da60"
+  Hint: LinkTextFieldName
+  Value: DeleteLabel
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 400
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160325T200802Z
+    - ID: "5869a226-dfb2-4676-8754-1cd7d22b23ed"
+      Hint: ColumnTitle
+      Value: 
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\julia

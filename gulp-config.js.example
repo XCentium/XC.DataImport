@@ -1,0 +1,12 @@
+module.exports = function () {
+    var instanceRoot = "C:\\Websites\\Car";
+    var config = {
+        websiteRoot: instanceRoot + "\\Website",
+        sitecoreLibraries: instanceRoot + "\\Website\\bin",
+        licensePath: instanceRoot + "\\Data\\license.xml",
+        solutionName: "Car",
+        buildConfiguration: "Debug",
+        runCleanBuilds: false
+    };
+    return config;
+}

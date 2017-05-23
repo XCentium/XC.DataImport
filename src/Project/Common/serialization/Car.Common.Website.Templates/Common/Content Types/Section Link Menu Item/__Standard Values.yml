@@ -1,0 +1,29 @@
+﻿---
+ID: "aa2a619b-e92d-455c-a29b-88434aba7d8f"
+Parent: "010357ed-ae62-4c2f-a1f0-2d4f1819be4c"
+Template: "010357ed-ae62-4c2f-a1f0-2d4f1819be4c"
+Path: /sitecore/templates/Project/Common/Content Types/Section Link Menu Item/__Standard Values
+DB: master
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "04f82419-1706-4f2a-8e62-22294a0a9221"
+      Hint: ShowInNavigation
+      Type: Checkbox
+      Value: 1
+    - ID: "1f5b8fc6-7441-478a-9426-a247d0d06971"
+      Hint: NavigationTitle
+      Value: $name
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20150910T044109Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "caa02a19-2fe7-4295-b63d-ea7a989e6be9"
+      Hint: ShowChildren
+      Type: Checkbox
+      Value: 1

@@ -1,0 +1,98 @@
+﻿---
+ID: "e906d585-8cd2-4358-9567-50324979058b"
+Parent: "5538c53c-4962-4a7f-a15b-da8b8b9d0baf"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Run Template Import/PageSettings/ConfigurationMappingRuleDefinition
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{AAC7A8EC-8760-4850-8130-9E06FFCB3365}"
+            uid="28EEB31FA6634149AF626D0E09B48641"
+            targetControlId="MappingDatasource"
+            propertyName="DynamicData"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{49C68A44-A141-44B9-9087-23BF89C2601D}"
+            targetControlId="MappingNameValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Name" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{67B52CA9-F6EA-4504-AF27-7C7F9190A9C9}"
+            targetControlId="SourceDatabaseValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Databases.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{3BCB0BE0-F540-476D-B769-C5B39AE8EF13}"
+            targetControlId="TargetDatabaseValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Databases.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{C677BFCC-8B1B-44E5-9A0E-57F02C33730F}"
+            targetControlId="SourceTemplateValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Templates.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{6BC6CB74-B46D-4FA6-9A84-CB6699674533}"
+            targetControlId="TargetTemplateValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Templates.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{07EBDD64-C231-4AC4-BB29-6EBFAF5627F5}"
+            targetControlId="SourcePathValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Paths.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{90F2801A-EA06-47CC-8A34-3EDF700D2F41}"
+            targetControlId="TargetPathValue"
+            propertyName="Value"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="Paths.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{027F4ADA-E14E-4764-9A66-71A37A80BA43}"
+            targetControlId="MigrateAllFieldsValue"
+            propertyName="IsChecked"
+            sourceControlId="MappingDatasource"
+            sourceProperty="DynamicData"
+            sourceSubProperty="MigrateAllFields" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160310T141214Z
