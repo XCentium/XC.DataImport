@@ -106,7 +106,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config" />
     <Content Include="App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config.example" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />

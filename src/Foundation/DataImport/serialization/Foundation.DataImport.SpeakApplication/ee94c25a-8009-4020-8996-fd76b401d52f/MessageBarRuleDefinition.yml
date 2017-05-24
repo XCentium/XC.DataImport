@@ -1,0 +1,18 @@
+﻿---
+ID: "33ffb036-dcec-447e-986c-09eb26e1941d"
+Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Rules/MessageBarRuleDefinition"
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170524T160750Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

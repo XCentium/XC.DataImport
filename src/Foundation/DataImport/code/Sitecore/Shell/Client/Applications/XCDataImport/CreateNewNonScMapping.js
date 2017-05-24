@@ -1,11 +1,11 @@
 ﻿define(["sitecore"], function (Sitecore) {
   var CreatenewMapping = Sitecore.Definitions.App.extend({
       initialized: function () {
-          this.DatabaseDatasource.loadData();
-          this.ConnectionsDatasource.loadData();
-          if (_sc.utils.url.parameterByName("mapping")) {
-              this.MappingViewDatasource.loadMapping();
-          }
+          //this.DatabaseDatasource.getData();
+          //this.ConnectionsDatasource.getData();
+          //if (_sc.utils.url.parameterByName("mapping")) {
+          //    this.MappingViewDatasource.loadMapping();
+          //}
       },
 
       saveMapping: function () {

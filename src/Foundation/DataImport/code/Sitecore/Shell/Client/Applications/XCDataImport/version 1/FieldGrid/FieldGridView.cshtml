@@ -1,0 +1,22 @@
+﻿@using Sitecore
+@using Sitecore.Mvc
+@using Sitecore.Data
+@using Sitecore.Data.Items
+@using Sitecore.Mvc.Presentation
+@using System.Collections.Specialized
+@using System.Web.Mvc
+@using Sitecore.Speak.Components.Models.Forms.FormPanels
+@using Sitecore.Speak.Components.Models.ListsAndGrids.Grids
+@model RenderingModel
+
+@{
+    var userControl = this.Html.Sitecore().Controls().GetUserControl(this.Model.Rendering);
+    userControl.Requires.Script("/sitecore/shell/client/Applications/XCDataImport/version 1/FieldGrid/FieldGridView.js");
+
+    var cssClass = "sc-FieldGridView";
+
+    var htmlAttributes = userControl.HtmlAttributes;
+    userControl.AppendClass(cssClass);
+}
+<script type='text/x-sitecore-fieldgridview' @htmlAttributes>
+</script>

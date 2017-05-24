@@ -13,7 +13,7 @@
           throw "functionName is not set";
       }
 
-      if (sourceControl.get(sourceProperty)) {
+      if (sourceControl && sourceControl.get(sourceProperty)) {
           selectedItem = sourceControl.get(sourceProperty);
       } else {
           console.debug("Unable to get the property to set");

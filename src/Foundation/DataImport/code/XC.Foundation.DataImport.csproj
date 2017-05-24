@@ -199,30 +199,32 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\Assets\lib\jQueryPresenter.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewBatchMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewNonScMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DatabaseDatasource\AsyncDatasource.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DatabaseDatasource\DatabaseDatasource.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DatabaseDatasource\DatabaseDatasource.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\ServiceDatasource.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DataImport.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\EditMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ExistingMappings.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\FieldGrid\FieldGridView.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\RunImport.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\TreeView\ItemTreeView.js" />
-    <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Assets\lib\jQueryPresenter.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\FieldGrid\FieldGridView.js" />
     <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\CallComponentFunction.js" />
     <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToComplexProperty.js" />
     <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToOtherProperty.js" />
     <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasComplexValue.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DatabaseDatasource\AsyncDatasource.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DatabaseDatasource\DatabaseDatasource.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\FieldGrid\FieldGridView.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\TreeView\ItemTreeView.cshtml" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\ServiceDatasource.cshtml" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\FieldGrid\FieldGridView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

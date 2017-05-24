@@ -43,8 +43,12 @@ namespace XC.Foundation.DataImport.Controllers
             {
                 databases.Add(new DatabaseEntity { Name = connection.Name, ConnectionString = connection.ConnectionString, Id = connection.Name });
             }
-             
-            return databases;
+
+            return new
+            {
+                data = databases,
+                messages = ""
+            };
         }
 
         /// <summary>
@@ -65,7 +69,11 @@ namespace XC.Foundation.DataImport.Controllers
                             new DatabaseEntity {Name = d.Name, ConnectionString = d.ConnectionStringName, Id = d.Name}));
             }
 
-            return databases;
+            return new
+            {
+                data = databases,
+                messages = ""
+            };
         }
         /// <summary>
         /// Getting Templates.
@@ -74,27 +82,39 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object Templates(string item)
+        public object Templates(string item = "")
         {
             var templates = new List<TemplateEntity>();
+
+            if(string.IsNullOrWhiteSpace(item))
+                return new
+                {
+                    data = templates,
+                    messages = "Database name is empty"
+                };
+
             var db = Factory.GetDatabase(item);
             if(db == null)
                 return new
                 {
-                    data = new List<string>(),
-                    messages = ""
+                    data = templates,
+                    messages = "Database with the name provided doesn't exist"
                 };
 
-            var dbTemplates = db.Templates.GetTemplates(Sitecore.Context.Language).Where(t => !t.InnerItem.Name.Contains("__")).OrderBy(t => t.Name);
+            var dbTemplates = db.Templates.GetTemplates(Sitecore.Context.Language).Where(t => !t.InnerItem.Name.Contains("__") && !t.InnerItem.Paths.FullPath.Contains("/sitecore/templates/System")).OrderBy(t => t.Name);
             if (dbTemplates.Any())
             {
-                templates.Add(new TemplateEntity { Name = "", Id = "", Database = "", Path = "" });
+                templates.Add(new TemplateEntity { Name = "Select Target Template", Id = "", Database = "", Path = "" });
                 templates.AddRange(
                     dbTemplates.Select(
                         t =>
                             new TemplateEntity { Name = t.Name + " (" + t.InnerItem.Paths.Path + ")", Id = t.ID.ToString(), Database = t.Database.Name, Path = t.InnerItem.Paths.Path }));
             }
-            return templates;
+            return new
+            {
+                data = templates,
+                messages = ""
+            };
         }
 
         /// <summary>

@@ -132,7 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\Foundation\Foundation.Serialization.config" />
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.Serialization.Settings.config" />
     <Content Include="App_Config\Include\Unicorn\Unicorn.UI.config" />
     <Content Include="App_Config\Include\Rainbow.config" />

@@ -3,7 +3,7 @@
         paths: {
             dynatree: "/sitecore/shell/client/Speak/Assets/lib/ui/1.1/deps/DynaTree/jquery.dynatree-1.2.4",
             dynatreecss: "/sitecore/shell/client/Speak/Assets/lib/ui/1.1/deps/DynaTree/skin-vista/ui.dynatree",
-            jQueryPresenter: "/sitecore/shell/client/Applications/XCDataImport/Assets/lib/jQueryPresenter"
+            jQueryPresenter: "/sitecore/shell/client/Business Component Library/version 2/Assets/lib/jQueryPresenter"
         },
         shim: {
             "dynatree": { deps: ["jqueryui"] }

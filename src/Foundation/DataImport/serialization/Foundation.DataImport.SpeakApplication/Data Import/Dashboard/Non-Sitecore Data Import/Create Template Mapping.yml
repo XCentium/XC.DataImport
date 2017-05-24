@@ -155,6 +155,11 @@ SharedFields:
           ph="Border.Content"
           uid="{EAB65C4E-B301-4DED-BC55-CB70F2CF2D0B}" />
         <r
+          id="{E5760C8F-8346-44B6-BE16-E84228BC1617}"
+          par="QueryParameters=%7bBinding+SourceDatabases.SelectedValue%7d&amp;Id=TargetTemplateDatasource&amp;ServiceUrl=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ftemplates"
+          ph="Border.Content"
+          uid="{E1EBF047-34B6-460E-AE53-CE0338F225CD}" />
+        <r
           id="{08994B8F-7BF1-4963-815D-0FA8D75B3D86}"
           par="Id=Border1&amp;PaddingType=All&amp;UsePadding=1"
           ph="TargetExpander.Body"
@@ -170,15 +175,15 @@ SharedFields:
           ph="Border1.Content"
           uid="{BD5A4C89-F290-46AB-80A9-A083602EB05A}" />
         <r
+          id="{A5C22E3F-6A3A-4032-9974-01C6D325553E}"
+          par="Id=TargetDatabasesRule&amp;Trigger=change%3aselectedItem&amp;LoadMode=Immediately&amp;TargetControl=TargetDatabases&amp;RuleItemId=%7bEE708D73-92B8-4B0D-A2C3-324285531B4F%7d"
+          ph="Border1.Content"
+          uid="{D828A476-0F10-4349-B9F3-A40FA1632C6A}" />
+        <r
           id="{08994B8F-7BF1-4963-815D-0FA8D75B3D86}"
           par="Id=Border2&amp;PaddingType=All&amp;ContentHorizontalAlignment=Left&amp;UsePadding=1"
           ph="SourceExpander.Body"
           uid="{7433380B-0AB1-4B23-A38A-837C801D9EF1}" />
-        <r
-          id="{A5C22E3F-6A3A-4032-9974-01C6D325553E}"
-          par="Id=TargetDatabasesRule&amp;Trigger=change%3aSelectedItem&amp;LoadMode=Immediately&amp;TargetControl=TargetDatabases&amp;RuleItemId=%7b4B22AB25-AF7D-4F96-BA3A-97AFD66B5C65%7d"
-          ph="Border2.Content"
-          uid="{D828A476-0F10-4349-B9F3-A40FA1632C6A}" />
         <r
           id="{EFCD0AB0-5B9D-4F1D-AB81-BE0336CD273C}"
           par="Id=SourceCommandLabel&amp;Text=Source+Command"
@@ -199,11 +204,6 @@ SharedFields:
           par="Id=Border3&amp;PaddingType=All&amp;ContentHorizontalAlignment=Left&amp;UsePadding=1"
           ph="TargetExpander.Body"
           uid="{CAA5E01E-24CE-4E16-BE88-4035E1245152}" />
-        <r
-          id="{E5760C8F-8346-44B6-BE16-E84228BC1617}"
-          par="QueryParameters=%7bBinding+SourceDatabases.SelectedValue%7d&amp;Id=TargetTemplateDatasource&amp;ServiceUrl=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ftemplates"
-          ph="TargetExpander.Body"
-          uid="{E1EBF047-34B6-460E-AE53-CE0338F225CD}" />
         <r
           id="{EFCD0AB0-5B9D-4F1D-AB81-BE0336CD273C}"
           par="Id=TargetTemplateLabel&amp;Text=Target+Template"
