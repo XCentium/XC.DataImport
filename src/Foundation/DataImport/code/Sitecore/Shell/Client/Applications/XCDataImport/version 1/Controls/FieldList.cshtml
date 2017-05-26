@@ -42,6 +42,14 @@
     @Html.Raw(listControl.RenderRow())
 </script>
 
+<script data-layout-emptyrow="@id" type="text/x-sc-fieldlistcontrol">
+    @Html.Raw(listControl.RenderRow())
+</script>
+
+<script data-layout-addrowbutton="@id" type="text/x-sc-fieldlistcontrol">
+    <td><div><input type="button" value="Add Field" class="sc-button-text" /></div></td>
+</script>
+
 <script data-layout-iconList="@id" type="text/x-sc-fieldlistcontrol">
 </script>
 

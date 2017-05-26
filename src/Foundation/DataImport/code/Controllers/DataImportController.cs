@@ -484,6 +484,60 @@ namespace XC.Foundation.DataImport.Controllers
             };
         }
 
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
+        public object NonScFieldMappings(string mapping = "", int item = 0)
+        {
+            var messages = new List<MessageModel>();
+            if (string.IsNullOrEmpty(mapping))
+            {
+                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = GetFieldMappings(item),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                var mappingContent = File.ReadAllText(mapping);
+                var mappingObject = (NonSitecoreMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(NonSitecoreMappingModel));
+
+                return new
+                {
+                    data = mappingObject.FieldMapping,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = GetFieldMappings(0),
+                messages = messages
+            };
+        }
+
+        /// <summary>
+        /// Gets the field mappings.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        private IEnumerable<NonScFieldMapping> GetFieldMappings(int item)
+        {
+            var emptyMappingList = new List<NonScFieldMapping>();
+            for(var i=0; i<= item; i++)
+            {
+                emptyMappingList.Add(new NonScFieldMapping());
+            }
+            return emptyMappingList;
+        }
+
         /// <summary>
         /// Mappings the specified mapping.
         /// </summary>

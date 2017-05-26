@@ -26,6 +26,13 @@ SharedFields:
             uid="{0CDE5619-9F8B-4001-99B8-F82432FB0214}"
             targetControlId="TemplateDatasource"
             eventName="change:dataUrl" />
+          <action
+            id="{2A4D7853-9A50-4E8C-A65A-E5414119905E}"
+            uid="{60CA9EA0-2999-4C9A-B6AB-D2693E3D9194}"
+            targetId="TargetPath"
+            targetProperty="Database"
+            sourceId="TargetDatabaseList"
+            sourceProperty="selectedValue" />
         </actions>
       </rule>
     </ruleset>

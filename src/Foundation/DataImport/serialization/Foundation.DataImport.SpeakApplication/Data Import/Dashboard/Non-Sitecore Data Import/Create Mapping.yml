@@ -37,6 +37,11 @@ SharedFields:
           ph="Page.Body"
           uid="{2E71F8A1-C427-4EC9-8E1B-03376CB05073}" />
         <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7bB7748830-1BBA-4372-A170-A7E3A3C985D8%7d&amp;Id=FieldMappingRule&amp;LoadMode=Immediately&amp;TargetControl=FieldMappingList&amp;Trigger=change%3aaddrow&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{6ADE3732-08F0-4D01-A42B-4B8F7991E84D}" />
+        <r
           id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
           par="Id=TemplateDatasource&amp;QueryParameters=%7bBinding+TargetDatabaseList.SelectedValue%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ftemplates"
           ph="Page.Body"
@@ -56,6 +61,11 @@ SharedFields:
           par="Id=MappingSaveDatasource&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fsaveNonScMapping"
           ph="Page.Body"
           uid="{DCED3ABF-F144-4EC5-AFA2-FD12F3845524}" />
+        <r
+          id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
+          par="Id=FieldMappingDatasource&amp;QueryParameters=%7bBinding+FieldMappingList.RowCount%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fnonScFieldMappings"
+          ph="Page.Body"
+          uid="{092CFF8A-F2B4-4A03-8FE4-27E4C68DBFEB}" />
         <r
           id="{225B55AC-0270-44F9-842B-96D89F9C20A9}"
           ph="Page.Body"
@@ -283,16 +293,16 @@ SharedFields:
           ph="FullWidthPanel.Content"
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
-          ds="{24956696-2A50-4A1C-8F6E-A39715AD9D25}"
-          id="{62972446-BB45-44D6-8924-2FB38CAA5ABA}"
-          par="Id=FieldMappingList"
-          ph="FieldMappingExpander.Body"
-          uid="{175DDBF9-227D-492C-9DD8-4548A4E7FB46}" />
-        <r
           id="{CA84FBFF-B3A0-4AEC-9C2C-7DDBBF7DA102}"
           par="Id=PostProcessingExpander&amp;Text=Rules+to+Run+After+Import+is+Complete"
           ph="FullWidthPanel.Content"
           uid="{F7C3B5FB-82DF-4919-8F1C-FAD1641B9E72}" />
+        <r
+          ds="{24956696-2A50-4A1C-8F6E-A39715AD9D25}"
+          id="{62972446-BB45-44D6-8924-2FB38CAA5ABA}"
+          par="Id=FieldMappingList&amp;Items=%7bBinding+FieldMappingDatasource.Data%7d"
+          ph="FieldMappingExpander.Body"
+          uid="{B2307CEB-4BAE-423A-AC06-9C416A117373}" />
         <r
           id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
           par="Id=Border2&amp;PaddingType=All&amp;ContentAlignment=Center&amp;UsePadding=1"

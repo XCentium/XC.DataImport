@@ -58,20 +58,25 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
     var EmptyRow = Backbone.LayoutManager.extend({
         template: "row",
         tagName: "tr",
-        events: { "click td.ventilate": "select" },
+        initialize: function (options) {
+            this.parent = options.parent;
+        },
+        afterRender: function () {
+        }
+    });
+
+    var AddRowButton = Backbone.LayoutManager.extend({
+        template: "addrowbutton",
+        tagName: "tr",
+        events: { "click": "select" },
         initialize: function (options) {
             this.parent = options.parent;
         },
         afterRender: function () {
         },
         select: function (e) {
-            if (this.$el.hasClass("active")) {
-                this.trigger("unselected", this.$el, this.model);
-            } else {
-                this.trigger("selected", this.$el, this.model);
-            }
+            this.model.trigger("change:addrow", this.model.viewModel);
         }
-
     });
 
     var DetailList = Backbone.LayoutManager.extend({
@@ -115,6 +120,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
 
             this.resizable = null;
 
+            this.model.set("rowCount", 0);
         },
         unselectRow: function (row, rowModel) {
             this.$el.find(".active").removeClass("active");
@@ -255,18 +261,13 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
                 html = "<tr class='empty'><td colspan='" + numberRow + "'>{0}</td></tr>";
 
             html = html.replace("{0}", emptytext);
-            //var addButton = "<tr class='empty'><td colspan='" + numberRow + "'><input type='button' value='Add Field' onclick='insertRow()' /></td></tr>"
-            //html += addButton;
 
-            var row = new EmptyRow({ parent: this.parent, model: this.model, serialize: this.model.viewModel });
-            this.insertView(".sc-table tbody", row);
-
-            this.$el.find(".sc-table tbody").html(html);
             this.hasEmpty = true;
-
         },
         formatFooter: function (numberRow) {
             //this.$el.find(".sc-table tfoot tr td").attr("colspan", numberRow);
+            var buttonrow = new AddRowButton({ parent: this.parent, model: this.model, serialize: this.model.viewModel });
+            this.insertView(".sc-table-footer", buttonrow);
         }
     });
 
@@ -380,7 +381,6 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
             if (this.collection.length === 0) {
                 this.renderEmpty();
             }
-
         },
         removeEmpty: function () {
             this.$el.find(".empty").remove();
@@ -466,7 +466,6 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
             if (this.collection.length === 0) {
                 this.renderEmpty();
             }
-
         },
         removeEmpty: function () {
             this.$el.find(".empty").remove();
@@ -506,6 +505,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
         refresh: function () {
             var self = this;
             this.collection.reset();
+
             _.each(this.model.get("items"), function (item) {
 
                 this.appendLanguageParameter(item);
@@ -568,6 +568,8 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
                 };
                 this.collection.add(itemModel);
             }, this);
+
+            this.model.set("rowCount", this.collection.length);
 
             var parent = this.parent;
             this.render().done(function () {
@@ -633,6 +635,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
             this.set("isEndlessScrollEnabled", false);
             this.set("maxHeight", 0);
             this.set("minHeight", 0);
+            this.set("rowCount", 0);
 
             this.on("change:selectedItem", updateHasSelectedItem, this);
 
@@ -678,6 +681,9 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
             }
             this.listControl = new FieldListControl({ model: this.model, parent: this, collection: this.collection, app: this.app });
             this.$el.empty().append(this.listControl.el);
+
+            this.set("rowCount", this.collection.length);
+
             this.listControl.render();
         },
         setDetailListView: function () {
