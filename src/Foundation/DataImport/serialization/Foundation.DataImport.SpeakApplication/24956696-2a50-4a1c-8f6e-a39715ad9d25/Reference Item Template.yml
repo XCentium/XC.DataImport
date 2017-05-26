@@ -1,0 +1,26 @@
+﻿---
+ID: "32ce61bc-c3a5-4baa-8cfa-0bae223e4b36"
+Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
+Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Reference Item Template"
+DB: core
+SharedFields:
+- ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
+  Hint: HTMLTemplate
+  Value: |
+    <select id="referenceitemtemplate_{{Id}}" ></select>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170525T202037Z
+    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
+      Hint: HeaderText
+      Value: Reference Item Template
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

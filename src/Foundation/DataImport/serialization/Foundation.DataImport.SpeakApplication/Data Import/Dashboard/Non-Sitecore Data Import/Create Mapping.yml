@@ -283,6 +283,12 @@ SharedFields:
           ph="FullWidthPanel.Content"
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
+          ds="{24956696-2A50-4A1C-8F6E-A39715AD9D25}"
+          id="{62972446-BB45-44D6-8924-2FB38CAA5ABA}"
+          par="Id=FieldMappingList"
+          ph="FieldMappingExpander.Body"
+          uid="{175DDBF9-227D-492C-9DD8-4548A4E7FB46}" />
+        <r
           id="{CA84FBFF-B3A0-4AEC-9C2C-7DDBBF7DA102}"
           par="Id=PostProcessingExpander&amp;Text=Rules+to+Run+After+Import+is+Complete"
           ph="FullWidthPanel.Content"

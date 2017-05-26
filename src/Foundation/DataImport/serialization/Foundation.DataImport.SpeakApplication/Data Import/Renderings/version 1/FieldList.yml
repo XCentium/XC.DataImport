@@ -1,0 +1,30 @@
+﻿---
+ID: "62972446-bb45-44d6-8924-2fb38caa5aba"
+Parent: "4b80f1f1-f145-4168-b336-d02dfc8dfee4"
+Template: "99f8905d-4a87-4eb8-9f8b-a9bebfb3add6"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/FieldList
+DB: core
+SharedFields:
+- ID: "1a7c85e5-dc0b-490d-9187-bb1dbcb4c72f"
+  Hint: Datasource Template
+  Value: /sitecore/client/Your Apps/Data Import/Renderings/version 1/FieldGridView/FieldListControl
+- ID: "51b435bc-f7b9-478a-9c51-52916af96ff5"
+  Hint: Path
+  Value: /sitecore/shell/client/Applications/XCDataImport/version 1/Controls/FieldList.cshtml
+- ID: "7d24e54f-5c16-4314-90c9-6051aa1a7da1"
+  Hint: Parameters Template
+  Value: "{05681411-8F8F-4FB8-A17A-3FE57DEB4618}"
+- ID: "ddab263e-b42e-419a-aa6f-081b7393ca38"
+  Hint: Model
+  Value: 
+- ID: "ef7c5528-7307-4e19-863b-da19eed6a9ed"
+  Hint: Open Properties after Add
+  Value: "-"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160308T205648Z

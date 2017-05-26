@@ -1,0 +1,18 @@
+﻿---
+ID: "040b171b-9011-4836-834a-d8b744674763"
+Parent: "62972446-bb45-44d6-8924-2fb38caa5aba"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/FieldList/Columns
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170525T200120Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

@@ -1,0 +1,75 @@
+﻿---
+ID: "5aeb7a0b-8760-4c4c-bbc8-24cfb8c1deeb"
+Parent: "9e5a0dc6-9faa-4767-abbb-831687e0ac6e"
+Template: "9e5a0dc6-9faa-4767-abbb-831687e0ac6e"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/FieldList/FieldListControl/__Standard Values
+DB: core
+SharedFields:
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Type: tree list
+  Value: |
+    {C7839D9E-430D-431D-B69D-FEFDE4324653}
+    {13F16099-77E8-4135-95AB-2F7ED2008F65}
+    {6C075406-A887-4CB8-97ED-EE05BEE7FFBE}
+    {D3CEFE6E-E51B-4A84-B92E-AAF8AA8E8DC8}
+- ID: "67169b67-df4a-4ae6-97cf-e891db2c66f6"
+  Hint: DefaultView
+  Value: detailList
+Languages:
+- Language: da
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104016Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "734b47e3-2273-4acf-b4bd-305080c12711"
+      Hint: EmptyText
+      Value: Der er ikke angivet nogen data
+- Language: "de-DE"
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104536Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "734b47e3-2273-4acf-b4bd-305080c12711"
+      Hint: EmptyText
+      Value: Es wurden keine Daten eingestellt
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20130110T195827Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "734b47e3-2273-4acf-b4bd-305080c12711"
+      Hint: EmptyText
+      Value: No data has been set
+- Language: "ja-JP"
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104933Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "734b47e3-2273-4acf-b4bd-305080c12711"
+      Hint: EmptyText
+      Value: データが設定されていません

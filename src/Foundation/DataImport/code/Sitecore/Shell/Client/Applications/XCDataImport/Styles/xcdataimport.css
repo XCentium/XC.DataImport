@@ -1,0 +1,283 @@
+﻿.sc-fieldlistcontrol {
+  margin-top: 0;
+  *zoom: 1;
+}
+.sc-fieldlistcontrol .sc-table {
+  table-layout: fixed;
+  margin-bottom: 0;
+  background: #ffffff;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td,
+.sc-fieldlistcontrol .sc-table thead td,
+.sc-fieldlistcontrol .sc-table tbody tr th,
+.sc-fieldlistcontrol .sc-table thead th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-indent: 8px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td img,
+.sc-fieldlistcontrol .sc-table thead td img,
+.sc-fieldlistcontrol .sc-table tbody tr th img,
+.sc-fieldlistcontrol .sc-table thead th img {
+  height: 18px;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td,
+.sc-fieldlistcontrol .sc-table thead td {
+  padding: 14px 15px;
+  border: 1px solid #d6d6d6;
+  color: #474747;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td a,
+.sc-fieldlistcontrol .sc-table thead td a {
+  color: #2694c0;
+  text-decoration: none;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th,
+.sc-fieldlistcontrol .sc-table thead th {
+  padding: 15px;
+  border: 0;
+  background: #969696;
+  color: #ffffff;
+  font-weight: normal;
+  position: relative;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th .sc-table-sortable,
+.sc-fieldlistcontrol .sc-table thead th .sc-table-sortable {
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -4px;
+  cursor: pointer;
+  border-left: 0.500em solid transparent;
+  border-right: 0.500em solid transparent;
+  border-top: 8px solid #ffffff;
+  border-bottom: 0 solid #ffffff;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th .sc-table-sortable.up,
+.sc-fieldlistcontrol .sc-table thead th .sc-table-sortable.up {
+  border-bottom: 8px solid #ffffff;
+  border-top: 0 solid #ffffff;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th .sc-table-sortable.noDirection,
+.sc-fieldlistcontrol .sc-table thead th .sc-table-sortable.noDirection {
+  border-bottom: 8px solid #cccccc;
+  border-top: 0 solid #cccccc;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td.cb,
+.sc-fieldlistcontrol .sc-table thead td.cb,
+.sc-fieldlistcontrol .sc-table tbody tr th.cb,
+.sc-fieldlistcontrol .sc-table thead th.cb {
+  width: 50px;
+  max-width: 50px;
+  text-indent: 0;
+  text-align: center;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th[data-sc-sort],
+.sc-fieldlistcontrol .sc-table thead th[data-sc-sort] {
+  position: relative;
+  padding-right: 20px;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th[data-sc-sort] i.sort,
+.sc-fieldlistcontrol .sc-table thead th[data-sc-sort] i.sort {
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 10px;
+  top: 20px;
+  margin-top: -8px;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th[data-sc-sort] i.sort.asc,
+.sc-fieldlistcontrol .sc-table thead th[data-sc-sort] i.sort.asc {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #121212;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th[data-sc-sort] i.sort.desc,
+.sc-fieldlistcontrol .sc-table thead th[data-sc-sort] i.sort.desc {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #121212;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th[data-sc-sort] a,
+.sc-fieldlistcontrol .sc-table thead th[data-sc-sort] a {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 35px;
+  top: 6px;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td.label1,
+.sc-fieldlistcontrol .sc-table thead td.label1 {
+  background: #6ac0e2;
+  border-right: 1px solid #8ccee8;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td.label2,
+.sc-fieldlistcontrol .sc-table thead td.label2 {
+  background: #a2ca81;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td.label3,
+.sc-fieldlistcontrol .sc-table thead td.label3 {
+  background: #fb9851;
+}
+.sc-fieldlistcontrol .sc-table tbody tr:hover td,
+.sc-fieldlistcontrol .sc-table thead:hover td {
+  background-color: #e3e3e3;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td.ventilate,
+.sc-fieldlistcontrol .sc-table thead td.ventilate {
+  overflow: hidden;
+  margin-right: 2px;
+  position: relative;
+}
+.sc-fieldlistcontrol .sc-table tbody tr td.sc-nodata,
+.sc-fieldlistcontrol .sc-table thead td.sc-nodata {
+  color: #cccccc;
+}
+.sc-fieldlistcontrol .sc-table tbody tr.empty td {
+  text-align: center;
+}
+.sc-fieldlistcontrol .sc-table thead th.sc-table-head:last-child {
+  border-right: 0;
+}
+.sc-fieldlistcontrol .sc-table thead th.sc-table-head:last-child:after {
+  background: none;
+}
+.sc-fieldlistcontrol .sc-table.sc-table-footer {
+  border: 0;
+  width: 100%;
+  border-left: 1px solid #d6d6d6;
+  border-right: 1px solid #d6d6d6;
+  border-bottom: 1px solid #d6d6d6;
+  position: relative;
+}
+.sc-fieldlistcontrol .sc-table.sc-table-footer tr td {
+  text-align: center;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  position: relative;
+}
+.sc-fieldlistcontrol .sc-table.sc-table-footer tr td a {
+  position: absolute;
+  right: 10px;
+}
+.sc-fieldlistcontrol:before,
+.sc-fieldlistcontrol:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.sc-fieldlistcontrol:after {
+  clear: both;
+}
+.sc-fieldlistcontrol .table > tbody > tr.active > td {
+  background: #aadbee;
+}
+.sc-fieldlistcontrol .table > tbody > tr.checked > td {
+  background: #aadbee;
+}
+.sc-fieldlistcontrol .empty {
+  margin: 20px;
+}
+.sc-fieldlistcontrol .sc-text-align-center {
+  text-align: center;
+}
+.sc-fieldlistcontrol .sc-text-align-left {
+  text-align: left;
+}
+.sc-fieldlistcontrol .sc-text-align-right {
+  text-align: right;
+}
+.sc-fieldlistcontrol .sc-text-sortpadding {
+  padding-right: 16px;
+}
+.sc-fieldlistcontrol .sc-table-header th.sc-text-align-right > div {
+  padding-right: 25px;
+}
+.sc-fieldlistcontrol .sc-table-header th > div {
+  position: relative;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.sc-fieldlistcontrol .sc-table-header .sc-table-header-container {
+  cursor: default;
+}
+.sc-fieldlistcontrol .sc-table-header th.sc-table-head:after {
+  background: #d6d6d6 right center;
+  position: absolute;
+  width: 1px;
+  display: block;
+  height: 20px;
+  top: 15px;
+  right: 0;
+  content: "";
+}
+.sc-fieldlistcontrol .sc-rc-handle-container {
+  position: relative;
+}
+.sc-fieldlistcontrol .sc-rc-handle {
+  position: absolute;
+  width: 7px;
+  cursor: ew-resize;
+  margin-left: -3px;
+}
+.sc-fieldlistcontrol .sc-rc-handle-border-container {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+.sc-fieldlistcontrol .sc-rc-handle-border {
+  border-left: 1px dashed #969696;
+  position: absolute;
+  width: 1px;
+  cursor: ew-resize;
+  display: none;
+}
+.sc-fieldlistcontrol table.sc-rc-table-resizing {
+  cursor: ew-resize;
+}
+.sc-fieldlistcontrol table.sc-rc-table-resizing thead,
+.sc-fieldlistcontrol table.sc-rc-table-resizing thead > th,
+.sc-fieldlistcontrol table.sc-rc-table-resizing thead > th > a {
+  cursor: ew-resize;
+}
+.sc-fieldlistcontrol .sc-table thead tr th.scrollbar-spacer {
+  padding: 0;
+  width: 15px;
+}
+.sc-fieldlistcontrol .mCSB_container.mCS_no_scrollbar {
+  padding-right: 15px;
+}
+.sc-fieldlistcontrol .sc-table tbody tr th .sc-table-sortable,
+.sc-fieldlistcontrol .sc-table thead th .sc-table-sortable {
+  right: 0;
+  top: 50%;
+}
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .table,
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .sc-table {
+  border-top: none;
+}
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .table tr:nth-child(even),
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .sc-table tr:nth-child(even) {
+  background: #f7f7f7;
+}
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .table tr:first-child td,
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .sc-table tr:first-child td {
+  border-top: none;
+}
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .table tr td,
+.sc-fieldlistcontrol .sc-fieldlistcontrol-body .sc-table tr td {
+  color: #2b2b2b;
+}

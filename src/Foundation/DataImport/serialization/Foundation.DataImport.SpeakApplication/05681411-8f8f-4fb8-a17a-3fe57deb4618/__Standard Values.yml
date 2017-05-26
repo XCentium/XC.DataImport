@@ -1,0 +1,26 @@
+﻿---
+ID: "db61bc9e-2e3e-4f34-8224-cb34887a8dcf"
+Parent: "05681411-8f8f-4fb8-a17a-3fe57deb4618"
+Template: "05681411-8f8f-4fb8-a17a-3fe57deb4618"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/FieldList/FieldListControl Parameters/__Standard Values
+DB: core
+SharedFields:
+- ID: "6427662f-dd10-4755-a86f-d7b8a2f49601"
+  Hint: TileHtmlFileName
+  Value: /sitecore/shell/client/Business Component Library/Layouts/Renderings/ListsAndGrids/ListControls/DefaultTile.cshtml
+- ID: "80563549-67e7-4a8a-a2e9-f21277047c1d"
+  Hint: AllowMultipleColumnSorting
+  Type: Checkbox
+  Value: 1
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20120531T125836
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
