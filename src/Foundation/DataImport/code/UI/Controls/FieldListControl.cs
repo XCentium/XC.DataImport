@@ -40,7 +40,7 @@ namespace XC.Foundation.DataImport.UI.Controls
             return stringWriter.ToString();
         }
 
-        public virtual string RenderRow()
+        public override string RenderRow()
         {
             Item dataSource = this.GetDataSource();
             if (dataSource == null)
@@ -52,27 +52,38 @@ namespace XC.Foundation.DataImport.UI.Controls
                 string str1 = string.IsNullOrEmpty(child["ContentAlignment"]) ? string.Empty : " sc-text-align-" + ClientHost.Items.GetItem(child["ContentAlignment"]).Name.ToLower();
                 output.AddAttribute(HtmlTextWriterAttribute.Class, "ventilate" + str1);
                 output.AddAttribute("data-sc-important", "data-sc-important");
-                string str2;
+                string str2 = string.Empty;
+                var innerHtml = string.Empty;
                 if (string.IsNullOrEmpty(child["Formatter"]) && string.IsNullOrEmpty(child["HTMLTemplate"]))
                 {
                     string str3 = "(typeof $data['" + child["DataField"] + "'] != 'undefined' && $data['" + child["DataField"] + "']() != null)";
                     string str4 = str3 + " ? $data['" + child["DataField"] + "'] : '" + child["EmptyText"] + "'";
+                    str2 = string.Format("{0},{1},{2}", ("text: " + str4), ("attr: { title: " + str4 + " }"), ("css: { 'sc-nodata': !" + str3 + "}"));
+                }
+                else if (!string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["Tag"]) && !string.IsNullOrEmpty(child["Options Property"]))
+                {
+                    innerHtml = "<" + child["Tag"] + " id='" + child["DataField"] + "_{{Id}}' data-bind='options: " + child["Options Property"] + ", optionsText: \""+ child["DisplayFieldName"] + "\", optionsValue: \"" + child["ValueFieldName"] + "\" '></" + child["Tag"] + ">";
+                }
+                else if (string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["HTMLTemplate"]))
+                {
                     if (!string.IsNullOrEmpty(child["Options Property"]))
                     {
-                        str2 = string.Format("{0},{1},{2},{3}", ("text: " + str4), ("attr: { title: " + str4 + " }"), ("css: { 'sc-nodata': !" + str3 + "}"),("options: " + child["Options Property"]));
+                        str2 = "html: formatValue('', '" + child["HTMLTemplate"] + "'), options: " + child["Options Property"];
                     }
                     else
                     {
-                        str2 = string.Format("{0},{1},{2}", ("text: " + str4), ("attr: { title: " + str4 + " }"), ("css: { 'sc-nodata': !" + str3 + "}"));
+                        str2 = "html: formatValue('', '" + child["HTMLTemplate"] + "')";
                     }
                 }
-                else if (string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["HTMLTemplate"]))
-                    str2 = "html: formatValue('', '" + child["HTMLTemplate"] + "')";
+
                 else
+                {
                     str2 = string.Format("{0},{1}", (object)("text: formatValue('" + child["DataField"] + "', '" + child["Formatter"] + "')"), (object)("attr: { title:  formatValue('" + child["DataField"] + "', '" + child["Formatter"] + "')}"));
+                }
                 SetWidthStyle(output, child);
                 output.AddAttribute("data-bind", str2);
                 output.RenderBeginTag(HtmlTextWriterTag.Td);
+                output.Write(innerHtml);
                 output.RenderEndTag();
             }
             return stringWriter.ToString();

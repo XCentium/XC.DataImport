@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using Sitecore;
 using XC.Foundation.DataImport.Configurations;
 using XC.Foundation.DataImport.Diagnostics;
+using Sitecore.Data.Managers;
 
 namespace XC.Foundation.DataImport.Controllers
 {
@@ -108,7 +109,7 @@ namespace XC.Foundation.DataImport.Controllers
                 templates.AddRange(
                     dbTemplates.Select(
                         t =>
-                            new TemplateEntity { Name = t.Name + " (" + t.InnerItem.Paths.Path + ")", Id = t.ID.ToString(), Database = t.Database.Name, Path = t.InnerItem.Paths.Path }));
+                            new TemplateEntity { Name = t.Name + " (" + t.InnerItem.Paths.Path + ")", Id = t.InnerItem.Uri.ToString(), Database = t.Database.Name, Path = t.InnerItem.Paths.Path }));
             }
             return new
             {
@@ -125,10 +126,10 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object Fields(string item = "", string database = "")
+        public object Fields(string item = "")
         {
             var fields = new List<TemplateFieldEntity>();
-            if (string.IsNullOrEmpty(item) || string.IsNullOrEmpty(database))
+            if (string.IsNullOrEmpty(item))
             {
                 return new
                 {
@@ -136,7 +137,15 @@ namespace XC.Foundation.DataImport.Controllers
                     messages = ""
                 };
             }
-            var db = Factory.GetDatabase(database);
+            var itemUri = ItemUri.Parse(item);
+            if (itemUri == null)
+                return new
+                {
+                    data = new List<string>(),
+                    messages = ""
+                };
+
+            var db = Factory.GetDatabase(itemUri.DatabaseName);
             if (db == null)
                 return new
                 {
@@ -144,8 +153,7 @@ namespace XC.Foundation.DataImport.Controllers
                     messages = ""
                 };
 
-            var template = db.Templates.GetTemplates(Sitecore.Context.Language)
-                .FirstOrDefault(t => t.ID == new ID(item));
+            var template = TemplateManager.GetTemplate(itemUri.ItemID, db);
 
             if(template == null)
                 return new
@@ -154,16 +162,20 @@ namespace XC.Foundation.DataImport.Controllers
                     messages = ""
                 };
 
-            if (template.Fields.Any())
+            if (template.GetFields(true).Any())
             {
-                fields.Add(new TemplateFieldEntity {Id = "", Name = ""});
+                fields.Add(new TemplateFieldEntity {Id = "", Name = "Select Field"});
                 fields.AddRange(
-                    template.Fields.OrderBy(f=>f.Name).Select(
+                    template.GetFields(true).OrderBy(f=>f.Name).Select(
                         t =>
                             new TemplateFieldEntity { Name = t.Name + " (" + t.Type + ")", Id = t.ID.ToString() }));
             }
 
-            return fields;
+            return new
+            {
+                data = fields,
+                messages = ""
+            };
         }
 
         /// <summary>

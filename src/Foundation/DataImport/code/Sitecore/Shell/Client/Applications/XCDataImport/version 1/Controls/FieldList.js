@@ -11,7 +11,7 @@
 });
 
 
-define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableColumns"], function (sc, userProfile) {
+define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollbar", "EndlessPageScroll", "ResizableColumns"], function (sc, userProfile, combobox) {
     /**
     * Detail List View
     * Composite View which uses:
@@ -41,6 +41,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
         events: { "click td.ventilate": "select" },
         initialize: function (options) {
             this.parent = options.parent;
+            this.model.set("templateFields", options.parent.model.get("templateFields"));
         },
         afterRender: function () {
             this.sync();
@@ -493,6 +494,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
             this.parent = options.parent;
             this.model.on("change:items", this.refresh, this);
             this.model.on("change:view", this.setViewModel, this);
+            this.model.on("change:templateFields", this.refresh, this);
             this.setViewModel();
         },
 
@@ -518,7 +520,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
                 }
 
                 // apply formating
-                itemModel.viewModel.formatValue = function (name, format) {
+                itemModel.viewModel.formatValue = function (name, format, propertyName) {
 
                     var val = "";
 
@@ -566,7 +568,9 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
 
                     return val;
                 };
+
                 this.collection.add(itemModel);
+
             }, this);
 
             this.model.set("rowCount", this.collection.length);
@@ -625,6 +629,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
         initialize: function (options) {
             this._super();
             this.set("items", []);
+            this.set("templateFields", []);
 
             this.set("selectedItem", "");
             this.set("selectedItemId", "");

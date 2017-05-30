@@ -42,6 +42,11 @@ SharedFields:
           ph="Page.Body"
           uid="{6ADE3732-08F0-4D01-A42B-4B8F7991E84D}" />
         <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7b49B83280-D64F-48DE-8889-DD6FF2238ED5%7d&amp;Id=TargetTemplateListRule&amp;LoadMode=Immediately&amp;TargetControl=TemplateList&amp;Trigger=change%3aselectedItem&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{20A385FA-BFEE-415E-B8AC-79E50729913E}" />
+        <r
           id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
           par="Id=TemplateDatasource&amp;QueryParameters=%7bBinding+TargetDatabaseList.SelectedValue%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ftemplates"
           ph="Page.Body"
@@ -66,6 +71,11 @@ SharedFields:
           par="Id=FieldMappingDatasource&amp;QueryParameters=%7bBinding+FieldMappingList.RowCount%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fnonScFieldMappings"
           ph="Page.Body"
           uid="{092CFF8A-F2B4-4A03-8FE4-27E4C68DBFEB}" />
+        <r
+          id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
+          par="Id=TemplateFieldDatasource&amp;QueryParameters=%7bBinding+TemplateList.SelectedValue%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ffields"
+          ph="Page.Body"
+          uid="{C1A3E289-C70A-49C5-B2AD-76B3B3D25647}" />
         <r
           id="{225B55AC-0270-44F9-842B-96D89F9C20A9}"
           ph="Page.Body"
@@ -300,7 +310,7 @@ SharedFields:
         <r
           ds="{24956696-2A50-4A1C-8F6E-A39715AD9D25}"
           id="{62972446-BB45-44D6-8924-2FB38CAA5ABA}"
-          par="Id=FieldMappingList&amp;Items=%7bBinding+FieldMappingDatasource.Data%7d"
+          par="Id=FieldMappingList&amp;TemplateFields=%7bBinding+TemplateFieldDatasource.Data%7d&amp;Items=%7bBinding+FieldMappingDatasource.Data%7d"
           ph="FieldMappingExpander.Body"
           uid="{B2307CEB-4BAE-423A-AC06-9C416A117373}" />
         <r

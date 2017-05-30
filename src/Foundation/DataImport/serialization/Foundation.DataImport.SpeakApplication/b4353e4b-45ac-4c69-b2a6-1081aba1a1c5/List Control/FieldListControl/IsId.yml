@@ -5,10 +5,16 @@ Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
 Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/IsId"
 DB: core
 SharedFields:
+- ID: "1c50efbe-47cd-4a9b-9eef-a466e75c4977"
+  Hint: Width
+  Value: 7%
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
   Value: |
     <input type="checkbox" id="isid_{{Id}}"/>
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 0
 Languages:
 - Language: en
   Versions:

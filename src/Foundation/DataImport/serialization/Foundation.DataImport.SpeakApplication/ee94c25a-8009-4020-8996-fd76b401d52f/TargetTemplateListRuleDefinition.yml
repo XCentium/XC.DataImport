@@ -1,0 +1,40 @@
+﻿---
+ID: "49b83280-d64f-48de-8889-dd6ff2238ed5"
+Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Rules/TargetTemplateListRuleDefinition"
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{E956001C-6ACD-4CE0-B7CC-F2B6EE7DDA94}"
+            uid="8832A81B76E047548FE8C05021FAB541"
+            name="TemplateList" />
+        </conditions>
+        <actions>
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{C39854BD-2CC5-4638-B31C-280D1799E8EF}"
+            targetControlId="TemplateFieldDatasource"
+            eventName="change:dataUrl" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170530T195746Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
