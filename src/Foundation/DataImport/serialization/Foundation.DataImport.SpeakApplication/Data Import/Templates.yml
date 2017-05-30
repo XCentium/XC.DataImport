@@ -1,8 +1,8 @@
 ﻿---
-ID: "040b171b-9011-4836-834a-d8b744674763"
-Parent: "62972446-bb45-44d6-8924-2fb38caa5aba"
-Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
-Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/FieldList/Columns
+ID: "5fe76a92-44db-4a81-bbc2-50ef2984709d"
+Parent: "62270284-b85f-494d-aae1-76accac295e9"
+Template: "0437fee2-44c9-46a6-abe9-28858d9fee8c"
+Path: /sitecore/client/Your Apps/Data Import/Templates
 DB: core
 Languages:
 - Language: en
@@ -11,7 +11,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20170525T200120Z
+      Value: 20170530T143048Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |

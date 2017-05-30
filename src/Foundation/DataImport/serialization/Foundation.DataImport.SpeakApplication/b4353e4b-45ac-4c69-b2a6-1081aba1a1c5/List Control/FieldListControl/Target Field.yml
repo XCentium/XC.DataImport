@@ -1,7 +1,7 @@
 ﻿---
 ID: "2a64da44-4757-4791-b9c7-84dd6aa9dfbc"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
-Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Template: "3f0992ab-7f07-463a-a4e9-cc7f84a47b32"
 Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Target Field"
 DB: core
 SharedFields:
@@ -9,6 +9,9 @@ SharedFields:
   Hint: HTMLTemplate
   Value: |
     <select id="targetfield_{{Id}}" ></select>
+- ID: "bb83fffc-f445-4d38-9cbf-a72990ab2681"
+  Hint: Options Property
+  Value: templateFields
 Languages:
 - Language: en
   Versions:

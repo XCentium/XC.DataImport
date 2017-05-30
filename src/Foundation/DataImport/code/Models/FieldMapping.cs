@@ -13,5 +13,6 @@ namespace XC.Foundation.DataImport.Models
         public string SourceFields { get; set; }
         public string TargetFields { get; set; }
         public bool IsId { get; set; }
+        public int Id { get; set; }
     }
 }

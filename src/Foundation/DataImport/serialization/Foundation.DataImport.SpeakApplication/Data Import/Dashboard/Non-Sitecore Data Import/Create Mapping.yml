@@ -193,8 +193,8 @@ SharedFields:
           ph="TargetExpander.Body"
           uid="{FBF78178-17FF-4274-9E4D-015C82A78433}" />
         <r
-          id="{08B6767B-8E8A-41C8-8880-EFEBB4EAE0E3}"
-          par="Id=TargetPath&amp;IsCheckboxEnabled=0"
+          id="{D075D680-D15E-466B-9060-58C883B02CFB}"
+          par="Id=TargetPath&amp;Database=core&amp;IsCheckboxEnabled=0"
           ph="TargetPathBorder.Content"
           uid="{0C79AFEC-3ADB-47EB-9951-83FEE78DC2FD}" />
         <r

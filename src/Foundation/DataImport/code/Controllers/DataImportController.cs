@@ -531,9 +531,9 @@ namespace XC.Foundation.DataImport.Controllers
         private IEnumerable<NonScFieldMapping> GetFieldMappings(int item)
         {
             var emptyMappingList = new List<NonScFieldMapping>();
-            for(var i=0; i<= item; i++)
+            for (var i = 0; i <= item; i++)
             {
-                emptyMappingList.Add(new NonScFieldMapping());
+                emptyMappingList.Add(new NonScFieldMapping() { Id = i});
             }
             return emptyMappingList;
         }

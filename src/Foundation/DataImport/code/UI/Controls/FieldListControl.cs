@@ -40,36 +40,43 @@ namespace XC.Foundation.DataImport.UI.Controls
             return stringWriter.ToString();
         }
 
-        //public virtual string RenderEmptyRow()
-        //{
-        //    Item dataSource = this.GetDataSource();
-        //    if (dataSource == null)
-        //        return string.Empty;
-        //    StringWriter stringWriter = new StringWriter();
-        //    HtmlTextWriter output = new HtmlTextWriter((TextWriter)stringWriter);
-        //    foreach (Item child in dataSource.Children)
-        //    {
-        //        string str1 = string.IsNullOrEmpty(child["ContentAlignment"]) ? string.Empty : " sc-text-align-" + ClientHost.Items.GetItem(child["ContentAlignment"]).Name.ToLower();
-        //        output.AddAttribute(HtmlTextWriterAttribute.Class, "ventilate" + str1);
-        //        output.AddAttribute("data-sc-important", "data-sc-important");
-        //        string str2;
-        //        if (string.IsNullOrEmpty(child["Formatter"]) && string.IsNullOrEmpty(child["HTMLTemplate"]))
-        //        {
-        //            string str3 = "(typeof $data['" + child["DataField"] + "'] != 'undefined' && $data['" + child["DataField"] + "']() != null)";
-        //            string str4 = str3 + " ? $data['" + child["DataField"] + "'] : '" + child["EmptyText"] + "'";
-        //            str2 = string.Format("{0},{1},{2}", (object)("text: " + str4), (object)("attr: { title: " + str4 + " }"), (object)("css: { 'sc-nodata': !" + str3 + "}"));
-        //        }
-        //        else if (string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["HTMLTemplate"]))
-        //            str2 = "html: '" + child["HTMLTemplate"] + "'";
-        //        else
-        //            str2 = string.Format("{0},{1}", (object)("text: '" + child["DataField"] + "', '" + child["Formatter"] + "'"), (object)("attr: { title:  '" + child["DataField"] + "', '" + child["Formatter"] + "'}"));
-        //        FieldListControl.SetWidthStyle(output, child);
-        //        output.AddAttribute("data-bind", str2);
-        //        output.RenderBeginTag(HtmlTextWriterTag.Td);
-        //        output.RenderEndTag();
-        //    }
-        //    return stringWriter.ToString();
-        //}
+        public virtual string RenderRow()
+        {
+            Item dataSource = this.GetDataSource();
+            if (dataSource == null)
+                return string.Empty;
+            StringWriter stringWriter = new StringWriter();
+            HtmlTextWriter output = new HtmlTextWriter((TextWriter)stringWriter);
+            foreach (Item child in dataSource.Children)
+            {
+                string str1 = string.IsNullOrEmpty(child["ContentAlignment"]) ? string.Empty : " sc-text-align-" + ClientHost.Items.GetItem(child["ContentAlignment"]).Name.ToLower();
+                output.AddAttribute(HtmlTextWriterAttribute.Class, "ventilate" + str1);
+                output.AddAttribute("data-sc-important", "data-sc-important");
+                string str2;
+                if (string.IsNullOrEmpty(child["Formatter"]) && string.IsNullOrEmpty(child["HTMLTemplate"]))
+                {
+                    string str3 = "(typeof $data['" + child["DataField"] + "'] != 'undefined' && $data['" + child["DataField"] + "']() != null)";
+                    string str4 = str3 + " ? $data['" + child["DataField"] + "'] : '" + child["EmptyText"] + "'";
+                    if (!string.IsNullOrEmpty(child["Options Property"]))
+                    {
+                        str2 = string.Format("{0},{1},{2},{3}", ("text: " + str4), ("attr: { title: " + str4 + " }"), ("css: { 'sc-nodata': !" + str3 + "}"),("options: " + child["Options Property"]));
+                    }
+                    else
+                    {
+                        str2 = string.Format("{0},{1},{2}", ("text: " + str4), ("attr: { title: " + str4 + " }"), ("css: { 'sc-nodata': !" + str3 + "}"));
+                    }
+                }
+                else if (string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["HTMLTemplate"]))
+                    str2 = "html: formatValue('', '" + child["HTMLTemplate"] + "')";
+                else
+                    str2 = string.Format("{0},{1}", (object)("text: formatValue('" + child["DataField"] + "', '" + child["Formatter"] + "')"), (object)("attr: { title:  formatValue('" + child["DataField"] + "', '" + child["Formatter"] + "')}"));
+                SetWidthStyle(output, child);
+                output.AddAttribute("data-bind", str2);
+                output.RenderBeginTag(HtmlTextWriterTag.Td);
+                output.RenderEndTag();
+            }
+            return stringWriter.ToString();
+        }
 
         private static void SetWidthStyle(HtmlTextWriter output, Item child)
         {
