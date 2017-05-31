@@ -215,7 +215,7 @@ SharedFields:
           uid="{405E2C06-ACC5-46F8-8295-FA61378273CF}" />
         <r
           id="{25D357D3-3648-4336-9B53-55EED7CFA078}"
-          par="Id=SourceConnectionList&amp;DisplayFieldName=Name&amp;Items=%7bBinding+ConnectionsDatasource.Data%7d&amp;ValueFieldName=ConnectionString"
+          par="Id=SourceConnectionList&amp;DisplayFieldName=Name&amp;Items=%7bBinding+ConnectionsDatasource.Data%7d&amp;ValueFieldName=Id"
           ph="SourceExpander.Body"
           uid="{7F3C5097-C7F2-4E42-9382-2CE881D3642F}" />
         <r
