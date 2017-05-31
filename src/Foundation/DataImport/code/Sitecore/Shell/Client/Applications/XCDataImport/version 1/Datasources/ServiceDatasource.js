@@ -143,6 +143,36 @@ define(["sitecore", "baseDataprovider"], function (_sc) {
       
         return (requestString);
     },
+    performPostRequest: function (serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess) {
+        "use strict";
+
+        var self = this;
+        this.model.set("isBusy", true);
+
+        if (this.QueryParameters) {
+            serverRequestUrl += (serverRequestUrl.match(/\?/) ? '&' : '?') + this.QueryParameters;
+        }
+
+        var ajaxOptions = {
+            method: 'POST',
+            dataType: "json",
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            headers: {},
+            data: providerItemProperties,
+            url: serverRequestUrl,
+            success: function (data) {
+                self.baseSuccessHandler(data, serverRequestOnSuccess);
+            },
+            error: function (response) {
+                self.handleError({ name: "Error", message: self.$el.data("sc-serverreturn") + ": " + response.status + " (" + response.statusText + ")", response: response });
+            }
+        };
+
+        var token = _sc.Helpers.antiForgery.getAntiForgeryToken();
+        ajaxOptions.headers[token.headerKey] = token.value;
+
+        $.ajax(ajaxOptions);
+    },
     successHandler: function (jsonData) {      
       
       this.model.set("hasMoreData", jsonData.hasMoreData);

@@ -42,5 +42,5 @@ Languages:
       Value: |
         sitecore\Admin
     - ID: "ef2d9b63-9327-4083-aee6-38c8e9be3474"
-      Hint: DataFieldName
+      Hint: ValueFieldName
       Value: Id

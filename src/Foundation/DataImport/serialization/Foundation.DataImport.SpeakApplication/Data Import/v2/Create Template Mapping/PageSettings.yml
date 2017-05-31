@@ -2,7 +2,7 @@
 ID: "7981abca-c14f-4bee-96fd-dc3e16a9ee41"
 Parent: "df2723b0-cab8-4086-8e8b-73aefb079164"
 Template: "e35eaa2d-edea-431c-a9e6-488272b53782"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Template Mapping/PageSettings"
+Path: /sitecore/client/Your Apps/Data Import/v2/Create Template Mapping/PageSettings
 DB: core
 Languages:
 - Language: en

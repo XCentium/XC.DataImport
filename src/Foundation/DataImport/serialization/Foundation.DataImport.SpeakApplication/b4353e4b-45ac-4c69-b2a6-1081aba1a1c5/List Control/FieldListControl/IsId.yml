@@ -11,18 +11,9 @@ SharedFields:
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
   Value: 
-- ID: "484c9968-1829-4776-878a-f89c760df948"
-  Hint: Tag
-  Value: input
 - ID: "4f2a4bcb-8811-47af-8c8d-0df079eee9c9"
   Hint: Tag
   Value: input
-- ID: "6c725e4f-cdc6-41af-a5fb-eb48fa9e2722"
-  Hint: Options Property
-  Value: IsId
-- ID: "84635c49-4bc9-4803-9f0d-86d09a60dc4d"
-  Hint: Tag Type
-  Value: checkbox
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 0

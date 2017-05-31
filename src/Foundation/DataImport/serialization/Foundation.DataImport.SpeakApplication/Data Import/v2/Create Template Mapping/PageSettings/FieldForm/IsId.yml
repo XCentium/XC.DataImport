@@ -2,7 +2,7 @@
 ID: "c16af1f0-de8c-49be-8c97-a9c8c0eb39a4"
 Parent: "25472067-bd5d-4a7d-81de-9a945550d87f"
 Template: "ad75c314-f983-4c56-81d5-dc10d5ccf4ef"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Template Mapping/PageSettings/FieldForm/IsId"
+Path: /sitecore/client/Your Apps/Data Import/v2/Create Template Mapping/PageSettings/FieldForm/IsId
 DB: core
 SharedFields:
 - ID: "3e079fc3-6b2d-41c9-9204-374a786fc761"

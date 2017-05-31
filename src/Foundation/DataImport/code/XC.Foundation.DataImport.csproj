@@ -217,6 +217,7 @@
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\RunImport.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\TreeView\ItemTreeView.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\NonScMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\TreeViews\ItemTreeView.js" />
     <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\CallComponentFunction.js" />
     <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToComplexProperty.js" />
@@ -254,6 +255,8 @@
     <Compile Include="Cache\ItemCacheDependency.cs" />
     <Compile Include="Configurations\DataImportConfigurations.cs" />
     <Compile Include="Diagnostics\DataImportLogger.cs" />
+    <Compile Include="Repositories\FileSystem\FileSystemRepository.cs" />
+    <Compile Include="Repositories\FileSystem\IFileSystemRepository.cs" />
     <Compile Include="Repositories\History\HistoryLogging.cs" />
     <Compile Include="Repositories\HtmlExtensions.cs" />
     <Compile Include="Repositories\Migration\BatchNonSitecoreImportManager.cs" />

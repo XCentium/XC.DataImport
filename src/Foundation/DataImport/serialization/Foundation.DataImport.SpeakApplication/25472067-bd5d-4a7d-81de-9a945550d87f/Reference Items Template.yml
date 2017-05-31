@@ -2,7 +2,7 @@
 ID: "825f3e98-ca98-45f3-88e0-3606166e6438"
 Parent: "25472067-bd5d-4a7d-81de-9a945550d87f"
 Template: "4640f8f6-ff25-4615-8a40-fe9f0c87225e"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Template Mapping/PageSettings/FieldForm/Reference Items Template"
+Path: /sitecore/client/Your Apps/Data Import/v2/Create Template Mapping/PageSettings/FieldForm/Reference Items Template
 DB: core
 SharedFields:
 - ID: "0b6b2d34-5308-4aa8-b59d-85ba47e8b8aa"

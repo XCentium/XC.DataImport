@@ -16,12 +16,25 @@ using Sitecore;
 using XC.Foundation.DataImport.Configurations;
 using XC.Foundation.DataImport.Diagnostics;
 using Sitecore.Data.Managers;
+using XC.Foundation.DataImport.Repositories.FileSystem;
 
 namespace XC.Foundation.DataImport.Controllers
 {
     [ServicesController("speak.dataimport/data")]
     public class DataImportController : ServicesApiController
     {
+        private IFileSystemRepository _fileSystemRepository;
+
+        public DataImportController(): base()
+        {
+            _fileSystemRepository = new FileSystemRepository();
+        }
+
+        public DataImportController(IFileSystemRepository fileSystemRepository): base()
+        {
+            _fileSystemRepository = fileSystemRepository;
+        }
+
         [System.Web.Http.AcceptVerbs("GET")]
         [HttpGet]
         public object DefaultAction()
@@ -269,8 +282,8 @@ namespace XC.Foundation.DataImport.Controllers
 
                 if (mappingObject != null)
                 {
-                    var fileName = mappingObject.Name + ".json";
-                    var filePath = Path.Combine(DataImportConfigurations.NonSitecoreMappingFolder, fileName);
+                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown" + ".json";
+                    var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.NonSitecoreMappingFolder), fileName);
                     mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMapping != null)
                     {
@@ -304,6 +317,7 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = messages
             };
         }
+
         /// <summary>
         /// Saves the mapping.
         /// </summary>

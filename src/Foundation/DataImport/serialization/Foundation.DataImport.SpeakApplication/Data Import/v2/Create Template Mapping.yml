@@ -1,8 +1,8 @@
 ﻿---
 ID: "df2723b0-cab8-4086-8e8b-73aefb079164"
-Parent: "2b43c4db-e16a-42ef-aac6-7650ed4b67b7"
+Parent: "2b3c8147-830c-4c0d-b61f-740648182ced"
 Template: "d7cf8b7e-083d-4351-aef2-2bcd2d794826"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Template Mapping"
+Path: /sitecore/client/Your Apps/Data Import/v2/Create Template Mapping
 DB: core
 SharedFields:
 - ID: "3a67ad0f-9530-4b1b-9b70-9230c36ae8d6"
