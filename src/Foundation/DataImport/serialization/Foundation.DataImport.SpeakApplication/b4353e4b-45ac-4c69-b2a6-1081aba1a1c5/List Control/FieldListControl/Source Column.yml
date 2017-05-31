@@ -1,17 +1,20 @@
 ﻿---
 ID: "d209bde9-e4c0-4ee7-8468-48a7d06bffe2"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
-Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Template: "ae71e55c-20a0-4820-97d9-4d63e7d9bf25"
 Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Source Column"
 DB: core
 SharedFields:
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
   Value: |
-    <input type="text"  id="sourcecolumn_{{Id}}" />
+    <input type="text"  id="SourceColumn_{{Id}}" />
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 50
+- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
+  Hint: DataField
+  Value: SourceFields
 Languages:
 - Language: en
   Versions:

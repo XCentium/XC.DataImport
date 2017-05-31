@@ -1,17 +1,28 @@
 ﻿---
 ID: "32ce61bc-c3a5-4baa-8cfa-0bae223e4b36"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
-Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Template: "3f0992ab-7f07-463a-a4e9-cc7f84a47b32"
 Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Reference Item Template"
 DB: core
 SharedFields:
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
-  Value: |
-    <select id="referenceitemtemplate_{{Id}}" ></select>
+  Value: 
+- ID: "7fd3412b-a19a-4c43-993a-97e5180f92f4"
+  Hint: DisplayFieldName
+  Value: Name
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 200
+- ID: "bb83fffc-f445-4d38-9cbf-a72990ab2681"
+  Hint: Options Property
+  Value: templates
+- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
+  Hint: DataField
+  Value: ReferenceItemsTemplate
+- ID: "fbcfd96b-9d99-4882-aa45-0ee3a085a361"
+  Hint: Tag
+  Value: select
 Languages:
 - Language: en
   Versions:
@@ -27,3 +38,6 @@ Languages:
       Hint: __Created by
       Value: |
         sitecore\Admin
+    - ID: "ef2d9b63-9327-4083-aee6-38c8e9be3474"
+      Hint: ValueFieldName
+      Value: Id

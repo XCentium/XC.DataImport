@@ -310,7 +310,7 @@ SharedFields:
         <r
           ds="{24956696-2A50-4A1C-8F6E-A39715AD9D25}"
           id="{62972446-BB45-44D6-8924-2FB38CAA5ABA}"
-          par="Id=FieldMappingList&amp;TemplateFields=%7bBinding+TemplateFieldDatasource.Data%7d&amp;Items=%7bBinding+FieldMappingDatasource.Data%7d"
+          par="Id=FieldMappingList&amp;TemplateFields=%7bBinding+TemplateFieldDatasource.Data%7d&amp;Items=%7bBinding+FieldMappingDatasource.Data%7d&amp;Templates=%7bBinding+TemplateDatasource.Data%7d"
           ph="FieldMappingExpander.Body"
           uid="{B2307CEB-4BAE-423A-AC06-9C416A117373}" />
         <r

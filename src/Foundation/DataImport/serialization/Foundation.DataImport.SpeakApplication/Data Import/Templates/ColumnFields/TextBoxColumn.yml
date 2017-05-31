@@ -1,19 +1,17 @@
 ﻿---
-ID: "3f0992ab-7f07-463a-a4e9-cc7f84a47b32"
+ID: "ae71e55c-20a0-4820-97d9-4d63e7d9bf25"
 Parent: "a1a2c1c0-7b9b-420f-9bb4-89a2841ee23c"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
-Path: /sitecore/client/Your Apps/Data Import/Templates/ColumnFields/DropListColumn
+Path: /sitecore/client/Your Apps/Data Import/Templates/ColumnFields/TextBoxColumn
 DB: core
 SharedFields:
 - ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
   Hint: __Base template
   Type: tree list
-  Value: |
-    {1930BBEB-7805-471A-A3BE-4858AC7CF696}
-    {D3CEFE6E-E51B-4A84-B92E-AAF8AA8E8DC8}
+  Value: "{D3CEFE6E-E51B-4A84-B92E-AAF8AA8E8DC8}"
 - ID: "f7d48a55-2158-4f02-9356-756654404f73"
   Hint: __Standard values
-  Value: "{F38ADC50-1678-4951-89D4-85A85ECD4B7B}"
+  Value: "{E7C99C1D-BBBC-400B-BC68-04D148DA0DF8}"
 Languages:
 - Language: en
   Versions:
@@ -21,4 +19,4 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20170530T144542Z
+      Value: 20170531T182532Z

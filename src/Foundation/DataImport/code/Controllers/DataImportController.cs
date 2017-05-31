@@ -105,7 +105,7 @@ namespace XC.Foundation.DataImport.Controllers
             var dbTemplates = db.Templates.GetTemplates(Sitecore.Context.Language).Where(t => !t.InnerItem.Name.Contains("__") && !t.InnerItem.Paths.FullPath.Contains("/sitecore/templates/System")).OrderBy(t => t.Name);
             if (dbTemplates.Any())
             {
-                templates.Add(new TemplateEntity { Name = "Select Target Template", Id = "", Database = "", Path = "" });
+                templates.Add(new TemplateEntity { Name = "Select Template", Id = "", Database = "", Path = "" });
                 templates.AddRange(
                     dbTemplates.Select(
                         t =>

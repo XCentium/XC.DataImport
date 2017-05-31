@@ -10,8 +10,7 @@ SharedFields:
   Value: 12%
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
-  Value: |
-    <select id="targetfield_{{Id}}" ></select>
+  Value: 
 - ID: "7fd3412b-a19a-4c43-993a-97e5180f92f4"
   Hint: DisplayFieldName
   Value: Name

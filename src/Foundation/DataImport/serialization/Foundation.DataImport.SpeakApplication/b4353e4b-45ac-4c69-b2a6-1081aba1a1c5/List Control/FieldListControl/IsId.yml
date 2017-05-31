@@ -1,7 +1,7 @@
 ﻿---
 ID: "ae699cdd-843a-4355-9837-eeeb05d1ea8f"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
-Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Template: "c76f2781-6b01-425f-90a0-73b4c880674b"
 Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/IsId"
 DB: core
 SharedFields:
@@ -10,11 +10,28 @@ SharedFields:
   Value: 7%
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
-  Value: |
-    <input type="checkbox" id="isid_{{Id}}"/>
+  Value: 
+- ID: "484c9968-1829-4776-878a-f89c760df948"
+  Hint: Tag
+  Value: input
+- ID: "4f2a4bcb-8811-47af-8c8d-0df079eee9c9"
+  Hint: Tag
+  Value: input
+- ID: "6c725e4f-cdc6-41af-a5fb-eb48fa9e2722"
+  Hint: Options Property
+  Value: IsId
+- ID: "84635c49-4bc9-4803-9f0d-86d09a60dc4d"
+  Hint: Tag Type
+  Value: checkbox
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 0
+- ID: "c52b97a9-8cf4-497c-ac37-2ade2662bda9"
+  Hint: Tag Type
+  Value: checkbox
+- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
+  Hint: DataField
+  Value: IsId
 Languages:
 - Language: en
   Versions:

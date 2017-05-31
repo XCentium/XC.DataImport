@@ -54,15 +54,35 @@ namespace XC.Foundation.DataImport.UI.Controls
                 output.AddAttribute("data-sc-important", "data-sc-important");
                 string str2 = string.Empty;
                 var innerHtml = string.Empty;
-                if (string.IsNullOrEmpty(child["Formatter"]) && string.IsNullOrEmpty(child["HTMLTemplate"]))
+                if (!string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["Tag"]))
+                {
+                    var tagType = string.Empty;
+                    var options = string.Empty;
+                    if (!string.IsNullOrEmpty(child["Tag Type"]))
+                    {
+                        tagType = " type=\"" + child["Tag Type"] + "\"";
+                        switch (child["Tag Type"])
+                        {
+                            case "checkbox":
+                                options += ", checked: " + child["DataField"];
+                                break;
+                            default:
+                                options += ", value: " + child["DataField"];
+                                break;
+                        }
+                    }
+                    if(!string.IsNullOrEmpty(child["Options Property"]))
+                    {
+                        options += ", options: " + child["Options Property"] + ", optionsText: \"" + child["DisplayFieldName"] + "\", optionsValue: \"" + child["ValueFieldName"] + "\"";
+                        options += ", value: " + child["DataField"];
+                    }
+                    innerHtml = "<" + child["Tag"] + tagType + " data-bind='attr: { id: formatValue(\"\",\"" + child["DataField"] + "_{{Id}}\") } " + options + " '></" + child["Tag"] + ">";
+                }
+                else if (string.IsNullOrEmpty(child["Formatter"]) && string.IsNullOrEmpty(child["HTMLTemplate"]))
                 {
                     string str3 = "(typeof $data['" + child["DataField"] + "'] != 'undefined' && $data['" + child["DataField"] + "']() != null)";
                     string str4 = str3 + " ? $data['" + child["DataField"] + "'] : '" + child["EmptyText"] + "'";
                     str2 = string.Format("{0},{1},{2}", ("text: " + str4), ("attr: { title: " + str4 + " }"), ("css: { 'sc-nodata': !" + str3 + "}"));
-                }
-                else if (!string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["Tag"]) && !string.IsNullOrEmpty(child["Options Property"]))
-                {
-                    innerHtml = "<" + child["Tag"] + " id='" + child["DataField"] + "_{{Id}}' data-bind='options: " + child["Options Property"] + ", optionsText: \""+ child["DisplayFieldName"] + "\", optionsValue: \"" + child["ValueFieldName"] + "\" '></" + child["Tag"] + ">";
                 }
                 else if (string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["HTMLTemplate"]))
                 {

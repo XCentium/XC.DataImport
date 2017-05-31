@@ -1,7 +1,7 @@
 ﻿---
 ID: "4852560b-b281-4abb-96a9-793fc4a37fd5"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
-Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Template: "c76f2781-6b01-425f-90a0-73b4c880674b"
 Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Overwrite on Update"
 DB: core
 SharedFields:
@@ -11,10 +11,13 @@ SharedFields:
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
   Hint: HTMLTemplate
   Value: |
-    <input type="checkbox" id="overwrite_{{Id}}"/>
+    <input type="checkbox" id="Overwrite_{{Id}}"/>
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
   Value: 600
+- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
+  Hint: DataField
+  Value: Overwrite
 Languages:
 - Language: en
   Versions:

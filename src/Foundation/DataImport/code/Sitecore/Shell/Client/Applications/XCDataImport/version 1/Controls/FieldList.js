@@ -38,22 +38,29 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
     var Row = Backbone.LayoutManager.extend({
         template: "row",
         tagName: "tr",
-        events: { "click td.ventilate": "select" },
+        events: { "change td.ventilate": "select" },
         initialize: function (options) {
             this.parent = options.parent;
             this.model.set("templateFields", options.parent.model.get("templateFields"));
+            this.model.set("templates", options.parent.model.get("templates"));
         },
         afterRender: function () {
             this.sync();
         },
         select: function (e) {
-            if (this.$el.hasClass("active")) {
-                this.trigger("unselected", this.$el, this.model);
-            } else {
-                this.trigger("selected", this.$el, this.model);
-            }
-        }
+            var eventTargetId = e.target.id;
 
+            if (!eventTargetId.indexOf("_"))
+                return;
+
+            var itemInfo = eventTargetId.split("_");
+            var itemPropertyName = itemInfo[0];
+            var itemIndex = itemInfo[1];
+
+            var newValue = e.target.selectedOptions ? e.target.selectedOptions[0].value : e.target.checked ? e.target.checked : e.target.value;
+            this.parent.listControl.model.viewModel.items()[itemIndex][itemPropertyName] = newValue;
+            this.parent.listControl.model.set("savedItems", this.parent.listControl.model.viewModel.items());
+        }
     });
 
     var EmptyRow = Backbone.LayoutManager.extend({
@@ -495,6 +502,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.model.on("change:items", this.refresh, this);
             this.model.on("change:view", this.setViewModel, this);
             this.model.on("change:templateFields", this.refresh, this);
+            this.model.on("change:templates", this.refresh, this);
             this.setViewModel();
         },
 
@@ -507,6 +515,11 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
         refresh: function () {
             var self = this;
             this.collection.reset();
+
+            var savedItems = this.model.get("savedItems");
+            if (savedItems) {
+                this.mergeWithSavedItems(savedItems);
+            }
 
             _.each(this.model.get("items"), function (item) {
 
@@ -614,6 +627,15 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             if (this.$el.is(":data('sc-resizableColumns')")) {
                 this.$el.resizableColumns("destroy");
             }
+        },
+        mergeWithSavedItems: function (savedItems) {
+            var self = this;
+            _.each(this.model.get("items"), function (item) {
+                var savedItem = savedItems[item.Id];
+                if (savedItem) {
+                    self.model.get("items")[item.Id] = savedItem;
+                }
+            });
         }
     });
 
@@ -630,6 +652,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this._super();
             this.set("items", []);
             this.set("templateFields", []);
+            this.set("templates", []);
 
             this.set("selectedItem", "");
             this.set("selectedItemId", "");
