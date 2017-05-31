@@ -16,7 +16,7 @@ namespace XC.Foundation.DataImport.Configurations
         {
             get
             {
-                var path = Path.Combine(Settings.GetSetting("XC.Foundation.DataImport.DataFolder", Sitecore.Configuration.Settings.DataFolder), "XC.Foundation.DataImport");
+                var path = Settings.GetSetting("XC.Foundation.DataImport.DataFolder", Settings.DataFolder);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
