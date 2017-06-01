@@ -1,10 +1,10 @@
 ﻿define(["sitecore"], function (Sitecore) {
   var CreatenewMapping = Sitecore.Definitions.App.extend({
       initialized: function () {
-
-      },
-      validateInput: function(){
-          alert("validate");
+          var qs = _sc.Helpers.url.getQueryParameters(window.document.location.href);
+          if (qs["mapping"]) {
+              this.MappingPathHidden.set("text", qs["mapping"]);
+          }
       },
       saveMapping: function () {
           "use strict";
@@ -44,16 +44,7 @@
           };
 
           this.MappingSaveDatasource.viewModel.performPostRequest(serverRequestUrl, providerItemProperties, serverRequestParameters, serverRequestOnSuccess);
-      },
-      
-      populateMapping: function () {
-          "use strict";
-
-          if (this.DatabaseDatasource.DynamicData) {
-              this.MappingName.Value = this.DatabaseDatasource.DynamicData.Name;
-          }
       }
-
   });
 
   return CreatenewMapping;

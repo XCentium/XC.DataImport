@@ -83,7 +83,7 @@ define(['sitecore', 'dynatree'], function (_sc) {
         this.model.set("rootItem", this.$el.attr("data-sc-rootitem"));
 
         //this.model.on("change:database", this.refresh, this);
-        //this.model.on("change:pathToLoad", this.refresh, this);
+        this.model.on("change:pathToLoad", this.loadPath, this);
 
         this.model.on("change:database", this.refresh, this);
 
@@ -200,34 +200,37 @@ define(['sitecore', 'dynatree'], function (_sc) {
         //expand needed node
       },
 
-      loadKeyPath: function () {
+      loadPath: function () {
         var separator = "/",
-            pathParts,
+            pathPartsObj,
             currentNodeId,
             path = this.model.get("pathToLoad"),
             tree = this.widget.apply(this.$el, ["getTree"]),
             node;
 
-        pathParts = path.split(separator);
-        if (pathParts.length === 0) {
+        pathPartsObj = path.split(separator);
+        if (pathPartsObj.length === 0) {
           return false;
         }
 
-        currentNodeId = pathParts.shift();
+        currentNodeId = pathPartsObj.shift();
+        if (currentNodeId === "") {
+            currentNodeId = pathPartsObj.shift();
+        }
         if (!currentNodeId) {
           return false;
         }
 
         node = tree.getNodeByKey(currentNodeId);
         if (!node) {
-          this.model.set("pathToLoad", "");
-          return false;
+            this.model.set("pathToLoad", "");
+            return false;
         }
 
-        this.model.set("pathToLoad", pathParts.join(separator));
+        this.model.set("pathToLoad", pathPartsObj.join(separator));
         node.expand();
 
-        if (pathParts.length === 0) {
+        if (pathPartsObj.length === 0) {
           this.model.set("selectedItemId", currentNodeId);
           node.activate(true);
           node.select(true);
@@ -256,7 +259,7 @@ define(['sitecore', 'dynatree'], function (_sc) {
                   childNodes[n].remove();
               }
               this.render();
-          }
+          } 
       },
       render: function () {
 

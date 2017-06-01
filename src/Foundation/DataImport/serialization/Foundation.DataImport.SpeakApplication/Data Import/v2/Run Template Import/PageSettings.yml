@@ -1,0 +1,18 @@
+﻿---
+ID: "238f0d24-c068-49a5-8f11-399e99822a65"
+Parent: "a6e59199-d1d6-4ddd-aae3-14b6b228b136"
+Template: "e35eaa2d-edea-431c-a9e6-488272b53782"
+Path: /sitecore/client/Your Apps/Data Import/v2/Run Template Import/PageSettings
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160303T223706Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin

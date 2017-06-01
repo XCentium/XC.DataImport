@@ -220,10 +220,10 @@
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\NonScMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\TreeViews\ItemTreeView.js" />
-    <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\CallComponentFunction.js" />
-    <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToComplexProperty.js" />
-    <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToOtherProperty.js" />
-    <Content Include="Sitecore\Shell\Client\Business Component Library\version 2\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasComplexValue.js" />
+    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\CallComponentFunction.js" />
+    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToComplexProperty.js" />
+    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToOtherProperty.js" />
+    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasComplexValue.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DatabaseDatasource\AsyncDatasource.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\FieldGrid\FieldGridView.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\TreeView\ItemTreeView.cshtml" />
@@ -303,6 +303,7 @@
     <Compile Include="UI\Controls\FieldListControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Sitecore\Shell\Client\Business Component Library\version 2\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <PropertyGroup>

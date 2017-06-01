@@ -2,7 +2,7 @@
 ID: "b328a1b2-c9b5-4b78-9e67-d94dcfecb87a"
 Parent: "82121459-c9ca-4e73-960c-67a28aa896e4"
 Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Run Batch Import/PageSettings/ConfigurationMappingRuleDefinition"
+Path: /sitecore/client/Your Apps/Data Import/v2/Run Batch Import/PageSettings/ConfigurationMappingRuleDefinition
 DB: core
 SharedFields:
 - ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"

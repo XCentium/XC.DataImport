@@ -16,8 +16,9 @@ namespace XC.Foundation.DataImport
 
         public struct NonSitecore
         {
-            public static readonly ID NonScMappingsCreateTemplateMapping = ID.Parse("{DF2723B0-CAB8-4086-8E8B-73AEFB079164}");
-            public static readonly ID NonScMappingsRunTemplateImport = ID.Parse("{A6E59199-D1D6-4DDD-AAE3-14B6B228B136}");
+            public static readonly ID NonScMappingsCreateTemplateMapping = ID.Parse("{217B963F-DCE3-4008-B4A7-F253679324CF}");
+            public static readonly ID NonScMappingsRunTemplateImport = ID.Parse("{EDA349B3-B298-4994-86FD-3868CD572BCB}");
+            public static readonly ID NonScMappingsDeleteTemplateImport = ID.Parse("{BF6B9AC2-7B9F-4990-A625-E520661EA2B9}");
         }
 
         public struct SitecoreBatch

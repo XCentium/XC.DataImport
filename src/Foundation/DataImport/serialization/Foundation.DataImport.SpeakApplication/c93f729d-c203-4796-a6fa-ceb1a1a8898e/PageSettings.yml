@@ -1,0 +1,18 @@
+﻿---
+ID: "4245acff-2203-44f5-97be-74ac52e45cf6"
+Parent: "c93f729d-c203-4796-a6fa-ceb1a1a8898e"
+Template: "e35eaa2d-edea-431c-a9e6-488272b53782"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Existing Mappings/PageSettings"
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170601T161743Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

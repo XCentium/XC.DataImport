@@ -35,6 +35,11 @@ SharedFields:
             uid="{CF40EF6B-836F-41C2-8A2D-AD62B4FBADA9}"
             targetControlId="FieldMappingDatasource"
             eventName="change:dataUrl" />
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{193A9B08-0F00-4342-8BAF-46CED20BFA0E}"
+            targetControlId="MappingViewDatasource"
+            eventName="change:dataUrl" />
         </actions>
       </rule>
     </ruleset>

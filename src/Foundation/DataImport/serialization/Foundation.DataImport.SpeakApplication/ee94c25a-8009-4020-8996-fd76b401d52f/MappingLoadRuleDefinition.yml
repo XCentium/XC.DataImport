@@ -1,0 +1,86 @@
+﻿---
+ID: "30591dbd-b1ce-4f14-bba6-e38a91c5d48a"
+Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Rules/MappingLoadRuleDefinition"
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{63666509-24CA-4C9C-91BD-C756F07C3783}"
+            uid="6E73D522052E4BB58381ACB5FC7B8921"
+            targetControlId="MappingViewDatasource"
+            propertyName="data"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{7A74CB0A-B2A2-4488-BDDD-4AFD016AB2AA}"
+            targetControlId="MappingName"
+            propertyName="text"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Name" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{4A64BF4C-F265-4138-B376-332A2D595CC7}"
+            targetControlId="SourceCommandText"
+            propertyName="text"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Templates.Source.Command" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{0BCE63DA-898B-4CC9-8EC6-7C0751F1C204}"
+            targetControlId="SourceMatchColumn"
+            propertyName="text"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="MergeColumnFieldMatch.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{DA9DD9DB-C17D-497C-837D-18DDACF9FE6C}"
+            targetControlId="MergeWithExistingItems"
+            propertyName="checked"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="MergeWithExistingItems" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{8BADCB4B-9BB9-4A21-AB85-9DC50738A7FB}"
+            targetControlId="SourceConnectionList"
+            propertyName="selectedValue"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Databases.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{85AD088D-C248-406C-A246-4F86CFE0068A}"
+            targetControlId="TargetDatabaseList"
+            propertyName="selectedValue"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Databases.Target" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170601T172707Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

@@ -173,17 +173,10 @@ define(["sitecore", "baseDataprovider"], function (_sc) {
 
         $.ajax(ajaxOptions);
     },
-    successHandler: function (jsonData) {      
-      
-      this.model.set("hasMoreData", jsonData.hasMoreData);
-      this.model.set("totalRecordCount", jsonData.totalRecordCount);
-      this.model.set("pageSize", jsonData.pageSize);
-      this.model.set("pageNumber", jsonData.pageNumber);
-
-      
-      if (jsonData.sorting) {
-        this.model.set("serverSorting", jsonData.sorting);
-      }
+    successHandler: function (jsonData) {            
+      this.model.set("totalRecordCount", jsonData.data.length);
+      this.model.set("items", jsonData.data);
+      this.model.set("data", jsonData.data);
     }
   });
 });

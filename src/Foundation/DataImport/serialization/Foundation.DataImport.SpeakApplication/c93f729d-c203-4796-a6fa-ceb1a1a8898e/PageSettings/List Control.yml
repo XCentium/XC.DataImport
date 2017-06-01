@@ -1,8 +1,8 @@
 ﻿---
-ID: "cbdbe53f-54e9-4008-8c42-e981a21be03d"
-Parent: "8855fdc1-9123-43bc-a838-e9f1571a3478"
+ID: "e29ce6f0-ad89-47e2-9ee2-8a0dbbf738ac"
+Parent: "4245acff-2203-44f5-97be-74ac52e45cf6"
 Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
-Path: /sitecore/client/Your Apps/Data Import/v2/Create Batch Mapping/PageSettings/Rules
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Existing Mappings/PageSettings/List Control"
 DB: core
 Languages:
 - Language: en
@@ -11,8 +11,8 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20160330T124314Z
+      Value: 20170601T162252Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\julia
+        sitecore\Admin

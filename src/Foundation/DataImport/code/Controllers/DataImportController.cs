@@ -71,9 +71,9 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object All()
+        public object Databases()
         {
-            var databases = new List<DatabaseEntity>();
+            var databases = new List<DatabaseEntity>() { new DatabaseEntity { Name = "Select Target Database" } };
             var dbs = Factory.GetDatabases().Where(d => !string.IsNullOrEmpty(d.ConnectionStringName)).ToList();
             if (dbs.Any())
             {
@@ -282,7 +282,7 @@ namespace XC.Foundation.DataImport.Controllers
 
                 if (mappingObject != null)
                 {
-                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown" + ".json";
+                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.NonSitecoreMappingFolder), fileName);
                     mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMapping != null)
@@ -473,10 +473,10 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object ViewNonScMapping(string mapping)
+        public object ViewNonScMapping(string item = "")
         {
             var messages = new List<MessageModel>();
-            if (mapping == null)
+            if (item == null)
             {
                 messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
                 return new
@@ -488,7 +488,7 @@ namespace XC.Foundation.DataImport.Controllers
 
             try
             {
-                var mappingContent = File.ReadAllText(mapping);
+                var mappingContent = File.ReadAllText(item);
                 var mappingObject = (NonSitecoreMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(NonSitecoreMappingModel));
 
                 return new
@@ -680,6 +680,9 @@ namespace XC.Foundation.DataImport.Controllers
                 var runItem = db.GetItem(MappingPages.NonSitecore.NonScMappingsRunTemplateImport);
                 var runMappingItem = ClientHost.Factory.GetDataSourceItem(runItem);
 
+                var deleteItem = db.GetItem(MappingPages.NonSitecore.NonScMappingsDeleteTemplateImport);
+                var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
+
                 var files =
                     Directory.GetFiles(DataImportConfigurations.NonSitecoreMappingFolder, "*.json")
                         .Select(
@@ -696,7 +699,7 @@ namespace XC.Foundation.DataImport.Controllers
                                     LastRun = HistoryLogging.NonSitecoreGetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f)
+                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(deleteMappingItem), "mapping", f)
                                 });
 
                 return new

@@ -34,7 +34,7 @@ SharedFields:
           uid="{A43F8745-01C4-45FE-8396-3A595F13B128}" />
         <r
           id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
-          par="RuleItemId=%7bC12D03E8-CA86-41EB-9FE6-292E116709AF%7d&amp;Id=TargetDatabasesRule&amp;LoadMode=Immediately&amp;TargetControl=TargetDatabaseList&amp;Trigger=change%3aselectedItem&amp;Field=Rule"
+          par="RuleItemId=%7bC12D03E8-CA86-41EB-9FE6-292E116709AF%7d&amp;Id=TargetDatabasesRule&amp;LoadMode=WhenRun&amp;TargetControl=TargetDatabaseList&amp;Trigger=change%3aselectedValue&amp;Field=Rule"
           ph="Page.Body"
           uid="{2E71F8A1-C427-4EC9-8E1B-03376CB05073}" />
         <r
@@ -53,13 +53,23 @@ SharedFields:
           ph="Page.Body"
           uid="{FFB1EFBE-FE98-468F-8B8B-F9F511705513}" />
         <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7b30591DBD-B1CE-4F14-BBA6-E38A91C5D48A%7d&amp;Id=MappingLoadRule&amp;LoadMode=WhenRun&amp;TargetControl=MappingViewDatasource&amp;Trigger=change%3adata&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{218E4618-9840-4277-8C21-5D6960355C5F}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7bC3F4A438-C91A-401E-9F95-14A48EDB925A%7d&amp;Id=TemplateDatasourceLoadRule&amp;LoadMode=Immediately&amp;TargetControl=TemplateDatasource&amp;Trigger=change%3aitems&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{8390909A-443D-46EE-A5C8-EB1C7F5F209F}" />
+        <r
           id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
           par="Id=TemplateDatasource&amp;QueryParameters=%7bBinding+TargetDatabaseList.SelectedValue%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ftemplates"
           ph="Page.Body"
           uid="{E08486B4-D11C-4521-A8D6-FA5E562D15F4}" />
         <r
           id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
-          par="Id=DatabaseDatasource&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fall"
+          par="Id=DatabaseDatasource&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fdatabases"
           ph="Page.Body"
           uid="{4E9A96AD-8B33-4E8D-AA9C-B2AC7D9245D0}" />
         <r
@@ -83,10 +93,20 @@ SharedFields:
           ph="Page.Body"
           uid="{C1A3E289-C70A-49C5-B2AD-76B3B3D25647}" />
         <r
+          id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
+          par="Id=MappingViewDatasource&amp;QueryParameters=%7bBinding+MappingPathHidden.Text%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fviewNonScMapping"
+          ph="Page.Body"
+          uid="{81E3E2D2-F16C-4CFE-9490-2940F4B01E75}" />
+        <r
           id="{ADB8338C-0701-4838-845F-9B2E339812FD}"
           par="Id=Required&amp;PageScriptFileName=%2fsitecore%2fshell%2fclient%2fApplications%2fXCDataImport%2fversion+1%2fBehaviors%2fRequired.js&amp;Name=Required"
           ph="Page.Code"
           uid="{DFBA7207-FD01-436A-B06B-02EF9C8ADAA9}" />
+        <r
+          id="{57F86E9A-1844-45CE-BF8A-62900AE17A92}"
+          par="IsEnabled=1&amp;IsReadonly=1&amp;Id=MappingPathHidden&amp;IsVisible=0"
+          ph="Page.Code"
+          uid="{D85D409C-1B8A-45C9-85E9-B0B756BD023C}" />
         <r
           id="{225B55AC-0270-44F9-842B-96D89F9C20A9}"
           ph="Page.Body"
@@ -215,7 +235,7 @@ SharedFields:
           uid="{FBF78178-17FF-4274-9E4D-015C82A78433}" />
         <r
           id="{D075D680-D15E-466B-9060-58C883B02CFB}"
-          par="Id=TargetPath&amp;Database=core&amp;IsCheckboxEnabled=0"
+          par="Id=TargetPath&amp;ShowHiddenItems=1&amp;Database=core&amp;IsCheckboxEnabled=0&amp;ShowSitecoreIcons=1"
           ph="TargetPathBorder.Content"
           uid="{0C79AFEC-3ADB-47EB-9951-83FEE78DC2FD}" />
         <r
@@ -331,7 +351,7 @@ SharedFields:
           uid="{247EE711-58D9-4183-B7AC-BFB3C5670449}" />
         <r
           id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}"
-          par="Id=SaveButton&amp;ButtonType=Primary&amp;Text=Save+Mapping"
+          par="Click=javascript%3aapp.saveMapping()&amp;Id=SaveButton&amp;ButtonType=Primary&amp;Text=Save+Mapping"
           ph="Border2.Content"
           uid="{952E35A6-14CD-4269-ABA5-A0FE874B35D3}" />
       </d>
