@@ -1,0 +1,25 @@
+﻿---
+ID: "3504fdd1-2158-4e6b-a375-084c493aadc8"
+Parent: "ba2c7414-1e56-444b-a8b8-1d4d1c9ebcde"
+Template: "ba2c7414-1e56-444b-a8b8-1d4d1c9ebcde"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/Behaviors/Required/Required/__Standard Values
+DB: core
+SharedFields:
+- ID: "8b400719-b932-4230-b5f9-6e9ba2ca07a7"
+  Hint: PageScriptFileName
+  Value: /sitecore/shell/client/Applications/XCDataImport/version 1/Behaviors/Required.js
+- ID: "b5077812-5551-4c46-9bba-4cb190ccf253"
+  Hint: Name
+  Value: Required
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170601T144014Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

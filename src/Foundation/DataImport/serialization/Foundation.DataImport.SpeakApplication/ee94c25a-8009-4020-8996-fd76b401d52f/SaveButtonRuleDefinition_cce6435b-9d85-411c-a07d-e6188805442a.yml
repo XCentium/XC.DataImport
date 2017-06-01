@@ -1,0 +1,49 @@
+﻿---
+ID: "cce6435b-9d85-411c-a07d-e6188805442a"
+Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Rules/SaveButtonRuleDefinition"
+DB: core
+SharedFields:
+- ID: "1cb967b6-8720-4f39-9779-147c3cbcfc78"
+  Hint: Trigger
+  Value: click
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{DC7F75A8-F299-4697-9166-D6D74DE4F2C3}"
+            uid="C9F778F687B84E86811E5652A8C9FE9E"
+            name="MappingName"
+            except="true" />
+        </conditions>
+        <actions>
+          <action
+            id="{3DA33BB4-9E03-48CD-AC5C-E48B825DD4B6}"
+            uid="{D49AD603-B30B-4B26-8459-054514191B86}"
+            targetControlId="MappingName"
+            propertyName="isValid"
+            value="false" />
+          <action
+            id="{70F1C6D5-31BF-4D26-987A-A11505DFBFF3}"
+            uid="{B0E09CAE-ED11-4255-84A0-49F46C6F358F}"
+            controlId="MessageBar" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170531T220602Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
