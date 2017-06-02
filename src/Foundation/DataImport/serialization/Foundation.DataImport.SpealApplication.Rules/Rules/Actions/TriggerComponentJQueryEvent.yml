@@ -1,0 +1,82 @@
+﻿---
+ID: "7e40bff3-d9f7-4a90-b0bd-6c109cafaa5d"
+Parent: "d4cabaef-f4ea-4167-a633-82f45e230860"
+Template: "f90052a5-b4e6-4e6d-9812-1e1b88a6fcea"
+Path: /sitecore/client/Business Component Library/version 1/Layouts/Renderings/Resources/Rule/Rules/Actions/TriggerComponentJQueryEvent
+DB: core
+SharedFields:
+- ID: "0b8b930b-8916-4462-bd4d-700303eadfd6"
+  Hint: Code
+  Value: 
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 2100
+Languages:
+- Language: da
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: TriggerComponentJQueryEvent
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104100Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "udløser komponent [targetControlId,,,name]  Jquery-event [eventName,,,eventName]"
+- Language: "de-DE"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: AuslöserKomponenteJQueryEvent
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104619Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "Trigger Komponente [targetControlId,,,name]  Jquery Event [eventName,,,eventName]"
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20130320T095200
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "trigger component [targetControlId,,,name]  Jquery event [eventName,,,eventName]"
+- Language: "ja-JP"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: コンポーネント JQuery イベントをトリガー
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T105020Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "[targetControlId,,,コンポーネント名] コンポーネントの [eventName,,,イベント名] jQuery イベントをトリガーする"

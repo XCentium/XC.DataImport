@@ -512,7 +512,7 @@ namespace XC.Foundation.DataImport.Controllers
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object NonScFieldMappings(string mapping = "", int item = 0)
+        public object NonScFieldMappings(int item = 0, string mapping = "")
         {
             var messages = new List<MessageModel>();
             if (string.IsNullOrEmpty(mapping))
@@ -520,7 +520,7 @@ namespace XC.Foundation.DataImport.Controllers
                 messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
                 return new
                 {
-                    data = GetFieldMappings(item),
+                    data = GetFieldMappings(0, 0),
                     messages = messages
                 };
             }
@@ -530,9 +530,17 @@ namespace XC.Foundation.DataImport.Controllers
                 var mappingContent = File.ReadAllText(mapping);
                 var mappingObject = (NonSitecoreMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(NonSitecoreMappingModel));
 
+                var mappings = mappingObject.FieldMapping.ToList();
+
+                IEnumerable<NonScFieldMapping> additionalMappings = null;
+                if(item > mappingObject.FieldMapping.Count())
+                {
+                    additionalMappings = GetFieldMappings(item - mappingObject.FieldMapping.Count(), mappingObject.FieldMapping.Count());
+                    mappings.AddRange(additionalMappings);
+                }
                 return new
                 {
-                    data = mappingObject.FieldMapping,
+                    data = mappings,
                     messages = messages
                 };
             }
@@ -544,7 +552,7 @@ namespace XC.Foundation.DataImport.Controllers
 
             return new
             {
-                data = GetFieldMappings(0),
+                data = GetFieldMappings(0, 0),
                 messages = messages
             };
         }
@@ -554,10 +562,10 @@ namespace XC.Foundation.DataImport.Controllers
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        private IEnumerable<NonScFieldMapping> GetFieldMappings(int item)
+        private IEnumerable<NonScFieldMapping> GetFieldMappings(int item, int start)
         {
             var emptyMappingList = new List<NonScFieldMapping>();
-            for (var i = 0; i <= item; i++)
+            for (var i = start; i <= item; i++)
             {
                 emptyMappingList.Add(new NonScFieldMapping() { Id = i});
             }

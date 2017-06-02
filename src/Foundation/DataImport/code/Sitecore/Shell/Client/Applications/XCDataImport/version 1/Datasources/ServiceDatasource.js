@@ -32,7 +32,6 @@ define(["sitecore", "baseDataprovider"], function (_sc) {
 
       this.formatListSorting();
     },
-
     /// <summary>
     /// Format serverSorting to listSorting.
     /// </summary>
@@ -177,6 +176,7 @@ define(["sitecore", "baseDataprovider"], function (_sc) {
       this.model.set("totalRecordCount", jsonData.data.length);
       this.model.set("items", jsonData.data);
       this.model.set("data", jsonData.data);
+      this.model.set("messages", jsonData.messages);
     }
   });
 });

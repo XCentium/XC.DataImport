@@ -1,0 +1,79 @@
+﻿---
+ID: "a81a766a-74b0-4f64-a933-7828c88c227b"
+Parent: "d4cabaef-f4ea-4167-a633-82f45e230860"
+Template: "f90052a5-b4e6-4e6d-9812-1e1b88a6fcea"
+Path: /sitecore/client/Business Component Library/version 1/Layouts/Renderings/Resources/Rule/Rules/Actions/ComposeEmailWithSubject
+DB: core
+SharedFields:
+- ID: "0b8b930b-8916-4462-bd4d-700303eadfd6"
+  Hint: Code
+  Value: 
+Languages:
+- Language: da
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: ComposeEmailWithSubject
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104119Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "angiv e-mail-visningsteksten til tekstegenskaben for [targetDisplayTextID,,,textControl1], e-mail-adressen til tekstegenskaben for [targetAdressID,,,textControl2], e-mail-emnet til tekstegenskaben for [targetSubjectID,,,textControl3] og typografien til tekstegenskaben for  [targetStyleID,,,textControl4]"
+- Language: "de-DE"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: EmailMitThemaErstellen
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104640Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "Den Emailanzeigetext auf die Texteigenschaft des   [targetDisplayTextID,,,textControl1]setzen, Emailadresse auf die Texteigenschaft des  [targetAdressID,,,textControl2], Email-Betreff auf die Texteigenschaft des [targetSubjectID,,,textControl3] und den Stil auf die Texteigenschaft des  [targetStyleID,,,textControl4]"
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20130320T095200
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "set the email display text to the  [targetDisplayTextID,,,textControl1]'s text property, email address to the  [targetAdressID,,,textControl2]'s text property, email subject to  [targetSubjectID,,,textControl3]'s text property, and style to the  [targetStyleID,,,textControl4]'s text property"
+- Language: "ja-JP"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: 件名ありの電子メールを作成する
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T105041Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "eeb36a3b-40d9-4af5-862a-de257b84dca3"
+      Hint: Text
+      Value: "電子メールの表示テキストを [targetDisplayTextID,,,テキスト コントロール1] テキスト プロパティに、電子メール アドレスを [targetAdressID,,,テキスト コントロール2] テキスト プロパティに、電子メールの件名を [targetSubjectID,,,テキスト コントロール3] テキスト プロパティに、スタイルを [targetStyleID,,,テキスト コントロール4] テキスト プロパティに設定する。"

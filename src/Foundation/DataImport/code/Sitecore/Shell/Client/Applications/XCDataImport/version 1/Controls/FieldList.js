@@ -58,8 +58,10 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             var itemIndex = itemInfo[1];
 
             var newValue = e.target.selectedOptions ? e.target.selectedOptions[0].value : e.target.checked ? e.target.checked : e.target.value;
-            this.parent.listControl.model.viewModel.items()[itemIndex][itemPropertyName] = newValue;
-            this.parent.listControl.model.set("savedItems", this.parent.listControl.model.viewModel.items());
+            if (newValue) {
+                this.parent.listControl.model.viewModel.items()[itemIndex][itemPropertyName] = newValue;
+                this.parent.listControl.model.set("savedItems", this.parent.listControl.model.viewModel.items());
+            }
         }
     });
 
@@ -83,6 +85,9 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
         afterRender: function () {
         },
         select: function (e) {
+            var rowCount = this.model.get("rowCount");
+            this.model.set("rowCount", rowCount + 1);
+            this.model.trigger("change:count");
             this.model.trigger("change:addrow", this.model.viewModel);
         }
     });
@@ -503,9 +508,22 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.model.on("change:view", this.setViewModel, this);
             this.model.on("change:templateFields", this.refresh, this);
             this.model.on("change:templates", this.refresh, this);
+            this.model.set("dataParameters", "");
+            this.model.on("change:mapping", this.updateDataParameters, this);
+            this.model.on("change:count", this.updateDataParameters, this);
             this.setViewModel();
         },
+        updateDataParameters: function(){
+            var rowCount = this.model.get("rowCount");
+            var query = rowCount;
 
+            var mapping = this.model.get("mapping");
+            if (mapping) {
+                query += "&mapping=" + mapping;
+            }
+
+            this.model.set("dataParameters", query);
+        },
         appendLanguageParameter: function (item) {
             if (item.$icon && item.$icon.indexOf(".ashx") > 0) {
                 item.$icon += "&la=" + this.model.get("contentLanguage");
@@ -586,7 +604,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
 
             }, this);
 
-            this.model.set("rowCount", this.collection.length);
+            this.model.set("rowCount", this.collection.length);            
 
             var parent = this.parent;
             this.render().done(function () {
@@ -664,6 +682,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.set("maxHeight", 0);
             this.set("minHeight", 0);
             this.set("rowCount", 0);
+            this.set("mapping", "");
 
             this.on("change:selectedItem", updateHasSelectedItem, this);
 

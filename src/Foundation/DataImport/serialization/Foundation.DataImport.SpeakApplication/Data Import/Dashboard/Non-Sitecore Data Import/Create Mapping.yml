@@ -63,6 +63,16 @@ SharedFields:
           ph="Page.Body"
           uid="{8390909A-443D-46EE-A5C8-EB1C7F5F209F}" />
         <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7b00713335-964A-4ED2-A4D8-4B8371D2014A%7d&amp;Id=MappingChangedFieldListRule&amp;LoadMode=WhenRun&amp;TargetControl=FieldMappingList&amp;Trigger=change%3amapping&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{793D8259-5144-4826-AEC8-D5CCF2588A4C}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7bC4D89142-B606-42FC-AAAA-A4DDFE564C67%7d&amp;Id=MappingSavedRule&amp;LoadMode=WhenRun&amp;TargetControl=MappingSaveDatasource&amp;Trigger=change%3adata&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{686BC462-8518-4F29-9B3E-936F59DDC21F}" />
+        <r
           id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
           par="Id=TemplateDatasource&amp;QueryParameters=%7bBinding+TargetDatabaseList.SelectedValue%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2ftemplates"
           ph="Page.Body"
@@ -84,7 +94,7 @@ SharedFields:
           uid="{DCED3ABF-F144-4EC5-AFA2-FD12F3845524}" />
         <r
           id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
-          par="Id=FieldMappingDatasource&amp;QueryParameters=%7bBinding+FieldMappingList.RowCount%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fnonScFieldMappings"
+          par="Id=FieldMappingDatasource&amp;QueryParameters=%7bBinding+FieldMappingList.DataParameters%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fnonScFieldMappings"
           ph="Page.Body"
           uid="{092CFF8A-F2B4-4A03-8FE4-27E4C68DBFEB}" />
         <r
@@ -145,7 +155,7 @@ SharedFields:
           uid="{7A419347-0B6E-436C-A783-5DCCC09848A4}" />
         <r
           id="{910155C7-3881-4A56-90FB-D126490EDE55}"
-          par="Id=MessageBar"
+          par="Id=MessageBar&amp;IsVisible=0&amp;Messages=%7bB01CB275-8B15-41AE-B0F4-2D06FA15ABBC%7d"
           ph="ApplicationHeader.ContextSwitch"
           uid="{D2EF65B1-A846-49F2-9FC0-C054F477E1BA}" />
         <r

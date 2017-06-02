@@ -33,7 +33,7 @@ namespace XC.Foundation.DataImport.Models
                     var item = sourceDatabase.GetItem(Paths.Source);
                     if (item != null)
                     {
-                        FullPaths.Source = item.Paths.LongID;
+                        FullPaths.Source = item.Paths.LongID.TrimStart('/');
                     }
                 }
             }
@@ -46,7 +46,7 @@ namespace XC.Foundation.DataImport.Models
                     var item = targetDatabase.GetItem(Paths.Target);
                     if (item != null)
                     {
-                        FullPaths.Target = item.Paths.LongID;
+                        FullPaths.Target = item.Paths.LongID.TrimStart('/');
                     }
                 }
             }

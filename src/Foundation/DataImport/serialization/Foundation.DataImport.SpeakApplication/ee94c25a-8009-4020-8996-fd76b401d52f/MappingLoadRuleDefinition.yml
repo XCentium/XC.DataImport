@@ -49,7 +49,7 @@ SharedFields:
             id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
             uid="{DA9DD9DB-C17D-497C-837D-18DDACF9FE6C}"
             targetControlId="MergeWithExistingItems"
-            propertyName="checked"
+            propertyName="isChecked"
             sourceControlId="MappingViewDatasource"
             sourceProperty="data"
             sourceSubProperty="MergeWithExistingItems" />
@@ -69,6 +69,45 @@ SharedFields:
             sourceControlId="MappingViewDatasource"
             sourceProperty="data"
             sourceSubProperty="Databases.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{B95EFE03-54FD-49B8-9585-BC4848A1CC7A}"
+            targetControlId="TargetPath"
+            propertyName="pathToLoad"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="FullPaths.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{FBDC6F60-F510-4B9F-A42C-8BCD19E11B38}"
+            targetControlId="SourceDateColumn"
+            propertyName="text"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="IncrementalUpdateSourceColumn" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{8530DA61-7C57-471F-BC61-1251D3A47885}"
+            targetControlId="IncrementalUpdateCheckbox"
+            propertyName="isChecked"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="IncrementalUpdate" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{CAC014A0-D5FE-4FDC-9AE9-556DC4265F0C}"
+            targetControlId="TargetMergeTemplate"
+            propertyName="selectedValue"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="MergeColumnFieldMatch.Target" />
+          <action
+            id="{2A4D7853-9A50-4E8C-A65A-E5414119905E}"
+            uid="{722AFF64-DFAF-4BF1-82C4-8B1E2D249200}"
+            targetId="FieldMappingList"
+            targetProperty="mapping"
+            sourceId="MappingPathHidden"
+            sourceProperty="text" />
         </actions>
       </rule>
     </ruleset>

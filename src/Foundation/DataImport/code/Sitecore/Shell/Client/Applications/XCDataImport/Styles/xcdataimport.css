@@ -281,3 +281,11 @@
 .sc-fieldlistcontrol .sc-fieldlistcontrol-body .sc-table tr td {
   color: #2b2b2b;
 }
+
+.sc .sc-messageBar .sc-messageBar-messageText-container {
+  display: table-cell;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px !important; 
+}

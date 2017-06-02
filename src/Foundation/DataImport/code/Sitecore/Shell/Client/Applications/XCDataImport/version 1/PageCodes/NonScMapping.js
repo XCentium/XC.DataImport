@@ -29,9 +29,9 @@
           mapping["MergeColumnFieldMatch"]["Source"] = this.SourceMatchColumn.get("text");
           mapping["MergeColumnFieldMatch"]["Target"] = this.TargetMergeTemplate.get("selectedValue");
           
-          mapping["MergeWithExistingItems"] = this.MergeWithExistingItems.get("checked");
+          mapping["MergeWithExistingItems"] = this.MergeWithExistingItems.get("isChecked");
 
-          mapping["IncrementalUpdate"] = this.IncrementalUpdateCheckbox.get("checked");
+          mapping["IncrementalUpdate"] = this.IncrementalUpdateCheckbox.get("isChecked");
           mapping["IncrementalUpdateSourceColumn"] = this.SourceDateColumn.get("text");
 
 

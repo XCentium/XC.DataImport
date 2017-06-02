@@ -26,14 +26,6 @@ SharedFields:
             sourceControlId="MappingViewDatasource"
             sourceProperty="data"
             sourceSubProperty="Templates.Target" />
-          <action
-            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
-            uid="{75274872-7CB1-4595-A31F-CE6CD5A3598F}"
-            targetControlId="TargetPath"
-            propertyName="pathToLoad"
-            sourceControlId="MappingViewDatasource"
-            sourceProperty="data"
-            sourceSubProperty="FullPaths.Target" />
         </actions>
       </rule>
     </ruleset>
