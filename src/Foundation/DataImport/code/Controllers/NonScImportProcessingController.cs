@@ -53,6 +53,7 @@ namespace XC.Foundation.DataImport.Controllers
                 catch (Exception ex)
                 {
                     WriteStatus(string.Format("<span style=\"color:red\">[FAILURE] {0}</span>", ex.Message), statusFileName);
+                    WriteStatus("<span style=\"color:red\">[DONE]</span>", statusFileName);
                     DataImportLogger.Log.Error(ex.Message, ex);
                 }
             }
