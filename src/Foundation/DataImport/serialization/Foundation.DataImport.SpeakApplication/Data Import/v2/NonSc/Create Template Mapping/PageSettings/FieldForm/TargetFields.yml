@@ -1,8 +1,8 @@
 ﻿---
-ID: "825f3e98-ca98-45f3-88e0-3606166e6438"
+ID: "f7e5c0c3-4882-4089-9f44-81b58fef7d09"
 Parent: "25472067-bd5d-4a7d-81de-9a945550d87f"
 Template: "4640f8f6-ff25-4615-8a40-fe9f0c87225e"
-Path: /sitecore/client/Your Apps/Data Import/v2/NonSc/Create Template Mapping/PageSettings/FieldForm/Reference Items Template
+Path: /sitecore/client/Your Apps/Data Import/v2/NonSc/Create Template Mapping/PageSettings/FieldForm/TargetFields
 DB: core
 SharedFields:
 - ID: "0b6b2d34-5308-4aa8-b59d-85ba47e8b8aa"
@@ -10,10 +10,10 @@ SharedFields:
   Value: Id
 - ID: "179a7734-1c9e-481c-9f20-bc2ff5095665"
   Hint: DynamicData
-  Value: "{Binding TargetTemplates.DynamicData}"
+  Value: "{Binding TargetFieldDatasource.DynamicData}"
 - ID: "3e079fc3-6b2d-41c9-9204-374a786fc761"
   Hint: BindingConfiguration
-  Value: ReferenceTemplate_0=
+  Value: TargetFields_0=
 - ID: "a176e7b0-1c0b-4f2e-a494-2df342a75c0e"
   Hint: IsLabelOnTop
   Type: Checkbox
@@ -34,4 +34,4 @@ Languages:
       Value: 20160308T212820Z
     - ID: "3885a716-2eed-47ae-9132-32225f0458ff"
       Hint: FormLabel
-      Value: Reference Items Template
+      Value: Target Field

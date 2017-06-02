@@ -1,8 +1,8 @@
 ﻿---
-ID: "ee708d73-92b8-4b0d-a2c3-324285531b4f"
+ID: "b45e4524-df77-4085-9939-0c7459c99c02"
 Parent: "32ca4ba1-dd3b-48ad-949b-e0de0a38660c"
 Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
-Path: /sitecore/client/Your Apps/Data Import/v2/NonSc/Create Template Mapping/PageSettings/Rules/TargetDatabasesRuleDefinition
+Path: /sitecore/client/Your Apps/Data Import/v2/NonSc/Create Template Mapping/PageSettings/Rules/TargetTemplateRule
 DB: core
 SharedFields:
 - ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
@@ -15,7 +15,7 @@ SharedFields:
           <condition
             id="{AAC7A8EC-8760-4850-8130-9E06FFCB3365}"
             uid="CDE97E314C1E4D3A9A70BF5655F4E29F"
-            targetControlId="TargetDatabases"
+            targetControlId="TargetTemplates"
             propertyName="SelectedItem"
             operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
             value="null" />
@@ -24,23 +24,9 @@ SharedFields:
           <action
             id="{B9E39442-1843-47A5-8728-1CC6CD9EB8B1}"
             uid="{56B44838-2772-43EC-945A-AE8E086170D5}"
-            targetControlId="TargetTemplateDatasource"
+            targetControlId="TargetFieldDatasource"
             functionName="change:Parameters"
-            sourceControlId="TargetDatabases"
-            sourceProperty="SelectedItem" />
-          <action
-            id="{EDBDD646-30EE-4A94-88DF-92B70534C8D5}"
-            uid="{C3C97D61-2C9B-493E-B003-1441037E8A17}"
-            targetControlId="TargetPath"
-            propertyName="database"
-            sourceControlId="TargetDatabases"
-            sourceProperty="SelectedValue" />
-          <action
-            id="{B9E39442-1843-47A5-8728-1CC6CD9EB8B1}"
-            uid="{E2311185-B107-4EE9-A4AB-D03589E28AC9}"
-            targetControlId="TargetPath"
-            functionName="update:Database"
-            sourceControlId="TargetDatabases"
+            sourceControlId="TargetTemplates"
             sourceProperty="SelectedItem" />
         </actions>
       </rule>

@@ -1,0 +1,40 @@
+﻿---
+ID: "d23af370-1c6d-4668-a458-96b2620932c7"
+Parent: "238f0d24-c068-49a5-8f11-399e99822a65"
+Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
+Path: /sitecore/client/Your Apps/Data Import/v2/NonSc/Run Template Import/PageSettings/ProgressBarRuleDefinition
+DB: core
+SharedFields:
+- ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{AAC7A8EC-8760-4850-8130-9E06FFCB3365}"
+            uid="8432718AA02D45B58F94906EE6223B63"
+            targetControlId="ImportProgress"
+            propertyName="Percentage"
+            operatorid="{10537C58-1684-4CAB-B4C0-40C10907CE31}"
+            value="100" />
+        </conditions>
+        <actions>
+          <action
+            id="{38241354-31DD-4169-ACA5-A99351FC58B2}"
+            uid="{51CC77DA-3078-4C9B-A0F9-37BFE218095F}"
+            targetControlId="StartButton"
+            propertyName="IsEnabled"
+            value="true" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160311T222636Z

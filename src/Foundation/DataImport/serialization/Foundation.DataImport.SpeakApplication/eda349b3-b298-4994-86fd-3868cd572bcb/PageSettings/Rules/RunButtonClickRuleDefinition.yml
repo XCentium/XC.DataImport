@@ -1,0 +1,39 @@
+﻿---
+ID: "06d9acb5-2b60-4060-a8fb-c8759dc4d4bc"
+Parent: "cb2c400e-f127-41b7-891e-99f7ba3be2d1"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Run Mapping Import/PageSettings/Rules/RunButtonClickRuleDefinition"
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{B5CF2ABD-0811-4220-9805-8F6E62F4F4AC}"
+            uid="6AD9FBFA1D0C4D2099AB91A44E5278C4" />
+        </conditions>
+        <actions>
+          <action
+            id="{F51FD432-BB4E-46E2-9A43-20F27C0BC24F}"
+            uid="{9A52DFC3-D1B7-470F-898C-E31E884000DA}"
+            name="RunButton"
+            value="false" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170602T210253Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

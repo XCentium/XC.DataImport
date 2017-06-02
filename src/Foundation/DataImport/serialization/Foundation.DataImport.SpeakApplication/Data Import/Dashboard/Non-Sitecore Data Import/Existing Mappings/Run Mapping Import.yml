@@ -9,6 +9,176 @@ SharedFields:
   Hint: __Hidden
   Type: checkbox
   Value: 1
+- ID: "3a67ad0f-9530-4b1b-9b70-9230c36ae8d6"
+  Hint: UseFullWidth
+  Type: Checkbox
+  Value: 1
+- ID: "f1a1fe9e-a60c-4ddb-a3a0-bb5b29fe732e"
+  Hint: __Renderings
+  Type: layout
+  Value: |
+    <r>
+      <d
+        id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"
+        l="{4F72A793-BDBC-4262-9523-6AADD8FEA487}">
+        <r
+          id="{DAFAFFB8-74AF-4141-A96A-70B16834CEC6}"
+          par="PageCodeScriptFileName=%2fsitecore%2fshell%2fclient%2fApplications%2fXCDataImport%2fversion+1%2fPageCodes%2fRunImport.js"
+          ph="Page.Code"
+          uid="{5AAE51CE-F557-4F1B-A06C-7B830BD6E2D3}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=MappingPathHidden&amp;IsVisible=0"
+          ph="Page.Code"
+          uid="{DCCEDF47-9A26-4829-8DD6-4604824297A7}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7b06D9ACB5-2B60-4060-A8FB-C8759DC4D4BC%7d&amp;Id=RunButtonClickRule&amp;LoadMode=WhenRun&amp;TargetControl=RunButton&amp;Trigger=click&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{2DB7D4C1-ED2A-4F18-9302-7801BF71CFC0}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7b9F8BBD7E-8AA3-4F43-B97E-8FE2B588151F%7d&amp;Id=MappingLoadRule&amp;LoadMode=Immediately&amp;Trigger=app%3aloaded&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{3EB97E00-6166-44A2-922D-25048019EF7A}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7b89816681-3862-4581-8247-4E63C6F8635E%7d&amp;Id=PopulateMappingRule&amp;LoadMode=Immediately&amp;TargetControl=MappingDatasource&amp;Trigger=change%3adata&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{4D179061-97DD-42F3-BB92-80405CEFA844}" />
+        <r
+          id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
+          par="Id=MappingDatasource&amp;QueryParameters=%7bBinding+MappingPathHidden.Text%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fviewNonScMapping"
+          ph="GlobalHeader.StartButton"
+          uid="{13F23820-016D-44FD-BD6D-E9CDF5297931}" />
+        <r
+          id="{D15A0868-AC62-49F3-B5CE-F84E33F6166E}"
+          par="Id=ImportDatasource&amp;DataURL=%2fapi%2fsitecore%2fNonScImportProcessing%2fStartImport"
+          ph="GlobalHeader.StartButton"
+          uid="{F47876C3-5C40-4F12-8249-BD9E8C41B8D7}" />
+        <r
+          id="{225B55AC-0270-44F9-842B-96D89F9C20A9}"
+          ph="Page.Body"
+          uid="{18150CFB-04C0-4DDA-8E54-2EB4C8D040F2}" />
+        <r
+          id="{5AE97C0C-EE88-4564-A363-4FA11C01C90A}"
+          ph="GlobalHeader"
+          uid="{D3880C8A-E49F-413E-9C87-5D664985B3E2}" />
+        <r
+          id="{7A69C522-7E99-4630-A25A-5D571505862A}"
+          par="Id=GlobalLogo1"
+          ph="GlobalHeader.StartButton"
+          uid="{EBBD9E71-5927-419B-ADF2-6066F31E58D7}" />
+        <r
+          id="{2EE499CD-439A-4F10-B81F-36A54CAC01DB}"
+          par="Id=AccountInformation1"
+          ph="GlobalHeader.LoginInfo"
+          uid="{ABE1157A-0DF8-4EA0-97A8-9828E43CFE3B}" />
+        <r
+          id="{93CEEFCD-2DE1-40AF-AE9A-EBBFBCCC522F}"
+          ph="ApplicationHeader"
+          uid="{E00DAE0D-D255-49F7-9F26-6A64128B7C30}" />
+        <r
+          id="{EB6214BE-5687-4706-ABA6-B25C0958C85B}"
+          ph="ApplicationContent"
+          uid="{2D8B8F52-3100-4E58-A743-67DD6DA3303E}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=PageTitle&amp;Text=Run+Import"
+          ph="ApplicationHeader.Title"
+          uid="{4AB3A7F2-2410-40A0-937A-4650B854E5D6}" />
+        <r
+          id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}"
+          par="Click=javascript%3aapp.startImport()&amp;Id=RunButton&amp;ButtonType=Primary&amp;Text=Start+Import"
+          ph="ApplicationHeader.Actions"
+          uid="{B6F4F31C-ED09-4C20-82C2-6386D1E03C22}" />
+        <r
+          id="{162FC747-B9E6-4FCE-A96C-1EFE125643F2}"
+          par="Click=javascript%3aapp.editMapping()&amp;Id=EditButton&amp;Text=Edit+Mapping&amp;Target=_blank&amp;IsButtonMode=1&amp;NavigateUrl=%2fsitecore%2fshell%2fsitecore%2fclient%2fYour-Apps%2fData-Import%2fDashboard%2fNon-Sitecore-Data-Import%2fCreate-Mapping%3fmenuItemId%3d%257b217B963F-DCE3-4008-B4A7-F253679324CF%257d"
+          ph="ApplicationHeader.Actions"
+          uid="{645E3ED9-5CDE-4479-BECB-A8385C744FD7}" />
+        <r
+          id="{C5D667DE-AA48-4072-872E-7C8BFFCE4D44}"
+          par="Id=NavigationMenu&amp;ItemsDataSource=%7bE68E4405-8539-40A8-B5D4-C4DBD7EBBCEC%7d"
+          ph="ApplicationContent.Navigation"
+          uid="{27961397-1151-46EE-88B4-51C7348915BD}" />
+        <r
+          id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
+          par="Id=Border1&amp;PaddingType=All&amp;UsePadding=1"
+          ph="ApplicationContent.Main"
+          uid="{6C28E4E2-E4B4-4F6F-A19D-AC8D39277ACC}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=MappingNameLabel&amp;TextType=LargeTitle&amp;Text=Mapping+Name%3a+"
+          ph="Border1.Content"
+          uid="{35A8985B-B19A-4D93-9FE7-6DB3D714D18C}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=MappingName&amp;TextType=LargeValue"
+          ph="Border1.Content"
+          uid="{6D18D794-56F7-4CAF-80AC-231178D966AB}" />
+        <r
+          id="{CA84FBFF-B3A0-4AEC-9C2C-7DDBBF7DA102}"
+          par="IsOpen=0&amp;Id=LeftExpander&amp;Text=Mapping+Info"
+          ph="ApplicationContent.Main"
+          uid="{D902AB55-2DC8-4635-9E89-7B1C5F2E5BFF}" />
+        <r
+          id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
+          par="Id=Border2"
+          ph="LeftExpander.Body"
+          uid="{F36008A0-34D7-407C-BFDD-176C605D9265}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=SourceDatabaseLabel&amp;TextType=Divider&amp;Text=Source+Database%3a"
+          ph="Border2.Content"
+          uid="{D4DB9B44-F5FE-4546-838F-9F00E8A0DE35}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=SourceDatabase&amp;Text=db"
+          ph="Border2.Content"
+          uid="{33419D9F-8CD6-4622-8DEE-376EA3E32FF1}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=SourceCommandLabel&amp;TextType=Divider&amp;Text=Source+Command%3a"
+          ph="Border2.Content"
+          uid="{08DE476C-407B-4696-BF3B-5BF413494984}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=SourceCommand"
+          ph="Border2.Content"
+          uid="{54290BDC-7EFB-4199-8763-50DA6CBFCCEA}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=TargetDatabaseLabel&amp;TextType=Divider&amp;Text=Target+Database%3a"
+          ph="Border2.Content"
+          uid="{C5CE4F64-4FC4-4C8E-A066-C83CC40A5F81}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=TargetDatabase"
+          ph="Border2.Content"
+          uid="{6617C4EE-FEB1-45C1-8557-3F8FA3740068}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=TargetTemplateLabel&amp;TextType=Divider&amp;Text=Target+Template%3a"
+          ph="Border2.Content"
+          uid="{5EA71AAE-E444-4F26-84E3-9E64944C7B48}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=TargetTemplate"
+          ph="Border2.Content"
+          uid="{E088D8C4-55A8-4368-9698-3BAE710EBBDC}" />
+        <r
+          id="{41EF8D3D-6B51-4E31-B61E-417A5E652AE1}"
+          par="Id=Frame1&amp;Height=1px"
+          ph="ApplicationContent.Main"
+          uid="{C9F68C67-5596-44FE-A230-146180210C31}" />
+        <r
+          id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
+          par="Id=ImportResults"
+          ph="ApplicationContent.Main"
+          uid="{66063FA2-27F0-4C3C-A612-5196C2CB46E4}" />
+      </d>
+    </r>
 Languages:
 - Language: en
   Versions:

@@ -1,0 +1,22 @@
+﻿---
+ID: "e6f23257-7b7e-473f-80e5-652abcaf31d4"
+Parent: "7981abca-c14f-4bee-96fd-dc3e16a9ee41"
+Template: "5a47f494-7869-4af9-9987-7c135349c575"
+Path: /sitecore/client/Your Apps/Data Import/v2/NonSc/Create Template Mapping/PageSettings/ScrollablePanel Parameters
+DB: core
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 400
+- ID: "d794a96f-7211-412d-bb5a-4df141d9a3f4"
+  Hint: HasScroll
+  Type: Checkbox
+  Value: 1
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20160308T203345Z

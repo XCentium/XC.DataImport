@@ -473,6 +473,51 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
+        public object DeleteMapping(string mapping)
+        {
+            var messages = new List<MessageModel>();
+
+            if (mapping == null)
+            {
+                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = new List<string>(),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                if (File.Exists(mapping))
+                {
+                    File.Delete(mapping);
+                }
+                return new
+                {
+                    data = new List<string>(),
+                    messages = "Mapping has been deleted"
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = new List<string>(),
+                messages = messages
+            };
+        }
+        /// <summary>
+        /// Mappings the specified mapping.
+        /// </summary>
+        /// <param name="mapping">The mapping.</param>
+        /// <returns></returns>
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
         public object ViewNonScMapping(string item = "")
         {
             var messages = new List<MessageModel>();
