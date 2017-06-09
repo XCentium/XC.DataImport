@@ -277,7 +277,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public DataTable GetDataSet(Action<string, string> statusMethod, string statusFilename, string code = "", Tuple<string, string, string> filter = null)
+        public DataTable GetDataSet(Action<string, string> statusMethod, string statusFilename, Tuple<string, string, string> filter = null)
         {
             if (_mapping == null || _mapping.Databases == null || string.IsNullOrEmpty(_mapping.Databases.Source))
             {
@@ -302,20 +302,7 @@ namespace XC.DataImport.Repositories.Repositories
                     dataTable = HttpRuntime.Cache[commandText] as DataTable;
                     if (dataTable != null)
                     {
-                        if (!string.IsNullOrEmpty(code))
-                        {
-                            var selectCommand = AddCodeFilterForDataSetSelect(_mapping.MergeColumnFieldMatch.Source, commandText, code);
-                            var selectedRecords = dataTable.Select(selectCommand);
-                            if (selectedRecords != null && selectedRecords.Length > 0)
-                            {
-                                return dataTable.Select(selectCommand).CopyToDataTable();
-                            }
-                            return null;
-                        }
-                        else
-                        {
-                            return dataTable;
-                        }
+                        return dataTable;
                     }
 
                     using (SqlCommand command = new SqlCommand(commandText, connection))
@@ -353,7 +340,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// Gets the source items for import count.
         /// </summary>
         /// <returns></returns>
-        public int GetSourceItemsForImportCount(Action<string, string> statusMethod, string statusFilename, string code = "", Tuple<string, string, string> filter = null)
+        public int GetSourceItemsForImportCount(Action<string, string> statusMethod, string statusFilename, Tuple<string, string, string> filter = null)
         {
             int rowCount = 0;
 
@@ -369,17 +356,13 @@ namespace XC.DataImport.Repositories.Repositories
                 {
                     var commandText = _mapping.Templates.Source.Command;
                     commandText = AdjustCommandForIncrementalUpdate(commandText);
-                    if (!string.IsNullOrEmpty(code))
-                    {
-                        commandText = AddCodeFilter(_mapping.MergeColumnFieldMatch.Source, commandText, code);
-                    }
-                    else if (filter != null)
+                    if (filter != null)
                     {
                         commandText = AddCodeFilter(commandText, filter);
                     }
                     DataImportLogger.Log.Info("XC.DataImport - SQL statement: " + commandText);
 
-                    var dataSet = GetDataSet(statusMethod, statusFilename, code, filter);
+                    var dataSet = GetDataSet(statusMethod, statusFilename, filter);
                     if (dataSet != null)
                     {
                         return dataSet.Rows.Count;
@@ -430,34 +413,6 @@ namespace XC.DataImport.Repositories.Repositories
             return commandText;
         }
 
-
-        /// <summary>
-        /// Adds the code filter.
-        /// </summary>
-        /// <param name="commandText">The command text.</param>
-        /// <param name="code">The code.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        private string AddCodeFilter(string filterCodeColumn, string commandText, string code)
-        {
-            if (!string.IsNullOrEmpty(filterCodeColumn))
-                return commandText = commandText.IndexOf("WHERE", StringComparison.CurrentCultureIgnoreCase) != -1 ? string.Format(" {0} AND [{1}] = '{2}' ", commandText, filterCodeColumn, code) : string.Format(" {0} WHERE [{1}] = '{2}' ", commandText, filterCodeColumn, code);
-            else
-                if (commandText.IndexOf("Base_Code", StringComparison.CurrentCultureIgnoreCase) != -1)
-                {
-                    return commandText = commandText.IndexOf("WHERE", StringComparison.CurrentCultureIgnoreCase) != -1 ? string.Format(" {0} AND [{1}] = '{2}' ", commandText, "Base_Code", code) : string.Format(" {0} WHERE [{1}] = '{2}' ", commandText, "Base_Code", code);
-                }
-                else if (commandText.IndexOf("Code", StringComparison.CurrentCultureIgnoreCase) != -1)
-                {
-                    return commandText = commandText.IndexOf("WHERE", StringComparison.CurrentCultureIgnoreCase) != -1 ? string.Format(" {0} AND [{1}] = '{2}' ", commandText, "Code", code) : string.Format(" {0} WHERE [{1}] = '{2}' ", commandText, "Code", code);
-                }
-                else if (commandText.IndexOf("Name", StringComparison.CurrentCultureIgnoreCase) != -1)
-                {
-                    return commandText = commandText.IndexOf("WHERE", StringComparison.CurrentCultureIgnoreCase) != -1 ? string.Format(" {0} AND [{1}] = '{2}' ", commandText, "Name", code) : string.Format(" {0} WHERE [{1}] = '{2}'  ", commandText, "Name", code);
-                }
-            return commandText = commandText.Contains("WHERE") ? string.Format(" {0} AND [{1}] = '{4}' OR  [{3}] = '{4}' OR  [{2}] = '{4}' ", commandText, "Base_Code", "Code", "Name", code) : string.Format(" {0} WHERE [{1}] = '{4}'  OR  [{3} ]= '{4}' OR  [{2}] = '{4}'  ", commandText, "Base_Code", "Code", "Name", code);
-        }
-
         /// <summary>
         /// Adds the code filter.
         /// </summary>
@@ -471,25 +426,6 @@ namespace XC.DataImport.Repositories.Repositories
             return commandText = commandText.IndexOf("WHERE", StringComparison.CurrentCultureIgnoreCase) != -1 ? string.Format(" {0} AND [{1}] = '{2}' ", commandText, filter.Item1, filter.Item3) : string.Format(" {0} WHERE [{1}] = '{2}'  ", commandText, filter.Item1, filter.Item3);
         }
 
-        private string AddCodeFilterForDataSetSelect(string filterCodeColumn, string commandText, string code)
-        {
-            if (!string.IsNullOrEmpty(filterCodeColumn))
-                return string.Format("[{0}] = '{1}' ", filterCodeColumn, code);
-            else
-                if (commandText.IndexOf("Base_Code", StringComparison.CurrentCultureIgnoreCase) != -1)
-                {
-                    return string.Format("[{0}] = '{1}' ", "Base_Code", code);
-                }
-                else if (commandText.IndexOf("Code", StringComparison.CurrentCultureIgnoreCase) != -1)
-                {
-                    return string.Format("[{0}] = '{1}' ", "Code", code);
-                }
-                else if (commandText.IndexOf("Name", StringComparison.CurrentCultureIgnoreCase) != -1)
-                {
-                    return string.Format("[{0}] = '{1}' ", "Name", code);
-                }
-            return string.Format("[{0}] = '{3}' OR  [{2}] = '{3}' OR  [{1}] = '{3}' ", "Base_Code", "Code", "Name", code);
-        }
         /// <summary>
         /// Escapes the dashes.
         /// </summary>
@@ -986,7 +922,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// <summary>
         /// Clears the multilist field values.
         /// </summary>
-        public void ClearMultilistFieldValues(Action<string, string> statusMethod, string statusFilepath, DataTable dataSet, string code = "", Tuple<string, string, string> filter = null)
+        public void ClearMultilistFieldValues(Action<string, string> statusMethod, string statusFilepath, DataTable dataSet, Tuple<string, string, string> filter = null)
         {
             if (_mapping == null || !_mapping.MergeWithExistingItems) return;
 
@@ -1060,7 +996,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// Retrieves the items to process.
         /// </summary>
         /// <param name="code">The code.</param>
-        public List<Item> RetrieveItemsToProcess(string code = "", Tuple<string, string, string> filter = null)
+        public List<Item> RetrieveItemsToProcess(Tuple<string, string, string> filter = null)
         {
             if (ItemsToProcess == null)
             {

@@ -84,7 +84,7 @@ namespace XC.DataImport.Repositories.Migration
                 var startDate = DateTime.Now;
                 HistoryLogging.ImportInitialized("nonsitecore-" + Mapping.Name, startDate);
 
-                var itemsToImport = SourceRepository.GetSourceItemsForImportCount(statusMethod, statusFilepath, this.Code, this.Filter);
+                var itemsToImport = SourceRepository.GetSourceItemsForImportCount(statusMethod, statusFilepath, Filter);
                 if (itemsToImport == 0)
                 {
                     statusMethod(string.Format(" <span style=\"color:blue\">[INFO] Nothing to import ({0})</span>", Mapping.Name), statusFilepath);
@@ -112,12 +112,12 @@ namespace XC.DataImport.Repositories.Migration
                         using (new DatabaseCacheDisabler())
                         using (new EventDisabler())
                         {
-                            TargetRepository.RetrieveItemsToProcess(this.Code, this.Filter);
-                            var dataSet = SourceRepository.GetDataSet(statusMethod, statusFilepath, this.Code, this.Filter);
+                            TargetRepository.RetrieveItemsToProcess(this.Filter);
+                            var dataSet = SourceRepository.GetDataSet(statusMethod, statusFilepath, Filter);
 
                             if (dataSet != null)
                             {
-                                TargetRepository.ClearMultilistFieldValues(statusMethod, statusFilepath, dataSet, this.Code, this.Filter);
+                                TargetRepository.ClearMultilistFieldValues(statusMethod, statusFilepath, dataSet, Filter);
 
                                 lock (dataSet.Rows)
                                 {
@@ -172,7 +172,7 @@ namespace XC.DataImport.Repositories.Migration
                 var startDate = DateTime.Now;
                 HistoryLogging.ImportInitialized("nonsitecore-" + Mapping.Name, startDate);
 
-                var itemsToImport = SourceRepository.GetSourceItemsForImportCount(statusMethod, statusFilepath, this.Code, this.Filter);
+                var itemsToImport = SourceRepository.GetSourceItemsForImportCount(statusMethod, statusFilepath, Filter);
                 if (itemsToImport == 0)
                 {
                     statusMethod(string.Format(" <span style=\"color:blue\">[INFO] Nothing to import ({0})</span>", Mapping.Name), statusFilepath);
@@ -196,7 +196,7 @@ namespace XC.DataImport.Repositories.Migration
                     using (new DatabaseCacheDisabler())
                     using (new EventDisabler())
                     {
-                        var items = TargetRepository.RetrieveItemsToProcess(this.Code, this.Filter);
+                        var items = TargetRepository.RetrieveItemsToProcess(Filter);
                         if (items != null)
                         {
                             return items;

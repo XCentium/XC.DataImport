@@ -18,6 +18,10 @@ using System.Web;
 using XC.DataImport.Repositories.History;
 using XC.Foundation.DataImport.Models;
 using XC.Foundation.DataImport.Diagnostics;
+using System.Configuration;
+using Sitecore.IO;
+using Sitecore.Resources.Media;
+using System.IO;
 
 namespace XC.DataImport.Repositories.Repositories
 {
@@ -125,7 +129,8 @@ namespace XC.DataImport.Repositories.Repositories
                         }
                         if (!string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(_mapping.Templates.Target))
                         {
-                            var templateId = ID.Parse(_mapping.Templates.Target);
+                            var template = ItemUri.Parse(_mapping.Templates.Target);
+                            var templateId = template.ItemID;
                             var newItem = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(itemName), parentItem, templateId, sitecoreId);
                             if (newItem == null) return null;
 
@@ -226,8 +231,8 @@ namespace XC.DataImport.Repositories.Repositories
             {
                 if (!string.IsNullOrEmpty(_mapping.Templates.Target))
                 {
-                    var templateId = ID.Parse(_mapping.Templates.Target);
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}' and @@templateid='{2}']", EscapeDashes(targetFieldItem.Name), matchingColumnValue, _mapping.Templates.Target));
+                    var template = ItemUri.Parse(_mapping.Templates.Target);
+                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}' and @@templateid='{2}']", EscapeDashes(targetFieldItem.Name), matchingColumnValue, template.ItemID));
                 }
                 else
                 {
@@ -238,8 +243,8 @@ namespace XC.DataImport.Repositories.Repositories
             {
                 if (!string.IsNullOrEmpty(_mapping.Templates.Target))
                 {
-                    var templateId = ID.Parse(_mapping.Templates.Target);
-                    return ItemsToProcess.FirstOrDefault(i => i.TemplateID == templateId && i[targetFieldItem.Name] == matchingColumnValue);
+                    var template = ItemUri.Parse(_mapping.Templates.Target);
+                    return ItemsToProcess.FirstOrDefault(i => i.TemplateID == template.ItemID && i[targetFieldItem.Name] == matchingColumnValue);
                 }
                 else
                 {
@@ -253,7 +258,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public DataTable GetDataSet(Action<string, string> statusMethod, string statusFilename, string code = "", Tuple<string, string, string> filter = null)
+        public DataTable GetDataSet(Action<string, string> statusMethod, string statusFilename, Tuple<string, string, string> filter = null)
         {
             if (_mapping == null || _mapping.Databases == null || string.IsNullOrEmpty(_mapping.Databases.Source))
             {
@@ -265,7 +270,11 @@ namespace XC.DataImport.Repositories.Repositories
             try
             {
                 var startDate = DateTime.Now;
-                using (SqlConnection connection = new SqlConnection(_mapping.Databases.Source))
+                var connectionString = ConfigurationManager.ConnectionStrings[_mapping.Databases.Source].ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                    return dataTable;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     var commandText = _mapping.Templates.Source.Command;
                     commandText = AdjustCommandForIncrementalUpdate(commandText);
@@ -278,20 +287,7 @@ namespace XC.DataImport.Repositories.Repositories
                     dataTable = HttpRuntime.Cache[commandText] as DataTable;
                     if (dataTable != null)
                     {
-                        if (!string.IsNullOrEmpty(code))
-                        {
-                            var selectCommand = AddCodeFilterForDataSetSelect(_mapping.MergeColumnFieldMatch.Source, commandText, code);
-                            var selectedRecords = dataTable.Select(selectCommand);
-                            if (selectedRecords != null && selectedRecords.Length > 0)
-                            {
-                                return dataTable.Select(selectCommand).CopyToDataTable();
-                            }
-                            return null;
-                        }
-                        else
-                        {
-                            return dataTable;
-                        }
+                        return dataTable;
                     }
 
                     using (SqlCommand command = new SqlCommand(commandText, connection))
@@ -312,7 +308,10 @@ namespace XC.DataImport.Repositories.Repositories
                             dataAdapter.SelectCommand = command;
                             dataAdapter.Fill(dataSet);
                             if (dataSet.Tables != null && dataSet.Tables.Count > 0)
+                            {
                                 HttpRuntime.Cache[commandText] = dataSet.Tables[0];
+                                dataTable = dataSet.Tables[0];
+                            }
                         }
                     }
                 }
@@ -329,7 +328,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// Gets the source items for import count.
         /// </summary>
         /// <returns></returns>
-        public int GetSourceItemsForImportCount(Action<string, string> statusMethod, string statusFilename, string code = "", Tuple<string, string, string> filter = null)
+        public int GetSourceItemsForImportCount(Action<string, string> statusMethod, string statusFilename, Tuple<string, string, string> filter = null)
         {
             int rowCount = 0;
 
@@ -341,21 +340,21 @@ namespace XC.DataImport.Repositories.Repositories
             try
             {
                 var startDate = DateTime.Now;
-                using (SqlConnection connection = new SqlConnection(_mapping.Databases.Source))
+                var connectionString = ConfigurationManager.ConnectionStrings[_mapping.Databases.Source].ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                    return rowCount;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     var commandText = _mapping.Templates.Source.Command;
                     commandText = AdjustCommandForIncrementalUpdate(commandText);
-                    if (!string.IsNullOrEmpty(code))
-                    {
-                        commandText = AddCodeFilter(_mapping.MergeColumnFieldMatch.Source, commandText, code);
-                    }
-                    else if (filter != null)
+                    if (filter != null)
                     {
                         commandText = AddCodeFilter(commandText, filter);
                     }
                     DataImportLogger.Log.Info("XC.DataImport - SQL statement: " + commandText);
 
-                    var dataSet = GetDataSet(statusMethod, statusFilename, code, filter);
+                    var dataSet = GetDataSet(statusMethod, statusFilename, filter);
                     if (dataSet != null)
                     {
                         return dataSet.Rows.Count;
@@ -502,7 +501,9 @@ namespace XC.DataImport.Repositories.Repositories
         {
             //using (new EditContext(item, false, true))
             //{
-                lock (_mapping.FieldMapping)
+            lock (_mapping.FieldMapping)
+            {
+                ProcessAttachmentField(row, item, statusMethod, statusFilepath);
                 foreach (var field in _mapping.FieldMapping)
                 {
                     try
@@ -569,7 +570,7 @@ namespace XC.DataImport.Repositories.Repositories
                                     {
                                         if (!multilistField.Contains(matchingItem.ID.ToString()))
                                         {
-                                            using (new EditContext(item, false,true))
+                                            using (new EditContext(item, false, true))
                                             {
                                                 multilistField.Add(matchingItem.ID.ToString());
                                             }
@@ -651,7 +652,7 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
-                                {                                    
+                                {
                                     if (item.Fields[field.TargetFields].TypeKey.Contains("tristate"))
                                     {
                                         var fieldValue = "";
@@ -693,11 +694,11 @@ namespace XC.DataImport.Repositories.Repositories
                                                 checkboxField.Value = fieldValue;
                                             }
 
-                                        if (DetailedLogging)
-                                        {
-                                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
-                                        }
-                                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
+                                            if (DetailedLogging)
+                                            {
+                                                statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                                            }
+                                            DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
                                         }
                                     }
                                 }
@@ -729,6 +730,10 @@ namespace XC.DataImport.Repositories.Repositories
                                     }
                                 }
                             }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("attachment"))
+                            {
+                                // do not do anything
+                            }
                             else if (string.IsNullOrWhiteSpace(item[field.TargetFields]) || field.Overwrite)
                             {
                                 using (new EditContext(item, false, true))
@@ -741,6 +746,7 @@ namespace XC.DataImport.Repositories.Repositories
                                 }
                                 DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
                             }
+
                         }
                     }
                     catch (Exception ex)
@@ -749,6 +755,7 @@ namespace XC.DataImport.Repositories.Repositories
                         DataImportLogger.Log.Error(ex.Message, ex);
                     }
                 }
+            }
             //}
         }
 
@@ -761,7 +768,9 @@ namespace XC.DataImport.Repositories.Repositories
         {
             //using (new EditContext(item, false, true))
             //{
-                lock (_mapping.FieldMapping)
+            lock (_mapping.FieldMapping)
+            {
+                ProcessAttachmentField(row, item, statusMethod, statusFilepath);
                 foreach (var field in _mapping.FieldMapping)
                 {
                     try
@@ -873,6 +882,10 @@ namespace XC.DataImport.Repositories.Repositories
                                     }
                                 }
                             }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("attachment"))
+                            {
+                                // do not do anything
+                            }
                             else
                             {
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
@@ -893,6 +906,7 @@ namespace XC.DataImport.Repositories.Repositories
                         DataImportLogger.Log.Error(ex.Message, ex);
                     }
                 }
+            }
             //}
         }
 
@@ -970,7 +984,7 @@ namespace XC.DataImport.Repositories.Repositories
         /// <summary>
         /// Clears the multilist field values.
         /// </summary>
-        public void ClearMultilistFieldValues(Action<string, string> statusMethod, string statusFilepath, DataTable dataSet, string code = "", Tuple<string, string, string> filter = null)
+        public void ClearMultilistFieldValues(Action<string, string> statusMethod, string statusFilepath, DataTable dataSet, Tuple<string, string, string> filter = null)
         {
             if (_mapping == null || !_mapping.MergeWithExistingItems) return;
 
@@ -1044,70 +1058,134 @@ namespace XC.DataImport.Repositories.Repositories
         /// Retrieves the items to process.
         /// </summary>
         /// <param name="code">The code.</param>
-        public List<Item> RetrieveItemsToProcess(string code = "", Tuple<string, string, string> filter = null)
+        public List<Item> RetrieveItemsToProcess(Tuple<string, string, string> filter = null)
         {
             if (ItemsToProcess == null)
             {
                 Item[] items = null;
                 var query = string.Empty;
 
+                ItemUri template = null;
+                if(!string.IsNullOrEmpty(_mapping.Templates.Target))
+                    template = ItemUri.Parse(_mapping.Templates.Target);
                 if (filter != null)
                 {
-                    if (!string.IsNullOrEmpty(filter.Item3) && !string.IsNullOrEmpty(filter.Item2) && !string.IsNullOrEmpty(_mapping.Templates.Target))
+                    if (!string.IsNullOrEmpty(filter.Item3) && !string.IsNullOrEmpty(filter.Item2) && template != null)
                     {
-                        query = string.Format("fast://sitecore//*[@@templateid='{0}' and @{1}='{2}']", _mapping.Templates.Target, EscapeDashes(filter.Item2), filter.Item3);
+                        query = string.Format("fast://sitecore//*[@@templateid='{0}' and @{1}='{2}']", template.ItemID, EscapeDashes(filter.Item2), filter.Item3);
                     }
-                    else if (!string.IsNullOrEmpty(_mapping.Templates.Target))
+                    else if (template != null)
                     {
-                        query = string.Format("fast://sitecore//*[@@templateid='{0}']", _mapping.Templates.Target);
+                        query = string.Format("fast://sitecore//*[@@templateid='{0}']", template.ItemID);
                     }
                     else if (!string.IsNullOrEmpty(filter.Item3) && !string.IsNullOrEmpty(filter.Item2))
                     {
-                        query = string.Format("fast://sitecore//*[@{1}='{2}']", _mapping.Templates.Target, EscapeDashes(filter.Item2), filter.Item3);
+                        query = string.Format("fast://sitecore//*[@{0}='{1}']", EscapeDashes(filter.Item2), filter.Item3);
                     }
                     else if (!string.IsNullOrEmpty(_mapping.Paths.Target))
                     {
                         query = string.Format("fast:/{0}//*", EscapeDashes(_mapping.Paths.Target));
                     }
                 }
-                //else
-                //{
-                //    if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(_mapping.Templates.Target))
-                //    {
-                //        query = string.Format("fast://sitecore//*[@@templateid='{0}' and @{1}='{2}']", _mapping.Templates.Target, EscapeDashes(CoreProductInfo.CatalogNumberFieldName), code);
-                //    }
-                //    else if (!string.IsNullOrEmpty(_mapping.Templates.Target))
-                //    {
-                //        query = string.Format("fast://sitecore//*[@@templateid='{0}']", _mapping.Templates.Target);
-                //    }
-                //    else if (!string.IsNullOrEmpty(code))
-                //    {
-                //        query = string.Format("fast://sitecore//*[@{1}='{2}']", _mapping.Templates.Target, EscapeDashes(CoreProductInfo.CatalogNumberFieldName), code);
-                //    }
-                //    else if (!string.IsNullOrEmpty(_mapping.Paths.Target))
-                //    {
-                //        query = string.Format("fast:/{0}//*", EscapeDashes(_mapping.Paths.Target));
-                //    }
-                //}
-                var cache = HttpRuntime.Cache;
-                var cachedItems = cache.Get(query) as Item[];
-                if (cachedItems != null)
-                {
-                    ItemsToProcess = cachedItems.ToList();
-                }
                 else
                 {
-                    items = Database.SelectItems(query);
-                    if (items != null)
+                    if (template != null)
                     {
-                        ItemsToProcess = items.ToList();
-                        cache.Insert(query, items, null, DateTime.Now.AddDays(3), System.Web.Caching.Cache.NoSlidingExpiration);
+                        query = string.Format("fast://sitecore//*[@@templateid='{0}']", template.ItemID);
+                    }
+                    else if (!string.IsNullOrEmpty(_mapping.Paths.Target))
+                    {
+                        query = string.Format("fast:/{0}//*", EscapeDashes(_mapping.Paths.Target));
+                    }
+                }
+                var cache = HttpRuntime.Cache;
+                if (!string.IsNullOrEmpty(query))
+                {
+                    var cachedItems = cache.Get(query) as Item[];
+                    if (cachedItems != null)
+                    {
+                        ItemsToProcess = cachedItems.ToList();
+                    }
+                    else
+                    {
+                        items = Database.SelectItems(query);
+                        if (items != null)
+                        {
+                            ItemsToProcess = items.ToList();
+                            cache.Insert(query, items, null, DateTime.Now.AddDays(3), System.Web.Caching.Cache.NoSlidingExpiration);
+                        }
                     }
                 }
             }
             return ItemsToProcess;
         }
 
+        /// <summary>
+        /// Processes the attachment field.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void ProcessAttachmentField(DataRow row, Item item, Action<string, string> statusMethod, string statusFilepath)
+        {
+            var blobField = _mapping.FieldMapping.FirstOrDefault(f => item.Fields[f.TargetFields].TypeKey == "attachment");
+            if (blobField != null)
+            {
+                if (item.Fields[blobField.TargetFields].TypeKey.Contains("attachment") && (string.IsNullOrWhiteSpace(item[blobField.TargetFields]) || blobField.Overwrite))
+                {
+                    byte[] fileContent = row[blobField.SourceFields] != DBNull.Value ? (byte[])row[blobField.SourceFields] : null;
+                    if (fileContent != null)
+                    {
+                        AttachMediaStream(item, fileContent, statusMethod, statusFilepath);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Attaches the media stream.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="existingItem">The existing item.</param>
+        private void AttachMediaStream(Item item, byte[] mediaStream, Action<string, string> statusMethod, string statusFilename)
+        {
+            var options = CreateMediaCreatorOptions(item);
+            var creator = new Sitecore.Resources.Media.MediaCreator();
+            var sourceMediaItem = new MediaItem(item);
+            var sourceMediaStream = new MemoryStream(mediaStream);
+            var fileName = sourceMediaItem.Name + "." + sourceMediaItem.Extension;
+
+            if (sourceMediaStream != null)
+            {
+                Media media = MediaManager.GetMedia(sourceMediaItem);
+                media.SetStream(sourceMediaStream, FileUtil.GetExtension(fileName));
+                statusMethod(string.Format("<span style=\"color:green\"><strong>[SUCCESS][{0}] Updating Attached Media: {1} </strong></span>", item.ID, item.Paths.FullPath), statusFilename);
+            }
+            else
+            {
+                statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE][{0}] Stream is null</strong></span>", item.ID), statusFilename);
+            }
+        }
+
+        /// <summary>
+        /// Creates the media creator options.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="parentItem">The parent item.</param>
+        /// <returns></returns>
+        public static MediaCreatorOptions CreateMediaCreatorOptions(Item item)
+        {
+            var options = new MediaCreatorOptions
+            {
+                FileBased = false,
+                IncludeExtensionInItemName = false,
+                OverwriteExisting = true,
+                Destination = item.Paths.FullPath,
+                Database = item.Database
+            };
+            return options;
+        }
         /// <summary>
         /// Replaces the first.
         /// </summary>

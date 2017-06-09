@@ -115,7 +115,7 @@ namespace XC.Foundation.DataImport.Controllers
                     messages = "Database with the name provided doesn't exist"
                 };
 
-            var dbTemplates = db.Templates.GetTemplates(Sitecore.Context.Language).Where(t => !t.InnerItem.Name.Contains("__") && !t.InnerItem.Paths.FullPath.Contains("/sitecore/templates/System")).OrderBy(t => t.Name);
+            var dbTemplates = db.Templates.GetTemplates(Context.Language).Where(t => !t.InnerItem.Name.Contains("__")).OrderBy(t => t.Name);
             if (dbTemplates.Any())
             {
                 templates.Add(new TemplateEntity { Name = "Select Template", Id = "", Database = "", Path = "" });
@@ -565,7 +565,7 @@ namespace XC.Foundation.DataImport.Controllers
                 messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
                 return new
                 {
-                    data = GetFieldMappings(0, 0),
+                    data = GetFieldMappings(1, 0),
                     messages = messages
                 };
             }
@@ -580,7 +580,7 @@ namespace XC.Foundation.DataImport.Controllers
                 IEnumerable<NonScFieldMapping> additionalMappings = null;
                 if(item > mappingObject.FieldMapping.Count())
                 {
-                    additionalMappings = GetFieldMappings(item - mappingObject.FieldMapping.Count(), mappingObject.FieldMapping.Count());
+                    additionalMappings = GetFieldMappings(item, mappingObject.FieldMapping.Count());
                     mappings.AddRange(additionalMappings);
                 }
                 return new
@@ -597,7 +597,7 @@ namespace XC.Foundation.DataImport.Controllers
 
             return new
             {
-                data = GetFieldMappings(0, 0),
+                data = GetFieldMappings(1, 0),
                 messages = messages
             };
         }
@@ -610,7 +610,7 @@ namespace XC.Foundation.DataImport.Controllers
         private IEnumerable<NonScFieldMapping> GetFieldMappings(int item, int start)
         {
             var emptyMappingList = new List<NonScFieldMapping>();
-            for (var i = start; i <= item; i++)
+            for (var i = start; i < item; i++)
             {
                 emptyMappingList.Add(new NonScFieldMapping() { Id = i});
             }

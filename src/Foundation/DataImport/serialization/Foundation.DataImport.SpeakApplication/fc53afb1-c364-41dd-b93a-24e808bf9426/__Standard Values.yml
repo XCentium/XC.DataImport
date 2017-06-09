@@ -1,0 +1,18 @@
+﻿---
+ID: "89abaaa4-3b2f-401e-b2f5-723435c5cf57"
+Parent: "fc53afb1-c364-41dd-b93a-24e808bf9426"
+Template: "fc53afb1-c364-41dd-b93a-24e808bf9426"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/ProcessingTaskBuilder/ProcessingTaskBuilder Parameters/__Standard Values
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20140528T101520
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
