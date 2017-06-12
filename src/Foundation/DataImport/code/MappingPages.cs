@@ -31,5 +31,11 @@ namespace XC.Foundation.DataImport
             public static readonly ID BatchNonScMappingsCreateBatchMapping = ID.Parse("{9F6CE075-50B0-4488-9F71-FE18463EB47F}");
             public static readonly ID BatchNonScMappingsRunBatchImport = ID.Parse("{58EE9324-03FC-4BAF-99B5-C83E94F8601A}");
         }
+
+        public struct Scripts
+        {
+            public static readonly ID PostProcessingScriptCreate = ID.Parse("{84343A27-76A9-42B2-B21E-9FACECD7138C}");
+            public static readonly ID PostProcessingScriptDelete = ID.Parse("{13D62B06-47B0-4E50-8324-D4A5A1D9FE31}");
+        }
     }
 }

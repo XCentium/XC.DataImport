@@ -108,6 +108,14 @@ SharedFields:
             targetProperty="mapping"
             sourceId="MappingPathHidden"
             sourceProperty="text" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{0EA34ADF-C546-436A-87C9-99E5FBCC4A69}"
+            targetControlId="AllScriptList"
+            propertyName="selectedItems"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="PostImportScripts" />
         </actions>
       </rule>
     </ruleset>

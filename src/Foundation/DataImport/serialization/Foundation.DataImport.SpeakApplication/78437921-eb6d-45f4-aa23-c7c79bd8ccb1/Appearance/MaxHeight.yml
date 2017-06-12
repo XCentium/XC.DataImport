@@ -1,0 +1,96 @@
+﻿---
+ID: "7c791374-950f-4570-93d5-463db71a3eac"
+Parent: "c728026f-517e-44e9-8072-4eb7958eaa04"
+Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/SelectableListControl/SelectableListControl Parameters/Appearance/MaxHeight
+DB: core
+SharedFields:
+- ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
+  Hint: Type
+  Value: Integer
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 280
+- ID: "be351a73-fcb0-4213-93fa-c302d8ab4f51"
+  Hint: Shared
+  Type: checkbox
+  Value: 1
+Languages:
+- Language: da
+  Fields:
+  - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
+    Hint: Title
+    Value: MaxHeight
+  - ID: "9541e67d-ce8c-4225-803d-33f7f29f09ef"
+    Hint: __Short description
+    Value: "Bruges til at angive en maksimumhøjde. Herved undgås, at værdien for højden bliver større end maksimumhøjden. Bruger CSS-standardfunktionsmåde."
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: MaxHeight
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104058Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+- Language: "de-DE"
+  Fields:
+  - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
+    Hint: Title
+    Value: MaxHöhe
+  - ID: "9541e67d-ce8c-4225-803d-33f7f29f09ef"
+    Hint: __Short description
+    Value: "Es wird benutzt, um die maximale Höhe einzustellen. Dies verhindert, dass der Wert der Höheneigenschaft größer ls die maximale Höhe wird. Verwendet Standard-Css-Verhalten."
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: MaxHöhe
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104618Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+- Language: en
+  Fields:
+  - ID: "9541e67d-ce8c-4225-803d-33f7f29f09ef"
+    Hint: __Short description
+    Value: It's used to set the maximum height. This prevents the value of the Height property from becoming larger than MaxHeight. Uses default CSS behavior.
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 00010101T000000
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+- Language: "ja-JP"
+  Fields:
+  - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
+    Hint: Title
+    Value: 最大高さ
+  - ID: "9541e67d-ce8c-4225-803d-33f7f29f09ef"
+    Hint: __Short description
+    Value: 最大限の高さを設定するために使用します。これにより高さプロパティの値が最大限の高さを上回ることを回避します。デフォルトの CSS 動作を使用してください。
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: 最大高さ
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T105018Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin

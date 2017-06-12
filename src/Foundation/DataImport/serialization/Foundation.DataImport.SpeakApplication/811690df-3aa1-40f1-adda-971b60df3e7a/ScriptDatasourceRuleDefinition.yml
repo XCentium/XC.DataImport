@@ -1,0 +1,40 @@
+﻿---
+ID: "4bff17c3-eb79-4e69-8dc5-7d536e1f9a00"
+Parent: "811690df-3aa1-40f1-adda-971b60df3e7a"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Processing Scripts/Post-Processing/PageSettings/Rules/ScriptDatasourceRuleDefinition"
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule
+        uid="{43199B4F-3FED-4338-8449-F0871BDF0E38}">
+        <conditions>
+          <condition
+            id="{B5CF2ABD-0811-4220-9805-8F6E62F4F4AC}"
+            uid="45F562379F6145F981689018A04D3BBD" />
+        </conditions>
+        <actions>
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{F7448561-3148-4258-83C4-6AC86B605363}"
+            targetControlId="ScriptsDatasource"
+            eventName="change:dataUrl" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170612T135839Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

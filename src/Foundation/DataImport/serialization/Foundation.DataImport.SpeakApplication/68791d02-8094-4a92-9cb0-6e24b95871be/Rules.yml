@@ -1,0 +1,18 @@
+﻿---
+ID: "78823ef5-6ed7-4556-88b3-3c0f3072c275"
+Parent: "68791d02-8094-4a92-9cb0-6e24b95871be"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Processing Scripts/Post-Processing/Create Script/PageSettings/Rules"
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170612T135809Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

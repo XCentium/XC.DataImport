@@ -11,5 +11,6 @@ namespace XC.Foundation.DataImport
         public const string MappingIsNull = "Mapping is null";
         public const string MappingObjectIsNull = "MappingObject is null";
         public const string ImportStarted = "<h1>Import Started</h1>";
+        public const string ScriptHasBeenSaved = "Script has been saved";
     }
 }

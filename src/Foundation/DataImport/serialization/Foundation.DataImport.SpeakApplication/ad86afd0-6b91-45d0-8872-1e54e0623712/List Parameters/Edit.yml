@@ -1,0 +1,18 @@
+﻿---
+ID: "a022b61c-fb2b-47c6-8c63-e5fb41e1e59f"
+Parent: "472d138e-a26b-4822-8d91-10e633af3a50"
+Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Processing Scripts/Post-Processing/PageSettings/List Control/List Parameters/Edit"
+DB: core
+SharedFields:
+- ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
+  Hint: HTMLTemplate
+  Value: |
+    <a href="{{EditLink}}">{{EditLabel}}</a> |  <a href="{{DeleteLink}}">{{DeleteLabel}}</a>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Value: "20170612T150214:636328765343189809Z"

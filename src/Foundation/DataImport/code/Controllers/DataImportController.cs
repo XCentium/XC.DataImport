@@ -318,6 +318,96 @@ namespace XC.Foundation.DataImport.Controllers
             };
         }
 
+
+        /// <summary>
+        /// Saves the mapping.
+        /// </summary>
+        /// <param name="mapping">The mapping.</param>
+        /// <returns></returns>
+        [System.Web.Http.AcceptVerbs("POST")]
+        [HttpPost]
+        public object SavePostProcessingScript()
+        {
+            string mapping = System.Web.HttpContext.Current.Request.Form["script"];
+            var messages = new List<MessageModel>();
+            if (mapping == null)
+            {
+                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = new List<string>(),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                var mappingObject = (ScriptReference)JsonConvert.DeserializeObject(mapping, typeof(ScriptReference));
+
+                if (mappingObject != null)
+                {
+                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
+                    var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.PostProcessingScriptsFolder), fileName);
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
+                }
+                messages.Add(new MessageModel { Text = Messages.ScriptHasBeenSaved, Type = MessageType.Notification.ToString() });
+
+                return new
+                {
+                    data = mappingObject,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = new List<string>(),
+                messages = messages
+            };
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
+        public object ViewPostProcessingScript(string item = "")
+        {
+            var messages = new List<MessageModel>();
+            if (item == null)
+            {
+                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = new List<string>(),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                var mappingContent = File.ReadAllText(item);
+                var mappingObject = (ScriptReference)JsonConvert.DeserializeObject(mappingContent, typeof(ScriptReference));
+
+                return new
+                {
+                    data = mappingObject,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = new List<string>(),
+                messages = messages
+            };
+        }
         /// <summary>
         /// Saves the mapping.
         /// </summary>
@@ -511,6 +601,53 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = messages
             };
         }
+
+        /// <summary>
+        /// Mappings the specified mapping.
+        /// </summary>
+        /// <param name="mapping">The mapping.</param>
+        /// <returns></returns>
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
+        public object DeleteScript(string script)
+        {
+            var messages = new List<MessageModel>();
+
+            if (script == null)
+            {
+                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = new List<string>(),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                if (File.Exists(script))
+                {
+                    File.Delete(script);
+                }
+                return new
+                {
+                    data = new List<string>(),
+                    messages = "Script has been deleted"
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = new List<string>(),
+                messages = messages
+            };
+        }
+
         /// <summary>
         /// Mappings the specified mapping.
         /// </summary>
@@ -551,6 +688,101 @@ namespace XC.Foundation.DataImport.Controllers
             return new
             {
                 data = new List<string>(),
+                messages = messages
+            };
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
+        public object AllPostProcessingScripts()
+        {
+            var messages = new List<MessageModel>();
+            try
+            {
+                var db = Factory.GetDatabase("core");
+                var editItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var editMappingItem = ClientHost.Factory.GetDataSourceItem(editItem);
+
+                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
+
+                var files =
+                    Directory.GetFiles(DataImportConfigurations.PostProcessingScriptsFolder, "*.json")
+                        .Select(
+                            f =>
+                                new ScriptInfo
+                                {
+                                    Name = Path.GetFileNameWithoutExtension(f),
+                                    FileName = Path.GetFileName(f),
+                                    Path = f,
+                                    EditLabel = Labels.Edit,
+                                    EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "script", f),
+                                    Type = GetScriptType(f),
+                                    DeleteLabel = Labels.Delete,
+                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(deleteMappingItem), "script", f)
+                                });
+
+                return new
+                {
+                    data = files,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = new List<string>(),
+                messages = messages
+            };
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
+        public object PostProcessingScripts(int item = 0, string mapping = "")
+        {
+            var messages = new List<MessageModel>();
+            if (string.IsNullOrEmpty(mapping))
+            {
+                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = GetScripts(1, 0),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                var mappingContent = File.ReadAllText(mapping);
+                var mappingObject = (NonSitecoreMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(NonSitecoreMappingModel));
+
+                var mappings = mappingObject.PostImportScripts.ToList();
+
+                IEnumerable<ScriptReference> additionalScripts = null;
+                if (item > mappingObject.FieldMapping.Count())
+                {
+                    additionalScripts = GetScripts(item, mappingObject.FieldMapping.Count());
+                    mappings.AddRange(additionalScripts);
+                }
+                return new
+                {
+                    data = mappings,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = GetScripts(1, 0),
                 messages = messages
             };
         }
@@ -600,6 +832,17 @@ namespace XC.Foundation.DataImport.Controllers
                 data = GetFieldMappings(1, 0),
                 messages = messages
             };
+        }
+
+
+        private IEnumerable<ScriptReference> GetScripts(int item, int start)
+        {
+            var emptyScriptList = new List<ScriptReference>();
+            for (var i = start; i < item; i++)
+            {
+                emptyScriptList.Add(new ScriptReference() { Id = i });
+            }
+            return emptyScriptList;
         }
 
         /// <summary>
@@ -885,6 +1128,30 @@ namespace XC.Foundation.DataImport.Controllers
                 data = new List<string>(),
                 messages = messages
             };
+        }
+
+        /// <summary>
+        /// Gets the type of the script.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        private string GetScriptType(string item)
+        {
+            if (string.IsNullOrEmpty(item))
+                return string.Empty;
+            try
+            {
+                var mappingContent = File.ReadAllText(item);
+                var mappingObject = (ScriptReference)JsonConvert.DeserializeObject(mappingContent, typeof(ScriptReference));
+
+                if (mappingObject != null)
+                    return mappingObject.Type;
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+            }
+            return string.Empty;
         }
 
     }

@@ -23,6 +23,11 @@ SharedFields:
           ph="Page.Code"
           uid="{D5E9DACE-7284-4D58-8583-06C7482FF384}" />
         <r
+          id="{327FD09D-41D6-4F15-8B18-611799364853}"
+          par="Id=MultiSelectList1&amp;PageScriptFileName=%2fsitecore%2fshell%2fclient%2fSpeak%2fAssets%2flib%2fui%2f1.1%2fbehaviors%2fMultiSelectList.js&amp;Name=MultiSelectList"
+          ph="Page.Code"
+          uid="{61178F70-5E8E-4CA0-A59B-5057C96FA344}" />
+        <r
           id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
           par="RuleItemId=%7bA416051D-74E3-4899-BDC2-F8C2CED5EF27%7d&amp;Id=DatabaseDatasourceOnLoadRule&amp;LoadMode=Immediately&amp;Trigger=app%3aloaded&amp;Field=Rule"
           ph="Page.Body"
@@ -107,6 +112,11 @@ SharedFields:
           par="Id=MappingViewDatasource&amp;QueryParameters=%7bBinding+MappingPathHidden.Text%7d&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fviewNonScMapping"
           ph="Page.Body"
           uid="{81E3E2D2-F16C-4CFE-9490-2940F4B01E75}" />
+        <r
+          id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
+          par="Id=AllPostProcessingScriptsDatasource&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fallpostprocessingscripts"
+          ph="Page.Body"
+          uid="{93D5ED9B-4D20-4A96-9A64-064E3E26F420}" />
         <r
           id="{ADB8338C-0701-4838-845F-9B2E339812FD}"
           par="Id=Required&amp;PageScriptFileName=%2fsitecore%2fshell%2fclient%2fApplications%2fXCDataImport%2fversion+1%2fBehaviors%2fRequired.js&amp;Name=Required"
@@ -240,7 +250,7 @@ SharedFields:
           uid="{A7C42B24-7F68-4E34-911D-E1FB21CE3112}" />
         <r
           id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
-          par="Id=TargetPathBorder&amp;PaddingType=All&amp;UsePadding=1&amp;ShowBorder=1"
+          par="Id=TargetPathBorder&amp;PaddingType=All&amp;Height=400px&amp;UsePadding=1&amp;Behaviors=Scrollbar&amp;ShowBorder=1"
           ph="TargetExpander.Body"
           uid="{FBF78178-17FF-4274-9E4D-015C82A78433}" />
         <r
@@ -344,10 +354,22 @@ SharedFields:
           ph="FullWidthPanel.Content"
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
-          id="{CA84FBFF-B3A0-4AEC-9C2C-7DDBBF7DA102}"
-          par="Id=PostProcessingExpander&amp;Text=Rules+to+Run+After+Import+is+Complete"
+          id="{442BD093-FBAD-4E36-BC08-489E16C82D08}"
+          par="Text=Rules%2525252bto%2525252bRun%2525252bAfter%2525252bImport%2525252bis%2525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
           ph="FullWidthPanel.Content"
           uid="{F7C3B5FB-82DF-4919-8F1C-FAD1641B9E72}" />
+        <r
+          ds="{D2A1B6EB-F9EF-46F5-9393-B5B63403DCBD}"
+          id="{28522C1B-378A-4398-B422-0775B4FF735D}"
+          par="Id=ScriptList&amp;TileHtmlFileName=%2fsitecore%2fshell%2fclient%2fBusiness+Component+Library%2fLayouts%2fRenderings%2fListsAndGrids%2fListControls%2fDefaultTile.cshtml&amp;Items=%7bBinding+AllScriptList.SelectedItems%7d"
+          ph="PostProcessingExpander.Body"
+          uid="{967990C0-F3D3-4032-A953-C58A946827F1}" />
+        <r
+          ds="{EFDD2446-7962-44F4-8672-8C8F7D1713F5}"
+          id="{C2FAF554-1419-4B6E-96B8-EC7DB6995B3C}"
+          par="Id=AddProcessingScriptButton&amp;Text=Add+Script"
+          ph="PostProcessingExpander.ActionBar"
+          uid="{08E17A71-2D01-4F8D-9F02-4641DF8EE62D}" />
         <r
           ds="{24956696-2A50-4A1C-8F6E-A39715AD9D25}"
           id="{62972446-BB45-44D6-8924-2FB38CAA5ABA}"
@@ -361,9 +383,35 @@ SharedFields:
           uid="{247EE711-58D9-4183-B7AC-BFB3C5670449}" />
         <r
           id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}"
+          par="Click=javascript%3aapp.saveMapping()&amp;Id=SaveButton1&amp;ButtonType=Primary&amp;Text=Save+Mapping"
+          ph="ApplicationHeader.Actions"
+          uid="{12E4AD50-788D-4535-A366-AF84BA691600}" />
+        <r
+          id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}"
           par="Click=javascript%3aapp.saveMapping()&amp;Id=SaveButton&amp;ButtonType=Primary&amp;Text=Save+Mapping"
           ph="Border2.Content"
           uid="{952E35A6-14CD-4269-ABA5-A0FE874B35D3}" />
+        <r
+          id="{B60FB581-44D1-4372-86A2-D6E494F020E1}"
+          par="HeaderText=Select+Script&amp;Id=ScriptsDialogWindow&amp;IsVisible=0&amp;Backdrop=Static&amp;Size=%7bF505B72F-890A-4190-8C48-742A4FEBD6B0%7d"
+          ph="Border2.Content"
+          uid="{1D9E14FA-FEDF-46A8-9FEF-DB91EFCCFDD0}" />
+        <r
+          ds="{8C23392E-089A-4D67-A87C-E691B9C826A6}"
+          id="{85429CB6-3445-41D3-85D4-8D4ED4C21779}"
+          par="TileHtmlFileName=%2fsitecore%2fshell%2fclient%2fBusiness+Component+Library%2fLayouts%2fRenderings%2fListsAndGrids%2fListControls%2fDefaultTile.cshtml&amp;Id=AllScriptList&amp;Items=%7bBinding+AllPostProcessingScriptsDatasource.Data%7d&amp;Behaviors=MultiSelectList"
+          ph="ScriptsDialogWindow.Content"
+          uid="{BDF2B6B1-13AE-4701-AFCF-89CE96EDB844}" />
+        <r
+          id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}"
+          par="Click=trigger%3ahide%3aScriptsDialogWindow&amp;Id=SaveScriptSelectionButton&amp;Text=Ok"
+          ph="ScriptsDialogWindow.Buttons"
+          uid="{1511F90A-7255-47D0-9FCF-C95DBAECFF41}" />
+        <r
+          id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}"
+          par="Click=trigger%3ahide%3aScriptsDialogWindow&amp;Id=CancelScriptSelectionButton&amp;Text=Cancel"
+          ph="ScriptsDialogWindow.Buttons"
+          uid="{FAA399DC-DD7D-456F-AB6D-F0004308286B}" />
       </d>
     </r>
 Languages:

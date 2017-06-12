@@ -79,6 +79,25 @@ namespace XC.Foundation.DataImport.Configurations
                 return path;
             }
         }
+
+        /// <summary>
+        /// Gets the post processing scripts folder.
+        /// </summary>
+        /// <value>
+        /// The post processing scripts folder.
+        /// </value>
+        public static string PostProcessingScriptsFolder
+        {
+            get
+            {
+                var path = Path.Combine(GetFolderPath, "post-processing-scripts");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
         /// <summary>
         /// Gets the history folder.
         /// </summary>

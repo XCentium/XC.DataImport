@@ -71,7 +71,7 @@ SharedFields:
         <r
           id="{910155C7-3881-4A56-90FB-D126490EDE55}"
           par="Id=MessageBar"
-          ph="ApplicationContent.Navigation"
+          ph="ApplicationHeader.ContextSwitch"
           uid="{BFC50609-DD12-4907-8E79-05AE46AF9E08}" />
         <r
           id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"

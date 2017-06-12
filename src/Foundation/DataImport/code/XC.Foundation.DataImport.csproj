@@ -93,6 +93,10 @@
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Abstractions, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.Abstractions.NoReferences.8.2.170407\lib\NET452\Sitecore.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sitecore.Buckets, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Buckets.NoReferences.8.2.170407\lib\NET452\Sitecore.Buckets.dll</HintPath>
       <Private>True</Private>
@@ -206,16 +210,15 @@
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\Styles\xcdataimport.css" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Behaviors\Required.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ProcessingTaskBuilder\ProcessingTaskBuilder.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ProcessingTaskBuilder\ProcessingTaskBuilder.css" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ProcessingTaskBuilder\ProcessingTaskBuilder.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ProcessingTaskBuilder\ProcessingTaskBuilder.min.css" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\SelectableListControl.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\ScriptList.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\AsyncServiceDatasource.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\ServiceDatasource.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DataImport.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\EditMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ExistingMappings.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\PostProcessingScript.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\NonScMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\RunImport.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\TreeViews\ItemTreeView.js" />
@@ -228,7 +231,8 @@
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\TreeViews\ItemTreeView.cshtml" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\AsyncServiceDatasource.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ProcessingTaskBuilder\ProcessingTaskBuilder.less" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\ScriptList.cshtml" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\SelectableListControl.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -251,6 +255,8 @@
     <Compile Include="Labels.cs" />
     <Compile Include="MappingPages.cs" />
     <Compile Include="Messages.cs" />
+    <Compile Include="Models\ScriptInfo.cs" />
+    <Compile Include="Models\ScriptReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cache\ItemCacheDependency.cs" />
     <Compile Include="Configurations\DataImportConfigurations.cs" />
@@ -299,9 +305,12 @@
     <Compile Include="Repositories\Repositories\NonSitecoreDatabaseRepositoryGrouped.cs" />
     <Compile Include="Repositories\Repositories\SitecoreDatabaseRepository.cs" />
     <Compile Include="Templates.cs" />
+    <Compile Include="UI\Controls\ScriptListControl.cs" />
     <Compile Include="UI\Controls\FieldListControl.cs" />
+    <Compile Include="UI\Controls\SelectableListControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Rules\" />
     <Folder Include="Sitecore\Shell\Client\Business Component Library\version 2\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>

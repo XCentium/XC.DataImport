@@ -1,0 +1,94 @@
+﻿---
+ID: "542e7cbb-43e8-46c5-b0d2-eedac0d88b49"
+Parent: "4089f09b-dbbc-44a9-a0ec-e19eb11cb861"
+Template: "5ee9a69b-bc29-452e-b2d0-ad421a04e7bf"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Action Control/ActionControl Parameters/List Source ActionColumn/List Source ActionGroup/Add script"
+DB: core
+SharedFields:
+- ID: "377bca4b-8687-4a89-b0d7-cc56765ad81b"
+  Hint: Click
+  Value: "trigger:show:ScriptsDialogWindow"
+- ID: "549da08f-8b0e-4a2f-9f1f-b35c474fe2a0"
+  Hint: ImageUrl
+  Value: ~/icon/Office/16x16/navigate_plus.png
+Languages:
+- Language: da
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: Tilføj kilde
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104001Z
+    - ID: "443c0046-ceb9-432a-9db0-cbc11787c786"
+      Hint: Title
+      Value: Tilføj kilde
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "9384139b-2f73-4f0f-8650-0c7a1d4c6ddc"
+      Hint: Tooltip
+      Value: Føj kilde til listen.
+- Language: "de-DE"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: Quelle hinzufügen
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104520Z
+    - ID: "443c0046-ceb9-432a-9db0-cbc11787c786"
+      Hint: Title
+      Value: Quelle hinzufügen
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "9384139b-2f73-4f0f-8650-0c7a1d4c6ddc"
+      Hint: Tooltip
+      Value: Die Quelle der Liste hinzufügen.
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20140505T124844
+    - ID: "443c0046-ceb9-432a-9db0-cbc11787c786"
+      Hint: Title
+      Value: Add script
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "9384139b-2f73-4f0f-8650-0c7a1d4c6ddc"
+      Hint: Tooltip
+      Value: Add source to the list.
+- Language: "ja-JP"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: ソースを追加
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104917Z
+    - ID: "443c0046-ceb9-432a-9db0-cbc11787c786"
+      Hint: Title
+      Value: ソースを追加
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "9384139b-2f73-4f0f-8650-0c7a1d4c6ddc"
+      Hint: Tooltip
+      Value: ソースをリストに追加

@@ -34,6 +34,7 @@
           mapping["IncrementalUpdate"] = this.IncrementalUpdateCheckbox.get("isChecked");
           mapping["IncrementalUpdateSourceColumn"] = this.SourceDateColumn.get("text");
 
+          mapping["PostImportScripts"] = this.ScriptList.get("items");
 
           var serverRequestParameters = null,
             serverRequestOnSuccess = null,
