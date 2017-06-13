@@ -16,5 +16,6 @@ namespace XC.Foundation.DataImport.Models
         public string FileName { get; set; }
         public string DeleteLink { get; set; }
         public string DeleteLabel { get; set; }
+        public string itemId { get; set; }
     }
 }

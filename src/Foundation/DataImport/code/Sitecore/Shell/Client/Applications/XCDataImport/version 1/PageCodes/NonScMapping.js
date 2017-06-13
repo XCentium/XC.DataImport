@@ -34,7 +34,12 @@
           mapping["IncrementalUpdate"] = this.IncrementalUpdateCheckbox.get("isChecked");
           mapping["IncrementalUpdateSourceColumn"] = this.SourceDateColumn.get("text");
 
-          mapping["PostImportScripts"] = this.ScriptList.get("items");
+          var scriptPaths = [];
+          _.each(this.ScriptList.get("items"), function (i) {
+              scriptPaths.push(i["Path"]);
+          });
+
+          mapping["PostImportScripts"] = scriptPaths;
 
           var serverRequestParameters = null,
             serverRequestOnSuccess = null,

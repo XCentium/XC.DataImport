@@ -11,6 +11,7 @@ namespace XC.Foundation.DataImport.Models
         string Name { get; set; }
         SourceTargetPair Paths { get; set; }
         SourceTargetPair Databases { get; set; }
+        IEnumerable<string> PostImportScripts { get; set; }
 
     }
 }

@@ -257,6 +257,9 @@
     <Compile Include="Messages.cs" />
     <Compile Include="Models\ScriptInfo.cs" />
     <Compile Include="Models\ScriptReference.cs" />
+    <Compile Include="Pipelines\IProcessingPipelineProcessor.cs" />
+    <Compile Include="Pipelines\ProcessingPipelineArgs.cs" />
+    <Compile Include="Pipelines\RunPostProcessingScripts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cache\ItemCacheDependency.cs" />
     <Compile Include="Configurations\DataImportConfigurations.cs" />

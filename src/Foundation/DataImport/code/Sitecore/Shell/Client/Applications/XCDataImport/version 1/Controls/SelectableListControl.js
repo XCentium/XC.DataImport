@@ -613,6 +613,7 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
 
       this.on("change:selectedItem", updateHasSelectedItem, this);
       this.on("change:checkedItems", updateSelectedItems, this);
+      this.on("change:selectedItems", updateSelectedItemIds, this);
 
       function updateHasSelectedItem() {
         this.set("hasSelectedItem", _.isObject(this.get("selectedItem")));
@@ -625,6 +626,9 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
               selectedItems.push(i);
           });
           this.set("selectedItems", selectedItems);
+      }
+      function updateSelectedItemIds() {
+          this.viewModel.checkItems(this.get("selectedItems"));
       }
     }
   });

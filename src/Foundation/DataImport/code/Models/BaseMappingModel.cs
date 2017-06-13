@@ -19,7 +19,7 @@ namespace XC.Foundation.DataImport.Models
 
         public SourceTargetPair FullPaths { get; set; }
 
-        public IEnumerable<ScriptReference> PostImportScripts { get; set; }
+        public IEnumerable<string> PostImportScripts { get; set; }
 
         public void ConvertPathsToLongIds()
         {

@@ -718,7 +718,8 @@ namespace XC.Foundation.DataImport.Controllers
                                     EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "script", f),
                                     Type = GetScriptType(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(deleteMappingItem), "script", f)
+                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(deleteMappingItem), "script", f),
+                                    itemId = f
                                 });
 
                 return new
@@ -760,17 +761,11 @@ namespace XC.Foundation.DataImport.Controllers
                 var mappingContent = File.ReadAllText(mapping);
                 var mappingObject = (NonSitecoreMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(NonSitecoreMappingModel));
 
-                var mappings = mappingObject.PostImportScripts.ToList();
+                var scripts = mappingObject.PostImportScripts.ToList();
 
-                IEnumerable<ScriptReference> additionalScripts = null;
-                if (item > mappingObject.FieldMapping.Count())
-                {
-                    additionalScripts = GetScripts(item, mappingObject.FieldMapping.Count());
-                    mappings.AddRange(additionalScripts);
-                }
                 return new
                 {
-                    data = mappings,
+                    data = scripts,
                     messages = messages
                 };
             }

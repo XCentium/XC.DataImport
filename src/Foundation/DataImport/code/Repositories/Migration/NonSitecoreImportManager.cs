@@ -13,6 +13,8 @@ using Sitecore.SecurityModel;
 using Sitecore.Data.Events;
 using Sitecore.ContentSearch.Maintenance;
 using XC.Foundation.DataImport.Diagnostics;
+using XC.Foundation.DataImport.Pipelines.PostProcessing;
+using Sitecore.Pipelines;
 
 namespace XC.DataImport.Repositories.Migration
 {
@@ -115,6 +117,8 @@ namespace XC.DataImport.Repositories.Migration
                             TargetRepository.RetrieveItemsToProcess(this.Filter);
                             var dataSet = SourceRepository.GetDataSet(statusMethod, statusFilepath, Filter);
 
+                            var migratedItems = new List<Item>();
+
                             if (dataSet != null)
                             {
                                 TargetRepository.ClearMultilistFieldValues(statusMethod, statusFilepath, dataSet, Filter);
@@ -133,11 +137,17 @@ namespace XC.DataImport.Repositories.Migration
                                             job.Status.Processed++;
                                             job.Status.State = JobState.Running;
                                         }
+                                        if (migratedItem != null)
+                                            migratedItems.Add(migratedItem);
                                     }
                                 }
                             }
-                            ClearCache();
                             statusMethod(" <h4 style=\"color:blue\">[INFO] Imported is done</h4>", statusFilepath);
+
+                            RunPostProcessingScripts(migratedItems, Mapping.PostImportScripts);
+                            statusMethod(" <h4 style=\"color:blue\">[INFO] Post Processing scripts are done</h4>", statusFilepath);
+
+                            ClearCache();
 
                         }
                     }
@@ -157,6 +167,12 @@ namespace XC.DataImport.Repositories.Migration
             }
             statusMethod(string.Format(" <span style=\"color:blue\">[INFO] {0} DONE", id), statusFilepath);
             return;
+        }
+
+        private void RunPostProcessingScripts(IEnumerable<Item> migratedItems, IEnumerable<string> postProcessingScripts)
+        {
+            var pipelineArgs = new ProcessingPipelineArgs(migratedItems, postProcessingScripts);
+            CorePipeline.Run("xc.dataimport.postprocessing", pipelineArgs);
         }
 
         internal List<Item> GetItemsToSync(Action<string, string> statusMethod, string statusFilepath)

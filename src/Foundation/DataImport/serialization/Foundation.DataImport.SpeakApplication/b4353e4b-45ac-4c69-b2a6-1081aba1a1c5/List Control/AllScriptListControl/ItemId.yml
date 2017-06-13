@@ -1,0 +1,25 @@
+﻿---
+ID: "c8eee94b-8e19-40c6-b35e-dd8d050cc9c8"
+Parent: "8c23392e-089a-4d67-a87c-e691b9c826a6"
+Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/AllScriptListControl/ItemId"
+DB: core
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 500
+- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
+  Hint: DataField
+  Value: Path
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170613T124756Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

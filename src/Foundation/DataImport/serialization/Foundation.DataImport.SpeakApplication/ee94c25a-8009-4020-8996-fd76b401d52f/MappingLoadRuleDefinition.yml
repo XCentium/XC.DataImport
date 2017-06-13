@@ -116,6 +116,11 @@ SharedFields:
             sourceControlId="MappingViewDatasource"
             sourceProperty="data"
             sourceSubProperty="PostImportScripts" />
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{54C2AB14-DC25-49E3-A96E-CFEA4C5D4D43}"
+            targetControlId="AllScriptList"
+            eventName="change:checkedItemIds" />
         </actions>
       </rule>
     </ruleset>
