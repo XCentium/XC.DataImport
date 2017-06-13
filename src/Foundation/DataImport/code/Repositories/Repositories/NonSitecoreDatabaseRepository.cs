@@ -22,6 +22,7 @@ using System.Configuration;
 using Sitecore.IO;
 using Sitecore.Resources.Media;
 using System.IO;
+using XC.Foundation.DataImport.Utilities;
 
 namespace XC.DataImport.Repositories.Repositories
 {
@@ -232,11 +233,11 @@ namespace XC.DataImport.Repositories.Repositories
                 if (!string.IsNullOrEmpty(_mapping.Templates.Target))
                 {
                     var template = ItemUri.Parse(_mapping.Templates.Target);
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}' and @@templateid='{2}']", EscapeDashes(targetFieldItem.Name), matchingColumnValue, template.ItemID));
+                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue, template.ItemID));
                 }
                 else
                 {
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", EscapeDashes(targetFieldItem.Name), matchingColumnValue));
+                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue));
                 }
             }
             else
@@ -302,6 +303,9 @@ namespace XC.DataImport.Repositories.Repositories
                         {
                             command.CommandType = System.Data.CommandType.Text;
                         }
+
+                        command.CommandTimeout = 0;
+
                         var dataSet = new DataSet();
                         using (SqlDataAdapter dataAdapter = new SqlDataAdapter())
                         {
@@ -371,6 +375,8 @@ namespace XC.DataImport.Repositories.Repositories
                             command.CommandType = System.Data.CommandType.Text;
                         }
                         connection.Open();
+
+                        command.CommandTimeout = 0;
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -465,32 +471,6 @@ namespace XC.DataImport.Repositories.Repositories
                 }
             return string.Format("[{0}] = '{3}' OR  [{2}] = '{3}' OR  [{1}] = '{3}' ", "Base_Code", "Code", "Name", code);
         }
-        /// <summary>
-        /// Escapes the dashes.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        private string EscapeDashes(string path)
-        {
-            var newPath = new List<string>();
-            var pathSegments = path.Split('/');
-            lock (pathSegments)
-            {
-                foreach (var segment in pathSegments)
-                {
-                    if (segment.Contains(" ") || segment.Contains("-"))
-                    {
-                        newPath.Add(string.Format("#{0}#", segment));
-                    }
-                    else
-                    {
-                        newPath.Add(segment);
-                    }
-                }
-            }
-            return string.Join("/", newPath);
-        }
-
 
         /// <summary>
         /// Updates the existing fields.
@@ -531,10 +511,10 @@ namespace XC.DataImport.Repositories.Repositories
                                     var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
                                     if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
                                     {
-                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}=\"{1}\" and @@templateid='{2}']", EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, EscapeDashes(startPath)));
+                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}=\"{1}\" and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
                                         if (matchingItem == null)
                                         {
-                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", EscapeDashes(referenceFieldName), matchingColumnValue, EscapeDashes(startPath)));
+                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
                                         }
                                         if (DetailedLogging)
                                         {
@@ -546,10 +526,10 @@ namespace XC.DataImport.Repositories.Repositories
                                     {
                                         if (!string.IsNullOrEmpty(referenceFieldName))
                                         {
-                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}=\"{1}\"]", EscapeDashes(referenceFieldName), matchingColumnValue, EscapeDashes(startPath)));
+                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}=\"{1}\"]", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
                                             if (matchingItem == null)
                                             {
-                                                matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", EscapeDashes(referenceFieldName), matchingColumnValue, EscapeDashes(startPath)));
+                                                matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
                                             }
                                             if (DetailedLogging)
                                             {
@@ -611,10 +591,10 @@ namespace XC.DataImport.Repositories.Repositories
                                     var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
                                     if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
                                     {
-                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, EscapeDashes(startPath)));
+                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
                                         if (matchingItem == null)
                                         {
-                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", EscapeDashes(referenceFieldName), matchingColumnValue, EscapeDashes(startPath)));
+                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
                                         }
                                         if (DetailedLogging)
                                         {
@@ -805,7 +785,7 @@ namespace XC.DataImport.Repositories.Repositories
 
                                     if (!string.IsNullOrWhiteSpace(field.ReferenceItemsTemplate))
                                     {
-                                        var matchingItem = Database.SelectSingleItem(string.Format("fast://{3}//*[@{0}='{1}' and @@templateid='{2}']", EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, field.ReferenceItemsTemplate, startPath));
+                                        var matchingItem = Database.SelectSingleItem(string.Format("fast://{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, field.ReferenceItemsTemplate, startPath));
                                         if (matchingItem != null && multilistField != null)
                                         {
                                             using (new EditContext(item, false, true))
@@ -820,7 +800,7 @@ namespace XC.DataImport.Repositories.Repositories
                                     }
                                     else
                                     {
-                                        var matchingItem = Database.SelectSingleItem(string.Format("fast://{2}//*[@{0}='{1}']", EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, startPath));
+                                        var matchingItem = Database.SelectSingleItem(string.Format("fast://{2}//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, startPath));
                                         if (matchingItem != null && multilistField != null)
                                         {
                                             using (new EditContext(item, false, true))
@@ -1072,7 +1052,7 @@ namespace XC.DataImport.Repositories.Repositories
                 {
                     if (!string.IsNullOrEmpty(filter.Item3) && !string.IsNullOrEmpty(filter.Item2) && template != null)
                     {
-                        query = string.Format("fast://sitecore//*[@@templateid='{0}' and @{1}='{2}']", template.ItemID, EscapeDashes(filter.Item2), filter.Item3);
+                        query = string.Format("fast://sitecore//*[@@templateid='{0}' and @{1}='{2}']", template.ItemID, FastQueryUtility.EscapeDashes(filter.Item2), filter.Item3);
                     }
                     else if (template != null)
                     {
@@ -1080,11 +1060,11 @@ namespace XC.DataImport.Repositories.Repositories
                     }
                     else if (!string.IsNullOrEmpty(filter.Item3) && !string.IsNullOrEmpty(filter.Item2))
                     {
-                        query = string.Format("fast://sitecore//*[@{0}='{1}']", EscapeDashes(filter.Item2), filter.Item3);
+                        query = string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(filter.Item2), filter.Item3);
                     }
                     else if (!string.IsNullOrEmpty(_mapping.Paths.Target))
                     {
-                        query = string.Format("fast:/{0}//*", EscapeDashes(_mapping.Paths.Target));
+                        query = string.Format("fast:/{0}//*", FastQueryUtility.EscapeDashes(_mapping.Paths.Target));
                     }
                 }
                 else
@@ -1095,7 +1075,7 @@ namespace XC.DataImport.Repositories.Repositories
                     }
                     else if (!string.IsNullOrEmpty(_mapping.Paths.Target))
                     {
-                        query = string.Format("fast:/{0}//*", EscapeDashes(_mapping.Paths.Target));
+                        query = string.Format("fast:/{0}//*", FastQueryUtility.EscapeDashes(_mapping.Paths.Target));
                     }
                 }
                 var cache = HttpRuntime.Cache;

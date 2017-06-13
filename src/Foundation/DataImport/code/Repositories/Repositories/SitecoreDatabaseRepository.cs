@@ -19,6 +19,7 @@ using Sitecore.Pipelines;
 using Sitecore.Data.Proxies;
 using XC.Foundation.DataImport.Disablers;
 using XC.Foundation.DataImport.Diagnostics;
+using XC.Foundation.DataImport.Utilities;
 
 namespace XC.DataImport.Repositories.Repositories
 {
@@ -67,7 +68,7 @@ namespace XC.DataImport.Repositories.Repositories
                 if (string.IsNullOrEmpty(_mapping.Paths.Source) && !string.IsNullOrEmpty(_mapping.Templates.Source))
                 {
                     query = string.Format("fast:/sitecore//*[@@templateid='{0}']",
-                            EscapeDashes(_mapping.Templates.Source));
+                            FastQueryUtility.EscapeDashes(_mapping.Templates.Source));
                 }
                 else if (!string.IsNullOrEmpty(_mapping.Paths.Source) && string.IsNullOrEmpty(_mapping.Templates.Source))
                 {
@@ -75,7 +76,7 @@ namespace XC.DataImport.Repositories.Repositories
                     if (startItem != null)
                     {
                         query = string.Format("fast:{0}//*",
-                                EscapeDashes(startItem.Paths.Path));
+                                FastQueryUtility.EscapeDashes(startItem.Paths.Path));
                     }
                 }
                 else
@@ -84,7 +85,7 @@ namespace XC.DataImport.Repositories.Repositories
                     if (startItem != null)
                     {
                         query = string.Format("fast:{1}//*[@@templateid='{0}']", _mapping.Templates.Source,
-                            EscapeDashes(startItem.Paths.Path));
+                            FastQueryUtility.EscapeDashes(startItem.Paths.Path));
                     }
                     else
                     {
@@ -99,29 +100,6 @@ namespace XC.DataImport.Repositories.Repositories
                 }
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Escapes the dashes.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        private string EscapeDashes(string path)
-        {
-            var newPath = new List<string>();
-            var pathSegments = path.Split('/');
-            foreach (var segment in pathSegments)
-            {
-                if (segment.Contains(" ") || segment.Contains("-"))
-                {
-                    newPath.Add(string.Format("#{0}#", segment));
-                }
-                else
-                {
-                    newPath.Add(segment);
-                }
-            }
-            return string.Join("/", newPath);
         }
 
         /// <summary>

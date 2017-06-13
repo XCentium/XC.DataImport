@@ -143,10 +143,12 @@ namespace XC.DataImport.Repositories.Migration
                                 }
                             }
                             statusMethod(" <h4 style=\"color:blue\">[INFO] Imported is done</h4>", statusFilepath);
-
-                            RunPostProcessingScripts(migratedItems, Mapping.PostImportScripts);
-                            statusMethod(" <h4 style=\"color:blue\">[INFO] Post Processing scripts are done</h4>", statusFilepath);
-
+                            if (Mapping.PostImportScripts != null && Mapping.PostImportScripts.Any())
+                            {
+                                statusMethod(" <h4 style=\"color:blue\">[INFO] Post Processing scripts starting</h4>", statusFilepath);
+                                RunPostProcessingScripts(migratedItems, Mapping.PostImportScripts);
+                                statusMethod(" <h4 style=\"color:blue\">[INFO] Post Processing scripts are done</h4>", statusFilepath);
+                            }
                             ClearCache();
 
                         }

@@ -11,6 +11,7 @@ using XC.Foundation.DataImport;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Pipelines;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
+using XC.Foundation.DataImport.Utilities;
 
 namespace XC.Project.DataImport.Scripts.PostImport
 {
@@ -45,11 +46,13 @@ namespace XC.Project.DataImport.Scripts.PostImport
 
         private Item GetParentItem(string parentId)
         {
-            var query = string.Format("fast:/sitecore//*['{0}'='{1}']", Templates.ImportedItem.Fields.OriginObjectId, parentId);
+            var query = string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginObjectId), parentId);
             var db = Factory.GetDatabase("master");
             if (db == null)
                 return null;
             return db.SelectSingleItem(query);
         }
+
+        
     }
 }

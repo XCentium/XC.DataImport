@@ -311,11 +311,10 @@
     <Compile Include="UI\Controls\ScriptListControl.cs" />
     <Compile Include="UI\Controls\FieldListControl.cs" />
     <Compile Include="UI\Controls\SelectableListControl.cs" />
+    <Compile Include="Utilities\FastQueryUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rules\" />
     <Folder Include="Sitecore\Shell\Client\Business Component Library\version 2\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
