@@ -9,10 +9,21 @@ SharedFields:
   Hint: HTMLTemplate
   Value: |
     <a href="{{EditLink}}">{{EditLabel}}</a> |  <a href="{{DeleteLink}}">{{DeleteLabel}}</a>
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 300
 Languages:
 - Language: en
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
-      Value: "20170612T150214:636328765343189809Z"
+      Hint: __Created
+      Value: 20170601T171038Z
+    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
+      Hint: HeaderText
+      Value: Actions
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
