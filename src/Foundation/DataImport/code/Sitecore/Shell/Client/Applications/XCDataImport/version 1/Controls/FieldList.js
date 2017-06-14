@@ -57,11 +57,9 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             var itemPropertyName = itemInfo[0];
             var itemIndex = itemInfo[1];
 
-            var newValue = e.target.selectedOptions ? e.target.selectedOptions[0].value : e.target.checked ? e.target.checked : e.target.value;
-            if (newValue) {
-                this.parent.listControl.model.viewModel.items()[itemIndex][itemPropertyName] = newValue;
-                this.parent.listControl.model.set("savedItems", this.parent.listControl.model.viewModel.items());
-            }
+            var newValue = e.target.selectedOptions ? e.target.selectedOptions[0].value : e.target.localName == "checkbox" ? e.target.checked : e.target.value;
+            this.parent.listControl.model.viewModel.items()[itemIndex][itemPropertyName] = newValue;
+            this.parent.listControl.model.set("savedItems", this.parent.listControl.model.viewModel.items());
         }
     });
 
