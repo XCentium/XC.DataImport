@@ -2,7 +2,7 @@
 ID: "bf6b9ac2-7b9f-4990-a625-e520661ea2b9"
 Parent: "4cf256dc-bfde-446e-a59a-cbb6f01d3836"
 Template: "d7cf8b7e-083d-4351-aef2-2bcd2d794826"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Delete Mapping"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Actions/Delete Mapping"
 DB: core
 SharedFields:
 - ID: "39c4902e-9960-4469-aeef-e878e9c8218f"

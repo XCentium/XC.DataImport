@@ -2,7 +2,7 @@
 ID: "89816681-3862-4581-8247-4e63c6f8635e"
 Parent: "cb2c400e-f127-41b7-891e-99f7ba3be2d1"
 Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Run Mapping Import/PageSettings/Rules/PopulateMappingRuleDefinition"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Actions/Run Mapping Import/PageSettings/Rules/PopulateMappingRuleDefinition"
 DB: core
 SharedFields:
 - ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
