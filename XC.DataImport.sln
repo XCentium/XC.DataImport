@@ -29,15 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 		publishsettings.targets.example = publishsettings.targets.example
 		README.md = README.md
 		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
-		src\Project\Common\code\App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config = src\Project\Common\code\App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config
-		src\Project\Common\code\App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config.example = src\Project\Common\code\App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config.example
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3E33DA08-FF81-4531-86C3-30CFB80F22EB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XC.Common.Website", "src\Project\Common\code\XC.Common.Website.csproj", "{03810978-BFDF-4985-AA30-8A288A04AF03}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Datasources", "Datasources", "{CF4BBA5E-B71F-4477-8EF0-19F32F0C22D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataImport", "DataImport", "{4F84DD68-1FC4-48DD-985C-993903BB2876}"
 EndProject
@@ -57,10 +51,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{03810978-BFDF-4985-AA30-8A288A04AF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03810978-BFDF-4985-AA30-8A288A04AF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03810978-BFDF-4985-AA30-8A288A04AF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03810978-BFDF-4985-AA30-8A288A04AF03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1103DAC-5274-47CF-81FB-4F9B86695A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1103DAC-5274-47CF-81FB-4F9B86695A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1103DAC-5274-47CF-81FB-4F9B86695A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,8 +73,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E33DA08-FF81-4531-86C3-30CFB80F22EB} = {879C8F51-41A7-489C-A1F3-98E56A2E67BE}
-		{03810978-BFDF-4985-AA30-8A288A04AF03} = {3E33DA08-FF81-4531-86C3-30CFB80F22EB}
-		{CF4BBA5E-B71F-4477-8EF0-19F32F0C22D8} = {441CFFA2-0ED7-4CD8-944B-D4F2BA1EBFE4}
 		{4F84DD68-1FC4-48DD-985C-993903BB2876} = {441CFFA2-0ED7-4CD8-944B-D4F2BA1EBFE4}
 		{A1103DAC-5274-47CF-81FB-4F9B86695A27} = {4F84DD68-1FC4-48DD-985C-993903BB2876}
 		{639923EF-E7D3-4A5C-9DB9-97D25E2FBA86} = {4F84DD68-1FC4-48DD-985C-993903BB2876}
