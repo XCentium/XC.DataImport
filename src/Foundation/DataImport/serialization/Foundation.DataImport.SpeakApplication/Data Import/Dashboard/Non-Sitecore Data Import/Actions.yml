@@ -2,7 +2,7 @@
 ID: "4cf256dc-bfde-446e-a59a-cbb6f01d3836"
 Parent: "2b43c4db-e16a-42ef-aac6-7650ed4b67b7"
 Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Actions"
 DB: core
 SharedFields:
 - ID: "39c4902e-9960-4469-aeef-e878e9c8218f"

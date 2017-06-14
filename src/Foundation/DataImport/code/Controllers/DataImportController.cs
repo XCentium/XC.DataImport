@@ -17,6 +17,9 @@ using XC.Foundation.DataImport.Configurations;
 using XC.Foundation.DataImport.Diagnostics;
 using Sitecore.Data.Managers;
 using XC.Foundation.DataImport.Repositories.FileSystem;
+using Sitecore.Data.DataSources;
+using Sitecore.Links;
+using Sitecore.Sites;
 
 namespace XC.Foundation.DataImport.Controllers
 {
@@ -715,10 +718,10 @@ namespace XC.Foundation.DataImport.Controllers
                                     FileName = Path.GetFileName(f),
                                     Path = f,
                                     EditLabel = Labels.Edit,
-                                    EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "script", f),
+                                    EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "script", f),
                                     Type = GetScriptType(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(deleteMappingItem), "script", f),
+                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(deleteMappingItem), "script", f),
                                     itemId = f
                                 });
 
@@ -740,6 +743,8 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = messages
             };
         }
+
+        
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
@@ -927,12 +932,12 @@ namespace XC.Foundation.DataImport.Controllers
                                     Path = f,
                                     EditLabel = Labels.Edit,
                                     RunLabel = Labels.Run,
-                                    RunLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(runMappingItem), "mapping", f),
-                                    EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f),
+                                    RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
+                                    EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
                                     LastRun = HistoryLogging.GetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f)
+                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f)
                                 });
 
                 return new
@@ -985,12 +990,12 @@ namespace XC.Foundation.DataImport.Controllers
                                     Path = f,
                                     EditLabel = Labels.Edit,
                                     RunLabel = Labels.Run,
-                                    RunLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(runMappingItem), "mapping", f),
-                                    EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f),
+                                    RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
+                                    EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
                                     LastRun = HistoryLogging.NonSitecoreGetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(deleteMappingItem), "mapping", f)
+                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(deleteMappingItem), "mapping", f)
                                 });
 
                 return new
@@ -1041,12 +1046,12 @@ namespace XC.Foundation.DataImport.Controllers
                                     Path = f,
                                     EditLabel = Labels.Edit,
                                     RunLabel = Labels.Run,
-                                    RunLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(runMappingItem), "mapping", f),
-                                    EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f),
+                                    RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
+                                    EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
                                     LastRun = HistoryLogging.GetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f)
+                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f)
                                 });
 
                 return new
@@ -1098,12 +1103,12 @@ namespace XC.Foundation.DataImport.Controllers
                                     Path = f,
                                     EditLabel = Labels.Edit,
                                     RunLabel = Labels.Run,
-                                    RunLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(runMappingItem), "mapping", f),
-                                    EditLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f),
+                                    RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
+                                    EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
                                     LastRun = HistoryLogging.GetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(ClientHost.Links.GetItemUrl(editMappingItem), "mapping", f)
+                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f)
                                 });
 
                 return new
@@ -1148,6 +1153,18 @@ namespace XC.Foundation.DataImport.Controllers
             }
             return string.Empty;
         }
-
+        /// <summary>
+        /// Gets the item URL.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        private string GetItemUrl(IDataSourceItem item)
+        {
+            DataSourceItem dataSourceItem = item as DataSourceItem;
+            if (dataSourceItem == null)
+                return string.Empty;
+            var site = SiteContextFactory.GetSiteContext("shell");
+            return LinkManager.GetItemUrl(dataSourceItem.InnerItem, new UrlOptions { AlwaysIncludeServerUrl = false, Site = site });
+        }
     }
 }
