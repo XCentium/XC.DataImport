@@ -2,7 +2,7 @@
 ID: "e29ce6f0-ad89-47e2-9ee2-8a0dbbf738ac"
 Parent: "4245acff-2203-44f5-97be-74ac52e45cf6"
 Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Existing Mappings/PageSettings/List Control"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/PageSettings/List Control"
 DB: core
 Languages:
 - Language: en

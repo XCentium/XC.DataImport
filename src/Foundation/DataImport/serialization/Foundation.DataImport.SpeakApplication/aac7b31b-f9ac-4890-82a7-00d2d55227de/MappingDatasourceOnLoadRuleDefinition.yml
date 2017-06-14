@@ -2,7 +2,7 @@
 ID: "09f56d64-0462-4723-acee-a190155b35b1"
 Parent: "aac7b31b-f9ac-4890-82a7-00d2d55227de"
 Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Existing Mappings/PageSettings/Rules/MappingDatasourceOnLoadRuleDefinition"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/PageSettings/Rules/MappingDatasourceOnLoadRuleDefinition"
 DB: core
 SharedFields:
 - ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"

@@ -313,9 +313,7 @@
     <Compile Include="UI\Controls\SelectableListControl.cs" />
     <Compile Include="Utilities\FastQueryUtility.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sitecore\Shell\Client\Business Component Library\version 2\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

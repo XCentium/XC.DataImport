@@ -4,7 +4,15 @@
           var qs = _sc.Helpers.url.getQueryParameters(window.document.location.href);
           if (qs["mapping"]) {
               this.MappingPathHidden.set("text", qs["mapping"]);
+              this.set("mapping", qs["mapping"]);
           }
+      },
+      runImport: function () {
+          var navigateUrl = this.RunImportButton.get("navigateUrl");
+          if (navigateUrl) {
+              navigateUrl += "?mapping=" + this.get("mapping")
+          }
+          window.open(navigateUrl);
       },
       saveMapping: function () {
           "use strict";

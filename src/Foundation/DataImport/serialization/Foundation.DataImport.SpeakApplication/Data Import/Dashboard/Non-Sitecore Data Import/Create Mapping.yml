@@ -355,7 +355,7 @@ SharedFields:
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
           id="{442BD093-FBAD-4E36-BC08-489E16C82D08}"
-          par="Text=Rules%252525252bto%252525252bRun%252525252bAfter%252525252bImport%252525252bis%252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
+          par="Text=Rules%2525252525252bto%2525252525252bRun%2525252525252bAfter%2525252525252bImport%2525252525252bis%2525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
           ph="FullWidthPanel.Content"
           uid="{F7C3B5FB-82DF-4919-8F1C-FAD1641B9E72}" />
         <r
@@ -391,6 +391,11 @@ SharedFields:
           par="Click=javascript%3aapp.saveMapping()&amp;Id=SaveButton&amp;ButtonType=Primary&amp;Text=Save+Mapping"
           ph="Border2.Content"
           uid="{952E35A6-14CD-4269-ABA5-A0FE874B35D3}" />
+        <r
+          id="{162FC747-B9E6-4FCE-A96C-1EFE125643F2}"
+          par="Click=javascript%3aapp.runImport()&amp;Id=RunImportButton&amp;Text=Run+Import&amp;IsButtonMode=1&amp;NavigateUrl=%2fsitecore%2fclient%2fYour-Apps%2fData-Import%2fDashboard%2fNon-Sitecore-Data-Import%2fExisting-Mappings%2fRun-Mapping-Import"
+          ph="ApplicationHeader.Actions"
+          uid="{5344DE40-DDA1-404A-A933-F5B43E824518}" />
         <r
           id="{B60FB581-44D1-4372-86A2-D6E494F020E1}"
           par="HeaderText=Select+Script&amp;Id=ScriptsDialogWindow&amp;IsVisible=0&amp;Backdrop=Static&amp;Size=%7bF505B72F-890A-4190-8C48-742A4FEBD6B0%7d"
