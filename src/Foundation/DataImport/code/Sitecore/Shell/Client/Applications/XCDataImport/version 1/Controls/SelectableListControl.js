@@ -622,14 +622,17 @@ define(["sitecore", "userProfile", "Scrollbar", "EndlessPageScroll", "ResizableC
           this.set("selectedItems", []);
           var selectedItems = [];
           _.each(this.get("checkedItems"), function (i, idx) {
-              i["Id"] = idx;
-              selectedItems.push(i);
+              if (i) {
+                  i["Id"] = idx;
+                  selectedItems.push(i);
+              }
           });
           this.set("selectedItems", selectedItems);
       }
       function updateSelectedItemIds() {
           this.viewModel.checkItems(this.get("selectedItems"));
       }
+
     }
   });
 

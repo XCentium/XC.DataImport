@@ -12,7 +12,7 @@
           if (navigateUrl) {
               navigateUrl += "&mapping=" + this.get("mapping")
           }
-          window.open(navigateUrl);
+          window.location.href = navigateUrl;
       },
       startImport: function () {
           var taskId = "XC.DataImport";

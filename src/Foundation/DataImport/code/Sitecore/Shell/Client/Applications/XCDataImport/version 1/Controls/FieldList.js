@@ -38,14 +38,36 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
     var Row = Backbone.LayoutManager.extend({
         template: "row",
         tagName: "tr",
-        events: { "change td.ventilate": "select" },
+        events: {
+            "change td.ventilate": "select",
+            "click button.actionControl": "runAction"
+        },
         initialize: function (options) {
             this.parent = options.parent;
             this.model.set("templateFields", options.parent.model.get("templateFields"));
             this.model.set("templates", options.parent.model.get("templates"));
+
+            this.model.set("scripts", []);
         },
         afterRender: function () {
             this.sync();
+        },
+        runAction: function (e) {
+            var action = $(e.target).attr("data-sc-click");
+            var targetControl = $(e.target).attr("data-sc-targetcontrol");
+            var control = this.parent.app[targetControl];
+            if (control) {
+                var dataField = $(e.target).attr("data-sc-datafield");
+                var selectedItems = this.model.get(dataField);
+                if (!selectedItems) {
+                    selectedItems = [];
+                }
+                control.viewModel.uncheckAll();
+
+                control.viewModel.checkItemsById(selectedItems);
+                control.set("source", $(e.target).attr("buttonfor"));
+            }
+            this.parent.app.trigger(action);
         },
         select: function (e) {
             var eventTargetId = e.target.id;
@@ -506,7 +528,9 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.model.on("change:view", this.setViewModel, this);
             this.model.on("change:templateFields", this.refresh, this);
             this.model.on("change:templates", this.refresh, this);
+            this.model.on("change:incomingFieldScripts", this.refresh, this);
             this.model.set("dataParameters", "");
+            this.model.set("actionSource", "");
             this.model.on("change:mapping", this.updateDataParameters, this);
             this.model.on("change:count", this.updateDataParameters, this);
             this.setViewModel();
@@ -547,7 +571,14 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
                 } else {
                     var itemModel = new this.collection.model(item);
                 }
-
+                itemModel.viewModel.checkValue = function (name) {
+                    var val = "";
+                    //  Checking for this[name]() invokes binding, so make sure this[name] is a function
+                    if (typeof this[name] === 'function' && name != "" && typeof this[name]() != 'undefined') {
+                        val = this[name]();
+                    }
+                    return (val && val.length > 0) ? true : false;
+                };
                 // apply formating
                 itemModel.viewModel.formatValue = function (name, format, propertyName) {
 
@@ -669,6 +700,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.set("items", []);
             this.set("templateFields", []);
             this.set("templates", []);
+            this.set("incomingFieldScripts", []);
 
             this.set("selectedItem", "");
             this.set("selectedItemId", "");
@@ -683,9 +715,33 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.set("mapping", "");
 
             this.on("change:selectedItem", updateHasSelectedItem, this);
+            this.on("change:incomingFieldScripts", updateIncomingFieldScripts, this);
 
             function updateHasSelectedItem() {
                 this.set("hasSelectedItem", _.isObject(this.get("selectedItem")));
+            }
+
+            function updateIncomingFieldScripts() {
+                var actionSource = this.get("actionSource");
+                if(actionSource){
+                    var actn = actionSource.split("_");
+                    var target = this.get("items")[actn[1]];
+                    if (target) {
+                        var scriptIds = [];
+                        target[actn[0]] = [];
+                        if (this.get("incomingFieldScripts") && this.get("incomingFieldScripts") != "null") {
+                            _.each(this.get("incomingFieldScripts"), function (i) {
+                                if (i["itemId"]) {
+                                    scriptIds.push(i["itemId"]);
+                                }
+                                else {
+                                    scriptIds.push(i);
+                                }
+                            });
+                        }
+                        target[actn[0]] = scriptIds;
+                    }
+                }
             }
         }
     });

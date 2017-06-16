@@ -187,6 +187,7 @@
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewBatchMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\Styles\xcdataimport.css" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Behaviors\CustomMultiSelectList.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Behaviors\Required.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\SelectableListControl.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\ScriptList.js" />

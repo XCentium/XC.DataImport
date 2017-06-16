@@ -10,9 +10,9 @@
       runImport: function () {
           var navigateUrl = this.RunImportButton.get("navigateUrl");
           if (navigateUrl) {
-              navigateUrl += "?mapping=" + this.get("mapping")
+              navigateUrl += "?mapping=" + this.get("mapping");
           }
-          window.open(navigateUrl);
+          window.location.href = navigateUrl;
       },
       saveMapping: function () {
           "use strict";
@@ -44,7 +44,7 @@
 
           var scriptPaths = [];
           _.each(this.ScriptList.get("items"), function (i) {
-              scriptPaths.push(i["Path"]);
+              scriptPaths.push(i["itemId"]);
           });
 
           mapping["PostImportScripts"] = scriptPaths;

@@ -1,31 +1,32 @@
 ﻿---
-ID: "e1f24bae-96f5-4e50-bf67-29c4b0c027ab"
-Parent: "8c23392e-089a-4d67-a87c-e691b9c826a6"
-Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/AllScriptListControl/Type"
+ID: "608917de-e7ac-48d0-acc8-4aae9797fbe3"
+Parent: "5b8956f4-0205-4b4f-834b-956fecb144f8"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/client/Your Apps/Data Import/Renderings/version 1/Behaviors/CustomMultiSelectList/CustomMultiSelectList
 DB: core
 SharedFields:
-- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
-  Hint: __Sortorder
-  Value: 400
-- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
-  Hint: DataField
-  Value: itemId
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Applications/32x32/form_blue.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Type: tree list
+  Value: "{E19FFEDA-4505-4A2F-921A-0125D4B4A50A}"
+- ID: "f7d48a55-2158-4f02-9356-756654404f73"
+  Hint: __Standard values
+  Value: "{EA686DB1-99D7-45F3-8306-C6AC1326C66C}"
 Languages:
 - Language: da
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: Type
+    Value: MultiSelectList
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20161221T104134Z
-    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
-      Hint: HeaderText
-      Value: Type
+      Value: 20161221T104022Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
@@ -34,16 +35,13 @@ Languages:
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: Typ
+    Value: MultiSelectListe
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20161221T104654Z
-    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
-      Hint: HeaderText
-      Value: Typ
+      Value: 20161221T104543Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
@@ -54,10 +52,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20140401T151526
-    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
-      Hint: HeaderText
-      Value: Type
+      Value: 20130430T134815
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
@@ -66,16 +61,13 @@ Languages:
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: タイプ
+    Value: 複数選択リスト
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20161221T105056Z
-    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
-      Hint: HeaderText
-      Value: タイプ
+      Value: 20161221T104940Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |

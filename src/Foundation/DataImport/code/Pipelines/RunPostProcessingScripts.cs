@@ -1,4 +1,5 @@
-﻿using Sitecore.Diagnostics;
+﻿using Sitecore;
+using Sitecore.Diagnostics;
 using Sitecore.Pipelines;
 using System;
 using System.Collections;
@@ -28,18 +29,18 @@ namespace XC.Foundation.DataImport.Pipelines
             }
         }
 
-        public Pipeline GetPipeline(IEnumerable<ScriptReference> scripts)
+        public Pipeline GetPipeline(IEnumerable<string> scripts)
         {
             var pipelineName = "RunPostProcessingScripts";
             ArrayList processors = GetProcessors(pipelineName, scripts);
             return new Pipeline(pipelineName, processors, Pipeline.PipelineType.Dynamic);
         }
 
-        private ArrayList GetProcessors(string pipelineName, IEnumerable<ScriptReference> scripts)
+        private ArrayList GetProcessors(string pipelineName, IEnumerable<string> scripts)
         {
             Assert.ArgumentNotNullOrEmpty(pipelineName, "pipelineName");
             var processors = new ArrayList();
-            foreach (ScriptReference script in scripts)
+            foreach (var script in scripts)
             {
                 Processor processor = parseProcessor(script);
                 if (processor != null)
@@ -48,9 +49,10 @@ namespace XC.Foundation.DataImport.Pipelines
             return processors;
         }
 
-        private Processor parseProcessor(ScriptReference script)
+        private Processor parseProcessor(string script)
         {
-            return new Processor(script.Name, script.Type, "Process");
+            var scriptName = StringUtil.GetPostfix(script, '.');
+            return new Processor(scriptName, script, "Process");
         }
     }
 }

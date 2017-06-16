@@ -1,0 +1,60 @@
+﻿---
+ID: "819c35d7-77bf-4f31-a83c-6593656dabb2"
+Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Rules/OkFieldScriptsRuleDefinition"
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule
+        uid="{74DC93D3-9DD6-43EF-96BB-D59BCAFE3712}">
+        <conditions>
+          <condition
+            id="{B5CF2ABD-0811-4220-9805-8F6E62F4F4AC}"
+            uid="4F488965C3C6452BA4C2DCBFC87D8D52" />
+        </conditions>
+        <actions>
+          <action
+            id="{2A4D7853-9A50-4E8C-A65A-E5414119905E}"
+            uid="{B91F363C-FCE2-4487-80A1-1CC231A50F43}"
+            targetId="FieldMappingList"
+            targetProperty="actionSource"
+            sourceId="AllFieldScriptList"
+            sourceProperty="source" />
+          <action
+            id="{3DA33BB4-9E03-48CD-AC5C-E48B825DD4B6}"
+            uid="{E9C5FD69-3F82-4643-970A-A40FB6660B50}"
+            targetControlId="FieldMappingList"
+            propertyName="incomingFieldScripts"
+            value="null" />
+          <action
+            id="{2A4D7853-9A50-4E8C-A65A-E5414119905E}"
+            uid="{BC65F0E7-5BA8-4B9F-BA9C-619ADB1B7D7B}"
+            targetId="FieldMappingList"
+            targetProperty="incomingFieldScripts"
+            sourceId="AllFieldScriptList"
+            sourceProperty="selectedItems" />
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{B16EACD3-9C76-4BE4-BC9E-BF7B62C1BE37}"
+            targetControlId="FieldScripts"
+            eventName="hide" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170616T130851Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
