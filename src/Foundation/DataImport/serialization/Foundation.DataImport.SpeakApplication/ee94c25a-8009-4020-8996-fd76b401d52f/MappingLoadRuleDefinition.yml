@@ -12,13 +12,20 @@ SharedFields:
     <ruleset>
       <rule>
         <conditions>
-          <condition
-            id="{63666509-24CA-4C9C-91BD-C756F07C3783}"
-            uid="6E73D522052E4BB58381ACB5FC7B8921"
-            targetControlId="MappingViewDatasource"
-            propertyName="data"
-            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
-            value="null" />
+          <and
+            uid="BC0D5DFD7C31443497CF0ECC27824581">
+            <condition
+              id="{DC7F75A8-F299-4697-9166-D6D74DE4F2C3}"
+              uid="8FDD724E20DB46828C59ED1382033A0C"
+              name="MappingPathHidden" />
+            <condition
+              id="{63666509-24CA-4C9C-91BD-C756F07C3783}"
+              uid="6E73D522052E4BB58381ACB5FC7B8921"
+              targetControlId="MappingViewDatasource"
+              propertyName="data"
+              operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+              value="null" />
+          </and>
         </conditions>
         <actions>
           <action
@@ -121,6 +128,11 @@ SharedFields:
             uid="{54C2AB14-DC25-49E3-A96E-CFEA4C5D4D43}"
             targetControlId="AllScriptList"
             eventName="change:checkedItemIds" />
+          <action
+            id="{8FECB2A4-92AF-4D66-9595-92769B175ECF}"
+            uid="{E0926D16-53A3-48F0-B56D-C8E8434F7C90}"
+            name="RunImportButton"
+            value="true" />
         </actions>
       </rule>
     </ruleset>

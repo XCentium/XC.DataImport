@@ -22,10 +22,14 @@
               $(parts).each(function(i) {
                   objectTypeString += "[parts["+i+"]]";
               });
-              if (eval(objectTypeString) === "False" || eval(objectTypeString) === "True") {
-                  selectedItem = eval(objectTypeString) !== "False";
-              } else {
-                  selectedItem = eval(objectTypeString);
+              try{
+                  if (eval(objectTypeString) === "False" || eval(objectTypeString) === "True") {
+                      selectedItem = eval(objectTypeString) !== "False";
+                  } else {
+                      selectedItem = eval(objectTypeString);
+                  }
+              } catch(ex) {
+                  console.log(ex.message);
               }
           } else {
               selectedItem = sourceData[sourceSubProperty];

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using Sitecore.StringExtensions;
+using Sitecore.Web.UI.Controls.Common.ActionControls;
 
 namespace XC.Foundation.DataImport.UI.Controls
 {
@@ -54,7 +55,15 @@ namespace XC.Foundation.DataImport.UI.Controls
                 output.AddAttribute("data-sc-important", "data-sc-important");
                 string str2 = string.Empty;
                 var innerHtml = string.Empty;
-                if (!string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["Tag"]))
+                if (!string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["Tag"]) && !string.IsNullOrEmpty(child["Tag Type"]) && child["Tag Type"] == "actionControl")
+                {
+                    var tagType = " type=\"hidden\"";
+                    innerHtml += "<" + child["Tag"] + " class=\"" + child["Tag Type"] + "\"><input type=\"checkbox\" disabled  data-bind='attr: { id: formatValue(\"\",\"" + child["DataField"] + "_chk_{{Id}}\") } ,  checked: checkValue(\"" + child["DataField"] + "\")'/><input " + tagType + " data-bind='attr: { id: formatValue(\"\",\"" + child["DataField"] + "_{{Id}}\")}  ' />";
+
+                    innerHtml += " <button class=\"btn btn-default " + child["Tag Type"] + "\" data-sc-isbuttonmode=\"true\" data-sc-click=\"" + child["Click"] + "\" data-sc-targetcontrol=\""+ child["Target Control"] + "\" data-sc-datafield=\"" + child["DataField"] + "\" data-bind='attr: { buttonfor: formatValue(\"\",\"" + child["DataField"] + "_{{Id}}\") } '>" + child["Action Text"] + "</button>";
+                    innerHtml += "</" + child["Tag"] + ">";
+                }
+                else if (!string.IsNullOrEmpty(child["DataField"]) && !string.IsNullOrEmpty(child["Tag"]))
                 {
                     var tagType = string.Empty;
                     var options = string.Empty;
@@ -65,6 +74,9 @@ namespace XC.Foundation.DataImport.UI.Controls
                         {
                             case "checkbox":
                                 options += ", checked: " + child["DataField"];
+                                break;
+                            case "actionControl":
+                                tagType = string.Empty;
                                 break;
                             default:
                                 options += ", value: " + child["DataField"];

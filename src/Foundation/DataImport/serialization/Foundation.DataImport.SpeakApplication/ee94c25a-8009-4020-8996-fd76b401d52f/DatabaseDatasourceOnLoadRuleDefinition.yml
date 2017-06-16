@@ -45,6 +45,11 @@ SharedFields:
             uid="{053138FB-DD8F-4815-9348-28880CC9EFB1}"
             targetControlId="AllPostProcessingScriptsDatasource"
             eventName="change:dataUrl" />
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{AFC27021-DAD9-4A59-9D2A-0A46DA78010E}"
+            targetControlId="AllFieldScriptsDatasource"
+            eventName="change:dataUrl" />
         </actions>
       </rule>
     </ruleset>

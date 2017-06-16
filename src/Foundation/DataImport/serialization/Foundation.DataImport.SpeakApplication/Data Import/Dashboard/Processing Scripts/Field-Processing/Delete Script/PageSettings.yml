@@ -1,0 +1,18 @@
+﻿---
+ID: "3f2541e3-d36a-47b8-95e8-9537d182362e"
+Parent: "bff23631-1841-4d98-8d96-5d5a955b9b56"
+Template: "e35eaa2d-edea-431c-a9e6-488272b53782"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Processing Scripts/Field-Processing/Delete Script/PageSettings"
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170612T135016Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

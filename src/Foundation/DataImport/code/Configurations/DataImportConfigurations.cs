@@ -98,6 +98,25 @@ namespace XC.Foundation.DataImport.Configurations
                 return path;
             }
         }
+
+        /// <summary>
+        /// Gets the field processing scripts folder.
+        /// </summary>
+        /// <value>
+        /// The field processing scripts folder.
+        /// </value>
+        public static string FieldProcessingScriptsFolder
+        {
+            get
+            {
+                var path = Path.Combine(GetFolderPath, "field-processing-scripts");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
         /// <summary>
         /// Gets the history folder.
         /// </summary>

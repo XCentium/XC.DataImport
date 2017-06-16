@@ -26,24 +26,10 @@ namespace XC.Foundation.DataImport.Pipelines.PostProcessing
             get { return migratedItems; }
         }
 
-        public IEnumerable<ScriptReference> PostProcessingScripts
+        public IEnumerable<string> PostProcessingScripts
         {
             get {
-                if(postProcessingScripts == null || !postProcessingScripts.Any())
-                    return null;
-
-                var scripts = new List<ScriptReference>();
-                foreach(var path in postProcessingScripts)
-                {
-                    if (File.Exists(path))
-                    {
-                        var scriptContent = File.ReadAllText(path);
-                        var scriptObject = (ScriptReference)JsonConvert.DeserializeObject(scriptContent, typeof(ScriptReference));
-                        if (scriptObject != null)
-                            scripts.Add(scriptObject);
-                    }
-                }
-                return scripts;
+                return postProcessingScripts;
             }
         }
     }
