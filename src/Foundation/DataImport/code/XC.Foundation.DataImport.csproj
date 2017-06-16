@@ -236,9 +236,10 @@
     <Compile Include="Messages.cs" />
     <Compile Include="Models\ScriptInfo.cs" />
     <Compile Include="Models\ScriptReference.cs" />
-    <Compile Include="Pipelines\IProcessingPipelineProcessor.cs" />
-    <Compile Include="Pipelines\ProcessingPipelineArgs.cs" />
-    <Compile Include="Pipelines\RunPostProcessingScripts.cs" />
+    <Compile Include="Pipelines\FieldProcessing\FieldProcessingPipelineArgs.cs" />
+    <Compile Include="Pipelines\FieldProcessing\RunFieldProcessingScripts.cs" />
+    <Compile Include="Pipelines\PostProcessing\ProcessingPipelineArgs.cs" />
+    <Compile Include="Pipelines\PostProcessing\RunPostProcessingScripts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cache\ItemCacheDependency.cs" />
     <Compile Include="Configurations\DataImportConfigurations.cs" />

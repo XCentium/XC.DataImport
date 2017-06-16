@@ -23,6 +23,8 @@ using Sitecore.IO;
 using Sitecore.Resources.Media;
 using System.IO;
 using XC.Foundation.DataImport.Utilities;
+using XC.Foundation.DataImport.Pipelines.FieldProcessing;
+using Sitecore.Pipelines;
 
 namespace XC.DataImport.Repositories.Repositories
 {
@@ -496,6 +498,8 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
+                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                     var multilistField = (MultilistField)item.Fields[field.TargetFields];
                                     var startPath = "sitecore";
                                     var source = GetFieldSource(multilistField.InnerField.Source);
@@ -576,6 +580,8 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
+                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                     var referenceField = (ReferenceField)item.Fields[field.TargetFields];
                                     var startPath = "sitecore";
                                     var source = GetFieldSource(referenceField.InnerField.Source);
@@ -633,6 +639,8 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
+                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                     if (item.Fields[field.TargetFields].TypeKey.Contains("tristate"))
                                     {
                                         var fieldValue = "";
@@ -688,6 +696,8 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
+                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                     var linkField = (LinkField)item.Fields[field.TargetFields];
                                     if (!string.IsNullOrEmpty(matchingColumnValue))
                                     {
@@ -718,7 +728,11 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 using (new EditContext(item, false, true))
                                 {
-                                    item.Fields[field.TargetFields].Value = row[field.SourceFields].ToString();
+                                    var finalValue = row[field.SourceFields].ToString();
+
+                                    RunFieldProcessingScripts(finalValue, field.ProcessingScripts);
+
+                                    item.Fields[field.TargetFields].Value = finalValue;
                                 }
                                 if (DetailedLogging)
                                 {
@@ -761,6 +775,9 @@ namespace XC.DataImport.Repositories.Repositories
                             if (row[field.SourceFields] is bool)
                             {
                                 var val = (bool)row[field.SourceFields];
+
+                                RunFieldProcessingScripts(val, field.ProcessingScripts);
+
                                 using (new EditContext(item, false, true))
                                 {
                                     item.Fields[field.TargetFields].Value = val ? "1" : "0";
@@ -775,6 +792,8 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] as string;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
+                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                     var multilistField = (MultilistField)item.Fields[field.TargetFields];
                                     var startPath = "sitecore";
                                     var fieldSource = item.Database.GetItem(GetFieldSource(multilistField.InnerField.Source));
@@ -820,6 +839,8 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
+                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                     var fieldValue = "";
                                     if (matchingColumnValue == "true")
                                     {
@@ -843,6 +864,9 @@ namespace XC.DataImport.Repositories.Repositories
                             else if (item.Fields[field.TargetFields].TypeKey.Contains("checkbox"))
                             {
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
+
+                                RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                 var boolValue = false;
                                 var fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
                                 if (bool.TryParse(matchingColumnValue, out boolValue))
@@ -869,6 +893,9 @@ namespace XC.DataImport.Repositories.Repositories
                             else
                             {
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
+
+                                RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+
                                 using (new EditContext(item, false, true))
                                 {
                                     item.Fields[field.TargetFields].Value = matchingColumnValue;
@@ -889,7 +916,16 @@ namespace XC.DataImport.Repositories.Repositories
             }
             //}
         }
-
+        /// <summary>
+        /// Runs the field processing scripts.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="fieldMapping">The field mapping.</param>
+        private void RunFieldProcessingScripts(object value, IEnumerable<string> processingScript)
+        {
+            var pipelineArgs = new FieldProcessingPipelineArgs(value, processingScript);
+            CorePipeline.Run("xc.dataimport.fieldprocessing", pipelineArgs);
+        }
         /// <summary>
         /// Gets the field source.
         /// </summary>

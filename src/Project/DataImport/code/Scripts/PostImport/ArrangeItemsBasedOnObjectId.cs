@@ -1,21 +1,14 @@
 ﻿using Sitecore.Configuration;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 using Sitecore.SecurityModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XC.Foundation.DataImport;
 using XC.Foundation.DataImport.Diagnostics;
-using XC.Foundation.DataImport.Pipelines;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
 using XC.Foundation.DataImport.Utilities;
 
 namespace XC.Project.DataImport.Scripts.PostImport
 {
-    public class ArrangeItemsBasedOnObjectId : IProcessingPipelineProcessor
+    public class ArrangeItemsBasedOnObjectId 
     {
         public void Process(ProcessingPipelineArgs args)
         {
@@ -51,8 +44,6 @@ namespace XC.Project.DataImport.Scripts.PostImport
             if (db == null)
                 return null;
             return db.SelectSingleItem(query);
-        }
-
-        
+        }        
     }
 }

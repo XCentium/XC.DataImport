@@ -9,20 +9,20 @@ using System.Web;
 using XC.Foundation.DataImport.Models;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
 
-namespace XC.Foundation.DataImport.Pipelines
+namespace XC.Foundation.DataImport.Pipelines.FieldProcessing
 {
-    public class RunPostProcessingScripts : IProcessingPipelineProcessor
+    public class RunFieldProcessingScripts
     {
         /// <summary>The processor list cache.</summary>
         private readonly Hashtable processorListCache = new Hashtable();
         /// <summary>The _use caching.</summary>
         private bool useCaching = true;
 
-        public void Process(ProcessingPipelineArgs args)
+        public void Process(FieldProcessingPipelineArgs args)
         {
-            if(args.PostProcessingScripts != null)
+            if(args.ProcessingScripts != null)
             {
-                Pipeline pipeline = GetPipeline(args.PostProcessingScripts);
+                Pipeline pipeline = GetPipeline(args.ProcessingScripts);
                 if (pipeline == null)
                     return;
                 pipeline.Start(args, true);
@@ -31,7 +31,7 @@ namespace XC.Foundation.DataImport.Pipelines
 
         public Pipeline GetPipeline(IEnumerable<string> scripts)
         {
-            var pipelineName = "RunPostProcessingScripts";
+            var pipelineName = "RunFieldProcessingScripts";
             ArrayList processors = GetProcessors(pipelineName, scripts);
             return new Pipeline(pipelineName, processors, Pipeline.PipelineType.Dynamic);
         }

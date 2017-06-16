@@ -13,7 +13,7 @@ using static Sitecore.Configuration.Settings;
 
 namespace XC.Project.DataImport.Scripts.FieldScript
 {
-    public class SplitValuesByComma : IProcessingPipelineProcessor
+    public class SplitValuesByComma 
     {
         public void Process(ProcessingPipelineArgs args)
         {

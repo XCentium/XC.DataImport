@@ -12,7 +12,7 @@ using XC.Foundation.DataImport.Pipelines.PostProcessing;
 
 namespace XC.Project.DataImport.Scripts.PostImport
 {
-    public class ArrangeMigratedItemsBasedOnObjectId : IProcessingPipelineProcessor
+    public class ArrangeMigratedItemsBasedOnObjectId 
     {
         public void Process(ProcessingPipelineArgs args)
         {
