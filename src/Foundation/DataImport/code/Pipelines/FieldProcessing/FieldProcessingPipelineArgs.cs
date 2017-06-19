@@ -14,11 +14,13 @@ namespace XC.Foundation.DataImport.Pipelines.FieldProcessing
     {
         private object sourceValue;
         private IEnumerable<string> scripts;
+        public object Result { get; set; }
 
         public FieldProcessingPipelineArgs(object sourceValue, IEnumerable<string> scripts)
         {
             this.sourceValue = sourceValue;
             this.scripts = scripts;
+            this.Result = sourceValue;
         }
 
         public object SourceValue

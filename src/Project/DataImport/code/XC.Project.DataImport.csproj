@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\FieldScript\PrependUserWithDomainName.cs" />
     <Compile Include="Scripts\FieldScript\SplitValuesByComma.cs" />
     <Compile Include="Scripts\PostImport\ArrangeMigratedItemsBasedOnObjectId.cs" />
     <Compile Include="Scripts\PostImport\ArrangeItemsBasedOnObjectId.cs" />

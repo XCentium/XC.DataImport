@@ -125,11 +125,7 @@ namespace XC.DataImport.Repositories.Repositories
                         {
                             itemName = row[itemNameMapping.SourceFields] != DBNull.Value ? row[itemNameMapping.SourceFields].ToString() : "";
                         }
-                        if (itemName.All(Char.IsDigit))
-                        {
-                            // if name is plural convert it to singular
-                            itemName = string.Concat(_mapping.Name.TrimEnd('s'), " ", itemName);
-                        }
+                        
                         if (!string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(_mapping.Templates.Target))
                         {
                             var template = ItemUri.Parse(_mapping.Templates.Target);
@@ -498,80 +494,17 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
-                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
-
-                                    var multilistField = (MultilistField)item.Fields[field.TargetFields];
-                                    var startPath = "sitecore";
-                                    var source = GetFieldSource(multilistField.InnerField.Source);
-                                    if (!string.IsNullOrWhiteSpace(source))
+                                    var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                    if (processedValue is IEnumerable<string>)
                                     {
-                                        var fieldSource = item.Database.GetItem(source);
-                                        if (fieldSource != null)
+                                        foreach (var val in (IEnumerable<string>)processedValue)
                                         {
-                                            startPath = fieldSource.Paths.FullPath;
+                                            UpdateMultilistField(item, statusMethod, statusFilepath, field, targetField, val);
                                         }
-                                    }
-                                    Item matchingItem = null;
-                                    var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
-                                    if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
-                                    {
-                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}=\"{1}\" and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
-                                        if (matchingItem == null)
-                                        {
-                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
-                                        }
-                                        if (DetailedLogging)
-                                        {
-                                            statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\" under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
-                                        }
-                                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\" under \"{3}\"  </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
                                     }
                                     else
                                     {
-                                        if (!string.IsNullOrEmpty(referenceFieldName))
-                                        {
-                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}=\"{1}\"]", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
-                                            if (matchingItem == null)
-                                            {
-                                                matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
-                                            }
-                                            if (DetailedLogging)
-                                            {
-                                                statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\"  under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
-                                            }
-                                            DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\"  under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
-                                        }
-                                        else
-                                        {
-                                            if (DetailedLogging)
-                                            {
-                                                statusMethod(string.Format(" --- <span style=\"color:red\">[FAILURE][{2}] referenceFieldName is empty: \"{0}\"  \"{1}\"   \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
-                                            }
-                                            DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:red\">[FAILURE][{2}] referenceFieldName is empty:  \"{0}\"  \"{1}\"   \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
-                                        }
-                                    }
-                                    if (matchingItem != null && multilistField != null)
-                                    {
-                                        if (!multilistField.Contains(matchingItem.ID.ToString()))
-                                        {
-                                            using (new EditContext(item, false, true))
-                                            {
-                                                multilistField.Add(matchingItem.ID.ToString());
-                                            }
-                                        }
-                                        if (DetailedLogging)
-                                        {
-                                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
-                                        }
-                                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
-                                    }
-                                    else
-                                    {
-                                        if (DetailedLogging)
-                                        {
-                                            statusMethod(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
-                                        }
-                                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"));
+                                        UpdateMultilistField(item, statusMethod, statusFilepath, field, targetField, processedValue.ToString());
                                     }
                                 }
                             }
@@ -580,7 +513,7 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
-                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                    var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
 
                                     var referenceField = (ReferenceField)item.Fields[field.TargetFields];
                                     var startPath = "sitecore";
@@ -597,16 +530,16 @@ namespace XC.DataImport.Repositories.Repositories
                                     var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
                                     if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
                                     {
-                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
+                                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
                                         if (matchingItem == null)
                                         {
-                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
+                                            matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, FastQueryUtility.EscapeDashes(startPath)));
                                         }
                                         if (DetailedLogging)
                                         {
-                                            statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\" under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
+                                            statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\" under \"{3}\" </span>", referenceFieldName, processedValue, item.ID, startPath), statusFilepath);
                                         }
-                                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\" under \"{3}\"  </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
+                                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\" under \"{3}\"  </span>", referenceFieldName, processedValue, item.ID, startPath));
                                     }
 
                                     if (matchingItem != null && referenceField != null)
@@ -639,18 +572,21 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
-                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                    var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
 
                                     if (item.Fields[field.TargetFields].TypeKey.Contains("tristate"))
                                     {
                                         var fieldValue = "";
-                                        if (matchingColumnValue == "true")
+                                        if (processedValue is bool)
                                         {
-                                            fieldValue = "1";
-                                        }
-                                        else if (matchingColumnValue == "false")
-                                        {
-                                            fieldValue = "0";
+                                            if ((bool)processedValue)
+                                            {
+                                                fieldValue = "1";
+                                            }
+                                            else if (!(bool)processedValue)
+                                            {
+                                                fieldValue = "0";
+                                            }
                                         }
                                         var tristateField = (ValueLookupField)item.Fields[field.TargetFields];
                                         if (fieldValue != tristateField.Value)
@@ -696,20 +632,20 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
-                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                    var processedValue = (string)RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
 
                                     var linkField = (LinkField)item.Fields[field.TargetFields];
-                                    if (!string.IsNullOrEmpty(matchingColumnValue))
+                                    if (!string.IsNullOrEmpty(processedValue))
                                     {
-                                        if (!matchingColumnValue.Contains("://"))
+                                        if (!processedValue.Contains("://"))
                                         {
-                                            matchingColumnValue = "http://" + matchingColumnValue;
+                                            processedValue = "http://" + processedValue;
                                         }
                                         if (linkField.Url != matchingColumnValue)
                                         {
                                             using (new EditContext(item, false, true))
                                             {
-                                                linkField.Url = matchingColumnValue;
+                                                linkField.Url = processedValue;
                                             }
                                             if (DetailedLogging)
                                             {
@@ -730,9 +666,9 @@ namespace XC.DataImport.Repositories.Repositories
                                 {
                                     var finalValue = row[field.SourceFields].ToString();
 
-                                    RunFieldProcessingScripts(finalValue, field.ProcessingScripts);
+                                    var processedValue = (string)RunFieldProcessingScripts(finalValue, field.ProcessingScripts);
 
-                                    item.Fields[field.TargetFields].Value = finalValue;
+                                    item.Fields[field.TargetFields].Value = processedValue;
                                 }
                                 if (DetailedLogging)
                                 {
@@ -751,6 +687,83 @@ namespace XC.DataImport.Repositories.Repositories
                 }
             }
             //}
+        }
+
+        private void UpdateMultilistField(Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField, string matchingColumnValue)
+        {
+            var multilistField = (MultilistField)item.Fields[field.TargetFields];
+            var startPath = "sitecore";
+            var source = GetFieldSource(multilistField.InnerField.Source);
+            if (!string.IsNullOrWhiteSpace(source))
+            {
+                var fieldSource = item.Database.GetItem(source);
+                if (fieldSource != null)
+                {
+                    startPath = fieldSource.Paths.FullPath;
+                }
+            }
+            Item matchingItem = null;
+            var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
+            if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
+            {
+                matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}=\"{1}\" and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
+                if (matchingItem == null)
+                {
+                    matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
+                }
+                if (DetailedLogging)
+                {
+                    statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\" under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
+                }
+                DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\" under \"{3}\"  </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(referenceFieldName))
+                {
+                    matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}=\"{1}\"]", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
+                    if (matchingItem == null)
+                    {
+                        matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
+                    }
+                    if (DetailedLogging)
+                    {
+                        statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\"  under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
+                    }
+                    DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\"  under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
+                }
+                else
+                {
+                    if (DetailedLogging)
+                    {
+                        statusMethod(string.Format(" --- <span style=\"color:red\">[FAILURE][{2}] referenceFieldName is empty: \"{0}\"  \"{1}\"   \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
+                    }
+                    DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:red\">[FAILURE][{2}] referenceFieldName is empty:  \"{0}\"  \"{1}\"   \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
+                }
+            }
+            if (matchingItem != null && multilistField != null)
+            {
+                if (!multilistField.Contains(matchingItem.ID.ToString()))
+                {
+                    using (new EditContext(item, false, true))
+                    {
+                        multilistField.Add(matchingItem.ID.ToString());
+                    }
+                }
+                if (DetailedLogging)
+                {
+                    statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                }
+                DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
+            }
+            else
+            {
+                if (DetailedLogging)
+                {
+                    statusMethod(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                }
+                DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"));
+            }
         }
 
         /// <summary>
@@ -776,15 +789,18 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 var val = (bool)row[field.SourceFields];
 
-                                RunFieldProcessingScripts(val, field.ProcessingScripts);
+                                var processedValue = RunFieldProcessingScripts(val, field.ProcessingScripts);
 
-                                using (new EditContext(item, false, true))
+                                if (processedValue is bool)
                                 {
-                                    item.Fields[field.TargetFields].Value = val ? "1" : "0";
-                                }
-                                if (DetailedLogging)
-                                {
-                                    statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                                    using (new EditContext(item, false, true))
+                                    {
+                                        item.Fields[field.TargetFields].Value = (bool)processedValue ? "1" : "0";
+                                    }
+                                    if (DetailedLogging)
+                                    {
+                                        statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                                    }
                                 }
                             }
                             else if (item.Fields[field.TargetFields].TypeKey.Contains("multilist"))
@@ -792,45 +808,17 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] as string;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
-                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
-
-                                    var multilistField = (MultilistField)item.Fields[field.TargetFields];
-                                    var startPath = "sitecore";
-                                    var fieldSource = item.Database.GetItem(GetFieldSource(multilistField.InnerField.Source));
-                                    if (fieldSource != null)
+                                    var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                    if (processedValue is IEnumerable<string>)
                                     {
-                                        startPath = fieldSource.Paths.FullPath;
-                                    }
-
-                                    if (!string.IsNullOrWhiteSpace(field.ReferenceItemsTemplate))
-                                    {
-                                        var matchingItem = Database.SelectSingleItem(string.Format("fast://{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, field.ReferenceItemsTemplate, startPath));
-                                        if (matchingItem != null && multilistField != null)
+                                        foreach (var val in (IEnumerable<string>)processedValue)
                                         {
-                                            using (new EditContext(item, false, true))
-                                            {
-                                                multilistField.Add(matchingItem.ID.ToString());
-                                            }
-                                            if (DetailedLogging)
-                                            {
-                                                statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\"</span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
-                                            }
+                                            SaveMultilistField(item, statusMethod, statusFilepath, field, targetField, val);
                                         }
                                     }
                                     else
                                     {
-                                        var matchingItem = Database.SelectSingleItem(string.Format("fast://{2}//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, startPath));
-                                        if (matchingItem != null && multilistField != null)
-                                        {
-                                            using (new EditContext(item, false, true))
-                                            {
-                                                multilistField.Add(matchingItem.ID.ToString());
-                                            }
-                                            if (DetailedLogging)
-                                            {
-                                                statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\"</span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
-                                            }
-                                        }
+                                        SaveMultilistField(item, statusMethod, statusFilepath, field, targetField, processedValue.ToString());
                                     }
                                 }
                             }
@@ -839,7 +827,7 @@ namespace XC.DataImport.Repositories.Repositories
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
                                 if (!string.IsNullOrEmpty(matchingColumnValue))
                                 {
-                                    RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                    var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
 
                                     var fieldValue = "";
                                     if (matchingColumnValue == "true")
@@ -865,7 +853,7 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
 
-                                RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
 
                                 var boolValue = false;
                                 var fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
@@ -894,11 +882,11 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
 
-                                RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+                                var processedValue = (string)RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
 
                                 using (new EditContext(item, false, true))
                                 {
-                                    item.Fields[field.TargetFields].Value = matchingColumnValue;
+                                    item.Fields[field.TargetFields].Value = processedValue;
                                 }
                                 if (DetailedLogging)
                                 {
@@ -916,15 +904,59 @@ namespace XC.DataImport.Repositories.Repositories
             }
             //}
         }
+
+        private void SaveMultilistField(Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField, string matchingColumnValue)
+        {
+            var multilistField = (MultilistField)item.Fields[field.TargetFields];
+            var startPath = "sitecore";
+            var fieldSource = item.Database.GetItem(GetFieldSource(multilistField.InnerField.Source));
+            if (fieldSource != null)
+            {
+                startPath = fieldSource.Paths.FullPath;
+            }
+
+            if (!string.IsNullOrWhiteSpace(field.ReferenceItemsTemplate))
+            {
+                var matchingItem = Database.SelectSingleItem(string.Format("fast://{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, field.ReferenceItemsTemplate, startPath));
+                if (matchingItem != null && multilistField != null)
+                {
+                    using (new EditContext(item, false, true))
+                    {
+                        multilistField.Add(matchingItem.ID.ToString());
+                    }
+                    if (DetailedLogging)
+                    {
+                        statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\"</span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                    }
+                }
+            }
+            else
+            {
+                var matchingItem = Database.SelectSingleItem(string.Format("fast://{2}//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(ResolveFieldName(field.ReferenceItemsField)), matchingColumnValue, startPath));
+                if (matchingItem != null && multilistField != null)
+                {
+                    using (new EditContext(item, false, true))
+                    {
+                        multilistField.Add(matchingItem.ID.ToString());
+                    }
+                    if (DetailedLogging)
+                    {
+                        statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\"</span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                    }
+                }                
+            }
+        }
+
         /// <summary>
         /// Runs the field processing scripts.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="fieldMapping">The field mapping.</param>
-        private void RunFieldProcessingScripts(object value, IEnumerable<string> processingScript)
+        private object RunFieldProcessingScripts(object value, IEnumerable<string> processingScript)
         {
             var pipelineArgs = new FieldProcessingPipelineArgs(value, processingScript);
             CorePipeline.Run("xc.dataimport.fieldprocessing", pipelineArgs);
+            return pipelineArgs.Result;
         }
         /// <summary>
         /// Gets the field source.
@@ -1167,7 +1199,7 @@ namespace XC.DataImport.Repositories.Repositories
         private void AttachMediaStream(Item item, byte[] mediaStream, Action<string, string> statusMethod, string statusFilename)
         {
             var options = CreateMediaCreatorOptions(item);
-            var creator = new Sitecore.Resources.Media.MediaCreator();
+            var creator = new MediaCreator();
             var sourceMediaItem = new MediaItem(item);
             var sourceMediaStream = new MemoryStream(mediaStream);
             var fileName = sourceMediaItem.Name + "." + sourceMediaItem.Extension;
@@ -1176,6 +1208,13 @@ namespace XC.DataImport.Repositories.Repositories
             {
                 Media media = MediaManager.GetMedia(sourceMediaItem);
                 media.SetStream(sourceMediaStream, FileUtil.GetExtension(fileName));
+
+                using (new EditContext(item))
+                {
+                    var image = System.Drawing.Image.FromStream(sourceMediaStream);
+                    item["Height"] = image.Height.ToString();
+                    item["Width"] = image.Height.ToString();
+                }
                 statusMethod(string.Format("<span style=\"color:green\"><strong>[SUCCESS][{0}] Updating Attached Media: {1} </strong></span>", item.ID, item.Paths.FullPath), statusFilename);
             }
             else
