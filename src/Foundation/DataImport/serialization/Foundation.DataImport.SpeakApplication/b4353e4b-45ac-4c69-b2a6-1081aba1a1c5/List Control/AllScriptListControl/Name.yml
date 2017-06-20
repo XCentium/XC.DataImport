@@ -2,7 +2,7 @@
 ID: "6ddf9bd8-bc12-4f33-a0cc-63fd93faf6f0"
 Parent: "8c23392e-089a-4d67-a87c-e691b9c826a6"
 Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/AllScriptListControl/Name"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/AllScriptListControl/Name"
 DB: core
 SharedFields:
 - ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"

@@ -801,7 +801,7 @@ namespace XC.Foundation.DataImport.Controllers
                 var editItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
                 var editMappingItem = ClientHost.Factory.GetDataSourceItem(editItem);
 
-                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptDelete);
                 var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
 
                 var files =
@@ -848,10 +848,10 @@ namespace XC.Foundation.DataImport.Controllers
             try
             {
                 var db = Factory.GetDatabase("core");
-                var editItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var editItem = db.GetItem(MappingPages.Scripts.FieldProcessingScriptCreate);
                 var editMappingItem = ClientHost.Factory.GetDataSourceItem(editItem);
 
-                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var deleteItem = db.GetItem(MappingPages.Scripts.FieldProcessingScriptDelete);
                 var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
 
                 var files =

@@ -2,7 +2,7 @@
 ID: "c4d89142-b606-42fc-aaaa-a4ddfe564c67"
 Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
 Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Rules/MappingSavedRuleDefinition"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/Rules/MappingSavedRuleDefinition"
 DB: core
 SharedFields:
 - ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"

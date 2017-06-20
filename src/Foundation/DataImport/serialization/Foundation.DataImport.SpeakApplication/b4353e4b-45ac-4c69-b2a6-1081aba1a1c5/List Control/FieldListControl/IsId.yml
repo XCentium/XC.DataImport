@@ -2,7 +2,7 @@
 ID: "ae699cdd-843a-4355-9837-eeeb05d1ea8f"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
 Template: "c76f2781-6b01-425f-90a0-73b4c880674b"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/IsId"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/FieldListControl/IsId"
 DB: core
 SharedFields:
 - ID: "1c50efbe-47cd-4a9b-9eef-a466e75c4977"

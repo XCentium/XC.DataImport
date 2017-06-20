@@ -2,7 +2,7 @@
 ID: "660f343a-2664-4810-8200-0315d8f3be52"
 Parent: "b4353e4b-45ac-4c69-b2a6-1081aba1a1c5"
 Template: "27c78269-cef0-483f-9e7a-af27ed04ce5d"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/CreateMappings"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/CreateMappings"
 DB: core
 SharedFields:
 - ID: "834b2406-24a9-4376-9350-cbe6da96c51a"

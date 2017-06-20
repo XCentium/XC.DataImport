@@ -23,7 +23,7 @@ namespace XC.Project.DataImport.Scripts.FieldScript
             if (args.SourceValue == null)
                 DataImportLogger.Log.Info("SplitValuesByComma Field Processing: no SourceValue");
 
-            args.Result = args.SourceValue is string ? ((string)args.SourceValue).Replace("\"","").Split(',') : args.SourceValue;
+            args.Result = args.SourceValue is string ? ((string)args.SourceValue).Replace("\"","").Split(',').Select(i=>i.Trim()) : args.SourceValue;
 
             DataImportLogger.Log.Info("#################Field Processing SplitValuesByComma ended ##################");
         }

@@ -7,6 +7,7 @@ using Sitecore.Data.Items;
 using XC.Foundation.DataImport.Models;
 using System.IO;
 using Newtonsoft.Json;
+using Sitecore.Data;
 
 namespace XC.Foundation.DataImport.Pipelines.FieldProcessing
 {
@@ -15,12 +16,14 @@ namespace XC.Foundation.DataImport.Pipelines.FieldProcessing
         private object sourceValue;
         private IEnumerable<string> scripts;
         public object Result { get; set; }
+        public Database Database { get; internal set; }
 
-        public FieldProcessingPipelineArgs(object sourceValue, IEnumerable<string> scripts)
+        public FieldProcessingPipelineArgs(object sourceValue, IEnumerable<string> scripts, Database database)
         {
             this.sourceValue = sourceValue;
             this.scripts = scripts;
             this.Result = sourceValue;
+            this.Database = database;
         }
 
         public object SourceValue

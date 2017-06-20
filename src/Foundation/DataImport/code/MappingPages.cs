@@ -36,6 +36,8 @@ namespace XC.Foundation.DataImport
         {
             public static readonly ID PostProcessingScriptCreate = ID.Parse("{84343A27-76A9-42B2-B21E-9FACECD7138C}");
             public static readonly ID PostProcessingScriptDelete = ID.Parse("{13D62B06-47B0-4E50-8324-D4A5A1D9FE31}");
+            public static readonly ID FieldProcessingScriptCreate = ID.Parse("{96B0189C-0CA3-40C0-A151-49E1CF89EA07}");
+            public static readonly ID FieldProcessingScriptDelete = ID.Parse("{BFF23631-1841-4D98-8D96-5D5A955B9B56}");
         }
     }
 }

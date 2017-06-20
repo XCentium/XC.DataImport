@@ -2,7 +2,7 @@
 ID: "4852560b-b281-4abb-96a9-793fc4a37fd5"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
 Template: "c76f2781-6b01-425f-90a0-73b4c880674b"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Overwrite on Update"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/FieldListControl/Overwrite on Update"
 DB: core
 SharedFields:
 - ID: "1c50efbe-47cd-4a9b-9eef-a466e75c4977"

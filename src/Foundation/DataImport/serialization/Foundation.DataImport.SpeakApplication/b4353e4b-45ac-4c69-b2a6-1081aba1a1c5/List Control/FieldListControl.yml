@@ -2,7 +2,7 @@
 ID: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
 Parent: "d2f32c4c-b955-4f85-9016-a1e86eaed38c"
 Template: "9e5a0dc6-9faa-4767-abbb-831687e0ac6e"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/FieldListControl"
 DB: core
 Languages:
 - Language: en

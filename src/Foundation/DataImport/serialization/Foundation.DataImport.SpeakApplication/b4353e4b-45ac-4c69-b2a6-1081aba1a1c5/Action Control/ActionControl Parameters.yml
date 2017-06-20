@@ -2,7 +2,7 @@
 ID: "efdd2446-7962-44f4-8672-8c8f7d1713f5"
 Parent: "2c34e6b6-8746-45e4-8f3d-4452f65d92ee"
 Template: "9294594c-dea2-4102-929b-60d4e1e1fbc8"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Action Control/ActionControl Parameters"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/Action Control/ActionControl Parameters"
 DB: core
 SharedFields:
 - ID: "6d0c0ab0-bc40-4bd0-8acb-16612a180f14"

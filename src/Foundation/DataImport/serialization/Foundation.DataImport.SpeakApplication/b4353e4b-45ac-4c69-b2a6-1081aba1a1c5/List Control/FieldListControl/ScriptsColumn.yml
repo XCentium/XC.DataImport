@@ -2,9 +2,12 @@
 ID: "35191c19-f0c6-4244-a36b-85f1aac7586f"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
 Template: "e1ebed68-d872-413c-9b06-a2336b9ea5e2"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/ScriptsColumn"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/FieldListControl/ScriptsColumn"
 DB: core
 SharedFields:
+- ID: "1071db97-68af-4723-9598-55e6182ead16"
+  Hint: Action Text
+  Value: Scripts
 - ID: "15e1beee-13f7-4df4-8da8-cbc880b21f31"
   Hint: Target Control
   Value: AllFieldScriptList
@@ -28,9 +31,6 @@ Languages:
   Versions:
   - Version: 1
     Fields:
-    - ID: "1071db97-68af-4723-9598-55e6182ead16"
-      Hint: Action Text
-      Value: Scripts
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20170615T113400Z

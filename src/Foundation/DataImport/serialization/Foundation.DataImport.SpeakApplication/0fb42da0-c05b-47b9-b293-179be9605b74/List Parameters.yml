@@ -1,0 +1,18 @@
+﻿---
+ID: "56f8d5fd-a350-4b6f-942e-8309fe8881fa"
+Parent: "0fb42da0-c05b-47b9-b293-179be9605b74"
+Template: "88b6af7b-7253-471d-a644-12b81ef8f578"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Batch Mappings/Create Batch Mapping/PageSettings/List Control/List Parameters"
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170601T170300Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

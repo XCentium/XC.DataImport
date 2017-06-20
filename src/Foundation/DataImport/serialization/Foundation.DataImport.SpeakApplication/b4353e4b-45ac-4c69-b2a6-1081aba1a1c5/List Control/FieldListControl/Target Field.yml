@@ -2,7 +2,7 @@
 ID: "2a64da44-4757-4791-b9c7-84dd6aa9dfbc"
 Parent: "24956696-2a50-4a1c-8f6e-a39715ad9d25"
 Template: "3f0992ab-7f07-463a-a4e9-cc7f84a47b32"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/List Control/FieldListControl/Target Field"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/FieldListControl/Target Field"
 DB: core
 SharedFields:
 - ID: "1c50efbe-47cd-4a9b-9eef-a466e75c4977"

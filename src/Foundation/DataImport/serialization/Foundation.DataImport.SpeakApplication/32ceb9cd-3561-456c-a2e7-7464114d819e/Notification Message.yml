@@ -2,7 +2,7 @@
 ID: "b01cb275-8b15-41ae-b0f4-2d06fa15abbc"
 Parent: "32ceb9cd-3561-456c-a2e7-7464114d819e"
 Template: "76c2629e-3b7d-4eee-82d0-f5df443b56a5"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Messages/Notification Message"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/Messages/Notification Message"
 DB: core
 Languages:
 - Language: en
