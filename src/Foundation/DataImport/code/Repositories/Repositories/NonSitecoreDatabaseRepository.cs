@@ -1196,24 +1196,32 @@ namespace XC.DataImport.Repositories.Repositories
 
             if (sourceMediaStream != null)
             {
-                Media media = MediaManager.GetMedia(sourceMediaItem);
-                var scMediaStream = new MediaStream(sourceMediaStream, media.Extension, item);
-                media.SetStream(scMediaStream);
-
-                if (item.Fields["Height"] != null && string.IsNullOrEmpty(item["Height"]) && item.Fields["Width"] != null && string.IsNullOrEmpty(item["Width"]))
+                try
                 {
-                    try
+                    Media media = MediaManager.GetMedia(sourceMediaItem);
+                    var scMediaStream = new MediaStream(sourceMediaStream, media.Extension, item);
+                    media.SetStream(scMediaStream);
+
+                    if (item.Fields["Height"] != null && string.IsNullOrEmpty(item["Height"]) && item.Fields["Width"] != null && string.IsNullOrEmpty(item["Width"]))
                     {
-                        using (new EditContext(item))
+                        try
                         {
-                            var image = System.Drawing.Image.FromStream(sourceMediaStream);
-                            item["Height"] = image.Height.ToString();
-                            item["Width"] = image.Height.ToString();
+                            using (new EditContext(item))
+                            {
+                                var image = System.Drawing.Image.FromStream(sourceMediaStream);
+                                item["Height"] = image.Height.ToString();
+                                item["Width"] = image.Height.ToString();
+                            }
                         }
+                        catch { }
                     }
-                    catch { }
+                    statusMethod(string.Format("<span style=\"color:green\"><strong>[SUCCESS][{0}] Updating Attached Media: {1} </strong></span>", item.ID, item.Paths.FullPath), statusFilename);
                 }
-                statusMethod(string.Format("<span style=\"color:green\"><strong>[SUCCESS][{0}] Updating Attached Media: {1} </strong></span>", item.ID, item.Paths.FullPath), statusFilename);
+                catch (Exception ex)
+                {
+                    statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0} ({1})</strong</span>", ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilename);
+                    DataImportLogger.Log.Error(ex.Message, ex);
+                }
             }
             else
             {
