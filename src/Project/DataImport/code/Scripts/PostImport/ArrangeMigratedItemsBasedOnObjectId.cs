@@ -29,10 +29,14 @@ namespace XC.Project.DataImport.Scripts.PostImport
                     if (!string.IsNullOrEmpty(parentId))
                     {
                         var parent = args.MigratedItems.FirstOrDefault(i => i[Templates.ImportedItem.Fields.OriginObjectId] == parentId);
-                        if (parent != null)
+                        try
                         {
                             item.MoveTo(parent);
                             DataImportLogger.Log.Info(string.Format("Post Processing: Moving item {0} to {1}", item.Name, item.Paths.FullPath));
+                        }
+                        catch (Exception ex)
+                        {
+                            DataImportLogger.Log.Error(string.Format("Post Processing: Moving item {0} to {1}. Exception: {2}", item.Name, item.Paths.FullPath, ex.StackTrace));
                         }
                     }
                 }

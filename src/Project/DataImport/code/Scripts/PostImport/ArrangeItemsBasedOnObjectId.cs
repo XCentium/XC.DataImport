@@ -1,6 +1,7 @@
 ﻿using Sitecore.Configuration;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
+using System;
 using XC.Foundation.DataImport;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
@@ -27,8 +28,15 @@ namespace XC.Project.DataImport.Scripts.PostImport
                         var parent = GetParentItem(parentId);
                         if (parent != null)
                         {
-                            item.MoveTo(parent);
-                            DataImportLogger.Log.Info(string.Format("Post Processing: Moving item {0} to {1}", item.Name, item.Paths.FullPath));
+                            try
+                            {
+                                item.MoveTo(parent);
+                                DataImportLogger.Log.Info(string.Format("Post Processing: Moving item {0} to {1}", item.Name, item.Paths.FullPath));
+                            }
+                            catch (Exception ex)
+                            {
+                                DataImportLogger.Log.Error(string.Format("Post Processing: Moving item {0} to {1}. Exception: {2}", item.Name, item.Paths.FullPath, ex.StackTrace));
+                            }
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <publishUrl>http://car.import.local</publishUrl>
+    <publishUrl>http://car.dev.import.local</publishUrl>
   </PropertyGroup>
 </Project>

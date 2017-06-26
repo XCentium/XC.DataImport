@@ -290,13 +290,18 @@ namespace XC.Foundation.DataImport.Controllers
                     mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMapping != null)
                     {
+                        var processedMappings = new List<NonScFieldMapping>();
+                        var count = 0;
                         foreach (var mp in mappingObject.FieldMapping)
                         {
-                            if (string.IsNullOrEmpty(mp.SourceFields))
+                            if (!string.IsNullOrEmpty(mp.SourceFields))
                             {
-                                mappingObject.FieldMapping.ToList().Remove(mp);
+                                mp.Id = count;
+                                processedMappings.Add(mp);
+                                count++;
                             }
                         }
+                        mappingObject.FieldMapping = processedMappings.ToArray();
                     }
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
                 }

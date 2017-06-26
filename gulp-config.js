@@ -1,5 +1,5 @@
 module.exports = function () {
-    var instanceRoot = "C:\\Websites\\car.import.local";
+    var instanceRoot = "C:\\Websites\\car-import";
     var config = {
         websiteRoot: instanceRoot + "\\Website",
         sitecoreLibraries: instanceRoot + "\\Website\\bin",

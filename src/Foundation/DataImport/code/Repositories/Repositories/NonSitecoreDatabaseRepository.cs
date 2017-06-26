@@ -25,6 +25,7 @@ using System.IO;
 using XC.Foundation.DataImport.Utilities;
 using XC.Foundation.DataImport.Pipelines.FieldProcessing;
 using Sitecore.Pipelines;
+using Sitecore;
 
 namespace XC.DataImport.Repositories.Repositories
 {
@@ -515,7 +516,7 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 ProcessMultivalueField(row, item, statusMethod, statusFilepath, field, targetField);
                             }
-                            else if ((item.Fields[field.TargetFields].TypeKey.Contains("droplink") || item.Fields[field.TargetFields].TypeKey.Contains("reference")) && (string.IsNullOrWhiteSpace(item[field.TargetFields]) || field.Overwrite))
+                            else if ((item.Fields[field.TargetFields].TypeKey.Contains("droplink") || item.Fields[field.TargetFields].TypeKey.Contains("reference") || item.Fields[field.TargetFields].TypeKey.Contains("droptree")) && (string.IsNullOrWhiteSpace(item[field.TargetFields]) || field.Overwrite))
                             {
                                 ProcessReferenceField(row, item, statusMethod, statusFilepath, field, targetField);
                             }
@@ -530,6 +531,10 @@ namespace XC.DataImport.Repositories.Repositories
                             else if (item.Fields[field.TargetFields].TypeKey.Contains("attachment"))
                             {
                                 ProcessAttachmentField(row, item, field, statusMethod, statusFilepath);
+                            }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("date"))
+                            {
+                                ProcessDateField(row, item, field, statusMethod, statusFilepath, targetField);
                             }
                             else if (string.IsNullOrWhiteSpace(item[field.TargetFields]) || field.Overwrite)
                             {
@@ -721,7 +726,8 @@ namespace XC.DataImport.Repositories.Repositories
                 var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
                 if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
                 {
-                    matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, field.ReferenceItemsTemplate, FastQueryUtility.EscapeDashes(startPath)));
+                    var template = ItemUri.Parse(field.ReferenceItemsTemplate);
+                    matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, template.ItemID, FastQueryUtility.EscapeDashes(startPath)));
                     if (matchingItem == null)
                     {
                         matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, FastQueryUtility.EscapeDashes(startPath)));
@@ -897,7 +903,7 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 ProcessMultivalueField(row, item, statusMethod, statusFilepath, field, targetField);
                             }
-                            else if ((item.Fields[field.TargetFields].TypeKey.Contains("droplink") || item.Fields[field.TargetFields].TypeKey.Contains("reference")))
+                            else if ((item.Fields[field.TargetFields].TypeKey.Contains("droplink") || item.Fields[field.TargetFields].TypeKey.Contains("reference") || item.Fields[field.TargetFields].TypeKey.Contains("droptree")))
                             {
                                 ProcessReferenceField(row, item, statusMethod, statusFilepath, field, targetField);
                             }
@@ -913,6 +919,10 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 ProcessAttachmentField(row, item, field, statusMethod, statusFilepath);
                             }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("date"))
+                            {
+                                ProcessDateField(row, item, field, statusMethod, statusFilepath, targetField);
+                            }
                             else
                             {
                                 ProcessGenericField(row, item, statusMethod, statusFilepath, field, targetField);
@@ -927,6 +937,42 @@ namespace XC.DataImport.Repositories.Repositories
                 }
             }
             //}
+        }
+
+        /// <summary>
+        /// Processes the date field.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        /// <param name="targetField">The target field.</param>
+        private void ProcessDateField(DataRow row, Item item, NonScFieldMapping field, Action<string, string> statusMethod, string statusFilepath, Field targetField)
+        {
+            using (new EditContext(item, false, true))
+            {
+                var finalValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
+                if (string.IsNullOrEmpty(finalValue))
+                    return;
+
+                DateTime columnValue;
+                DateTime.TryParse(finalValue, out columnValue);
+
+                var processedValue = RunFieldProcessingScripts(columnValue, field.ProcessingScripts);
+
+                if (processedValue is DateTime)
+                {
+                    var dateField = (DateField)item.Fields[field.TargetFields];
+                    dateField.Value = DateUtil.ToIsoDate((DateTime)processedValue);
+                }
+
+            }
+            if (DetailedLogging)
+            {
+                statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+            }
+            DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
         }
 
         /// <summary>
