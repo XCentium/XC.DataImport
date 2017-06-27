@@ -35,7 +35,7 @@
 
           mapping["MergeColumnFieldMatch"] = {};
           mapping["MergeColumnFieldMatch"]["Source"] = this.SourceMatchColumn.get("text");
-          mapping["MergeColumnFieldMatch"]["Target"] = this.TargetMergeTemplate.get("selectedValue");
+          mapping["MergeColumnFieldMatch"]["Target"] = this.TargetMergeField.get("selectedValue");
           
           mapping["MergeWithExistingItems"] = this.MergeWithExistingItems.get("isChecked");
 

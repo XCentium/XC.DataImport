@@ -64,6 +64,11 @@ SharedFields:
           uid="{218E4618-9840-4277-8C21-5D6960355C5F}" />
         <r
           id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7bF032267B-E012-4477-9D29-E26F2F9570C4%7d&amp;Id=TemplateFieldDatasourceLoadRule&amp;LoadMode=Immediately&amp;TargetControl=TemplateFieldDatasource&amp;Trigger=change%3aitems&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{9790D81A-34FF-4E0E-B721-738EB4BCE385}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
           par="RuleItemId=%7bC3F4A438-C91A-401E-9F95-14A48EDB925A%7d&amp;Id=TemplateDatasourceLoadRule&amp;LoadMode=Immediately&amp;TargetControl=TemplateDatasource&amp;Trigger=change%3aitems&amp;Field=Rule"
           ph="Page.Body"
           uid="{8390909A-443D-46EE-A5C8-EB1C7F5F209F}" />
@@ -325,7 +330,7 @@ SharedFields:
           uid="{01D87380-0098-4D4F-BCCD-D3C3CA6C7F5A}" />
         <r
           id="{25D357D3-3648-4336-9B53-55EED7CFA078}"
-          par="Id=TargetMergeTemplate"
+          par="Id=TargetMergeField&amp;DisplayFieldName=Name&amp;Items=%7bBinding+TemplateFieldDatasource.Data%7d&amp;ValueFieldName=Id"
           ph="UpdateMatchExpander.Body"
           uid="{191BFD94-F634-4C8F-AE14-BFD6CBC1B4EF}" />
         <r
@@ -365,7 +370,7 @@ SharedFields:
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
           id="{442BD093-FBAD-4E36-BC08-489E16C82D08}"
-          par="Text=Rules%2525252525252525252bto%2525252525252525252bRun%2525252525252525252bAfter%2525252525252525252bImport%2525252525252525252bis%2525252525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
+          par="Text=Rules%252525252525252525252bto%252525252525252525252bRun%252525252525252525252bAfter%252525252525252525252bImport%252525252525252525252bis%252525252525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
           ph="FullWidthPanel.Content"
           uid="{F7C3B5FB-82DF-4919-8F1C-FAD1641B9E72}" />
         <r

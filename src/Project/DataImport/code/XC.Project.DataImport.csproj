@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\FieldScript\ConvertNullValueToNullString.cs" />
     <Compile Include="Scripts\FieldScript\UpdateReferences.cs" />
     <Compile Include="Scripts\FieldScript\ConvertSecuritySettings.cs" />
     <Compile Include="Scripts\FieldScript\PrependUserWithDomainName.cs" />

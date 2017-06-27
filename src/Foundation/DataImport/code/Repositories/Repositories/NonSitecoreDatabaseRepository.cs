@@ -110,7 +110,7 @@ namespace XC.DataImport.Repositories.Repositories
             var id = row[idFieldFromMapping.SourceFields].ToString();
             if (!string.IsNullOrEmpty(id))
             {
-                sitecoreId = StringToID(_mapping.Name + id);
+                sitecoreId = StringToID(id);
             }
 
             using (new SecurityDisabler())
@@ -598,10 +598,9 @@ namespace XC.DataImport.Repositories.Repositories
         private void ProcessLinkField(DataRow row, Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField)
         {
             var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
-            if (!string.IsNullOrEmpty(matchingColumnValue))
+            var processedValue = (string)RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+            if (!string.IsNullOrEmpty(processedValue))
             {
-                var processedValue = (string)RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
-
                 var linkField = (LinkField)item.Fields[field.TargetFields];
                 if (!string.IsNullOrEmpty(processedValue))
                 {
@@ -637,60 +636,64 @@ namespace XC.DataImport.Repositories.Repositories
         private void ProcessTristateCheckboxField(DataRow row, Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField)
         {
             var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
-            if (!string.IsNullOrEmpty(matchingColumnValue))
+            var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+            if (item.Fields[field.TargetFields].TypeKey.Contains("tristate"))
             {
-                var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
-
-                if (item.Fields[field.TargetFields].TypeKey.Contains("tristate"))
+                var fieldValue = "";
+                if (processedValue is bool)
                 {
-                    var fieldValue = "";
-                    if (processedValue is bool)
+                    if ((bool)processedValue)
                     {
-                        if ((bool)processedValue)
-                        {
-                            fieldValue = "1";
-                        }
-                        else if (!(bool)processedValue)
-                        {
-                            fieldValue = "0";
-                        }
+                        fieldValue = "1";
                     }
-                    var tristateField = (ValueLookupField)item.Fields[field.TargetFields];
-                    if (fieldValue != tristateField.Value)
+                    else if (!(bool)processedValue)
                     {
-                        using (new EditContext(item, false, true))
-                        {
-                            tristateField.Value = fieldValue;
-                        }
-                        if (DetailedLogging)
-                        {
-                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
-                        }
-                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
+                        fieldValue = "0";
                     }
                 }
-                else if (item.Fields[field.TargetFields].TypeKey.Contains("checkbox"))
+                var tristateField = (ValueLookupField)item.Fields[field.TargetFields];
+                if (fieldValue != tristateField.Value)
+                {
+                    using (new EditContext(item, false, true))
+                    {
+                        tristateField.Value = fieldValue;
+                    }
+                    if (DetailedLogging)
+                    {
+                        statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                    }
+                    DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
+                }
+            }
+            else if (item.Fields[field.TargetFields].TypeKey.Contains("checkbox"))
+            {
+                var fieldValue = "";
+                if (processedValue is bool)
+                {
+                    fieldValue = (bool)processedValue ? "1" : "0";
+                }
+                else if (processedValue is string)
                 {
                     var boolValue = false;
-                    var fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
-                    if (bool.TryParse(matchingColumnValue, out boolValue))
+                    fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
+                    if (bool.TryParse((string)processedValue, out boolValue))
                     {
                         fieldValue = boolValue ? "1" : "0";
                     }
-                    if (item.Fields[field.TargetFields].Value != fieldValue)
+                }
+                if (item.Fields[field.TargetFields].Value != fieldValue)
+                {
+                    var checkboxField = (CheckboxField)item.Fields[field.TargetFields];
+                    using (new EditContext(item, false, true))
                     {
-                        var checkboxField = (CheckboxField)item.Fields[field.TargetFields];
-                        using (new EditContext(item, false, true))
-                        {
-                            checkboxField.Value = fieldValue;
-                        }
-
-                        if (DetailedLogging)
-                        {
-                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
-                        }
-                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
+                        checkboxField.Value = fieldValue;
                     }
+
+                    if (DetailedLogging)
+                    {
+                        statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                    }
+                    DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
                 }
             }
         }
@@ -707,10 +710,9 @@ namespace XC.DataImport.Repositories.Repositories
         private void ProcessReferenceField(DataRow row, Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField)
         {
             var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
-            if (!string.IsNullOrEmpty(matchingColumnValue))
+            var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+            if (!string.IsNullOrEmpty((string)processedValue))
             {
-                var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
-
                 var referenceField = (ReferenceField)item.Fields[field.TargetFields];
                 var startPath = "sitecore";
                 var source = GetFieldSource(referenceField.InnerField.Source);
@@ -777,20 +779,17 @@ namespace XC.DataImport.Repositories.Repositories
         private void ProcessMultivalueField(DataRow row, Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField)
         {
             var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
-            if (!string.IsNullOrEmpty(matchingColumnValue))
+            var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+            if (processedValue is IEnumerable<string>)
             {
-                var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
-                if (processedValue is IEnumerable<string>)
+                foreach (var val in (IEnumerable<string>)processedValue)
                 {
-                    foreach (var val in (IEnumerable<string>)processedValue)
-                    {
-                        UpdateMultilistField(item, statusMethod, statusFilepath, field, targetField, val);
-                    }
+                    UpdateMultilistField(item, statusMethod, statusFilepath, field, targetField, val);
                 }
-                else
-                {
-                    UpdateMultilistField(item, statusMethod, statusFilepath, field, targetField, processedValue.ToString());
-                }
+            }
+            else
+            {
+                UpdateMultilistField(item, statusMethod, statusFilepath, field, targetField, processedValue.ToString());
             }
         }
 
