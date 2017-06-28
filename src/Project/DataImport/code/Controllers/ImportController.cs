@@ -1,5 +1,7 @@
 ﻿using HtmlAgilityPack;
+using Sitecore;
 using Sitecore.Configuration;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System;
@@ -18,6 +20,110 @@ namespace XC.Project.DataImport.Controllers
 {
     public class ImportController : Controller
     {
+        private const string MediaReferenceTemplateId = "{170EDED0-DB36-4FC8-98F8-EFF1D6CC65F5}";
+
+        public ActionResult MoveMediaOutOfFolder(string rootId)
+        {
+            if (string.IsNullOrEmpty(rootId))
+            {
+                return Content("rootId is not valid");
+            }
+            var database = Factory.GetDatabase("master");
+            if (database == null)
+            {
+                return Content("master database was not found");
+            }
+            var rootItem = database.GetItem(rootId);
+            if (rootItem == null)
+            {
+                return Content("root item was not found");
+            }
+
+            try
+            {
+                var mediaQuery = string.Format("fast:/{0}//*[@@templateid!='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), Sitecore.TemplateIDs.MediaFolder);
+                var mediaItems = database.SelectItems(mediaQuery);
+
+                if (mediaItems != null && mediaItems.Any())
+                {
+                    using (new SecurityDisabler())
+                    {
+                        foreach (var item in mediaItems)
+                        {
+                            if (item.Parent != null && item.Name == item.Parent.Name && item.Parent.TemplateID == Sitecore.TemplateIDs.MediaFolder)
+                            {
+                                var oldFolder = item.Parent;
+                                item.MoveTo(item.Parent.Parent);
+                                oldFolder.Delete();
+                                Response.Write("<div>Item Moved: " + item.Paths.FullPath + "</div>");
+                                Response.Flush();
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<div>ERROR:  " + ex.StackTrace + "</div>");
+                Response.Flush();
+            }
+            return Content("Finished");
+        }
+
+        public ActionResult MoveMediaIntoML(string rootId)
+        {
+            if (string.IsNullOrEmpty(rootId))
+            {
+                return Content("rootId is not valid");
+            }
+            var database = Factory.GetDatabase("master");
+            if (database == null)
+            {
+                return Content("master database was not found");
+            }
+            var rootItem = database.GetItem(rootId);
+            if (rootItem == null)
+            {
+                return Content("root item was not found");
+            }
+
+            try
+            {
+                var mediaQuery = string.Format("fast:/{0}//*[@@templateid!='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), Sitecore.TemplateIDs.MediaFolder);
+                var mediaItems = database.SelectItems(mediaQuery);
+
+                if (mediaItems != null && mediaItems.Any())
+                {
+                    var templateItem = database.GetItem(MediaReferenceTemplateId);
+                    if (templateItem != null)
+                    {
+                        using (new SecurityDisabler())
+                        {
+                            foreach (var item in mediaItems)
+                            {
+                                var mediaReferenceItem = item.Parent.Add(item.Name, new TemplateItem(templateItem));
+                                if (mediaReferenceItem != null)
+                                {
+                                    using (new EditContext(mediaReferenceItem))
+                                    {
+                                        mediaReferenceItem["Content Reference"] = item.ID.ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<div>ERROR:  " + ex.StackTrace + "</div>");
+                Response.Flush();
+            }
+            return Content("Finished");
+        }
+
         //Work in progress - Not Finished
         public ActionResult ReplaceArticleLinks(string rootId)
         {
@@ -222,5 +328,33 @@ namespace XC.Project.DataImport.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates the media path.
+        /// </summary>
+        /// <param name="database">The database.</param>
+        /// <param name="mediaLibraryPath">The media library path.</param>
+        private Item CreateMediaPath(Database database, string mediaLibraryPath)
+        {
+            if (string.IsNullOrEmpty(mediaLibraryPath))
+                return null;
+            try
+            {
+                using (new SecurityDisabler())
+                {
+                    var parentPath = mediaLibraryPath.Replace(StringUtil.GetLastPart(mediaLibraryPath, '/', ""), "");
+                    var parentItem = database.GetItem(parentPath);
+                    if (parentItem != null)
+                        return parentItem;
+
+                    var templateItem = database.GetItem(Sitecore.TemplateIDs.MediaFolder);
+                    return database.CreateItemPath(parentPath, templateItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Sitecore.Diagnostics.Log.Error(string.Format("Post Processing MoveMediaAndReplaceWithReference: Error creating path {0}. {1}", ex.StackTrace, ex.Source), this);
+            }
+            return null;
+        }
     }
 }

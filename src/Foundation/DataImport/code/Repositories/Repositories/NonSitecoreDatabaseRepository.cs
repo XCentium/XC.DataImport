@@ -532,6 +532,10 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 ProcessAttachmentField(row, item, field, statusMethod, statusFilepath);
                             }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("image"))
+                            {
+                                ProcessImageField(row, item, field, targetField, statusMethod, statusFilepath);
+                            }
                             else if (item.Fields[field.TargetFields].TypeKey.Contains("date"))
                             {
                                 ProcessDateField(row, item, field, statusMethod, statusFilepath, targetField);
@@ -918,6 +922,10 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 ProcessAttachmentField(row, item, field, statusMethod, statusFilepath);
                             }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("image"))
+                            {
+                                ProcessImageField(row, item, field, targetField, statusMethod, statusFilepath);
+                            }
                             else if (item.Fields[field.TargetFields].TypeKey.Contains("date"))
                             {
                                 ProcessDateField(row, item, field, statusMethod, statusFilepath, targetField);
@@ -936,6 +944,78 @@ namespace XC.DataImport.Repositories.Repositories
                 }
             }
             //}
+        }
+
+        /// <summary>
+        /// Processes the image field.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="targetField">The target field.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void ProcessImageField(DataRow row, Item item, NonScFieldMapping field, Field targetField, Action<string, string> statusMethod, string statusFilepath)
+        {
+            var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
+            var processedValue = (string)RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+            if (!string.IsNullOrEmpty(processedValue))
+            {
+                Item mediaItem = null;
+                var imageField = (ImageField)item.Fields[field.TargetFields];
+                if (!string.IsNullOrEmpty(processedValue))
+                {
+                    var startPath = "sitecore";
+                    var source = GetFieldSource(imageField.InnerField.Source);
+                    if (!string.IsNullOrWhiteSpace(source))
+                    {
+                        var fieldSource = item.Database.GetItem(source);
+                        if (fieldSource != null)
+                        {
+                            startPath = fieldSource.Paths.FullPath;
+                        }
+                    }
+                    var imageFieldName = ResolveFieldName(field.ReferenceItemsField);
+                    if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
+                    {
+                        var template = ItemUri.Parse(field.ReferenceItemsTemplate);
+                        mediaItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(imageFieldName), processedValue, template.ItemID, FastQueryUtility.EscapeDashes(startPath)));
+                        if (mediaItem == null)
+                        {
+                            mediaItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(imageFieldName), processedValue, FastQueryUtility.EscapeDashes(startPath)));
+                        }
+                        if (DetailedLogging)
+                        {
+                            statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\" under \"{3}\" </span>", imageFieldName, processedValue, item.ID, startPath), statusFilepath);
+                        }
+                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\" under \"{3}\"  </span>", imageFieldName, processedValue, item.ID, startPath));
+                    }
+
+                    if (mediaItem != null && imageField != null)
+                    {
+                        if (imageField.Value != mediaItem.ID.ToString())
+                        {
+                            using (new EditContext(item, false, true))
+                            {
+                                imageField.MediaID = mediaItem.ID;
+                            }
+                        }
+                        if (DetailedLogging)
+                        {
+                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID), statusFilepath);
+                        }
+                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", targetField.DisplayName, item.Fields[field.TargetFields].Value, item.ID));
+                    }
+                    else
+                    {
+                        if (DetailedLogging)
+                        {
+                            statusMethod(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                        }
+                        DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"));
+                    }
+                }
+            }
         }
 
         /// <summary>

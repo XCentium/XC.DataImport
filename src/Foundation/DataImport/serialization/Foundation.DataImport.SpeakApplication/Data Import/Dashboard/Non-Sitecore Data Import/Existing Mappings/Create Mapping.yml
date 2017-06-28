@@ -304,11 +304,6 @@ SharedFields:
           ph="SourceExpander.Body"
           uid="{E113D0E5-EA99-4B90-9030-4A548BE59B1B}" />
         <r
-          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
-          par="Id=SourceProcessingRulesLabel&amp;Text=Source+Processing+Rules%3a"
-          ph="Border3.Content"
-          uid="{25311A4F-9333-4C64-AB43-E7EA5A8D12A1}" />
-        <r
           id="{CA84FBFF-B3A0-4AEC-9C2C-7DDBBF7DA102}"
           par="IsOpen=0&amp;Id=UpdateMatchExpander&amp;Text=Matching+Column%2fField+for+Merged+Item+Import"
           ph="SourceContentGrid.Content"
@@ -370,7 +365,7 @@ SharedFields:
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
           id="{442BD093-FBAD-4E36-BC08-489E16C82D08}"
-          par="Text=Rules%252525252525252525252bto%252525252525252525252bRun%252525252525252525252bAfter%252525252525252525252bImport%252525252525252525252bis%252525252525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
+          par="Text=Rules%25252525252525252525252bto%25252525252525252525252bRun%25252525252525252525252bAfter%25252525252525252525252bImport%25252525252525252525252bis%25252525252525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
           ph="FullWidthPanel.Content"
           uid="{F7C3B5FB-82DF-4919-8F1C-FAD1641B9E72}" />
         <r

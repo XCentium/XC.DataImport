@@ -141,6 +141,7 @@
     <Compile Include="Scripts\FieldScript\SplitValuesByComma.cs" />
     <Compile Include="Scripts\PostImport\ArrangeMigratedItemsBasedOnObjectId.cs" />
     <Compile Include="Scripts\PostImport\ArrangeItemsBasedOnObjectId.cs" />
+    <Compile Include="Scripts\PostImport\MoveMediaAndReplaceWithReference.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

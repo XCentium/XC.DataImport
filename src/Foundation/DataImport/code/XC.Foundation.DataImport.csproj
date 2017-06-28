@@ -292,6 +292,7 @@
     <Compile Include="UI\Controls\FieldListControl.cs" />
     <Compile Include="UI\Controls\SelectableListControl.cs" />
     <Compile Include="Utilities\FastQueryUtility.cs" />
+    <Compile Include="Utilities\ItemExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
