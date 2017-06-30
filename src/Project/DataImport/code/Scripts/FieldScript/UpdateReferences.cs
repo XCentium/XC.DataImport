@@ -21,6 +21,8 @@ namespace XC.Project.DataImport.Scripts.FieldScript
 {
     public class UpdateReferences
     {
+        private readonly ID StringSettingTemplateId = ID.Parse("{5EECF4A9-2D1F-44D1-AE33-0B7EE1230055}");
+
         public void Process(FieldProcessingPipelineArgs args)
         {
             DataImportLogger.Log.Info("#################Field Processing UpdateReferences started ##################");
@@ -40,13 +42,29 @@ namespace XC.Project.DataImport.Scripts.FieldScript
                         HtmlAttribute att = link.Attributes["href"];
                         if (att == null)
                             continue;
+                        var anchorValue = att.Value;
+
                         var linkId = Regex.Match(att.Value, @"\d+").Value;
+                        var linkAnchor = Regex.Match(att.Value, @"#.*").Value;
                         var match = FindItem(args.Database, linkId);
                         if (match == null)
                             continue;
-                        var formattedId = match.ID.ToString().Replace("-", "").Replace("{", "").Replace("}", "");
-                        var sitecoreString = String.Format("~/link.aspx?_id={0}&amp;_z=z", formattedId);
-                        link.SetAttributeValue("href", sitecoreString);
+
+                        var sitecoreString = "";
+                        if (match.TemplateID == StringSettingTemplateId)
+                        {
+                            sitecoreString = match["Value"];
+                        }
+                        else
+                        {
+                            var formattedId = match.ID.ToShortID().ToString();
+                            sitecoreString = string.Format("~/link.aspx?_id={0}&amp;_z=z", formattedId);
+                        }
+                        if (!string.IsNullOrEmpty(sitecoreString))
+                        {
+                            link.SetAttributeValue("href", sitecoreString + linkAnchor);
+                            Sitecore.Diagnostics.Log.Info(string.Format("#################Field Processing UpdateReferences Updating link to {0} ##################", sitecoreString), this);
+                        }
                     }
                 }
                 if (htmldoc.DocumentNode.SelectNodes("//img[@src]") != null)
@@ -61,12 +79,10 @@ namespace XC.Project.DataImport.Scripts.FieldScript
                         var match = FindItem(args.Database, linkId);
                         if (match == null)
                             continue;
-                        if (!match.Paths.IsMediaItem)
-                            continue;
-                        //var formattedId = match.ID.ToString().Replace("-", "").Replace("{", "").Replace("}", "");
                         var formattedId = match.ID.ToShortID().ToString();
-                        var sitecoreString = String.Format("-/media/{0}.ashx", formattedId);
+                        var sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
                         link.SetAttributeValue("src", sitecoreString);
+                        Sitecore.Diagnostics.Log.Info(string.Format("#################Field Processing UpdateReferences Updating media src to {0} ##################", sitecoreString), this);
                     }
                 }
 
@@ -81,10 +97,13 @@ namespace XC.Project.DataImport.Scripts.FieldScript
             }
 
             DataImportLogger.Log.Info("#################Field Processing UpdateReferences ended ##################");
+            Sitecore.Diagnostics.Log.Info("#################Field Processing UpdateReferences ended ##################", this);
+
         }
 
         private Item FindItem(Database database, string linkId)
         {
+            Sitecore.Diagnostics.Log.Info(string.Format("#################Field Processing UpdateReferences FindItem {0} ##################", linkId), this);
             return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Foundation.DataImport.Templates.ImportedItem.Fields.OriginObjectId), linkId));
         }
     }

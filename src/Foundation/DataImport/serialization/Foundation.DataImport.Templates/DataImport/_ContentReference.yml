@@ -1,5 +1,5 @@
 ﻿---
-ID: "751da72d-8b06-4c4d-96bb-d8054a7e08dd"
+ID: "5152e20b-972d-4b3e-8cbf-54e221444c38"
 Parent: "74c6b2d8-fa8d-436d-8be6-1fbab003a008"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
 Path: /sitecore/templates/Foundation/DataImport/_ContentReference
@@ -16,4 +16,4 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20170626T164129Z
+      Value: 20170626T140723Z

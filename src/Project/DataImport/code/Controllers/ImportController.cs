@@ -2,12 +2,14 @@
 using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -21,6 +23,54 @@ namespace XC.Project.DataImport.Controllers
     public class ImportController : Controller
     {
         private const string MediaReferenceTemplateId = "{170EDED0-DB36-4FC8-98F8-EFF1D6CC65F5}";
+
+        public ActionResult CleanUpMediaReferenceItems(string rootId)
+        {
+            if (string.IsNullOrEmpty(rootId))
+            {
+                return Content("rootId is not valid");
+            }
+            var database = Factory.GetDatabase("master");
+            if (database == null)
+            {
+                return Content("master database was not found");
+            }
+            var rootItem = database.GetItem(rootId);
+            if (rootItem == null)
+            {
+                return Content("root item was not found");
+            }
+
+            try
+            {
+                var mediaQuery = string.Format("fast:/{0}//*[@@templateid='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), MediaReferenceTemplateId);
+                var mediaItems = database.SelectItems(mediaQuery);
+
+                if (mediaItems != null && mediaItems.Any())
+                {
+                    using (new SecurityDisabler())
+                    {
+                        foreach (var item in mediaItems)
+                        {
+                            var contentReference = (ReferenceField)item.Fields["Content Reference"];
+                            if (contentReference != null && contentReference.TargetItem != null && contentReference.TargetItem.Paths.IsContentItem)
+                            {
+                                Response.Write("<div>Item Deleted: " + item.Paths.FullPath + " | " + contentReference.TargetItem.Paths.FullPath +"</div>");
+                                Response.Flush();
+                                item.Delete();
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<div>ERROR:  " + ex.StackTrace + "</div>");
+                Response.Flush();
+            }
+            return Content("Finished");
+        }
 
         public ActionResult MoveMediaOutOfFolder(string rootId)
         {
@@ -90,7 +140,7 @@ namespace XC.Project.DataImport.Controllers
 
             try
             {
-                var mediaQuery = string.Format("fast:/{0}//*[@@templateid!='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), Sitecore.TemplateIDs.MediaFolder);
+                var mediaQuery = string.Format("fast:/{0}//*", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath));
                 var mediaItems = database.SelectItems(mediaQuery);
 
                 if (mediaItems != null && mediaItems.Any())
@@ -100,16 +150,9 @@ namespace XC.Project.DataImport.Controllers
                     {
                         using (new SecurityDisabler())
                         {
-                            foreach (var item in mediaItems)
+                            foreach (var item in mediaItems.OrderBy(i=>i.Paths.FullPath))
                             {
-                                var mediaReferenceItem = item.Parent.Add(item.Name, new TemplateItem(templateItem));
-                                if (mediaReferenceItem != null)
-                                {
-                                    using (new EditContext(mediaReferenceItem))
-                                    {
-                                        mediaReferenceItem["Content Reference"] = item.ID.ToString();
-                                    }
-                                }
+                                MoveMediaAssetIntoMediaLibrary(item);
                             }
                         }
                     }
@@ -122,6 +165,42 @@ namespace XC.Project.DataImport.Controllers
                 Response.Flush();
             }
             return Content("Finished");
+        }
+
+        private void MoveMediaAssetIntoMediaLibrary(Item item)
+        {
+            if (item.Paths.IsContentItem && (item.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || item.IsDerived(Sitecore.TemplateIDs.UnversionedFile)))
+            {
+                var contentItemPath = item.Paths.FullPath;
+                var mediaLibraryPath = item.Paths.FullPath.Replace(Sitecore.Constants.ContentPath, Sitecore.Constants.MediaLibraryPath);
+                var mediaLibraryParentItem = item.Database.GetItem(mediaLibraryPath);
+
+                var mediaReferenceItem = CreateMediaReferenceItem(item, item.Parent);                
+                CreateChildMediaReferences(item, mediaReferenceItem);                
+
+                if (mediaLibraryParentItem == null)
+                {
+                    mediaLibraryParentItem = CreateMediaPath(item.Database, mediaLibraryPath);
+                }
+                if (mediaLibraryParentItem != null)
+                {
+                    item.MoveTo(mediaLibraryParentItem);
+                    Response.Write("<div>Item Moved: " + item.Paths.FullPath + "</div>");
+                    Response.Flush();
+                }
+            }
+        }
+
+        private void CreateChildMediaReferences(Item item, Item mediaReferenceItem)
+        {
+            if (item.HasChildren)
+            {
+                foreach (Item child in item.Children)
+                {
+                    var referenceItem = CreateMediaReferenceItem(child, mediaReferenceItem);
+                    CreateChildMediaReferences(child, referenceItem);
+                }
+            }
         }
 
         //Work in progress - Not Finished
@@ -280,6 +359,83 @@ namespace XC.Project.DataImport.Controllers
             return Content("Finished");
         }
 
+        public ActionResult MissingObjectIdReport(string path)
+        {
+            Response.Buffer = true;
+            if (string.IsNullOrEmpty(path))
+                return Content("missing path");
+
+            var result = new StringBuilder();
+            result.AppendLine("<table>");
+            result.AppendLine("<tr>");
+            result.AppendLine("<th>#</th>");
+            result.AppendLine("<th>Link Value</th>");
+            result.AppendLine("<th>Object ID</th>");
+            result.AppendLine("<th>Link Anchor Value</th>");
+            result.AppendLine("</tr>");
+
+            if (System.IO.File.Exists(path))
+            {
+                var htmldoc = new HtmlDocument();
+                htmldoc.Load(path);
+                var count = 1;
+
+                if (htmldoc.DocumentNode.SelectNodes("//a[@href]") != null)
+                {
+                    foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
+                    {
+                        HtmlAttribute att = link.Attributes["href"];
+                        if (att == null)
+                            continue;
+
+                        var match = Regex.Match(att.Value, @"link\-ref.*'(\d+)'");
+                        if (match.Success)
+                        {
+                            var linkId = Regex.Match(att.Value, @"\d+").Value;
+                            var linkAnchor = Regex.Match(att.Value, @"#\d+").Value;
+
+                            result.AppendLine("<tr>");
+                            result.AppendFormat("<td>{0}</td>", count);
+                            result.AppendFormat("<td>{0}</td>", att.Value);
+                            result.AppendFormat("<td>{0}</td>", linkId);
+                            result.AppendFormat("<td>{0}</td>", linkAnchor);
+                            result.AppendLine("</tr>");
+                            count++;
+                        }
+                    }
+                }
+                if (htmldoc.DocumentNode.SelectNodes("//img[@src]") != null)
+                {
+                    foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//img[@src]"))
+                    {
+                        HtmlAttribute att = link.Attributes["src"];
+                        if (att == null)
+                            continue;
+
+                        var match = Regex.Match(att.Value, @"link\-ref.*'(\d+)'");
+                        if (match.Success)
+                        {
+                            var linkId = Regex.Match(att.Value, @"\d+").Value;
+                            result.AppendLine("<tr>");
+                            result.AppendFormat("<td>{0}</td>", count);
+                            result.AppendFormat("<td>{0}</td>", att.Value);
+                            result.AppendFormat("<td>{0}</td>", linkId);
+                            result.AppendLine("<td></td>");
+                            result.AppendLine("</tr>");
+                            count++;
+                        }
+                    }
+                }
+
+                result.AppendLine("</table>");
+                return Content(result.ToString());
+            }
+            else
+            {
+                return Content("file not found");
+            }
+        }
+
         // GET: Import
         public ActionResult ImportRoles()
         {
@@ -356,5 +512,41 @@ namespace XC.Project.DataImport.Controllers
             }
             return null;
         }
+
+
+        /// <summary>
+        /// Creates the media reference item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        private Item CreateMediaReferenceItem(Item item, Item parentItem)
+        {
+            if (item == null)
+                return null;
+            try
+            {
+                using (new SecurityDisabler())
+                {
+                    var templateItem = item.Database.GetItem(MediaReferenceTemplateId);
+                    if (templateItem == null)
+                        return null;
+
+                    var mediaReferenceItem = parentItem.Add(item.Name, new TemplateItem(templateItem));
+                    if (mediaReferenceItem == null)
+                        return null;
+
+                    using (new EditContext(mediaReferenceItem))
+                    {
+                        mediaReferenceItem["Content Reference"] = item.ID.ToString();
+                    }
+                    return mediaReferenceItem;
+                }
+            }
+            catch (Exception ex)
+            {
+                Sitecore.Diagnostics.Log.Error(string.Format("Post Processing MoveMediaAndReplaceWithReference: Error creating media reference item {0}. {1}", item.Paths.FullPath, ex.StackTrace), this);
+            }
+            return null;
+        }
+
     }
 }
