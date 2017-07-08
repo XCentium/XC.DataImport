@@ -132,16 +132,12 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\FieldScript\ConvertNullValueToNullString.cs" />
-    <Compile Include="Scripts\FieldScript\UpdateReferences.cs" />
     <Compile Include="Scripts\FieldScript\ConvertSecuritySettings.cs" />
     <Compile Include="Scripts\FieldScript\PrependUserWithDomainName.cs" />
     <Compile Include="Scripts\FieldScript\SplitValuesByComma.cs" />
-    <Compile Include="Scripts\PostImport\ArrangeMigratedItemsBasedOnObjectId.cs" />
     <Compile Include="Scripts\PostImport\ArrangeItemsBasedOnObjectId.cs" />
-    <Compile Include="Scripts\PostImport\MoveMediaAndReplaceWithReference.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
