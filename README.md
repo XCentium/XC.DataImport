@@ -1,1 +1,2 @@
-Documentations: https://github.com/XCentium/XC.DataImport/wiki
+Overview of functionlity:
+https://github.com/XCentium/XC.DataImport/wiki
