@@ -1,0 +1,46 @@
+﻿---
+ID: "0cafce09-190d-4e2e-abd1-afecd84ee1a4"
+Parent: "23437e0f-b242-46a4-a198-daab64c3bdb0"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Actions/Delete Mapping/PageSettings/Rules/PopulateMappingRuleDefinition
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{63666509-24CA-4C9C-91BD-C756F07C3783}"
+            uid="C612CAEA6B9B4379A160FD18EAE97D49"
+            targetControlId="MappingDatasource"
+            propertyName="data"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{F5C1D882-2E34-4824-B4CC-06568A326FB6}"
+            targetControlId="MappingName"
+            propertyName="text"
+            sourceControlId="MappingDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Name" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170602T211345Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

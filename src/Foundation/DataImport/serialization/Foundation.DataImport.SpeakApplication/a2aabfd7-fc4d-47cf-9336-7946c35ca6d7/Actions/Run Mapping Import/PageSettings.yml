@@ -1,0 +1,18 @@
+﻿---
+ID: "6c9b8e87-5fa0-4992-ba3f-847c5a2e25a5"
+Parent: "4e4c8144-f78e-4439-9549-f01bc2282d76"
+Template: "e35eaa2d-edea-431c-a9e6-488272b53782"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Actions/Run Mapping Import/PageSettings
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170602T210228Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

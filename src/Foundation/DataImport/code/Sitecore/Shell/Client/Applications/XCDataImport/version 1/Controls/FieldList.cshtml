@@ -13,6 +13,7 @@
     var listControl = new FieldListControl(new DatasourceBasedParametersResolver(Model.Rendering));
     listControl.GetString("Items", "Items");
     listControl.GetString("TemplateFields", "TemplateFields");
+    listControl.GetString("SourceTemplateFields", "SourceTemplateFields");
     listControl.GetString("Templates", "Templates");
     listControl.Requires.Clear();
     listControl.Requires.Script("client","Applications/XCDataImport/version 1/Controls/FieldList.js");

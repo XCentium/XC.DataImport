@@ -1,0 +1,78 @@
+﻿---
+ID: "9817f6af-673c-477e-91da-8bb742fa1d24"
+Parent: "065a5c6e-90bc-4b94-a667-d7ae6965962d"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Actions/Run Mapping Import/PageSettings/Rules/PopulateMappingRuleDefinition
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{63666509-24CA-4C9C-91BD-C756F07C3783}"
+            uid="C612CAEA6B9B4379A160FD18EAE97D49"
+            targetControlId="MappingDatasource"
+            propertyName="data"
+            operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+            value="null" />
+        </conditions>
+        <actions>
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{F5C1D882-2E34-4824-B4CC-06568A326FB6}"
+            targetControlId="MappingName"
+            propertyName="text"
+            sourceControlId="MappingDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Name" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{041E268A-FD32-4323-856A-D1A0E7A05B12}"
+            targetControlId="SourceDatabase"
+            propertyName="text"
+            sourceControlId="MappingDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Databases.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{DBD18A4B-7128-4231-AD59-747C91DDD6CB}"
+            targetControlId="TargetDatabase"
+            propertyName="text"
+            sourceControlId="MappingDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Databases.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{B0EE6193-AB18-4B6E-ACC4-28FB68CBBF98}"
+            targetControlId="SourceTemplate"
+            propertyName="text"
+            sourceControlId="MappingDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Templates.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{1CAAA582-AAFE-4D45-8604-CC9A35E8C203}"
+            targetControlId="TargetTemplate"
+            propertyName="text"
+            sourceControlId="MappingDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Templates.Target" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170602T211345Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

@@ -2,7 +2,7 @@
 ID: "b7599c1e-3cac-45dc-adf3-4325a7d15050"
 Parent: "5538c53c-4962-4a7f-a15b-da8b8b9d0baf"
 Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Run Template Import/PageSettings/ProgressBarRuleDefinition
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Run Template Import/PageSettings/ProgressBarRuleDefinition"
 DB: core
 SharedFields:
 - ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"

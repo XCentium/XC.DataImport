@@ -2,7 +2,7 @@
 ID: "82cd6cf2-cb25-4019-b1fa-10b4e69f59ec"
 Parent: "cd111b60-c9b0-452b-ba74-c3dac983ee21"
 Template: "db753979-c1b7-4106-8dff-f54dc93b55ba"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Create New Template Mapping/PageSettings/ListControl Parameters/Exclude
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Create New Template Mapping/PageSettings/ListControl Parameters/Exclude"
 DB: core
 SharedFields:
 - ID: "3f25f389-1900-4c5e-b60e-a1f7a10f8b46"

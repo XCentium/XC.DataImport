@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace XC.Foundation.DataImport.Models
 {
-    public class NonScFieldMapping : FieldMapping
+    public class NonScFieldMapping : ScFieldMapping
     {
-        public string ReferenceItemsTemplate { get; set; }
-        public string ReferenceItemsField { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace XC.DataImport.Repositories.Migration
                 var itemsToImport = SourceRepository.GetSourceItemsForImportCount(statusMethod, statusFilepath, Filter);
                 if (itemsToImport == 0)
                 {
-                    statusMethod(string.Format(" <span style=\"color:blue\">[INFO] Nothing to import ({0})</span>", Mapping.Name), statusFilepath);
+                    statusMethod(string.Format(" <span style=\"color:blue\">[DONE] Nothing to import ({0})</span>", Mapping.Name), statusFilepath);
                     return;
                 }
 
@@ -193,7 +193,7 @@ namespace XC.DataImport.Repositories.Migration
                 var itemsToImport = SourceRepository.GetSourceItemsForImportCount(statusMethod, statusFilepath, Filter);
                 if (itemsToImport == 0)
                 {
-                    statusMethod(string.Format(" <span style=\"color:blue\">[INFO] Nothing to import ({0})</span>", Mapping.Name), statusFilepath);
+                    statusMethod(string.Format(" <span style=\"color:blue\">[DONE] Nothing to import ({0})</span>", Mapping.Name), statusFilepath);
                     return null;
                 }
 

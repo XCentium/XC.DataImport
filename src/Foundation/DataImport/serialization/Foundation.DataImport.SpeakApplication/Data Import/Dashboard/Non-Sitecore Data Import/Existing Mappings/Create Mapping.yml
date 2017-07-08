@@ -34,7 +34,7 @@ SharedFields:
           uid="{F239F4F5-1949-440C-A753-10E932156351}" />
         <r
           id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
-          par="RuleItemId=%7b33FFB036-DCEC-447E-986C-09EB26E1941D%7d&amp;Id=MessageBarRule&amp;TargetControl=MappingSaveDatasource&amp;Trigger=change%3aDynamicData&amp;Field=Rule"
+          par="RuleItemId=%7b33FFB036-DCEC-447E-986C-09EB26E1941D%7d&amp;Id=MessageBarRule&amp;TargetControl=MappingSaveDatasource&amp;Trigger=change%3adata&amp;Field=Rule"
           ph="Page.Body"
           uid="{A43F8745-01C4-45FE-8396-3A595F13B128}" />
         <r
@@ -181,7 +181,7 @@ SharedFields:
         <r
           id="{910155C7-3881-4A56-90FB-D126490EDE55}"
           par="Id=MessageBar&amp;IsVisible=0&amp;Messages=%7bB01CB275-8B15-41AE-B0F4-2D06FA15ABBC%7d"
-          ph="ApplicationHeader.ContextSwitch"
+          ph="ApplicationContent.Main"
           uid="{D2EF65B1-A846-49F2-9FC0-C054F477E1BA}" />
         <r
           id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
@@ -365,7 +365,7 @@ SharedFields:
           uid="{3BC511C2-CC03-459B-BBEB-AEE3F9AC837E}" />
         <r
           id="{442BD093-FBAD-4E36-BC08-489E16C82D08}"
-          par="Text=Rules%25252525252525252525252bto%25252525252525252525252bRun%25252525252525252525252bAfter%25252525252525252525252bImport%25252525252525252525252bis%25252525252525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
+          par="Text=Rules%2525252525252525252525252bto%2525252525252525252525252bRun%2525252525252525252525252bAfter%2525252525252525252525252bImport%2525252525252525252525252bis%2525252525252525252525252bComplete&amp;Id=PostProcessingExpander&amp;Header=Post-Import+Processing+Tasks"
           ph="FullWidthPanel.Content"
           uid="{F7C3B5FB-82DF-4919-8F1C-FAD1641B9E72}" />
         <r

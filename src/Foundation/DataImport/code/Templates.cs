@@ -15,6 +15,8 @@ namespace XC.Foundation.DataImport
                 public static readonly string OriginObjectId = "Origin Object Id";
                 public static readonly string OriginParentObjectId = "Origin Parent Object Id";
                 public static readonly string OriginBodyTextId = "Body";
+                public static readonly string OriginShortDescriptionId = "Short Description";
+                public static readonly string OriginPath = "Origin Path";
             }
         }
 

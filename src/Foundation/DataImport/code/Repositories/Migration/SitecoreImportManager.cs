@@ -12,6 +12,8 @@ using Sitecore.Jobs;
 using Sitecore;
 using Sitecore.ContentSearch.Maintenance;
 using XC.Foundation.DataImport.Diagnostics;
+using XC.Foundation.DataImport.Pipelines.PostProcessing;
+using Sitecore.Pipelines;
 
 namespace XC.DataImport.Repositories.Migration
 {
@@ -21,7 +23,7 @@ namespace XC.DataImport.Repositories.Migration
         public ISitecoreDatabaseRepository TargetRepository { get; set; }
         public IMappingModel Mapping { get; set; }
         private static readonly object SyncRoot = new object();
-        private static IDictionary<string, Tuple<int,string>> ProcessStatus { get; set; }
+        private static IDictionary<string, Tuple<int, string>> ProcessStatus { get; set; }
         private IEnumerable<Item> ItemsToImport { get; set; }
 
         public SitecoreImportManager()
@@ -75,7 +77,7 @@ namespace XC.DataImport.Repositories.Migration
                         var itemsToImport = SourceRepository.GetSourceItemsForImport();
                         if (itemsToImport == null)
                         {
-                            statusMethod(" <span style=\"color:blue\">[INFO] Nothing to import</span>", statusFilename);
+                            statusMethod(" <span style=\"color:blue\">[DONE] Nothing to import</span>", statusFilename);
                             return;
                         }
                         DataImportLogger.Log.Info("XC.DataImport - Total import count: " + itemsToImport.Count() + ": Mapping Name:" + Mapping.Name);
@@ -90,14 +92,24 @@ namespace XC.DataImport.Repositories.Migration
 
                         for (var i = 0; i < itemsToImport.Count(); i++)
                         {
-                            statusMethod(string.Format(" <span style=\"color:blue\">[INFO] {0}: {1}</span>", i, itemsToImport.ElementAt(i).ID), statusFilename);
+                            statusMethod(string.Format(" <span style=\"color:blue\">[INFO] {0}: {1}</span>", i + 1, itemsToImport.ElementAt(i).ID), statusFilename);
                             var item = SourceRepository.Database.GetItem(itemsToImport.ElementAt(i).ID);
                             TargetRepository.MigrateItem(item, parentItem, startDate, statusMethod, statusFilename);
                         }
+
                         //if (BucketManager.IsBucket(parentItem) || BucketManager.IsBucketFolder(parentItem))
                         //{
                         //    BucketManager.Sync(parentItem);
                         //}
+
+                        statusMethod(" <span style=\"color:blue\">[DONE] Import is done.</span>", statusFilename);
+
+                        if (Mapping.PostImportScripts != null && Mapping.PostImportScripts.Any())
+                        {
+                            statusMethod(" <h4 style=\"color:blue\">[INFO] Post Processing scripts starting</h4>", statusFilename);
+                            RunPostProcessingScripts(itemsToImport, Mapping.PostImportScripts);
+                            statusMethod(" <h4 style=\"color:blue\">[INFO] Post Processing scripts are done</h4>", statusFilename);
+                        }
 
                         ClearCache();
                     }
@@ -112,6 +124,9 @@ namespace XC.DataImport.Repositories.Migration
             }
         }
 
+        /// <summary>
+        /// Clears the cache.
+        /// </summary>
         private void ClearCache()
         {
             TargetRepository.Database.Caches.DataCache.Clear();
@@ -123,10 +138,21 @@ namespace XC.DataImport.Repositories.Migration
         }
 
         /// <summary>
+        /// Runs the post processing scripts.
+        /// </summary>
+        /// <param name="migratedItems">The migrated items.</param>
+        /// <param name="postProcessingScripts">The post processing scripts.</param>
+        private void RunPostProcessingScripts(IEnumerable<Item> migratedItems, IEnumerable<string> postProcessingScripts)
+        {
+            var pipelineArgs = new ProcessingPipelineArgs(migratedItems, postProcessingScripts);
+            CorePipeline.Run("xc.dataimport.postprocessing", pipelineArgs);
+        }
+
+        /// <summary>
         /// Adds the specified id.
         /// </summary>
         /// <param name="id">The id.</param>
-        public void Add(string id, Action<string,  string> statusMethod, string statusFilename)
+        public void Add(string id, Action<string, string> statusMethod, string statusFilename)
         {
             lock (SyncRoot)
             {
@@ -157,7 +183,7 @@ namespace XC.DataImport.Repositories.Migration
         {
             lock (SyncRoot)
             {
-                return ProcessStatus.Keys.Count(x => x == id) == 1 ? ProcessStatus[id] : new Tuple<int, string>(100,"");
+                return ProcessStatus.Keys.Count(x => x == id) == 1 ? ProcessStatus[id] : new Tuple<int, string>(100, "");
             }
         }
 

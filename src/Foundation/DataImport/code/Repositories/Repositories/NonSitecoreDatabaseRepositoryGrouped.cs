@@ -243,6 +243,9 @@ namespace XC.DataImport.Repositories.Repositories
         /// <returns></returns>
         private Item FindItem(string matchingColumnValue, Item targetFieldItem)
         {
+            if (string.IsNullOrEmpty(matchingColumnValue))
+                return null;
+
             if (ItemsToProcess == null)
             {
                 if (!string.IsNullOrEmpty(_mapping.Paths.Target))
@@ -252,11 +255,11 @@ namespace XC.DataImport.Repositories.Repositories
                 else if (!string.IsNullOrEmpty(_mapping.Templates.Target))
                 {
                     var templateId = ID.Parse(_mapping.Templates.Target);
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue, _mapping.Templates.Target));
+                    return Database.SelectSingleItem(string.Format("fast://sitecore/content//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue, _mapping.Templates.Target));
                 }
                 else
                 {
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue));
+                    return Database.SelectSingleItem(string.Format("fast://sitecore/content//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue));
                 }
             }
             else

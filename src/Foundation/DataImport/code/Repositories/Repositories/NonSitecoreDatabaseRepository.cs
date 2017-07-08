@@ -244,16 +244,19 @@ namespace XC.DataImport.Repositories.Repositories
         /// <returns></returns>
         private Item FindItem(string matchingColumnValue, Item targetFieldItem)
         {
+            if (string.IsNullOrEmpty(matchingColumnValue))
+                return null;
+
             if (ItemsToProcess == null)
             {
                 if (!string.IsNullOrEmpty(_mapping.Templates.Target))
                 {
                     var template = ItemUri.Parse(_mapping.Templates.Target);
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue, template.ItemID));
+                    return Database.SelectSingleItem(string.Format("fast://sitecore/content//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue, template.ItemID));
                 }
                 else
                 {
-                    return Database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue));
+                    return Database.SelectSingleItem(string.Format("fast://sitecore/content//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue));
                 }
             }
             else

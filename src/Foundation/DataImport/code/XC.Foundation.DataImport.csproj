@@ -197,6 +197,8 @@
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\EditMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ExistingMappings.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\DeleteMapping.js" />
+    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\ScMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\PostProcessingScript.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\NonScMapping.js" />
     <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\RunImport.js" />
@@ -227,7 +229,7 @@
     <Compile Include="Controllers\BatchNonScImportProcessingController.cs" />
     <Compile Include="Controllers\DataImportController.cs" />
     <Compile Include="Controllers\BaseImportController.cs" />
-    <Compile Include="Controllers\ImportProcessingController.cs" />
+    <Compile Include="Controllers\ScImportProcessingController.cs" />
     <Compile Include="Controllers\NonScImportProcessingController.cs" />
     <Compile Include="Disablers\ItemFilteringDisabler.cs" />
     <Compile Include="ConfigSettings.cs" />
@@ -263,7 +265,7 @@
     <Compile Include="Models\BatchMappingModel.cs" />
     <Compile Include="Models\DatabaseEntity.cs" />
     <Compile Include="Models\FieldGridRenderingModel.cs" />
-    <Compile Include="Models\FieldMapping.cs" />
+    <Compile Include="Models\ScFieldMapping.cs" />
     <Compile Include="Models\IBatchMappingModel.cs" />
     <Compile Include="Models\IMapping.cs" />
     <Compile Include="Models\IMappingModel.cs" />

@@ -2,7 +2,7 @@
 ID: "06b48dee-52c2-4b9b-b414-bd887c07bbd9"
 Parent: "638d92f3-5661-4547-8fe0-6e0f609cddb0"
 Template: "db753979-c1b7-4106-8dff-f54dc93b55ba"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Create Batch Mapping/PageSettings/FieldForm/Name
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Create Batch Mapping/PageSettings/FieldForm/Name"
 DB: core
 SharedFields:
 - ID: "024d9d7a-ccda-4dd1-a9d2-73fd3a27507c"

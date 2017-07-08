@@ -2,7 +2,7 @@
 ID: "c59180b4-7b7b-457c-bfc9-533782cce557"
 Parent: "ae41d199-6f79-4f0b-aa98-79d8831ddfba"
 Template: "4640f8f6-ff25-4615-8a40-fe9f0c87225e"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Create New Template Mapping/PageSettings/FieldForm/SourceFields
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Create New Template Mapping/PageSettings/FieldForm/SourceFields"
 DB: core
 SharedFields:
 - ID: "0b6b2d34-5308-4aa8-b59d-85ba47e8b8aa"

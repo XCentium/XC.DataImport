@@ -26,6 +26,13 @@ SharedFields:
             uid="{8E3A56D8-7C35-4865-9CDC-CF4F820AD41F}"
             name="MessageBar"
             value="true" />
+          <action
+            id="{2A4D7853-9A50-4E8C-A65A-E5414119905E}"
+            uid="{E763D0BC-94B7-4B3D-8364-279BDFDDFB83}"
+            targetId="MessageBar"
+            targetProperty="notifications"
+            sourceId="MappingSaveDatasource"
+            sourceProperty="messages" />
         </actions>
       </rule>
     </ruleset>

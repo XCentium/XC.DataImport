@@ -155,14 +155,14 @@ namespace XC.DataImport.Repositories.History
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
-        public static string GetLatestRunDateString(string path)
+        public static string SitecoreGetLatestRunDateString(string path)
         {
             try
             {
                 if (File.Exists(path))
                 {
                     var mappingContent = File.ReadAllText(path);
-                    var mappingObject = (MappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(MappingModel));
+                    var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ScMappingModel));
 
                     if (mappingObject != null)
                     {
@@ -267,7 +267,7 @@ namespace XC.DataImport.Repositories.History
             }
             return string.Empty;
         }
-
+        
         /// <summary>
         /// Gets the status file path.
         /// </summary>

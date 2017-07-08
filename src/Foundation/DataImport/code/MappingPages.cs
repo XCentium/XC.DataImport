@@ -10,20 +10,21 @@ namespace XC.Foundation.DataImport
     {
         public struct Sitecore
         {
-            public static readonly ID ScMappingsEditTemplateMapping = ID.Parse("{F683E74B-35C1-4C16-9168-8DD1A989640A}");
-            public static readonly ID ScMappingsRunTemplateImport = ID.Parse("{9539E038-208E-4C03-8C9F-AFF72CF1DCD7}");
+            public static readonly ID ScMappingsCreateTemplateMapping = ID.Parse("{3B13CFDF-D81E-4479-A755-F1337ED06210}");
+            public static readonly ID ScMappingsRunTemplateImport = ID.Parse("{4E4C8144-F78E-4439-9549-F01BC2282D76}");
+            public static readonly ID ScMappingsDeleteTemplateImport = ID.Parse("{9F745642-FD57-4076-BBB6-A5316D0271D2}");
         }
 
         public struct NonSitecore
         {
             public static readonly ID NonScMappingsCreateTemplateMapping = ID.Parse("{217B963F-DCE3-4008-B4A7-F253679324CF}");
             public static readonly ID NonScMappingsRunTemplateImport = ID.Parse("{EDA349B3-B298-4994-86FD-3868CD572BCB}");
-            public static readonly ID NonScMappingsDeleteTemplateImport = ID.Parse("{BF6B9AC2-7B9F-4990-A625-E520661EA2B9}");
+            public static readonly ID NonScMappingsDeleteTemplateImport = ID.Parse("{0B99D360-E15D-4B35-98A3-0A2C6C0083F8}");
         }
 
         public struct SitecoreBatch
         {
-            public static readonly ID BatchMappingsCreateBatchMapping = ID.Parse("{C7E0C875-E351-4359-932D-9806D377779A}");
+            public static readonly ID BatchMappingsCreateBatchMapping = ID.Parse("{8C76611D-AA83-429E-9861-1F4AEA2457FC}");
             public static readonly ID BatchMappingsRunBatchImport = ID.Parse("{E218E2FA-1911-47DB-8479-91851BAACEB6}");
         }
         public struct NonSitecoreBatch

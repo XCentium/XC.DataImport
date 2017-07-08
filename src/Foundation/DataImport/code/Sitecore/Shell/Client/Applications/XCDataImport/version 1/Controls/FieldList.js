@@ -45,6 +45,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
         initialize: function (options) {
             this.parent = options.parent;
             this.model.set("templateFields", options.parent.model.get("templateFields"));
+            this.model.set("sourceTemplateFields", options.parent.model.get("sourceTemplateFields"));
             this.model.set("templates", options.parent.model.get("templates"));
 
             this.model.set("scripts", []);
@@ -79,7 +80,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             var itemPropertyName = itemInfo[0];
             var itemIndex = itemInfo[1];
 
-            var newValue = e.target.selectedOptions ? e.target.selectedOptions[0].value : e.target.type == "checkbox" ? e.target.checked : e.target.value;
+            var newValue = e.target.selectedOptions && e.target.selectedOptions.length > 0 ? e.target.selectedOptions[0].value : e.target.type == "checkbox" ? e.target.checked : e.target.value;
             this.parent.listControl.model.viewModel.items()[itemIndex][itemPropertyName] = newValue;
             this.parent.listControl.model.set("savedItems", this.parent.listControl.model.viewModel.items());
         }
@@ -527,6 +528,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this.model.on("change:items", this.refresh, this);
             this.model.on("change:view", this.setViewModel, this);
             this.model.on("change:templateFields", this.refresh, this);
+            this.model.on("change:sourceTemplateFields", this.refresh, this);
             this.model.on("change:templates", this.refresh, this);
             this.model.on("change:incomingFieldScripts", this.refresh, this);
             this.model.set("dataParameters", "");
@@ -699,6 +701,7 @@ define(["sitecore", "userProfile", "/-/speak/v1/business/combobox.js", "Scrollba
             this._super();
             this.set("items", []);
             this.set("templateFields", []);
+            this.set("sourceTemplateFields", []);
             this.set("templates", []);
             this.set("incomingFieldScripts", []);
 

@@ -20,6 +20,8 @@ using Sitecore.Data.Proxies;
 using XC.Foundation.DataImport.Disablers;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Utilities;
+using System.Web;
+using XC.Foundation.DataImport.Pipelines.FieldProcessing;
 
 namespace XC.DataImport.Repositories.Repositories
 {
@@ -67,8 +69,9 @@ namespace XC.DataImport.Repositories.Repositories
             {
                 if (string.IsNullOrEmpty(_mapping.Paths.Source) && !string.IsNullOrEmpty(_mapping.Templates.Source))
                 {
+                    var template = ItemUri.Parse(_mapping.Templates.Source);
                     query = string.Format("fast:/sitecore//*[@@templateid='{0}']",
-                            FastQueryUtility.EscapeDashes(_mapping.Templates.Source));
+                            template.ItemID);
                 }
                 else if (!string.IsNullOrEmpty(_mapping.Paths.Source) && string.IsNullOrEmpty(_mapping.Templates.Source))
                 {
@@ -79,18 +82,19 @@ namespace XC.DataImport.Repositories.Repositories
                                 FastQueryUtility.EscapeDashes(startItem.Paths.Path));
                     }
                 }
-                else
+                else if (!string.IsNullOrEmpty(_mapping.Templates.Source))
                 {
+                    var template = ItemUri.Parse(_mapping.Templates.Source);
                     var startItem = Database.GetItem(_mapping.Paths.Source);
                     if (startItem != null)
                     {
-                        query = string.Format("fast:{1}//*[@@templateid='{0}']", _mapping.Templates.Source,
+                        query = string.Format("fast:{1}//*[@@templateid='{0}']", template.ItemID,
                             FastQueryUtility.EscapeDashes(startItem.Paths.Path));
                     }
                     else
                     {
                         query = string.Format("fast:/sitecore//*[@@templateid='{0}']",
-                        _mapping.Templates.Source);
+                        template.ItemID);
                     }
                 }
                 if (!string.IsNullOrEmpty(query))
@@ -114,7 +118,8 @@ namespace XC.DataImport.Repositories.Repositories
                 var query = context.GetQueryable<SearchResultItem>();
                 if (_mapping.Templates != null && !string.IsNullOrEmpty(_mapping.Templates.Source))
                 {
-                    query = query.Where(i => i.TemplateId == ID.Parse(_mapping.Templates.Source));
+                    var template = ItemUri.Parse(_mapping.Templates.Source);
+                    query = query.Where(i => i.TemplateId == template.ItemID);
                 }
                 if (_mapping.Paths != null && !string.IsNullOrEmpty(_mapping.Paths.Source))
                 {
@@ -144,7 +149,8 @@ namespace XC.DataImport.Repositories.Repositories
             }
             try
             {
-                var templateId = new TemplateID(ID.Parse(_mapping.Templates.Target));
+                var template = ItemUri.Parse(_mapping.Templates.Target);
+                var templateId = new TemplateID(template.ItemID);
 
                 using (new ProxyDisabler(true))
                 using (new ItemFilteringDisabler())
@@ -200,7 +206,10 @@ namespace XC.DataImport.Repositories.Repositories
                     DataImportLogger.Log.Info("XC.DataImport - item processed: Source Path - " + item.Paths.Path + "; Target path - " + existingItem.Paths.FullPath);
                     HistoryLogging.ItemMigrated(item, existingItem, importStartDate, _mapping.Name);
 
-                    MigrateChildren(item, existingItem, importStartDate, statusMethod, statusFilename);
+                    if (existingItem != null && item.HasChildren && _mapping.MigrateDescendants)
+                    {
+                        MigrateChildren(item, existingItem, importStartDate, statusMethod, statusFilename);
+                    }
 
                     return existingItem;
 
@@ -312,116 +321,248 @@ namespace XC.DataImport.Repositories.Repositories
         /// Updates the existing fields.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <param name="existingItem">The existing item.</param>
-        private void UpdateExistingFields(Item item, Item existingItem, Action<string, string> statusMethod, string statusFilename)
-        {
-            if (item == null || existingItem == null)
-                return;
-
-            //using (new EditContext(existingItem, false, true))
-            //{
-                foreach (var field in item.Template.Fields.Where(f => !f.Name.Contains("__") || IsAllowedSystemField(f.Name)))
-                {
-                    if (!string.IsNullOrWhiteSpace(field.Name))
-                    {
-                        var mdsField = existingItem.Fields[field.Name] != null ? (CheckboxField)existingItem.Fields[field.Name].InnerItem.Fields["MDS Field"] : null;
-                        if (mdsField != null && mdsField.Checked)
-                        {
-                            statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{1}] Field \"{0}\" Skipped. Reasons ( MDS Field: checked; )</span>", field.Name, item.ID), statusFilename);
-                        }
-                        else if (field.Name != "Blob" && existingItem.Fields[field.ID] != null && item[field.ID].Contains("xml") && field.Name != "__Renderings" && (_mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)))
-                        {
-                            using (new EditContext(existingItem, false, true))
-                            {
-                                existingItem.Fields[field.Name].Value = string.Empty;
-                            }
-                            statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{1}] Field \"{0}\" Cleared </span>", field.Name, item.ID), statusFilename);
-                        }
-                        else if (field.Name != "Blob" && (mdsField == null || !mdsField.Checked) && existingItem.Fields[field.Name] != null && (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)))
-                        {
-                            using (new EditContext(existingItem, false, true))
-                            {
-                                existingItem.Fields[field.Name].Value = item[field.Name];
-                            }
-                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{4}] Field \"{0}\" Updated to {5}. Reasons ( MDS Field: {1}; Target Field Exists: {2}; Included in Mapping: {3})</span>", field.Name, !(mdsField == null || !mdsField.Checked), existingItem.Fields[field.Name] != null, (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)), item.ID, item[field.ID]), statusFilename);
-                        }
-                        else
-                        {
-                            statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{4}] Field \"{0}\" Skipped. Reasons ( MDS Field: {1}; Target Field Exists: {2}; Included in Mapping: {3})</span>", field.Name, !(mdsField == null || !mdsField.Checked), existingItem.Fields[field.Name] != null, (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)), item.ID), statusFilename);
-                        }
-                    }
-                    else
-                    {
-                        statusMethod(string.Format(" --- <span style=\"color:red\">[SKIPPED][{1}] Field \"{0}\" has empty name</span>", field.ID, item.ID), statusFilename);
-                    }
-                }
-
-                // store origin template name
-                if (existingItem.Fields["Old System Template Name"] != null)
-                {
-                    using (new EditContext(existingItem, false, true))
-                    {
-                        existingItem.Fields["Old System Template Name"].Value = item.TemplateName;
-                    }
-                }
-            //}
-        }
-
+        /// <param name="item">The existing item.</param>
         /// <summary>
         /// Updates the fields.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <param name="newItem">The new item.</param>
-        private void UpdateFields(Item item, Item newItem, Action<string, string> statusMethod, string statusFilename)
+        /// <param name="item">The new item.</param>
+        private void UpdateFields(Item sourceItem, Item targetItem, Action<string, string> statusMethod, string statusFilename)
         {
-            if (item == null || newItem == null)
+            lock (_mapping.FieldMapping)
+            {
+                if (_mapping.MigrateAllFields)
+                {
+                    foreach (var field in sourceItem.Template.Fields.Where(f => !f.Name.Contains("__") || IsAllowedSystemField(f.Name)))
+                    {
+                        try
+                        {
+                            if (!string.IsNullOrWhiteSpace(field.Name))
+                            {
+                                if (field.Name != "Blob" && field.Name != "__Icon" && targetItem.Fields[field.Name] != null && (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)))
+                                {
+                                    ProcessField(sourceItem, targetItem, new Field(field.ID, sourceItem));
+                                    statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{1}] Field \"{0}\" Updated to {2}</span>", field.Name, targetItem.ID, targetItem[field.Name]), statusFilename);
+                                }
+                                else
+                                {
+                                    statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{1}] Field \"{0}\" skipped</span>", field.Name, targetItem.ID), statusFilename);
+                                }
+                            }
+                            else
+                            {
+                                statusMethod(string.Format(" --- <span style=\"color:red\">[SKIPPED][{1}] Field \"{0}\" has empty name</span>", field.ID, targetItem.ID), statusFilename);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0} ({1})</strong</span>", ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilename);
+                            DataImportLogger.Log.Error(ex.Message, ex);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var field in _mapping.FieldMapping)
+                    {
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(field.TargetFields))
+                            {
+                                var sitecoreField = targetItem.Fields[field.TargetFields];
+                                if (sitecoreField.Name != "Blob" && sitecoreField.Name != "__Icon" && targetItem.Fields[sitecoreField.Name] != null && !field.Exclude)
+                                {
+                                    ProcessField(sourceItem, targetItem, sitecoreField);
+                                    statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{1}] Field \"{0}\" Updated to {2}</span>", sitecoreField.Name, targetItem.ID, targetItem[sitecoreField.Name]), statusFilename);
+                                }
+                                else
+                                {
+                                    statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{1}] Field \"{0}\" skipped</span>", sitecoreField.Name, targetItem.ID), statusFilename);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0} ({1})</strong</span>", ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilename);
+                            DataImportLogger.Log.Error(ex.Message, ex);
+                        }
+                    }
+                    ProcessSystemFields(sourceItem, targetItem, statusMethod, statusFilename);
+                }
+            }
+            //}
+        }
+
+        /// <summary>
+        /// Processes the system fields.
+        /// </summary>
+        /// <param name="sourceItem">The source item.</param>
+        /// <param name="targetItem">The target item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilename">The status filename.</param>
+        private void ProcessSystemFields(Item sourceItem, Item targetItem, Action<string, string> statusMethod, string statusFilename)
+        {
+            foreach(var fieldName in GetAllowedSystemFields())
+            {
+                using (new EditContext(targetItem, false, true))
+                {
+                    targetItem.Fields[fieldName].Value = sourceItem[fieldName];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the processing scripts.
+        /// </summary>
+        /// <param name="fieldId">The field identifier.</param>
+        /// <returns></returns>
+        private IEnumerable<string> GetProcessingScripts(ID fieldId)
+        {
+            if (_mapping.FieldMapping != null)
+            {
+                var matchingField = _mapping.FieldMapping.FirstOrDefault(f => f.SourceFields == fieldId.ToString() && !f.Exclude);
+                if (matchingField != null)
+                {
+                    return matchingField.ProcessingScripts;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Runs the field processing scripts.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="fieldMapping">The field mapping.</param>
+        private object RunFieldProcessingScripts(object value, IEnumerable<string> processingScript)
+        {
+            var pipelineArgs = new FieldProcessingPipelineArgs(value, processingScript, Database);
+            CorePipeline.Run("xc.dataimport.fieldprocessing", pipelineArgs);
+            return pipelineArgs.Result;
+        }
+
+        /// <summary>
+        /// Gets the field source.
+        /// </summary>
+        /// <param name="sourceRawValue">The source raw value.</param>
+        /// <returns></returns>
+        private string GetFieldSource(string sourceRawValue)
+        {
+            if (string.IsNullOrWhiteSpace(sourceRawValue) || ID.IsID(sourceRawValue))
+                return sourceRawValue;
+
+            var queryString = HttpUtility.ParseQueryString(sourceRawValue);
+            return queryString["StartSearchLocation"];
+        }
+
+        /// <summary>
+        /// Updates the existing fields.
+        /// </summary>
+        /// <param name="sourceItem">The item.</param>
+        /// <param name="targetItem">The existing item.</param>
+        private void UpdateExistingFields(Item sourceItem, Item targetItem, Action<string, string> statusMethod, string statusFilename)
+        {
+            if (sourceItem == null || targetItem == null)
                 return;
 
-            statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Updating version: {1} </strong></span>", newItem.Paths.Path, newItem.Version), statusFilename);
-
-            //using (new EditContext(newItem, false, true))
-            //{
-                foreach (var field in item.Template.Fields.Where(f => !f.Name.Contains("__") || IsAllowedSystemField(f.Name)))
+            if (_mapping.MigrateAllFields) {
+                foreach (var field in sourceItem.Template.Fields.Where(f => !f.Name.Contains("__") || IsAllowedSystemField(f.Name)))
                 {
                     if (!string.IsNullOrWhiteSpace(field.Name))
                     {
-                        var mdsField = newItem.Fields[field.Name] != null ? (CheckboxField)newItem.Fields[field.Name].InnerItem.Fields["MDS Field"] : null;
-                        if (mdsField != null && mdsField.Checked)
+                        if (field.Name != "Blob" && targetItem.Fields[field.ID] != null && sourceItem[field.ID].Contains("xml") && field.Name != "__Renderings" && (_mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)))
                         {
-                            statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{1}] Field \"{0}\" skipped. MDS Field.</span>", field.Name, item.ID), statusFilename);
-                        }
-                        else if (field.Name != "Blob" && field.Name != "__Icon" && newItem.Fields[field.Name] != null && (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)))
-                        {
-                            using (new EditContext(newItem))
+                            using (new EditContext(targetItem, false, true))
                             {
-                                newItem.Fields[field.Name].Value = item[field.Name];
+                                targetItem.Fields[field.Name].Value = string.Empty;
                             }
-                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{1}] Field \"{0}\" Updated to {2}</span>", field.Name, item.ID, item[field.Name]), statusFilename);
+                            statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{1}] Field \"{0}\" Cleared </span>", field.Name, sourceItem.ID), statusFilename);
+                        }
+                        else if (field.Name != "Blob" && targetItem.Fields[field.Name] != null && (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)))
+                        {
+                            ProcessField(sourceItem, targetItem, new Field(field.ID, sourceItem));
+                            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{3}] Field \"{0}\" Updated to {4}. Reasons ( Target Field Exists: {1}; Included in Mapping: {2})</span>", field.Name, targetItem.Fields[field.Name] != null, (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)), sourceItem.ID, sourceItem[field.ID]), statusFilename);
                         }
                         else
                         {
-                            statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{1}] Field \"{0}\" skipped</span>", field.Name, item.ID), statusFilename);
+                            statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{3}] Field \"{0}\" Skipped. Reasons ( Target Field Exists: {1}; Included in Mapping: {2})</span>", field.Name, targetItem.Fields[field.Name] != null, (_mapping.FieldMapping.All(f => f.SourceFields != field.ID.ToString()) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && f.Overwrite) || _mapping.FieldMapping.Any(f => f.SourceFields == field.ID.ToString() && !f.Exclude)), sourceItem.ID), statusFilename);
                         }
                     }
                     else
                     {
-                        statusMethod(string.Format(" --- <span style=\"color:red\">[SKIPPED][{1}] Field \"{0}\" has empty name</span>", field.ID, item.ID), statusFilename);
+                        statusMethod(string.Format(" --- <span style=\"color:red\">[SKIPPED][{1}] Field \"{0}\" has empty name</span>", field.ID, sourceItem.ID), statusFilename);
                     }
                 }
-
-                // store origin template name
-                if (newItem.Fields["Old System Template Name"] != null)
+            }
+            else
+            {
+                foreach (var field in _mapping.FieldMapping)
                 {
-                    using (new EditContext(newItem))
+                    try
                     {
-                        newItem.Fields["Old System Template Name"].Value = item.TemplateName;
+                        if (!string.IsNullOrEmpty(field.TargetFields))
+                        {
+                            var sitecoreField = targetItem.Fields[field.TargetFields];
+                            if (sitecoreField.Name != "Blob" && sitecoreField.Name != "__Icon" && targetItem.Fields[sitecoreField.Name] != null && !field.Exclude)
+                            {
+                                ProcessField(sourceItem, targetItem, sitecoreField);
+                                statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{1}] Field \"{0}\" Updated to {2}</span>", sitecoreField.Name, targetItem.ID, targetItem[sitecoreField.Name]), statusFilename);
+                            }
+                            else
+                            {
+                                statusMethod(string.Format(" --- <span style=\"color:orange\">[SKIPPED][{1}] Field \"{0}\" skipped</span>", sitecoreField.Name, targetItem.ID), statusFilename);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0} ({1})</strong</span>", ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilename);
+                        DataImportLogger.Log.Error(ex.Message, ex);
                     }
                 }
-            //}
+            }
         }
+
+        /// <summary>
+        /// Processes the field.
+        /// </summary>
+        /// <param name="sourceItem">The source item.</param>
+        /// <param name="targetItem">The target item.</param>
+        /// <param name="field">The field.</param>
+        private void ProcessField(Item sourceItem, Item targetItem, Field field)
+        {
+            var valueToImport = sourceItem[field.Name];
+            var processingScripts = GetProcessingScripts(field.ID);
+            var processedValue = (string)RunFieldProcessingScripts(valueToImport, processingScripts);
+
+            using (new EditContext(targetItem, false, true))
+            {
+                targetItem.Fields[field.Name].Value = processedValue;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether [is allowed system field] [the specified field name].
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns>
+        ///   <c>true</c> if [is allowed system field] [the specified field name]; otherwise, <c>false</c>.
+        /// </returns>
         private bool IsAllowedSystemField(string fieldName)
         {
-            var allowedSystemFields = new List<string>() {
+            var allowedSystemFields = GetAllowedSystemFields();
+            if (allowedSystemFields.Contains(fieldName))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the allowed system fields.
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetAllowedSystemFields()
+        {
+            return new List<string>() {
                 "__Created",
                 "__Updated",
                 "__Updated by",
@@ -436,23 +577,20 @@ namespace XC.DataImport.Repositories.Repositories
                 "__Publishing groups",
                 "__Never publish"
             };
-            if (allowedSystemFields.Contains(fieldName))
-                return true;
-            return false;
         }
         /// <summary>
         /// Migrates the children.
         /// </summary>
-        /// <param name="item">The item.</param>
+        /// <param name="childItem">The item.</param>
         /// <param name="existingItem">The existing item.</param>
-        private void MigrateChildren(Item item, Item parentItem, DateTime importStartDate, Action<string, string> statusMethod, string statusFilename)
+        private void MigrateChildren(Item childItem, Item parentItem, DateTime importStartDate, Action<string, string> statusMethod, string statusFilename)
         {
-            if (parentItem != null && item.HasChildren && item.Children.Any(x => x.TemplateID != ID.Parse(ConfigSettings.ContentFolder)))
+            if (parentItem != null && childItem.HasChildren && childItem.Children.Any(x => x.TemplateID != ID.Parse(ConfigSettings.ContentFolder)))
             {
-                statusMethod("<span style=\"color:green\">[INFO] Attempting child import</span>", statusFilename);
+                statusMethod("<span style=\"color:green\"><strong>[INFO] Attempting child import</strong></span>", statusFilename);
 
-                foreach (Item child in item.Children.Where(x => x.TemplateID != ID.Parse(ConfigSettings.ContentFolder)).OrderBy(i=>i.Paths.FullPath))
-                {                    
+                foreach (Item child in childItem.Children.OrderBy(i => i.Paths.FullPath))
+                {
                     var existingItem = Database.SelectSingleItem(string.Format("fast:/sitecore//*[@@id='{0}']", child.ID));
 
                     //using (new CacheWriteDisabler())
@@ -466,7 +604,7 @@ namespace XC.DataImport.Repositories.Repositories
                             var newItem = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(child.Name), parentItem, child.TemplateID, child.ID, SecurityCheck.Disable);
                             if (newItem == null) return;
 
-                            if (child.Versions.Count > 1)
+                            if (child.Versions.Count > 1 && _mapping.MigrateAllVersions)
                             {
                                 foreach (var verNumber in child.Versions.GetVersionNumbers().OrderBy(v => v.Number))
                                 {
@@ -499,10 +637,10 @@ namespace XC.DataImport.Repositories.Repositories
 
                         DataImportLogger.Log.Info("XC.DataImport - item processed: Source Path - " + child.Paths.Path + "; Target path - " + existingItem.Paths.FullPath);
                         HistoryLogging.ItemMigrated(child, existingItem, importStartDate, _mapping.Name);
-                        statusMethod(string.Format("<span style=\"color:green\">[SUCCESS] {0}</span>", existingItem.Paths.Path), statusFilename);
+                        statusMethod(string.Format("<span style=\"color:green\"><strong>[SUCCESS] {0} was imported</strong></span>", existingItem.Paths.Path), statusFilename);
                     }
 
-                    if (existingItem != null && child.HasChildren)
+                    if (existingItem != null && child.HasChildren && _mapping.MigrateDescendants)
                     {
                         MigrateChildren(child, existingItem, importStartDate, statusMethod, statusFilename);
                     }

@@ -9,8 +9,11 @@ namespace XC.Foundation.DataImport.Models
     [Serializable]
     public class MessageModel
     {
-        public string Text { get; set; }
-        public string Type { get; set; }
+        public string text { get; set; }
+        public string type { get; set; }
+        public string temporary { get; set; }
+        public string closable { get; set; }
+        public string actions { get; set; }
     }
 
     public enum MessageType
