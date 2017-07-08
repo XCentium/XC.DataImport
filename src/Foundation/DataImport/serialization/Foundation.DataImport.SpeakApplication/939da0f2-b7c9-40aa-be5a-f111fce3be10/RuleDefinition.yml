@@ -1,0 +1,40 @@
+﻿---
+ID: "a1ba6037-086a-4a8d-b844-04996e1ea02a"
+Parent: "939da0f2-b7c9-40aa-be5a-f111fce3be10"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Batch Mappings/PageSettings/Rules/RuleDefinition"
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule
+        uid="{F9B5F70A-C0C6-4944-B1D5-281C9D35B5C9}">
+        <conditions>
+          <condition
+            id="{B5CF2ABD-0811-4220-9805-8F6E62F4F4AC}"
+            uid="C7A880BF18184EE2BBC95592BFD1E348" />
+        </conditions>
+        <actions>
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{F3072F3E-C26B-4D7F-B11A-8BA398EFC844}"
+            targetControlId="MappingDatasource"
+            eventName="change:dataUrl" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170620T212924Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

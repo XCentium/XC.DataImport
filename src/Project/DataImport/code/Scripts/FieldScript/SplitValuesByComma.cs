@@ -7,39 +7,25 @@ using System.Linq;
 using System.Web;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Pipelines;
+using XC.Foundation.DataImport.Pipelines.FieldProcessing;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
 using XC.Foundation.DataImport.Utilities;
 using static Sitecore.Configuration.Settings;
 
 namespace XC.Project.DataImport.Scripts.FieldScript
 {
-    public class SplitValuesByComma : IProcessingPipelineProcessor
+    public class SplitValuesByComma 
     {
-        public void Process(ProcessingPipelineArgs args)
+        public void Process(FieldProcessingPipelineArgs args)
         {
-            DataImportLogger.Log.Info("#################Field Processing started ##################");
+            DataImportLogger.Log.Info("#################Field Processing SplitValuesByComma started ##################");
 
-            if (args.MigratedItems == null)
-                DataImportLogger.Log.Info("Post Processing: no migrated items");
+            if (args.SourceValue == null)
+                DataImportLogger.Log.Info("SplitValuesByComma Field Processing: no SourceValue");
 
-            using (new SecurityDisabler())
-            {
-                //foreach (var item in args.MigratedItems)
-                //{
-                //    var parentId = item[Templates.ImportedItem.Fields.OriginParentObjectId];
-                //    if (!string.IsNullOrEmpty(parentId))
-                //    {
-                //        var parent = GetParentItem(parentId);
-                //        if (parent != null)
-                //        {
-                //            item.MoveTo(parent);
-                //            DataImportLogger.Log.Info(string.Format("Post Processing: Moving item {0} to {1}", item.Name, item.Paths.FullPath));
-                //        }
-                //    }
-                //}
-            }
+            args.Result = args.SourceValue is string ? ((string)args.SourceValue).Replace("\"","").Split(',').Select(i=>i.Trim()) : args.SourceValue;
 
-            DataImportLogger.Log.Info("#################Field Processing ended ##################");
+            DataImportLogger.Log.Info("#################Field Processing SplitValuesByComma ended ##################");
         }
     }
 }

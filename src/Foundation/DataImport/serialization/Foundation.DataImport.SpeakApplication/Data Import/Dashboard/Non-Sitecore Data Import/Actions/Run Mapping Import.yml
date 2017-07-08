@@ -94,7 +94,7 @@ SharedFields:
           uid="{B6F4F31C-ED09-4C20-82C2-6386D1E03C22}" />
         <r
           id="{162FC747-B9E6-4FCE-A96C-1EFE125643F2}"
-          par="Click=javascript%3aapp.editMapping()&amp;Id=EditButton&amp;Text=Edit+Mapping&amp;IsButtonMode=1&amp;NavigateUrl=%2fsitecore%2fshell%2fsitecore%2fclient%2fYour-Apps%2fData-Import%2fDashboard%2fNon-Sitecore-Data-Import%2fCreate-Mapping%3fmenuItemId%3d%257b217B963F-DCE3-4008-B4A7-F253679324CF%257d"
+          par="Click=javascript%3aapp.editMapping()&amp;Id=EditButton&amp;Text=Edit+Mapping&amp;IsButtonMode=1&amp;NavigateUrl=%2fsitecore%2fshell%2fsitecore%2fclient%2fYour%2520Apps%2fData%2520Import%2fDashboard%2fNon-Sitecore%2520Data%2520Import%2fExisting%2520Mappings%2fCreate%2520Mapping%3fmenuItemId%3d%257b217B963F-DCE3-4008-B4A7-F253679324CF%257d"
           ph="ApplicationHeader.Actions"
           uid="{645E3ED9-5CDE-4479-BECB-A8385C744FD7}" />
         <r

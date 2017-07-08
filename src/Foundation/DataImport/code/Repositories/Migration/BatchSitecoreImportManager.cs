@@ -56,8 +56,8 @@ namespace XC.DataImport.Repositories.Migration
 
                 for (var i = 0; i < Mapping.Files.Count(); i++)
                 {
-                    var mappingContent = File.ReadAllText(Path.Combine(DataImportConfigurations.MappingFolder, Mapping.Files[i]));
-                    var mappingObject = (MappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(MappingModel));
+                    var mappingContent = File.ReadAllText(Path.Combine(DataImportConfigurations.SitecoreMappingFolder, Mapping.Files[i]));
+                    var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ScMappingModel));
 
                     DataImportLogger.Log.Info(string.Format("[INFO] Mapping: {0} </span>", mappingObject.Name));
 

@@ -1,0 +1,42 @@
+﻿---
+ID: "b7748830-1bba-4372-a170-a7e3a3c985d8"
+Parent: "ee94c25a-8009-4020-8996-fd76b401d52f"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/Rules/FieldMappingRuleDefinition"
+DB: core
+SharedFields:
+- ID: "1cb967b6-8720-4f39-9779-147c3cbcfc78"
+  Hint: Trigger
+  Value: "change:addrow"
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <condition
+            id="{B5CF2ABD-0811-4220-9805-8F6E62F4F4AC}"
+            uid="8FD3547D59EB43DF9A45DAA668D7045D" />
+        </conditions>
+        <actions>
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{4767A602-46C4-4DCE-B2B0-2C513AB058C7}"
+            targetControlId="FieldMappingDatasource"
+            eventName="change:dataUrl" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170526T194645Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

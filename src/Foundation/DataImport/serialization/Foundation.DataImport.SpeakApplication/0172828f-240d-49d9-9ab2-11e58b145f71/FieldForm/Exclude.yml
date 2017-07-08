@@ -2,7 +2,7 @@
 ID: "8b712e9a-b114-408e-96ca-fc116f82236e"
 Parent: "ca710a9f-10a2-419c-9469-7ecc72ed09f9"
 Template: "ad75c314-f983-4c56-81d5-dc10d5ccf4ef"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Edit Template Mapping/PageSettings/FieldForm/Exclude
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Edit Template Mapping/PageSettings/FieldForm/Exclude"
 DB: core
 SharedFields:
 - ID: "3e079fc3-6b2d-41c9-9204-374a786fc761"

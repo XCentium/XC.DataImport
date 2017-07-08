@@ -1,0 +1,18 @@
+﻿---
+ID: "f3d892aa-5c2c-4473-8251-9a838d16e928"
+Parent: "6a65345b-b5bb-493f-be96-ac7445a46114"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Existing Mappings/PageSettings/Rules
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170601T162050Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

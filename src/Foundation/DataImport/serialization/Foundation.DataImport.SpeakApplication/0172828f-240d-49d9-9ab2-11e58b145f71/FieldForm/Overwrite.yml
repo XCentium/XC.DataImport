@@ -2,7 +2,7 @@
 ID: "0c3cb3eb-3950-4554-950c-fff67666e75b"
 Parent: "ca710a9f-10a2-419c-9469-7ecc72ed09f9"
 Template: "ad75c314-f983-4c56-81d5-dc10d5ccf4ef"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Edit Template Mapping/PageSettings/FieldForm/Overwrite
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Edit Template Mapping/PageSettings/FieldForm/Overwrite"
 DB: core
 SharedFields:
 - ID: "3dfbacc5-ae5c-43ec-add2-d69ef05ad2e7"

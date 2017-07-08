@@ -2,7 +2,7 @@
 ID: "4089f09b-dbbc-44a9-a0ec-e19eb11cb861"
 Parent: "ad3ec5d8-6e10-4ed8-a681-00e61ebe84a3"
 Template: "12e9df28-3315-419c-b302-b9f06db4a155"
-Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Create Mapping/PageSettings/Action Control/ActionControl Parameters/List Source ActionColumn/List Source ActionGroup"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/Action Control/ActionControl Parameters/List Source ActionColumn/List Source ActionGroup"
 DB: core
 Languages:
 - Language: da

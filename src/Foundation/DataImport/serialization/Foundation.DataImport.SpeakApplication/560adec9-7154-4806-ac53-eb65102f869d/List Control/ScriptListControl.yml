@@ -1,0 +1,79 @@
+﻿---
+ID: "85c0ceb3-7a22-4325-a133-b165776ca759"
+Parent: "73f65d36-0828-40e8-8b9e-39b4212270a2"
+Template: "871931b2-7ece-4b24-b7d4-3474eb7eaa13"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/ScriptListControl
+DB: core
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 900
+Languages:
+- Language: da
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: SelectLists
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104057Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "d3c94c90-88e8-4f33-8efd-286450bcf880"
+      Hint: EmptyText
+      Value: Der blev ikke fundet nogen lister.
+- Language: "de-DE"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: ListenAuswählen
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104616Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "d3c94c90-88e8-4f33-8efd-286450bcf880"
+      Hint: EmptyText
+      Value: Es wurden keine Listen gefunden.
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20140304T095934
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "d3c94c90-88e8-4f33-8efd-286450bcf880"
+      Hint: EmptyText
+      Value: No lists found.
+- Language: "ja-JP"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: リストを選択
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T105017Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "d3c94c90-88e8-4f33-8efd-286450bcf880"
+      Hint: EmptyText
+      Value: リストが見つかりませんでした

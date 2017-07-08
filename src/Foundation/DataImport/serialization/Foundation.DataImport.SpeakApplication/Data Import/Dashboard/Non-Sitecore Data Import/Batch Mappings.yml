@@ -1,0 +1,104 @@
+﻿---
+ID: "acef2e21-103b-4714-94c9-ad1551c58305"
+Parent: "2b43c4db-e16a-42ef-aac6-7650ed4b67b7"
+Template: "d7cf8b7e-083d-4351-aef2-2bcd2d794826"
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Non-Sitecore Data Import/Batch Mappings"
+DB: core
+SharedFields:
+- ID: "39c4902e-9960-4469-aeef-e878e9c8218f"
+  Hint: __Hidden
+  Type: checkbox
+  Value: 1
+- ID: "3a67ad0f-9530-4b1b-9b70-9230c36ae8d6"
+  Hint: UseFullWidth
+  Type: Checkbox
+  Value: 1
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 200
+- ID: "f1a1fe9e-a60c-4ddb-a3a0-bb5b29fe732e"
+  Hint: __Renderings
+  Type: layout
+  Value: |
+    <r>
+      <d
+        id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"
+        l="{4F72A793-BDBC-4262-9523-6AADD8FEA487}">
+        <r
+          id="{DAFAFFB8-74AF-4141-A96A-70B16834CEC6}"
+          ph="Page.Code"
+          uid="{001FA7B8-1ED0-4F4D-8FF9-9400A5DD7F2A}" />
+        <r
+          id="{225B55AC-0270-44F9-842B-96D89F9C20A9}"
+          ph="Page.Body"
+          uid="{4F4EEDF0-617A-4F2D-B845-9A6E2471DD8A}" />
+        <r
+          id="{DC6FB17E-DAC2-42A4-8C22-CC6D7DE4A589}"
+          par="Id=MappingDatasource&amp;DataURL=%2fsitecore%2fapi%2fssc%2fspeak-dataimport%2fdata%2f-%2fBatchNonScMappings"
+          ph="Page.Body"
+          uid="{60EAF234-C518-4A85-8B77-FAFAF21087F3}" />
+        <r
+          id="{1169C5EF-E49C-4B59-848D-9C9204E40D12}"
+          par="RuleItemId=%7bA1BA6037-086A-4A8D-B844-04996E1EA02A%7d&amp;Id=Rule1&amp;LoadMode=WhenRun&amp;Trigger=app%3aloaded&amp;Field=Rule"
+          ph="Page.Body"
+          uid="{A01D01F0-5934-4ABF-9205-748847400A92}" />
+        <r
+          id="{5AE97C0C-EE88-4564-A363-4FA11C01C90A}"
+          ph="GlobalHeader"
+          uid="{FFBDE782-D917-4300-90A6-A6BE10300EAC}" />
+        <r
+          id="{7A69C522-7E99-4630-A25A-5D571505862A}"
+          par="Id=GlobalLogo1"
+          ph="GlobalHeader.StartButton"
+          uid="{BAE6FBA3-D47D-40DE-A89D-ED39C2F0EE01}" />
+        <r
+          id="{2EE499CD-439A-4F10-B81F-36A54CAC01DB}"
+          par="Id=AccountInformation1"
+          ph="GlobalHeader.LoginInfo"
+          uid="{3C03F9FE-D5E9-43C6-943E-333D0C727D28}" />
+        <r
+          id="{93CEEFCD-2DE1-40AF-AE9A-EBBFBCCC522F}"
+          ph="ApplicationHeader"
+          uid="{A1E64275-6474-47DF-806E-84845AD438CC}" />
+        <r
+          id="{EB6214BE-5687-4706-ABA6-B25C0958C85B}"
+          ph="ApplicationContent"
+          uid="{14CE0FD9-C205-4CBD-A548-09D77704A023}" />
+        <r
+          id="{7717EB6C-9F90-4C58-826D-5E87722A0318}"
+          par="Id=PageTitle&amp;Text=Batch+Import+Mappings"
+          ph="ApplicationHeader.Title"
+          uid="{A0A49720-665C-4243-B413-2F892ADF7AA3}" />
+        <r
+          id="{C5D667DE-AA48-4072-872E-7C8BFFCE4D44}"
+          par="Id=NavigationMenu&amp;ItemsDataSource=%7bE68E4405-8539-40A8-B5D4-C4DBD7EBBCEC%7d"
+          ph="ApplicationContent.Navigation"
+          uid="{8D078551-1449-435A-A1E3-9D70BCF5DA1A}" />
+        <r
+          id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}"
+          par="Id=Border1"
+          ph="ApplicationContent.Main"
+          uid="{4BDC430D-7DFF-45E0-9A23-9058665B3797}" />
+        <r
+          ds="{177DC3F1-8305-4910-A215-C403A9EA247E}"
+          id="{ACE0AFD6-3DE0-42CF-8E62-4E68CD810A8D}"
+          par="Id=ListControl1&amp;Items=%7bBinding+MappingDatasource.Data%7d&amp;TileHtmlFileName=%2fsitecore%2fshell%2fclient%2fBusiness+Component+Library%2fLayouts%2fRenderings%2fListsAndGrids%2fListControls%2fDefaultTile.cshtml"
+          ph="Border1.Content"
+          uid="{14C5AC38-7B4C-4941-8BF2-D3AA08732139}" />
+      </d>
+    </r>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170620T212111Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "7205a57f-93b4-413a-aa9a-6b16bbc59565"
+      Hint: BrowserTitle
+      Value: Batch Mappings

@@ -67,11 +67,11 @@ namespace XC.Foundation.DataImport.Configurations
         /// <value>
         /// The mapping folder.
         /// </value>
-        public static string MappingFolder
+        public static string SitecoreMappingFolder
         {
             get
             {
-                var path = Path.Combine(GetFolderPath, "mappings");
+                var path = Path.Combine(GetFolderPath, "sc-mappings");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);

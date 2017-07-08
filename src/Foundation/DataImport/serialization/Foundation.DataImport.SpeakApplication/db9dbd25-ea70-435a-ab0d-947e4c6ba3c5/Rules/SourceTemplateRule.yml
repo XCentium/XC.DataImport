@@ -2,7 +2,7 @@
 ID: "3470f801-db51-4756-9bbc-f4901d933163"
 Parent: "48c74415-20aa-4914-860f-95d4e06dacb0"
 Template: "bcc3e542-a33a-42f0-a685-a1f64d4d789a"
-Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Create New Template Mapping/PageSettings/Rules/SourceTemplateRule
+Path: "/sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import - 81/Create New Template Mapping/PageSettings/Rules/SourceTemplateRule"
 DB: core
 SharedFields:
 - ID: "11689fcc-eba6-4896-89d1-5310e7e12d8f"

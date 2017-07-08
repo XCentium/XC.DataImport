@@ -1,0 +1,142 @@
+﻿---
+ID: "9a59864c-27ed-4d2b-a2b8-d4e780a2951b"
+Parent: "5b3d06d7-54e8-49be-bbae-ff8f2b35919b"
+Template: "1f99ae6e-22b8-419e-81db-a983e619325e"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/Rules/MappingLoadRuleDefinition
+DB: core
+SharedFields:
+- ID: "431a0113-9d08-4dae-8c5b-ac8301512bd8"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule>
+        <conditions>
+          <and
+            uid="BC0D5DFD7C31443497CF0ECC27824581">
+            <condition
+              id="{DC7F75A8-F299-4697-9166-D6D74DE4F2C3}"
+              uid="8FDD724E20DB46828C59ED1382033A0C"
+              name="MappingPathHidden" />
+            <condition
+              id="{63666509-24CA-4C9C-91BD-C756F07C3783}"
+              uid="6E73D522052E4BB58381ACB5FC7B8921"
+              targetControlId="MappingViewDatasource"
+              propertyName="data"
+              operatorid="{A6AC5A6B-F409-48B0-ACE7-C3E8C5EC6406}"
+              value="null" />
+          </and>
+        </conditions>
+        <actions>
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{7A74CB0A-B2A2-4488-BDDD-4AFD016AB2AA}"
+            targetControlId="MappingName"
+            propertyName="text"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Name" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{4A64BF4C-F265-4138-B376-332A2D595CC7}"
+            targetControlId="SourceTemplateList"
+            propertyName="selectedValue"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Templates.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{DA9DD9DB-C17D-497C-837D-18DDACF9FE6C}"
+            targetControlId="MigrateAllFields"
+            propertyName="isChecked"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="MigrateAllFields" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{8BADCB4B-9BB9-4A21-AB85-9DC50738A7FB}"
+            targetControlId="SourceDatabaseList"
+            propertyName="selectedValue"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Databases.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{85AD088D-C248-406C-A246-4F86CFE0068A}"
+            targetControlId="TargetDatabaseList"
+            propertyName="selectedValue"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="Databases.Target" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{B95EFE03-54FD-49B8-9585-BC4848A1CC7A}"
+            targetControlId="TargetPath"
+            propertyName="pathToLoad"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="FullPaths.Target" />
+          <action
+            id="{2A4D7853-9A50-4E8C-A65A-E5414119905E}"
+            uid="{722AFF64-DFAF-4BF1-82C4-8B1E2D249200}"
+            targetId="FieldMappingList"
+            targetProperty="mapping"
+            sourceId="MappingPathHidden"
+            sourceProperty="text" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{0EA34ADF-C546-436A-87C9-99E5FBCC4A69}"
+            targetControlId="AllScriptList"
+            propertyName="selectedItems"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="PostImportScripts" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{071E0E17-82A0-4CFF-BC85-0EC326D67004}"
+            targetControlId="SourcePath"
+            propertyName="pathToLoad"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="FullPaths.Source" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{4BB205C8-1BA2-4CFD-A490-30816A94D2BA}"
+            targetControlId="MigrateDescendants"
+            propertyName="isChecked"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="MigrateDescendants" />
+          <action
+            id="{721E0325-97C7-47C3-A959-5D31334E67FF}"
+            uid="{4791652F-E9AF-4AA8-B76B-0CB8EF6E60F4}"
+            targetControlId="MigrateAllVersions"
+            propertyName="isChecked"
+            sourceControlId="MappingViewDatasource"
+            sourceProperty="data"
+            sourceSubProperty="MigrateAllVersions" />
+          <action
+            id="{47173F0F-511E-4BA3-BA79-AEB5267C9E35}"
+            uid="{54C2AB14-DC25-49E3-A96E-CFEA4C5D4D43}"
+            targetControlId="AllScriptList"
+            eventName="change:checkedItemIds" />
+          <action
+            id="{8FECB2A4-92AF-4D66-9595-92769B175ECF}"
+            uid="{E0926D16-53A3-48F0-B56D-C8E8434F7C90}"
+            name="RunImportButton"
+            value="true" />
+        </actions>
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20170601T172707Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin

@@ -1,0 +1,86 @@
+﻿---
+ID: "7ce7e64d-6f59-4b2f-a0b2-9addf00307b6"
+Parent: "85c0ceb3-7a22-4325-a133-b165776ca759"
+Template: "d3cefe6e-e51b-4a84-b92e-aaf8aa8e8dc8"
+Path: /sitecore/client/Your Apps/Data Import/Dashboard/Sitecore Data Import/Existing Mappings/Create Mapping/PageSettings/List Control/ScriptListControl/Name
+DB: core
+SharedFields:
+- ID: "35e827ff-bb6c-4ed6-b79f-c41750ea5d46"
+  Hint: HTMLTemplate
+  Value: "{{Name}}"
+- ID: "b2a46ae4-38f9-4538-a2b3-8021083e0e40"
+  Hint: Sortable
+  Type: Checkbox
+  Value: 0
+- ID: "e67f1b1f-3488-4cf4-80ae-be285c918c2e"
+  Hint: DataField
+  Value: 
+Languages:
+- Language: da
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: Navn
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104010Z
+    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
+      Hint: HeaderText
+      Value: Navn
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+- Language: "de-DE"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: Name
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104530Z
+    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
+      Hint: HeaderText
+      Value: Name
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20140304T095941
+    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
+      Hint: HeaderText
+      Value: Name
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+- Language: "ja-JP"
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: 名前
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20161221T104926Z
+    - ID: "2e9fd749-0f47-4397-8ba2-c56c65366bf0"
+      Hint: HeaderText
+      Value: 名前
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin

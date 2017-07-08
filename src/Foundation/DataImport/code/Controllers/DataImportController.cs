@@ -28,12 +28,12 @@ namespace XC.Foundation.DataImport.Controllers
     {
         private IFileSystemRepository _fileSystemRepository;
 
-        public DataImportController(): base()
+        public DataImportController() : base()
         {
             _fileSystemRepository = new FileSystemRepository();
         }
 
-        public DataImportController(IFileSystemRepository fileSystemRepository): base()
+        public DataImportController(IFileSystemRepository fileSystemRepository) : base()
         {
             _fileSystemRepository = fileSystemRepository;
         }
@@ -76,14 +76,14 @@ namespace XC.Foundation.DataImport.Controllers
         [HttpGet, HttpPost]
         public object Databases()
         {
-            var databases = new List<DatabaseEntity>() { new DatabaseEntity { Name = "Select Target Database" } };
+            var databases = new List<DatabaseEntity>() { new DatabaseEntity { Name = "Select Database" } };
             var dbs = Factory.GetDatabases().Where(d => !string.IsNullOrEmpty(d.ConnectionStringName)).ToList();
             if (dbs.Any())
             {
                 databases.AddRange(
                     dbs.Select(
                         d =>
-                            new DatabaseEntity {Name = d.Name, ConnectionString = d.ConnectionStringName, Id = d.Name}));
+                            new DatabaseEntity { Name = d.Name, ConnectionString = d.ConnectionStringName, Id = d.Name }));
             }
 
             return new
@@ -103,7 +103,7 @@ namespace XC.Foundation.DataImport.Controllers
         {
             var templates = new List<TemplateEntity>();
 
-            if(string.IsNullOrWhiteSpace(item))
+            if (string.IsNullOrWhiteSpace(item))
                 return new
                 {
                     data = templates,
@@ -111,7 +111,7 @@ namespace XC.Foundation.DataImport.Controllers
                 };
 
             var db = Factory.GetDatabase(item);
-            if(db == null)
+            if (db == null)
                 return new
                 {
                     data = templates,
@@ -171,7 +171,7 @@ namespace XC.Foundation.DataImport.Controllers
 
             var template = TemplateManager.GetTemplate(itemUri.ItemID, db);
 
-            if(template == null)
+            if (template == null)
                 return new
                 {
                     data = new List<string>(),
@@ -180,9 +180,9 @@ namespace XC.Foundation.DataImport.Controllers
 
             if (template.GetFields(true).Any())
             {
-                fields.Add(new TemplateFieldEntity {Id = "", Name = "Select Field"});
+                fields.Add(new TemplateFieldEntity { Id = "", Name = "Select Field" });
                 fields.AddRange(
-                    template.GetFields(true).OrderBy(f=>f.Name).Select(
+                    template.GetFields(true).OrderBy(f => f.Name).Select(
                         t =>
                             new TemplateFieldEntity { Name = t.Name + " (" + t.Type + ")", Id = t.ID.ToString() }));
             }
@@ -201,14 +201,14 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("POST")]
         [HttpPost]
-        public object SaveMapping()
+        public object SaveScMapping()
         {
             string mapping = System.Web.HttpContext.Current.Request.Form["mapping"];
             var messages = new List<MessageModel>();
 
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -218,26 +218,31 @@ namespace XC.Foundation.DataImport.Controllers
 
             try
             {
-                var mappingObject = (MappingModel)JsonConvert.DeserializeObject(mapping, typeof(MappingModel));
+                var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mapping, typeof(ScMappingModel));
 
                 if (mappingObject != null)
                 {
-                    var fileName = mappingObject.Name + ".json";
-                    var filePath = Path.Combine(DataImportConfigurations.MappingFolder, fileName);
+                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
+                    var filePath = Path.Combine(DataImportConfigurations.SitecoreMappingFolder, fileName);
                     mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMapping != null)
                     {
+                        var processedMappings = new List<ScFieldMapping>();
+                        var count = 0;
                         foreach (var mp in mappingObject.FieldMapping)
                         {
-                            if (string.IsNullOrEmpty(mp.SourceFields))
+                            if (!string.IsNullOrEmpty(mp.SourceFields))
                             {
-                                mappingObject.FieldMapping.ToList().Remove(mp);
+                                mp.Id = count;
+                                processedMappings.Add(mp);
+                                count++;
                             }
                         }
+                        mappingObject.FieldMapping = processedMappings.ToArray();
                     }
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
-                messages.Add(new MessageModel { Text = Messages.MappingHasBeenSaved, Type = MessageType.Notification.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
                 return new
                 {
@@ -248,7 +253,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -271,7 +276,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -290,17 +295,22 @@ namespace XC.Foundation.DataImport.Controllers
                     mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMapping != null)
                     {
+                        var processedMappings = new List<NonScFieldMapping>();
+                        var count = 0;
                         foreach (var mp in mappingObject.FieldMapping)
                         {
-                            if (string.IsNullOrEmpty(mp.SourceFields))
+                            if (!string.IsNullOrEmpty(mp.SourceFields))
                             {
-                                mappingObject.FieldMapping.ToList().Remove(mp);
+                                mp.Id = count;
+                                processedMappings.Add(mp);
+                                count++;
                             }
                         }
+                        mappingObject.FieldMapping = processedMappings.ToArray();
                     }
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
                 }
-                messages.Add(new MessageModel { Text = Messages.MappingHasBeenSaved, Type = MessageType.Notification.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
                 return new
                 {
@@ -311,7 +321,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -335,7 +345,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -353,7 +363,7 @@ namespace XC.Foundation.DataImport.Controllers
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.PostProcessingScriptsFolder), fileName);
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
                 }
-                messages.Add(new MessageModel { Text = Messages.ScriptHasBeenSaved, Type = MessageType.Notification.ToString() });
+                messages.Add(new MessageModel { text = Messages.ScriptHasBeenSaved, type = MessageType.Notification.ToString() });
 
                 return new
                 {
@@ -364,7 +374,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -387,7 +397,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -405,7 +415,7 @@ namespace XC.Foundation.DataImport.Controllers
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.FieldProcessingScriptsFolder), fileName);
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
                 }
-                messages.Add(new MessageModel { Text = Messages.ScriptHasBeenSaved, Type = MessageType.Notification.ToString() });
+                messages.Add(new MessageModel { text = Messages.ScriptHasBeenSaved, type = MessageType.Notification.ToString() });
 
                 return new
                 {
@@ -416,7 +426,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -437,7 +447,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (item == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -459,7 +469,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -476,7 +486,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (item == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -498,7 +508,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -519,7 +529,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -533,11 +543,11 @@ namespace XC.Foundation.DataImport.Controllers
 
                 if (mappingObject != null)
                 {
-                    var fileName = mappingObject.Name + ".json";
-                    var filePath = Path.Combine(DataImportConfigurations.BatchMappingsFolder, fileName);                    
+                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
+                    var filePath = Path.Combine(DataImportConfigurations.BatchMappingsFolder, fileName);
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
                 }
-                messages.Add(new MessageModel { Text = Messages.MappingHasBeenSaved, Type = MessageType.Notification.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
                 return new
                 {
@@ -548,7 +558,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -571,7 +581,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -585,11 +595,11 @@ namespace XC.Foundation.DataImport.Controllers
 
                 if (mappingObject != null)
                 {
-                    var fileName = mappingObject.Name + ".json";
+                    var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
                     var filePath = Path.Combine(DataImportConfigurations.BatchNonScMappingsFolder, fileName);
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
                 }
-                messages.Add(new MessageModel { Text = Messages.MappingHasBeenSaved, Type = MessageType.Notification.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
                 return new
                 {
@@ -600,7 +610,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -617,13 +627,12 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object ViewMapping(string mapping)
+        public object ViewScMapping(string item = "")
         {
             var messages = new List<MessageModel>();
-
-            if (mapping == null)
+            if (item == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -633,8 +642,8 @@ namespace XC.Foundation.DataImport.Controllers
 
             try
             {
-                var mappingContent = File.ReadAllText(mapping);
-                var mappingObject = (MappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(MappingModel));
+                var mappingContent = File.ReadAllText(item);
+                var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ScMappingModel));
 
                 return new
                 {
@@ -645,7 +654,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -662,13 +671,13 @@ namespace XC.Foundation.DataImport.Controllers
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object DeleteMapping(string mapping)
+        public object DeleteMapping()
         {
             var messages = new List<MessageModel>();
-
-            if (mapping == null)
+            string mapping = System.Web.HttpContext.Current.Request.Form["mapping"];
+            if (string.IsNullOrEmpty(mapping))
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -681,17 +690,26 @@ namespace XC.Foundation.DataImport.Controllers
                 if (File.Exists(mapping))
                 {
                     File.Delete(mapping);
+                    return new
+                    {
+                        data = new List<string>(),
+                        messages = new List<MessageModel> { new MessageModel { text = "Mapping has been deleted", type = MessageType.Notification.ToString() } }
+                    };
                 }
-                return new
+                else
                 {
-                    data = new List<string>(),
-                    messages = "Mapping has been deleted"
-                };
+                    return new
+                    {
+                        data = new List<string>(),
+                        messages = new List<MessageModel> { new MessageModel { text = "Mapping doesn't exist", type = MessageType.Warning.ToString() } }
+                    };
+                }
+
             }
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -714,7 +732,7 @@ namespace XC.Foundation.DataImport.Controllers
 
             if (script == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -737,7 +755,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -759,7 +777,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (item == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -781,7 +799,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -801,7 +819,7 @@ namespace XC.Foundation.DataImport.Controllers
                 var editItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
                 var editMappingItem = ClientHost.Factory.GetDataSourceItem(editItem);
 
-                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptDelete);
                 var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
 
                 var files =
@@ -830,7 +848,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -848,10 +866,10 @@ namespace XC.Foundation.DataImport.Controllers
             try
             {
                 var db = Factory.GetDatabase("core");
-                var editItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var editItem = db.GetItem(MappingPages.Scripts.FieldProcessingScriptCreate);
                 var editMappingItem = ClientHost.Factory.GetDataSourceItem(editItem);
 
-                var deleteItem = db.GetItem(MappingPages.Scripts.PostProcessingScriptCreate);
+                var deleteItem = db.GetItem(MappingPages.Scripts.FieldProcessingScriptDelete);
                 var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
 
                 var files =
@@ -880,7 +898,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -898,7 +916,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (string.IsNullOrEmpty(mapping))
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = GetScripts(1, 0),
@@ -922,7 +940,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -934,15 +952,15 @@ namespace XC.Foundation.DataImport.Controllers
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object NonScFieldMappings(int item = 0, string mapping = "")
+        public object NonScFieldMappings(int item = 1, string mapping = "")
         {
             var messages = new List<MessageModel>();
             if (string.IsNullOrEmpty(mapping))
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
-                    data = GetFieldMappings(1, 0),
+                    data = GetFieldMappings(item, 0),
                     messages = messages
                 };
             }
@@ -955,7 +973,7 @@ namespace XC.Foundation.DataImport.Controllers
                 var mappings = mappingObject.FieldMapping.ToList();
 
                 IEnumerable<NonScFieldMapping> additionalMappings = null;
-                if(item > mappingObject.FieldMapping.Count())
+                if (item > mappingObject.FieldMapping.Count())
                 {
                     additionalMappings = GetFieldMappings(item, mappingObject.FieldMapping.Count());
                     mappings.AddRange(additionalMappings);
@@ -969,7 +987,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -979,6 +997,52 @@ namespace XC.Foundation.DataImport.Controllers
             };
         }
 
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [HttpGet, HttpPost]
+        public object ScFieldMappings(int item = 1, string mapping = "")
+        {
+            var messages = new List<MessageModel>();
+            if (string.IsNullOrEmpty(mapping))
+            {
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
+                return new
+                {
+                    data = GetScFieldMappings(item, 0),
+                    messages = messages
+                };
+            }
+
+            try
+            {
+                var mappingContent = File.ReadAllText(mapping);
+                var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ScMappingModel));
+
+                var mappings = mappingObject.FieldMapping.ToList();
+
+                IEnumerable<ScFieldMapping> additionalMappings = null;
+                if (item > mappingObject.FieldMapping.Count())
+                {
+                    additionalMappings = GetScFieldMappings(item, mappingObject.FieldMapping.Count());
+                    mappings.AddRange(additionalMappings);
+                }
+                return new
+                {
+                    data = mappings,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
+            }
+
+            return new
+            {
+                data = GetScFieldMappings(1, 0),
+                messages = messages
+            };
+        }
 
         private IEnumerable<ScriptReference> GetScripts(int item, int start)
         {
@@ -1000,7 +1064,17 @@ namespace XC.Foundation.DataImport.Controllers
             var emptyMappingList = new List<NonScFieldMapping>();
             for (var i = start; i < item; i++)
             {
-                emptyMappingList.Add(new NonScFieldMapping() { Id = i});
+                emptyMappingList.Add(new NonScFieldMapping() { Id = i });
+            }
+            return emptyMappingList;
+        }
+
+        private IEnumerable<ScFieldMapping> GetScFieldMappings(int item, int start)
+        {
+            var emptyMappingList = new List<ScFieldMapping>();
+            for (var i = start; i < item; i++)
+            {
+                emptyMappingList.Add(new ScFieldMapping() { Id = i });
             }
             return emptyMappingList;
         }
@@ -1017,7 +1091,7 @@ namespace XC.Foundation.DataImport.Controllers
             var messages = new List<MessageModel>();
             if (mapping == null)
             {
-                messages.Add(new MessageModel { Text = Messages.MappingIsNull, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = Messages.MappingIsNull, type = MessageType.Error.ToString() });
                 return new
                 {
                     data = new List<string>(),
@@ -1039,7 +1113,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -1049,25 +1123,28 @@ namespace XC.Foundation.DataImport.Controllers
             };
         }
         /// <summary>
-        /// Mappingses this instance.
+        /// Sitecore Mappings
         /// </summary>
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
-        public object Mappings()
+        public object ScMappings()
         {
             var messages = new List<MessageModel>();
             try
             {
                 var db = Factory.GetDatabase("core");
-                var editItem = db.GetItem(MappingPages.Sitecore.ScMappingsEditTemplateMapping);
+                var editItem = db.GetItem(MappingPages.Sitecore.ScMappingsCreateTemplateMapping);
                 var editMappingItem = ClientHost.Factory.GetDataSourceItem(editItem);
 
                 var runItem = db.GetItem(MappingPages.Sitecore.ScMappingsRunTemplateImport);
                 var runMappingItem = ClientHost.Factory.GetDataSourceItem(runItem);
 
+                var deleteItem = db.GetItem(MappingPages.Sitecore.ScMappingsDeleteTemplateImport);
+                var deleteMappingItem = ClientHost.Factory.GetDataSourceItem(deleteItem);
+
                 var files =
-                    Directory.GetFiles(DataImportConfigurations.MappingFolder, "*.json")
+                    Directory.GetFiles(DataImportConfigurations.SitecoreMappingFolder, "*.json")
                         .Select(
                             f =>
                                 new MappingInfo
@@ -1079,10 +1156,10 @@ namespace XC.Foundation.DataImport.Controllers
                                     RunLabel = Labels.Run,
                                     RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
                                     EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
-                                    LastRun = HistoryLogging.GetLatestRunDateString(f),
+                                    LastRun = HistoryLogging.SitecoreGetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
-                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f)
+                                    DeleteLink = WebUtil.AddQueryString(GetItemUrl(deleteMappingItem), "mapping", f)
                                 });
 
                 return new
@@ -1094,7 +1171,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -1152,7 +1229,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -1193,7 +1270,7 @@ namespace XC.Foundation.DataImport.Controllers
                                     RunLabel = Labels.Run,
                                     RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
                                     EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
-                                    LastRun = HistoryLogging.GetLatestRunDateString(f),
+                                    LastRun = HistoryLogging.SitecoreGetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
                                     DeleteLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f)
@@ -1208,7 +1285,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
@@ -1250,7 +1327,7 @@ namespace XC.Foundation.DataImport.Controllers
                                     RunLabel = Labels.Run,
                                     RunLink = WebUtil.AddQueryString(GetItemUrl(runMappingItem), "mapping", f),
                                     EditLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f),
-                                    LastRun = HistoryLogging.GetLatestRunDateString(f),
+                                    LastRun = HistoryLogging.SitecoreGetLatestRunDateString(f),
                                     NumberOfItemsProcessed = HistoryLogging.GetNumberOfItemsProcessed(f),
                                     DeleteLabel = Labels.Delete,
                                     DeleteLink = WebUtil.AddQueryString(GetItemUrl(editMappingItem), "mapping", f)
@@ -1265,7 +1342,7 @@ namespace XC.Foundation.DataImport.Controllers
             catch (Exception ex)
             {
                 DataImportLogger.Log.Error(ex.Message, ex);
-                messages.Add(new MessageModel { Text = ex.Message, Type = MessageType.Error.ToString() });
+                messages.Add(new MessageModel { text = ex.Message, type = MessageType.Error.ToString() });
             }
 
             return new
