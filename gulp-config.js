@@ -1,5 +1,5 @@
 module.exports = function () {
-    var instanceRoot = "C:\\inetpub\\wwwroot\\xc.dataimport";
+    var instanceRoot = "C:\\websites\\import";
     var config = {
         websiteRoot: instanceRoot + "\\Website",
         sitecoreLibraries: instanceRoot + "\\Website\\bin",

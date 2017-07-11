@@ -29,9 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 		publishsettings.targets.example = publishsettings.targets.example
 		README.md = README.md
 		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
+		src\Project\DataImport\code\App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config.example = src\Project\DataImport\code\App_Config\Include\Project\zzz.XC.DataImport.DevSettings.config.example
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3E33DA08-FF81-4531-86C3-30CFB80F22EB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataImport", "DataImport", "{3E33DA08-FF81-4531-86C3-30CFB80F22EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataImport", "DataImport", "{4F84DD68-1FC4-48DD-985C-993903BB2876}"
 EndProject
