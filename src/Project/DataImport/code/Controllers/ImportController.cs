@@ -26,14 +26,13 @@ using System.Xml;
 using XC.Foundation.DataImport;
 using XC.Foundation.DataImport.Disablers;
 using XC.Foundation.DataImport.Utilities;
+using XC.Project.DataImport.Helpers;
 
 namespace XC.Project.DataImport.Controllers
 {
     public class ImportController : Controller
     {
-        private const string MediaReferenceTemplateId = "{170EDED0-DB36-4FC8-98F8-EFF1D6CC65F5}";
         private const string _prefix = "XC.DataImport_";
-        private readonly ID StringSettingTemplateId = ID.Parse("{5EECF4A9-2D1F-44D1-AE33-0B7EE1230055}");
 
         public ActionResult VerifyImport()
         {
@@ -182,7 +181,7 @@ namespace XC.Project.DataImport.Controllers
                             var parentId = item[Templates.ImportedItem.Fields.OriginParentObjectId];
                             if (!string.IsNullOrEmpty(parentId) && parentId != item.Parent[Templates.ImportedItem.Fields.OriginObjectId])
                             {
-                                var parentItem = FindItem(item.Database, parentId);
+                                var parentItem = ImportHelper.FindItem(item.Database, parentId);
                                 if (parentItem != null)
                                 {
                                     item.MoveTo(parentItem);
@@ -225,7 +224,7 @@ namespace XC.Project.DataImport.Controllers
             }
             try
             {
-                var mediaQuery = string.Format("fast:/{0}//*[@@templateid='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), MediaReferenceTemplateId);
+                var mediaQuery = string.Format("fast:/{0}//*[@@templateid='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), ImportHelper.MediaReferenceTemplateId);
                 var mediaItems = database.SelectItems(mediaQuery);
 
                 if (mediaItems != null && mediaItems.Any())
@@ -310,7 +309,7 @@ namespace XC.Project.DataImport.Controllers
                         Response.Write("<tr><th>Object Id</th><th>Sitecore Item ID</th><th>Sitecore Item Path</th><th>Sitecore Item Field</th><th>Reference Type</th></tr>");
                         Response.Flush();
 
-                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(MediaReferenceTemplateId))))
+                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId))))
                         {
                             Response.Write("<tr>");
                             Response.Flush();
@@ -334,7 +333,7 @@ namespace XC.Project.DataImport.Controllers
                                             var linkId = Regex.Match(att.Value, @"\d+").Value;
                                             var linkAnchor = Regex.Match(att.Value, @"#.*").Value;
 
-                                            var matchItem = FindItem(item.Database, linkId);
+                                            var matchItem = ImportHelper.FindItem(item.Database, linkId);
                                             if (matchItem == null)
                                             {
                                                 Response.Write(string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>", linkId, item.ID, item.Paths.FullPath, field, "HREF"));
@@ -355,7 +354,7 @@ namespace XC.Project.DataImport.Controllers
                                         if (att.Value.Contains("link-ref"))
                                         {
                                             var linkId = Regex.Match(att.Value, @"\d+").Value;
-                                            var matchItem = FindItem(item.Database, linkId);
+                                            var matchItem = ImportHelper.FindItem(item.Database, linkId);
                                             if (ShortID.IsShortID(linkId))
                                                 continue;
                                             if (matchItem == null)
@@ -509,7 +508,7 @@ namespace XC.Project.DataImport.Controllers
                         Response.Write("<tr><th>ID</th><th>Link Value</th><th>Item Path</th></tr>");
                         Response.Flush();
 
-                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(MediaReferenceTemplateId))))
+                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId))))
                         {
                             foreach (var field in fields)
                             {
@@ -608,13 +607,13 @@ namespace XC.Project.DataImport.Controllers
                 {
                     using (new SecurityDisabler())
                     {
-                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(MediaReferenceTemplateId))))
+                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId))))
                         {
                             Response.Write(string.Format("<h4>UpdateReferences. Item Path {0} </h4>", item.Paths.FullPath));
                             Response.Flush();
 
-                            UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginBodyTextId);
-                            UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginShortDescriptionId);
+                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginBodyTextId, Response);
+                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginShortDescriptionId, Response);
                         }
 
                     }
@@ -626,165 +625,7 @@ namespace XC.Project.DataImport.Controllers
             }
             return Content("success");
         }
-
-        private void UpdateItemReferences(Item item, string fieldName)
-        {
-            using (new EditContext(item))
-            {
-                var htmldoc = new HtmlDocument();
-                htmldoc.LoadHtml(item[fieldName]);
-
-                var updated = false;
-
-                if (htmldoc.DocumentNode.SelectNodes("//a[@href]") != null)
-                {
-                    foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
-                    {
-                        HtmlAttribute att = link.Attributes["href"];
-                        if (att == null)
-                            continue;
-                        var anchorValue = att.Value;
-
-                        if (att.Value.Contains("link-ref"))
-                        {
-                            var linkId = Regex.Match(att.Value, @"\d+").Value;
-                            var linkAnchor = Regex.Match(att.Value, @"#.*").Value;
-                            var match = FindItem(item.Database, linkId);
-                            if (match == null)
-                            {
-                                continue;
-                            }
-
-                            if (!match.Paths.IsContentItem)
-                                continue;
-
-                            var sitecoreString = "";
-                            if (match.TemplateID == StringSettingTemplateId)
-                            {
-                                var urlValue = match["Value"];
-                                if (!string.IsNullOrEmpty(match["Value"]))
-                                {
-                                    if (urlValue.Contains("www.car.org"))
-                                    {
-                                        urlValue = new Uri(urlValue).PathAndQuery;
-                                    }
-                                    sitecoreString = urlValue;
-                                    Response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from StringSettings to {0} </div>", sitecoreString));
-                                    Response.Flush();
-                                    updated = true;
-                                }
-                            }
-                            else if (match.TemplateID == ID.Parse(MediaReferenceTemplateId))
-                            {
-                                var fld = (ReferenceField)match.Fields["Content Reference"];
-                                if (fld != null && fld.TargetItem != null && (fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedFile)))
-                                {
-                                    sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
-                                    Response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from MediaReferenceTemplateId to {0} </div", sitecoreString));
-                                    Response.Flush();
-                                    updated = true;
-                                }
-                            }
-                            else
-                            {
-                                if (match.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || match.IsDerived(Sitecore.TemplateIDs.UnversionedFile))
-                                {
-                                    var formattedId = match.ID.ToShortID().ToString();
-                                    sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
-                                    Response.Write(string.Format("<div>UpdateReferences Updating link to media item {0} </div", sitecoreString));
-                                    Response.Flush();
-                                    updated = true;
-                                }
-                                else
-                                {
-                                    var formattedId = match.ID.ToShortID().ToString();
-                                    sitecoreString = string.Format("~/link.aspx?_id={0}&amp;_z=z", formattedId);
-                                    Response.Write(string.Format("<div>UpdateReferences Updating link from default to {0} </div", sitecoreString));
-                                    Response.Flush();
-                                    updated = true;
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(sitecoreString))
-                            {
-                                link.SetAttributeValue("href", sitecoreString + linkAnchor);
-                                Response.Write(string.Format("<div>UpdateReferences Updating link to {0} </div", sitecoreString));
-                                Response.Flush();
-                                updated = true;
-                            }
-                        }
-                        else
-                        {
-                            Response.Write(string.Format("<div>Not Updated: href {0} </div>", att.Value));
-                            Response.Flush();
-                        }
-                    }
-                }
-                if (htmldoc.DocumentNode.SelectNodes("//img[@src]") != null)
-                {
-                    foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//img[@src]"))
-                    {
-                        HtmlAttribute att = link.Attributes["src"];
-                        if (att == null)
-                            continue;
-
-                        if (att.Value.Contains("link-ref"))
-                        {
-                            var linkId = Regex.Match(att.Value, @"\d+").Value;
-                            var match = FindItem(item.Database, linkId);
-                            if (match == null)
-                            {
-                                continue;
-                            }
-
-                            var sitecoreString = "";
-                            if (match.TemplateID == ID.Parse(MediaReferenceTemplateId))
-                            {
-                                var fld = (ReferenceField)match.Fields["Content Reference"];
-                                if (fld != null && fld.TargetItem != null)
-                                {
-                                    sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
-                                    Response.Write(string.Format("<div>UpdateReferences Updating media src from MediaReferenceTemplateId to {0} </div>", sitecoreString));
-                                    Response.Flush();
-                                    updated = true;
-                                }
-                            }
-                            else
-                            {
-                                var formattedId = match.ID.ToShortID().ToString();
-                                sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
-                                Response.Write(string.Format("<div>UpdateReferences Updating link media src from default to {0} </div>", sitecoreString));
-                                Response.Flush();
-                                updated = true;
-                            }
-
-                            if (!string.IsNullOrEmpty(sitecoreString))
-                            {
-                                link.SetAttributeValue("src", sitecoreString);
-                                Response.Write(string.Format("<div>UpdateReferences Updating media src to {0} </div>", sitecoreString));
-                                Response.Flush();
-                                updated = true;
-                            }
-                        }
-                        else
-                        {
-                            Response.Write(string.Format("<div>Not Updated: src {0} </div>", att.Value));
-                            Response.Flush();
-                        }
-                    }
-                }
-                if (updated)
-                {
-                    using (StringWriter writer = new StringWriter())
-                    {
-                        htmldoc.Save(writer);
-                        item[Templates.ImportedItem.Fields.OriginBodyTextId] = writer.ToString();
-
-                        Response.Write(string.Format("<div>Item Body field updated ItemId :{0}</div>", item.Paths.FullPath));
-                        Response.Flush();
-                    }
-                }
-            }
-        }
+        
 
         private static string EnsureMappingFolder(string mappingName)
         {
@@ -815,7 +656,7 @@ namespace XC.Project.DataImport.Controllers
 
             try
             {
-                var mediaQuery = string.Format("fast:/{0}//*[@@templateid='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), MediaReferenceTemplateId);
+                var mediaQuery = string.Format("fast:/{0}//*[@@templateid='{1}']", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath), ImportHelper.MediaReferenceTemplateId);
                 var mediaItems = database.SelectItems(mediaQuery);
 
                 if (mediaItems != null && mediaItems.Any())
@@ -917,7 +758,7 @@ namespace XC.Project.DataImport.Controllers
 
                 if (mediaItems != null && mediaItems.Any())
                 {
-                    var templateItem = database.GetItem(MediaReferenceTemplateId);
+                    var templateItem = database.GetItem(ImportHelper.MediaReferenceTemplateId);
                     if (templateItem != null)
                     {
                         using (new SecurityDisabler())
@@ -1303,7 +1144,7 @@ namespace XC.Project.DataImport.Controllers
             {
                 using (new SecurityDisabler())
                 {
-                    var templateItem = item.Database.GetItem(MediaReferenceTemplateId);
+                    var templateItem = item.Database.GetItem(ImportHelper.MediaReferenceTemplateId);
                     if (templateItem == null)
                         return null;
 
@@ -1330,16 +1171,5 @@ namespace XC.Project.DataImport.Controllers
             return new ID(new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(_prefix + value))));
         }
 
-        private Item FindItem(Database database, string objectId)
-        {
-            using (new ItemFilteringDisabler())
-                return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginObjectId), objectId));
-        }
-
-        private Item FindItemByPath(Database database, string path)
-        {
-            using (new ItemFilteringDisabler())
-                return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginPath), path));
-        }
     }
 }

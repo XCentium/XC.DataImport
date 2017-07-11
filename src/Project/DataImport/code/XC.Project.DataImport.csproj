@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Helpers\ImportHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\FieldScript\ConvertNullValueToNullString.cs" />
     <Compile Include="Scripts\FieldScript\UpdateReferences.cs" />
