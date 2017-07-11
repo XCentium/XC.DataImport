@@ -248,7 +248,7 @@ namespace XC.Project.DataImport.Controllers
                                 {
                                     for (var idx = 1; idx < itemGroup.Count(); idx++)
                                     {
-                                        var item = itemGroup.ElementAt(idx);
+                                        var item = itemGroup.Where(i=>string.IsNullOrWhiteSpace(i[Templates.ImportedItem.Fields.OriginObjectId])).ElementAt(idx);
                                         if (item != null)
                                         {
                                             Response.Write("<div>Duplicate Item Deleted: " + item.Paths.FullPath + "</div>");
