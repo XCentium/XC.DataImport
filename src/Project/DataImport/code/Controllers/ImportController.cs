@@ -51,7 +51,7 @@ namespace XC.Project.DataImport.Controllers
                 using (new ItemFilteringDisabler())
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    var commandText = "SELECT * FROM SitecoreData UNION ALL SELECT * FROM SitecoreData2 ORDER BY ObjectId ";
+                    var commandText = "SELECT * FROM SitecoreData UNION ALL SELECT * FROM SitecoreData2 UNION ALL SELECT * FROM SitecoreData3 ORDER BY ObjectId ";
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         connection.Open();
