@@ -250,6 +250,15 @@ namespace XC.DataImport.Repositories.Repositories
         /// <param name="existingItem">The existing item.</param>
         private void AttachMediaStream(Item item, Item existingItem, Action<string, string> statusMethod, string statusFilename)
         {
+            if (item == null || existingItem == null)
+            {
+                statusMethod("<span style=\"color:red\"><strong>[FAILURE] item or existingItem is null</strong></span>", statusFilename);
+                return;
+            }
+
+            if (existingItem.TemplateID == Sitecore.TemplateIDs.MediaFolder)
+                return;
+
             var options = CreateMediaCreatorOptions(existingItem);
             var creator = new Sitecore.Resources.Media.MediaCreator();
             var sourceMediaItem = new MediaItem(item);

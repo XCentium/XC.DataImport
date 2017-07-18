@@ -27,6 +27,7 @@ using XC.Foundation.DataImport;
 using XC.Foundation.DataImport.Disablers;
 using XC.Foundation.DataImport.Utilities;
 using XC.Project.DataImport.Helpers;
+using static XC.Foundation.DataImport.Templates;
 
 namespace XC.Project.DataImport.Controllers
 {
@@ -246,9 +247,10 @@ namespace XC.Project.DataImport.Controllers
                                 }
                                 if (!identicalReference)
                                 {
-                                    for (var idx = 1; idx < itemGroup.Count(); idx++)
+                                    var notImported = itemGroup.Where(i => string.IsNullOrWhiteSpace(i[ImportedItem.Fields.OriginObjectId]));
+                                    for (var idx = 1; idx < notImported.Count(); idx++)
                                     {
-                                        var item = itemGroup.Where(i=>string.IsNullOrWhiteSpace(i[Templates.ImportedItem.Fields.OriginObjectId])).ElementAt(idx);
+                                        var item = notImported.ElementAt(idx);
                                         if (item != null)
                                         {
                                             Response.Write("<div>Duplicate Item Deleted: " + item.Paths.FullPath + "</div>");
@@ -370,6 +372,15 @@ namespace XC.Project.DataImport.Controllers
 
                             Response.Write("</tr>");
                             Response.Flush();
+                        }
+
+                        foreach (var item in items.Where(i => i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId))))
+                        {
+                            if(string.IsNullOrEmpty(item["Content Reference"]))
+                            {
+                                Response.Write(string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>", item["Origin Content Reference Object Id"], item.ID, item.Paths.FullPath, "Content Reference", ""));
+                                Response.Flush();
+                            }
                         }
 
                         Response.Write("</table>");
@@ -625,7 +636,7 @@ namespace XC.Project.DataImport.Controllers
             }
             return Content("success");
         }
-        
+
 
         private static string EnsureMappingFolder(string mappingName)
         {
