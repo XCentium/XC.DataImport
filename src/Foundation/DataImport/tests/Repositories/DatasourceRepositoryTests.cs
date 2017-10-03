@@ -1,13 +1,9 @@
-﻿using Sitecore.Foundation.Testing.Attributes;
+﻿using Sitecore.Data;
 using Sitecore.FakeDb;
-using Sitecore.Data;
-using Sitecore;
-using FluentAssertions;
+using Sitecore.Foundation.Testing.Attributes;
 using Xunit;
-using Sitecore.Data.Items;
-using System.Linq;
 
-namespace Car.Foundation.Datasources.Repositories.Tests
+namespace XC.Foundation.DataImport.Tests.Repositories
 {
     public class DatasourceRepositoryTests
     {
