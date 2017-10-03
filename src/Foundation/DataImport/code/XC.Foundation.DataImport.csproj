@@ -101,15 +101,6 @@
       <HintPath>..\..\..\..\packages\Sitecore.Diagnostics.Logging.Log4Net.2.0.0.135\lib\Sitecore.Diagnostics.Logging.Log4Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Foundation.Indexing">
-      <HintPath>..\..\..\..\lib\Sitecore\Sitecore.Foundation.Indexing.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Foundation.SitecoreExtensions">
-      <HintPath>..\..\..\..\lib\Sitecore\Sitecore.Foundation.SitecoreExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Foundation.Testing">
-      <HintPath>..\..\..\..\lib\Sitecore\Sitecore.Foundation.Testing.dll</HintPath>
-    </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.8.2.161221\lib\NET452\Sitecore.Kernel.dll</HintPath>
       <Private>True</Private>
