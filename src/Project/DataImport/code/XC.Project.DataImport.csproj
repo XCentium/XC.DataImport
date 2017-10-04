@@ -126,7 +126,7 @@
   <ItemGroup>
     <Content Include="App_Config\Include\zzz\zzz.DisableMediaCache.config" />
     <Content Include="App_Config\Include\zzz\zzz.XC.DataImport.DevSettings.config" />
-    <Content Include="App_Config\Include\zzz\zzz.XC.DataImport.DevSettings.config.example" />
+    <None Include="App_Config\Include\zzz\zzz.XC.DataImport.DevSettings.config.example" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

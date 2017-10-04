@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
   <sitecore>
-    <sc.variable name="xc.dataimport.sourceFolder" value="C:\Git\XC.DataImport\src" />
+    <sc.variable name="xc.dataimport.sourceFolder" value="C:\projects\XC.DataImport\src" />
   </sitecore>
 </configuration>

@@ -242,3 +242,6 @@ Web/Neb.Mvc/App_Config/Include/Unicorn/Unicorn.DataProvider.config
 /packages
 /Web/Neb.Mvc/images
 /Core/Neb.SitecoreExtensions
+/src/Project/DataImport/code/App_Config/Include/zzz/zzz.XC.DataImport.DevSettings.config
+/publishsettings.targets
+/gulp-config.js
