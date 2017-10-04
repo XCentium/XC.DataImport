@@ -245,3 +245,4 @@ Web/Neb.Mvc/App_Config/Include/Unicorn/Unicorn.DataProvider.config
 /src/Project/DataImport/code/App_Config/Include/zzz/zzz.XC.DataImport.DevSettings.config
 /publishsettings.targets
 /gulp-config.js
+/lib/license.xml
