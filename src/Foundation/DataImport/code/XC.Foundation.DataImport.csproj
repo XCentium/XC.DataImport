@@ -166,8 +166,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\Foundation\zzz.XC.DataImport.DevSettings.config" />
-    <Content Include="App_Config\Include\Foundation\zzz.XC.DataImport.DevSettings.config.example" />
     <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config" />
