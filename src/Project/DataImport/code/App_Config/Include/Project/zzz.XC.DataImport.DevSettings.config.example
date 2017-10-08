@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <sc.variable name="xc.dataimport.sourceFolder" value="C:\projects\XC.DataImport\src" />
+
+    <settings>
+      <setting name="XC.Foundation.DataImport.DataFolder">
+        <patch:attribute name="value">$(xc.dataimport.sourceFolder)\project\dataimport\DataFolder</patch:attribute>
+      </setting>
+    </settings>
+  </sitecore>
+</configuration>
