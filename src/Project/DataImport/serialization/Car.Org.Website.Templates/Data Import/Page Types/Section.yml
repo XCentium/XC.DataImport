@@ -1,0 +1,24 @@
+﻿---
+ID: "77a34cec-30e2-4035-aaff-33b5098726cd"
+Parent: "5d746139-2e61-4e37-8ac6-4fda2e62f599"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Project/Data Import/Page Types/Section
+DB: master
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Business/32x32/index.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Type: tree list
+  Value: |
+    {8EE208F9-A6A6-41E2-88A0-C188737A178C}
+    {DFBD9FA6-D6DD-4181-BB9C-BB6890F6F457}
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171008T155901Z
