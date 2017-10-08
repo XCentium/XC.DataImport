@@ -1,0 +1,14 @@
+﻿---
+ID: "0f49e1da-dd90-46d5-896b-80d0d59143fe"
+Parent: "1b86e247-1dea-4865-968d-adfbbd872b24"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: /sitecore/content/CAR/Data Import/Keywords
+DB: master
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171007T052308Z
