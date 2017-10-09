@@ -1,8 +1,8 @@
 ﻿---
-ID: "2289b528-b02f-49d7-9fc9-52ce2a5ab005"
-Parent: "1b86e247-1dea-4865-968d-adfbbd872b24"
+ID: "f380c96e-8b55-45d2-a8ae-c8850e3f0bb8"
+Parent: "a5192d31-2e2e-4e69-b911-b5dc7dbe0d7f"
 Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
-Path: /sitecore/content/CAR/Data Import/Events
+Path: /sitecore/content/Data Import/CAR/Infographics
 DB: master
 Languages:
 - Language: en
@@ -11,4 +11,4 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20171006T205619Z
+      Value: 20171006T205627Z

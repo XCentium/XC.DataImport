@@ -1,8 +1,8 @@
 ﻿---
 ID: "dfbd9fa6-d6dd-4181-bb9c-bb6890f6f457"
-Parent: "b6ba5066-638c-4afa-8af5-dbca8947c17c"
+Parent: "13e29aa4-1f80-42da-804e-0c13f9339a79"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
-Path: /sitecore/templates/Project/Data Import/Import Base
+Path: /sitecore/templates/Project/Data Import/Base/Import Base
 DB: master
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"

@@ -1,8 +1,8 @@
 ﻿---
-ID: "6ddee860-550a-46b7-9cae-4a53578867dd"
-Parent: "1b86e247-1dea-4865-968d-adfbbd872b24"
+ID: "6293e560-3559-4b4c-b46a-4afe71a16f8c"
+Parent: "a5192d31-2e2e-4e69-b911-b5dc7dbe0d7f"
 Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
-Path: /sitecore/content/CAR/Data Import/Magazines
+Path: /sitecore/content/Data Import/CAR/Video Wall
 DB: master
 Languages:
 - Language: en
@@ -11,4 +11,4 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20171006T205639Z
+      Value: 20171006T210105Z
