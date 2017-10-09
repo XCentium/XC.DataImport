@@ -2,7 +2,7 @@
 ID: "3459622e-66cd-4878-8811-1c2f0ec17570"
 Parent: "74c6b2d8-fa8d-436d-8be6-1fbab003a008"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
-Path: /sitecore/templates/Foundation/DataImport/_ImportedItem
+Path: /sitecore/templates/Foundation/Data Import/_ImportedItem
 DB: master
 SharedFields:
 - ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
