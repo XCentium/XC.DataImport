@@ -55,6 +55,16 @@ After mappings have completed, execute the following post import controller acti
 localhost/api/sitecore/Import/\{controller action}
 
 - ArrangeItemsUnderParents
+  1.  Articles
+  2.  Content Folders
+  3.  Events
+  4.  Infographics
+  5.  Magazines
+  6.  Sections
+  7.  Documents
+  8.  Flash
+  9.  Images
+  10. Media Folders
 - RemoveDuplicateMediaReferences
 - UpdateAbsoluteLinks
 - UpdateReferences
