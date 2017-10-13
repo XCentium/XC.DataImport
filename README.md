@@ -54,21 +54,21 @@ After mappings have completed, execute the following post import controller acti
 
 localhost/api/sitecore/Import/\{controller action}
 
-- ArrangeItemsUnderParents
-  1.  Articles
-  2.  Content Folders
-  3.  Events
-  4.  Infographics
-  5.  Magazines
-  6.  Sections
-  7.  Documents
-  8.  Flash
-  9.  Images
-  10. Media Folders
-- RemoveDuplicateMediaReferences
-- UpdateAbsoluteLinks
-- UpdateReferences
-- CleanUpMediaReferenceItems
-- MoveMediaOutOfFolder
-- MoveMediaIntoML
-- Generate301RedirectsForIIS
+1. ArrangeItemsUnderParents
+   1.  Articles  
+   2.  Content Folders
+   3.  Events
+   4.  Infographics
+   5.  Magazines
+   6.  Sections
+   7.  Documents
+   8.  Flash
+   9.  Images
+   10. Media Folders
+2. MoveMediaIntoML
+3. MoveMediaOutOfFolder
+4. RemoveDuplicateMediaReferences
+5. CleanUpMediaReferenceItems
+6. UpdateAbsoluteLinks
+7. UpdateReferences
+8. Generate301RedirectsForIIS
