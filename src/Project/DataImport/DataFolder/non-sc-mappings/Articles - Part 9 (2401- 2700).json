@@ -266,7 +266,7 @@
 	}],
 	"IncrementalUpdate": false,
 	"IncrementalUpdateSourceColumn": "",
-	"Name": "Articles - Part 1 (2401- 2700)",
+	"Name": "Articles - Part 9 (2401- 2700)",
 	"Databases": {
 		"Source": "car",
 		"Target": "master"
