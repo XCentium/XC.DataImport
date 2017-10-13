@@ -66,9 +66,8 @@ localhost/api/sitecore/Import/\{controller action}
    9.  Images
    10. Media Folders
 2. MoveMediaIntoML
-3. MoveMediaOutOfFolder
-4. RemoveDuplicateMediaReferences
-5. CleanUpMediaReferenceItems
-6. UpdateAbsoluteLinks
-7. UpdateReferences
-8. Generate301RedirectsForIIS
+3. RemoveDuplicateMediaReferences
+4. CleanUpMediaReferenceItems
+5. UpdateAbsoluteLinks
+6. UpdateReferences
+7. Generate301RedirectsForIIS
