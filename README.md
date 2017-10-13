@@ -44,6 +44,7 @@ Run SQL Data Import Mappings in the following order
 39. Article - Part 7 (1801 - 2100)
 40. Article - Part 8 (2101 - 2400)
 41. Article - Part 9 (2401 - 2700)
+42. Article - Part 10 (2701 - 3000)
 42. Events
 43. Infographics
 44. Magazines
