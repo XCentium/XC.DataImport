@@ -49,3 +49,16 @@ Run SQL Data Import Mappings in the following order
 43. Infographics
 44. Magazines
 45. Content References
+
+After mappings have completed, execute the following post import controller actions
+
+localhost/api/sitecore/Import/\{controller action}
+
+- ArrangeItemsUnderParents
+- RemoveDuplicateMediaReferences
+- UpdateAbsoluteLinks
+- UpdateReferences
+- CleanUpMediaReferenceItems
+- MoveMediaOutOfFolder
+- MoveMediaIntoML
+- Generate301RedirectsForIIS
