@@ -1,7 +1,9 @@
 # XC.DataImport
 
 
-Run SQL Data Import Mappings in the following order
+Run SQL Data Import Mappings in the following order.  NOTE: can use the following temp directory to monitor status if the interface stops refreshing.
+
+\Website\temp\importstatus
 
 1. Keywords   
 2. Media Content Folders - CE
