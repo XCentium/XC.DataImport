@@ -685,11 +685,18 @@ namespace XC.DataImport.Repositories.Repositories
                 }
                 else if (processedValue is string)
                 {
-                    var boolValue = false;
-                    fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
-                    if (bool.TryParse((string)processedValue, out boolValue))
+                    if ((string)processedValue == "0" || (string)processedValue == "1")
                     {
-                        fieldValue = boolValue ? "1" : "0";
+                        fieldValue = (string)processedValue;
+                    }
+                    else
+                    {
+                        var boolValue = false;
+                        fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
+                        if (bool.TryParse((string)processedValue, out boolValue))
+                        {
+                            fieldValue = boolValue ? "1" : "0";
+                        }
                     }
                 }
                 if (item.Fields[field.TargetFields].Value != fieldValue)
