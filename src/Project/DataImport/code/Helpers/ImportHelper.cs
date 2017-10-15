@@ -24,11 +24,12 @@ namespace XC.Project.DataImport.Helpers
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="fieldName">Name of the field.</param>
+        /// <param name="updateItem">Updates the field value on item if set to true.</param>
         public static void UpdateItemReferences(Item item, string fieldName, HttpResponseBase response = null, bool updateItem = true)
         {
             using (new EditContext(item))
             {
-                var result = ProcessHtmlFieldValue(item[fieldName], item.Database, response, updateItem);
+                var result = ProcessHtmlFieldValue(item[fieldName], item.Database, response);
 
                 if (updateItem && !string.IsNullOrEmpty(result))
                 {
@@ -43,200 +44,222 @@ namespace XC.Project.DataImport.Helpers
             }
         }
 
+        private static bool ProcessHtmlFieldForLinks(HtmlDocument htmldoc, Database database, HttpResponseBase response)
+        {
+            if (htmldoc.DocumentNode.SelectNodes("//a[@href]") == null)
+            {
+                return false;
+            }
+
+            var updated = false;
+
+            foreach (var link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
+            {
+                var att = link.Attributes["href"];
+                if (att == null)
+                {
+                    continue;
+                }
+
+                if (att.Value.Contains("link-ref"))
+                {
+                    var linkId = Regex.Match(att.Value, @"\d+").Value;
+                    var linkAnchor = Regex.Match(att.Value, @"#.*").Value;
+                    var match = FindItem(database, linkId);
+                    if (match == null)
+                    {
+                        continue;
+                    }
+
+                    if (!match.Paths.IsContentItem)
+                        continue;
+
+                    var sitecoreString = "";
+                    if (match.IsDerived(StringSettingTemplateId))
+                    {
+                        var urlValue = match["Value"];
+                        if (!string.IsNullOrEmpty(match["Value"]))
+                        {
+                            if (urlValue.Contains("www.car.org"))
+                            {
+                                urlValue = new Uri(urlValue).PathAndQuery;
+                            }
+                            sitecoreString = urlValue;
+
+                            if (response != null)
+                            {
+                                response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from StringSettings to {0} </div>", sitecoreString));
+                                response.Flush();
+                            }
+
+                            updated = true;
+                        }
+                    }
+                    else if (match.IsDerived(ID.Parse(MediaReferenceTemplateId)))
+                    {
+                        var fld = (ReferenceField)match.Fields["Content Reference"];
+                        if (fld != null && fld.TargetItem != null && (fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedFile)))
+                        {
+                            sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
+                            if (response != null)
+                            {
+                                response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from MediaReferenceTemplateId to {0} </div", sitecoreString));
+                                response.Flush();
+                            }
+                            updated = true;
+                        }
+                    }
+                    else if (match.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || match.IsDerived(Sitecore.TemplateIDs.UnversionedFile))
+                    {
+                        var formattedId = match.ID.ToShortID().ToString();
+                        sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
+
+                        if (response != null)
+                        {
+                            response.Write(string.Format("<div>UpdateReferences Updating link to media item {0} </div", sitecoreString));
+                            response.Flush();
+                        }
+                        updated = true;
+                    }
+                    else
+                    {
+                        var formattedId = match.ID.ToShortID().ToString();
+                        sitecoreString = string.Format("~/link.aspx?_id={0}&amp;_z=z", formattedId);
+
+                        if (response != null)
+                        {
+                            response.Write(string.Format("<div>UpdateReferences Updating link from default to {0} </div", sitecoreString));
+                            response.Flush();
+                        }
+                        updated = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(sitecoreString))
+                    {
+                        link.SetAttributeValue("href", sitecoreString + linkAnchor);
+
+                        if (response != null)
+                        {
+                            response.Write(string.Format("<div>UpdateReferences Updating link to {0} </div", sitecoreString));
+                            response.Flush();
+                        }
+                        updated = true;
+                    }
+                }
+                else
+                {
+                    if (response != null)
+                    {
+                        response.Write(string.Format("<div>Not Updated: href {0} </div>", att.Value));
+                        response.Flush();
+                    }
+                }
+            }
+
+            return updated;
+        }
+
+        private static bool ProcesHtmlFieldForImageReferences(HtmlDocument htmldoc, Database database, HttpResponseBase response)
+        {
+            if (htmldoc.DocumentNode.SelectNodes("//img[@src]") == null)
+            {
+                return false;
+            }
+
+            var updated = false;
+
+            foreach (var link in htmldoc.DocumentNode.SelectNodes("//img[@src]"))
+            {
+                var att = link.Attributes["src"];
+                if (att == null)
+                {
+                    continue;
+                }
+
+                if (att.Value.Contains("link-ref"))
+                {
+                    var linkId = Regex.Match(att.Value, @"\d+").Value;
+                    var match = FindItem(database, linkId);
+                    if (match == null)
+                    {
+                        continue;
+                    }
+
+                    var sitecoreString = "";
+                    if (match.IsDerived(ID.Parse(MediaReferenceTemplateId)))
+                    {
+                        var fld = (ReferenceField)match.Fields["Content Reference"];
+                        if (fld != null && fld.TargetItem != null)
+                        {
+                            sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
+
+                            if (response != null)
+                            {
+                                response.Write(string.Format("<div>UpdateReferences Updating media src from MediaReferenceTemplateId to {0} </div>", sitecoreString));
+                                response.Flush();
+                            }
+                            updated = true;
+                        }
+                    }
+                    else
+                    {
+                        var formattedId = match.ID.ToShortID().ToString();
+                        sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
+
+                        if (response != null)
+                        {
+                            response.Write(string.Format("<div>UpdateReferences Updating link media src from default to {0} </div>", sitecoreString));
+                            response.Flush();
+                        }
+                        updated = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(sitecoreString))
+                    {
+                        link.SetAttributeValue("src", sitecoreString);
+
+                        if (response != null)
+                        {
+                            response.Write(string.Format("<div>UpdateReferences Updating media src to {0} </div>", sitecoreString));
+                            response.Flush();
+                        }
+                        updated = true;
+                    }
+                }
+                else
+                {
+                    if (response != null)
+                    {
+                        response.Write(string.Format("<div>Not Updated: src {0} </div>", att.Value));
+                        response.Flush();
+                    }
+                }
+            }
+
+            return updated;
+        }
+
         /// <summary>
         /// Processes the HTML field value.
         /// </summary>
         /// <param name="sourceValue">The source value.</param>
         /// <param name="database">The database.</param>
         /// <param name="response">The response.</param>
-        /// <param name="updateItem">if set to <c>true</c> [update item].</param>
         /// <returns></returns>
-        public static string ProcessHtmlFieldValue(string sourceValue, Database database, HttpResponseBase response, bool updateItem)
+        public static string ProcessHtmlFieldValue(string sourceValue, Database database, HttpResponseBase response)
         {
             var result = sourceValue;
 
             var htmldoc = new HtmlDocument();
             htmldoc.LoadHtml(sourceValue);
 
-            var updated = false;
-
-            if (htmldoc.DocumentNode.SelectNodes("//a[@href]") != null)
-            {
-                foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
-                {
-                    HtmlAttribute att = link.Attributes["href"];
-                    if (att == null)
-                        continue;
-                    var anchorValue = att.Value;
-
-                    if (att.Value.Contains("link-ref"))
-                    {
-                        var linkId = Regex.Match(att.Value, @"\d+").Value;
-                        var linkAnchor = Regex.Match(att.Value, @"#.*").Value;
-                        var match = FindItem(database, linkId);
-                        if (match == null)
-                        {
-                            continue;
-                        }
-
-                        if (!match.Paths.IsContentItem)
-                            continue;
-
-                        var sitecoreString = "";
-                        if (match.TemplateID == StringSettingTemplateId)
-                        {
-                            var urlValue = match["Value"];
-                            if (!string.IsNullOrEmpty(match["Value"]))
-                            {
-                                if (urlValue.Contains("www.car.org"))
-                                {
-                                    urlValue = new Uri(urlValue).PathAndQuery;
-                                }
-                                sitecoreString = urlValue;
-
-                                if (response != null)
-                                {
-                                    response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from StringSettings to {0} </div>", sitecoreString));
-                                    response.Flush();
-                                }
-
-                                updated = true;
-                            }
-                        }
-                        else if (match.TemplateID == ID.Parse(MediaReferenceTemplateId))
-                        {
-                            var fld = (ReferenceField)match.Fields["Content Reference"];
-                            if (fld != null && fld.TargetItem != null && (fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedFile)))
-                            {
-                                sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
-                                if (response != null)
-                                {
-                                    response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from MediaReferenceTemplateId to {0} </div", sitecoreString));
-                                    response.Flush();
-                                }
-                                updated = true;
-                            }
-                        }
-                        else
-                        {
-                            if (match.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || match.IsDerived(Sitecore.TemplateIDs.UnversionedFile))
-                            {
-                                var formattedId = match.ID.ToShortID().ToString();
-                                sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
-
-                                if (response != null)
-                                {
-                                    response.Write(string.Format("<div>UpdateReferences Updating link to media item {0} </div", sitecoreString));
-                                    response.Flush();
-                                }
-                                updated = true;
-                            }
-                            else
-                            {
-                                var formattedId = match.ID.ToShortID().ToString();
-                                sitecoreString = string.Format("~/link.aspx?_id={0}&amp;_z=z", formattedId);
-
-                                if (response != null)
-                                {
-                                    response.Write(string.Format("<div>UpdateReferences Updating link from default to {0} </div", sitecoreString));
-                                    response.Flush();
-                                }
-                                updated = true;
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(sitecoreString))
-                        {
-                            link.SetAttributeValue("href", sitecoreString + linkAnchor);
-
-                            if (response != null)
-                            {
-                                response.Write(string.Format("<div>UpdateReferences Updating link to {0} </div", sitecoreString));
-                                response.Flush();
-                            }
-                            updated = true;
-                        }
-                    }
-                    else
-                    {
-                        if (response != null)
-                        {
-                            response.Write(string.Format("<div>Not Updated: href {0} </div>", att.Value));
-                            response.Flush();
-                        }
-                    }
-                }
-            }
-            if (htmldoc.DocumentNode.SelectNodes("//img[@src]") != null)
-            {
-                foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//img[@src]"))
-                {
-                    HtmlAttribute att = link.Attributes["src"];
-                    if (att == null)
-                        continue;
-
-                    if (att.Value.Contains("link-ref"))
-                    {
-                        var linkId = Regex.Match(att.Value, @"\d+").Value;
-                        var match = FindItem(database, linkId);
-                        if (match == null)
-                        {
-                            continue;
-                        }
-
-                        var sitecoreString = "";
-                        if (match.TemplateID == ID.Parse(MediaReferenceTemplateId))
-                        {
-                            var fld = (ReferenceField)match.Fields["Content Reference"];
-                            if (fld != null && fld.TargetItem != null)
-                            {
-                                sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
-
-                                if (response != null)
-                                {
-                                    response.Write(string.Format("<div>UpdateReferences Updating media src from MediaReferenceTemplateId to {0} </div>", sitecoreString));
-                                    response.Flush();
-                                }
-                                updated = true;
-                            }
-                        }
-                        else
-                        {
-                            var formattedId = match.ID.ToShortID().ToString();
-                            sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
-
-                            if (response != null)
-                            {
-                                response.Write(string.Format("<div>UpdateReferences Updating link media src from default to {0} </div>", sitecoreString));
-                                response.Flush();
-                            }
-                            updated = true;
-                        }
-
-                        if (!string.IsNullOrEmpty(sitecoreString))
-                        {
-                            link.SetAttributeValue("src", sitecoreString);
-
-                            if (response != null)
-                            {
-                                response.Write(string.Format("<div>UpdateReferences Updating media src to {0} </div>", sitecoreString));
-                                response.Flush();
-                            }
-                            updated = true;
-                        }
-                    }
-                    else
-                    {
-                        if (response != null)
-                        {
-                            response.Write(string.Format("<div>Not Updated: src {0} </div>", att.Value));
-                            response.Flush();
-                        }
-                    }
-                }
-            }
+            var updated =
+                ProcessHtmlFieldForLinks(htmldoc, database, response) ||
+                ProcesHtmlFieldForImageReferences(htmldoc, database, response);
+            
             if (updated)
             {
-                using (StringWriter writer = new StringWriter())
+                using (var writer = new StringWriter())
                 {
                     htmldoc.Save(writer);
                     result = writer.ToString();                    

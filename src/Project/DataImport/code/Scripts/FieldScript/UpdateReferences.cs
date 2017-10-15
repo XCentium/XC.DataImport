@@ -35,7 +35,7 @@ namespace XC.Project.DataImport.Scripts.FieldScript
 
             if (!string.IsNullOrEmpty((string)args.SourceValue))
             {
-                args.Result = ImportHelper.ProcessHtmlFieldValue((string)args.SourceValue, args.Database, null, false);
+                args.Result = ImportHelper.ProcessHtmlFieldValue((string)args.SourceValue, args.Database, null);
             }
 
             DataImportLogger.Log.Info("#################Field Processing UpdateReferences ended ##################");
