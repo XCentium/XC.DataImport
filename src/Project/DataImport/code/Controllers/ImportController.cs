@@ -618,7 +618,7 @@ namespace XC.Project.DataImport.Controllers
                 {
                     using (new SecurityDisabler())
                     {
-                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId))))
+                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId)) && i.IsDerived(Templates.ImportedItem.ID)))
                         {
                             Response.Write(string.Format("<h4>UpdateReferences. Item Path {0} </h4>", item.Paths.FullPath));
                             Response.Flush();
