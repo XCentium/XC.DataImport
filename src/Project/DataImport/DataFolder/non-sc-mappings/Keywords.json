@@ -1,1 +1,65 @@
-{"Templates":{"Source":{"Command":"SELECT [ID]\n      ,[Keyword]\n  FROM [cmqa].[dbo].[SiteCoreData_Keywords]","IsStoredProc":false},"Target":"sitecore://master/{18CDD4CE-CDBE-4BDC-9D5A-6249F7F0EC17}?lang=en&ver=1"},"MergeColumnFieldMatch":{"Source":"","Target":""},"MergeWithExistingItems":false,"FieldMapping":[{"Exclude":false,"Overwrite":true,"SourceFields":"Keyword","TargetFields":"{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}","IsId":false,"Id":0,"ProcessingScripts":[],"ReferenceItemsTemplate":"","ReferenceItemsField":null},{"Exclude":false,"Overwrite":false,"SourceFields":"ID","TargetFields":"","IsId":true,"Id":1,"ProcessingScripts":[],"ReferenceItemsTemplate":"","ReferenceItemsField":null},{"Exclude":false,"Overwrite":true,"SourceFields":"Keyword","TargetFields":"{7BDBBA5F-C7E6-45C2-82F5-010DED013588}","IsId":false,"Id":2,"ProcessingScripts":[],"ReferenceItemsTemplate":"","ReferenceItemsField":null}],"IncrementalUpdate":false,"IncrementalUpdateSourceColumn":"","Name":"Keywords","Databases":{"Source":"car","Target":"master"},"Paths":{"Source":null,"Target":"/sitecore/system/Settings/Feature/Metadata/MetaKeyword"},"FullPaths":{"Source":null,"Target":"{11111111-1111-1111-1111-111111111111}/{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}/{087E1EA5-6280-4575-9E70-85B588DB91B2}/{256655EC-8F3A-45B5-AD90-B63BC25B8067}/{6FAF0ED9-82CD-45E6-9303-3E642C2943AB}/{8DF4BA41-0430-45DA-B250-41B22E5C683F}"},"PostImportScripts":[]}
+{
+  "Templates": {
+    "Source": {
+      "Command": "SELECT [ID]\n      ,[Keyword]\n  FROM [cmqa].[dbo].[SiteCoreData_Keywords]",
+      "IsStoredProc": false
+    },
+    "Target": "sitecore://master/{18CDD4CE-CDBE-4BDC-9D5A-6249F7F0EC17}?lang=en&ver=1"
+  },
+  "MergeColumnFieldMatch": {
+    "Source": "",
+    "Target": ""
+  },
+  "MergeWithExistingItems": false,
+  "FieldMapping": [
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "Keyword",
+      "TargetFields": "{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}",
+      "IsId": false,
+      "Id": 0,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": false,
+      "SourceFields": "ID",
+      "TargetFields": "",
+      "IsId": true,
+      "Id": 1,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "Keyword",
+      "TargetFields": "{7BDBBA5F-C7E6-45C2-82F5-010DED013588}",
+      "IsId": false,
+      "Id": 2,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    }
+  ],
+  "IncrementalUpdate": false,
+  "IncrementalUpdateSourceColumn": "",
+  "Name": "Keywords",
+  "Databases": {
+    "Source": "car",
+    "Target": "master"
+  },
+  "Paths": {
+    "Source": null,
+    "Target": "/sitecore/system/Settings/Feature/Metadata/MetaKeyword"
+  },
+  "FullPaths": {
+    "Source": null,
+    "Target": "{11111111-1111-1111-1111-111111111111}/{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}/{087E1EA5-6280-4575-9E70-85B588DB91B2}/{256655EC-8F3A-45B5-AD90-B63BC25B8067}/{6FAF0ED9-82CD-45E6-9303-3E642C2943AB}/{8DF4BA41-0430-45DA-B250-41B22E5C683F}"
+  },
+  "PostImportScripts": []
+}
