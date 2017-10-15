@@ -1,10 +1,4 @@
-﻿using Sitecore.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace XC.Foundation.DataImport
+﻿namespace XC.Foundation.DataImport
 {
     public struct Templates
     {
@@ -14,11 +8,17 @@ namespace XC.Foundation.DataImport
             {
                 public static readonly string OriginObject_FieldName = "Origin Object Id";
                 public static readonly string OriginParentObject_FieldName = "Origin Parent Object Id";
-                public static readonly string OriginBodyText_FieldName = "Body";
-                public static readonly string OriginShortDescription_FieldName = "Short Description";
                 public static readonly string OriginPath_FieldName = "Origin Path";
             }
         }
 
+        public struct HasPageContent
+        {
+            public struct Fields
+            {
+                public static readonly string Body_FieldName = "Body";
+                public static readonly string Summary_FieldName = "Summary";
+            }
+        }
     }
 }

@@ -623,8 +623,8 @@ namespace XC.Project.DataImport.Controllers
                             Response.Write(string.Format("<h4>UpdateReferences. Item Path {0} </h4>", item.Paths.FullPath));
                             Response.Flush();
 
-                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginBodyText_FieldName, Response);
-                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginShortDescription_FieldName, Response);
+                            ImportHelper.UpdateItemReferences(item, Templates.HasPageContent.Fields.Body_FieldName, Response);
+                            ImportHelper.UpdateItemReferences(item, Templates.HasPageContent.Fields.Summary_FieldName, Response);
                         }
 
                     }
