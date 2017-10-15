@@ -1,9 +1,13 @@
-﻿namespace XC.Foundation.DataImport
+﻿using Sitecore.Data;
+
+namespace XC.Foundation.DataImport
 {
     public struct Templates
     {
         public struct ImportedItem
         {
+            public static readonly ID ID = new ID("{3459622E-66CD-4878-8811-1C2F0EC17570}");
+
             public struct Fields
             {
                 public static readonly string OriginObject_FieldName = "Origin Object Id";
