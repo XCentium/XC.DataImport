@@ -96,12 +96,14 @@ namespace XC.Project.DataImport.Helpers
                     if (match.IsDerived(StringSettingTemplateId))
                     {
                         var urlValue = match["Value"];
-                        if (!string.IsNullOrEmpty(match["Value"]))
+                        if (!string.IsNullOrEmpty(urlValue))
                         {
                             if (urlValue.Contains("www.car.org"))
                             {
                                 urlValue = new Uri(urlValue).PathAndQuery;
                             }
+
+
                             sitecoreString = urlValue;
 
                             if (response != null)
@@ -110,20 +112,6 @@ namespace XC.Project.DataImport.Helpers
                                 response.Flush();
                             }
 
-                            updated = true;
-                        }
-                    }
-                    else if (match.IsDerived(ID.Parse(MediaReferenceTemplateId)))
-                    {
-                        var fld = (ReferenceField)match.Fields["Content Reference"];
-                        if (fld != null && fld.TargetItem != null && (fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedFile)))
-                        {
-                            sitecoreString = $"-/media/{fld.TargetItem.ID.ToShortID()}.ashx";
-                            if (response != null)
-                            {
-                                response.Write($"<div>Field Processing from Media Reference Item to {sitecoreString} </div");
-                                response.Flush();
-                            }
                             updated = true;
                         }
                     }
