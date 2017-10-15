@@ -26,15 +26,13 @@ namespace XC.Project.DataImport.Helpers
         /// <param name="fieldName">Name of the field.</param>
         public static void UpdateItemReferences(Item item, string fieldName, HttpResponseBase response = null, bool updateItem = true)
         {
-            var result = item[fieldName];
-
             using (new EditContext(item))
             {
-                result = ProcessHtmlFieldValue(item[fieldName], item.Database, response, updateItem);
+                var result = ProcessHtmlFieldValue(item[fieldName], item.Database, response, updateItem);
 
-                if (updateItem)
+                if (updateItem && !string.IsNullOrEmpty(result))
                 {
-                    item[Templates.ImportedItem.Fields.OriginBodyTextId] = result;
+                    item[fieldName] = result;
 
                     if (response != null)
                     {
