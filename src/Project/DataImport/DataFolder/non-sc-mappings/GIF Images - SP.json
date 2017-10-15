@@ -1,7 +1,7 @@
 {
   "Templates": {
     "Source": {
-      "Command": "SELECT [ObjectID] \n\t  ,[ParentObjectID] \n\t  ,[Name] \n\t  ,[SimpleName] \n\t  ,[Path] \n\t  ,[UpdateDate] \n\t  ,[BlobSize] \n\t  ,[BlobData] \n\t  ,REPLACE([Extension],'.','') as Extension \n\t  ,[Title] \n\t  ,[ObjectTypeID] \n\t  ,[ObjectType_Description] \n\t  ,[Group] \n\t  ,[AuthorName] \n\t  ,[t_ObjectTypeID] \n\t  ,[ShortDescription] \n\t  ,[Keyword] \n\t  ,[CreateDate] \n\t  ,ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum \n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_SP] \nWHERE [t_ObjectTypeID] = 192603 \nand BlobData is \nnot null and [t_ObjectTypeID] = [ObjectTypeID]\nUNION ALL\nSELECT [ObjectID] \n\t  ,[ParentObjectID] \n\t  ,[Name] \n\t  ,[SimpleName] \n\t  ,[Path] \n\t  ,[UpdateDate] \n\t  ,[BlobSize] \n\t  ,[BlobData] \n\t  ,REPLACE([Extension],'.','') as Extension \n\t  ,[Title] \n\t  ,[ObjectTypeID] \n\t  ,[ObjectType_Description] \n\t  ,[Group] \n\t  ,[AuthorName] \n\t  ,[t_ObjectTypeID] \n\t  ,[ShortDescription] \n\t  ,[Keyword] \n\t  ,[CreateDate] \n\t  ,ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum \n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_CE] \nWHERE [t_ObjectTypeID] = 192603 \nand BlobData is not null",
+      "Command": "SELECT [ObjectID] \n\t  ,[ParentObjectID] \n\t  ,[Name] \n\t  ,[SimpleName] \n\t  ,[Path] \n\t  ,[UpdateDate] \n\t  ,[BlobSize] \n\t  ,[BlobData] \n\t  ,REPLACE([Extension],'.','') as Extension \n\t  ,[Title] \n\t  ,[ObjectTypeID] \n\t  ,[ObjectType_Description] \n\t  ,[Group] \n\t  ,[AuthorName] \n\t  ,[t_ObjectTypeID] \n\t  ,[ShortDescription] \n\t  ,[Keyword] \n\t  ,[CreateDate] \n\t  ,ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum \n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_SP] \nWHERE [t_ObjectTypeID] = 232 \nand BlobData is not null \nand [t_ObjectTypeID] = [ObjectTypeID]",
       "IsStoredProc": false
     },
     "Target": "sitecore://master/{CB3D7954-3315-470B-814F-08CBBAAF6B8D}?lang=en&ver=1"
@@ -199,20 +199,18 @@
   ],
   "IncrementalUpdate": false,
   "IncrementalUpdateSourceColumn": "",
-  "Name": "Ico Images",
+  "Name": "GIF Images - SP",
   "Databases": {
     "Source": "car",
     "Target": "master"
   },
   "Paths": {
     "Source": null,
-    "Target": "/sitecore/media library/Data Import/CAR/Images/ICOs"
+    "Target": "/sitecore/media library/Data Import/CAR/Images/GIFs"
   },
   "FullPaths": {
     "Source": null,
-    "Target": "{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}/{F83D561E-E56A-451E-893E-72D410595589}/{2C9AA540-F96C-454B-B6E0-3A7D538472C5}/{D4265F75-FC87-47A0-831D-044ADE1203E7}/{4091C918-DF76-43A1-A174-7132E773B1AA}"
+    "Target": "{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}/{F83D561E-E56A-451E-893E-72D410595589}/{2C9AA540-F96C-454B-B6E0-3A7D538472C5}/{D4265F75-FC87-47A0-831D-044ADE1203E7}/{7DDA8DEC-57AA-4AB3-A686-81A9907BDD30}"
   },
-  "PostImportScripts": [
-    "XC.Project.DataImport.Scripts.PostImport.ArrangeItemsBasedOnObjectId,XC.Project.DataImport"
-  ]
+  "PostImportScripts": []
 }

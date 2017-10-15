@@ -1,7 +1,7 @@
 {
   "Templates": {
     "Source": {
-      "Command": "SELECT [t_ObjectID]\n      ,[t_ParentObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[CreateDate]\n      ,[UpdateDate]\n      ,[BlobSize]\n      ,[BlobData]\n      ,[Extension]\n      ,[Title]\n      ,[ObjectTypeID]\n      ,[ObjectType_Description]\n      ,[Group]\n\t  ,[AuthorName]\n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\n  FROM [cmqa].[dbo].[vw_SiteCoreMedia_CE]\n  where [BlobData] is null \nUNION ALL\nSELECT [t_ObjectID]\n      ,[t_ParentObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[CreateDate]\n      ,[UpdateDate]\n      ,[BlobSize]\n      ,[BlobData]\n      ,[Extension]\n      ,[Title]\n      ,[ObjectTypeID]\n      ,[ObjectType_Description]\n      ,[Group]\n\t  ,[AuthorName]\n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\n  FROM [cmqa].[dbo].[vw_SiteCoreMedia_SP]\n  WHERE [BlobData] is null ",
+      "Command": "SELECT [t_ObjectID]\n      ,[t_ParentObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[CreateDate]\n      ,[UpdateDate]\n      ,[BlobSize]\n      ,[BlobData]\n      ,[Extension]\n      ,[Title]\n      ,[ObjectTypeID]\n      ,[ObjectType_Description]\n      ,[Group]\n      ,[AuthorName]\n      ,[CreatedBy]\n      ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_AllElse]\nWHERE [BlobData] is null ",
       "IsStoredProc": false
     },
     "Target": "sitecore://master/{8532C7AD-40D1-4AFC-83EF-49317FD75C35}?lang=en&ver=1"
@@ -131,7 +131,7 @@
   ],
   "IncrementalUpdate": false,
   "IncrementalUpdateSourceColumn": "",
-  "Name": "Media Content Folders",
+  "Name": "Media Content Folders - AllElse",
   "Databases": {
     "Source": "car",
     "Target": "master"

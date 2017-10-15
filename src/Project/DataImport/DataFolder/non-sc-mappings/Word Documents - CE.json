@@ -1,10 +1,10 @@
 {
   "Templates": {
     "Source": {
-      "Command": "SELECT [t_ObjectID] \n\t  ,[t_ParentObjectID] \n\t  ,[Name] \n\t  ,[SimpleName] \n\t  ,[Path] \n\t  ,[UpdateDate] \n\t  ,[BlobSize] \n\t  ,[BlobData] \n\t  ,REPLACE([Extension],'.','') as Extension \n\t  ,[Title] \n\t  ,[ObjectTypeID] \n\t  ,[ObjectType_Description] \n\t  ,[Group] \n\t  ,[AuthorName] \n\t  ,[t_ObjectTypeID] \n\t  ,[t_ParentObjectID] \n\t  ,[ShortDescription] \n\t  ,[Keyword] \n\t  ,[CreateDate] \n\t  ,ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum \n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_CE] \nWHERE [t_ObjectTypeID] = 1202 \nand BlobData is not null\nUNION ALL\nSELECT [ObjectID] \n\t  ,[ParentObjectID] \n\t  ,[Name] \n\t  ,[SimpleName] \n\t  ,[Path] \n\t  ,[UpdateDate] \n\t  ,[BlobSize] \n\t  ,[BlobData] \n\t  ,REPLACE([Extension],'.','') as Extension \n\t  ,[Title] \n\t  ,[ObjectTypeID] \n\t  ,[ObjectType_Description] \n\t  ,[Group] \n\t  ,[AuthorName] \n\t  ,[t_ObjectTypeID]  \n\t  ,[t_ParentObjectID]\n\t  ,[ShortDescription] \n\t  ,[Keyword] \n\t  ,[CreateDate] \n\t  ,ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum \n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_SP] \nWHERE [ObjectTypeID] = [t_ObjectTypeID] \nand [t_ObjectTypeID] = 1202 \nand BlobData is not null",
+      "Command": "SELECT [t_ObjectID] \n\t  ,[t_ParentObjectID] \n\t  ,[Name] \n\t  ,[SimpleName] \n\t  ,[Path] \n\t  ,[UpdateDate] \n\t  ,[BlobSize] \n\t  ,[BlobData] \n\t  ,REPLACE([Extension],'.','') as Extension \n\t  ,[Title] \n\t  ,[ObjectTypeID] \n\t  ,[ObjectType_Description] \n\t  ,[Group] \n\t  ,[AuthorName] \n\t  ,[t_ObjectTypeID] \n\t  ,[ShortDescription] \n\t  ,[Keyword] \n\t  ,[CreateDate] \n\t  ,ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum \n\t  ,[CreatedBy]\n\t  ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_CE] \nWHERE ([t_ObjectTypeID] = 236 or [t_ObjectTypeID] = 564355) \nand BlobData is not null",
       "IsStoredProc": false
     },
-    "Target": "sitecore://master/{69B04B3F-8A5A-4C1F-815F-955A4864285E}?lang=en&ver=1"
+    "Target": "sitecore://master/{5BB32F06-2732-4193-9172-6E09011AB21A}?lang=en&ver=1"
   },
   "MergeColumnFieldMatch": {
     "Source": "",
@@ -164,21 +164,10 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "Title",
-      "TargetFields": "{65885C44-8FCD-4A7F-94F1-EE63703FE193}",
-      "IsId": false,
-      "Id": 13,
-      "ProcessingScripts": [],
-      "ReferenceItemsTemplate": "",
-      "ReferenceItemsField": null
-    },
-    {
-      "Exclude": false,
-      "Overwrite": true,
       "SourceFields": "Group",
       "TargetFields": "{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}",
       "IsId": false,
-      "Id": 14,
+      "Id": 13,
       "ProcessingScripts": [
         "XC.Project.DataImport.Scripts.FieldScript.ConvertSecuritySettings,XC.Project.DataImport"
       ],
@@ -191,7 +180,7 @@
       "SourceFields": "Path",
       "TargetFields": "{C413111F-377F-4A8F-BD89-8C37639FFC2A}",
       "IsId": false,
-      "Id": 15,
+      "Id": 14,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
@@ -199,18 +188,18 @@
   ],
   "IncrementalUpdate": false,
   "IncrementalUpdateSourceColumn": "",
-  "Name": "Banner Images",
+  "Name": "Word Documents - CE",
   "Databases": {
     "Source": "car",
     "Target": "master"
   },
   "Paths": {
     "Source": null,
-    "Target": "/sitecore/media library/Data Import/CAR/Images/Banner Images"
+    "Target": "/sitecore/media library/Data Import/CAR/Documents/Word"
   },
   "FullPaths": {
     "Source": null,
-    "Target": "{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}/{F83D561E-E56A-451E-893E-72D410595589}/{2C9AA540-F96C-454B-B6E0-3A7D538472C5}/{D4265F75-FC87-47A0-831D-044ADE1203E7}/{E5493064-77C0-4FB1-9820-69DEA2877331}"
+    "Target": "{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}/{F83D561E-E56A-451E-893E-72D410595589}/{2C9AA540-F96C-454B-B6E0-3A7D538472C5}/{3C7628B7-5CA9-4522-BE1A-6A6FA3C35516}/{D3D033BA-FAEB-4118-B873-43EDC237FE82}"
   },
   "PostImportScripts": []
 }
