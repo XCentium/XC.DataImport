@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Sitecore.Data.Managers;
 using XC.Foundation.DataImport;
 using XC.Foundation.DataImport.Disablers;
 using XC.Foundation.DataImport.Utilities;
@@ -31,7 +32,7 @@ namespace XC.Project.DataImport.Helpers
             {
                 if (response != null)
                 {
-                    response.Write($"<div>Evaluating {fieldName} field for Item :{item.Paths.FullPath}</div>");
+                    response.Write($"<div><b>Evaluating {fieldName} field for Item :{item.Paths.FullPath}</b></div>");
                     response.Flush();
                 }
 
@@ -98,18 +99,39 @@ namespace XC.Project.DataImport.Helpers
                         var urlValue = match["Value"];
                         if (!string.IsNullOrEmpty(urlValue))
                         {
-                            if (urlValue.Contains("www.car.org"))
-                            {
-                                urlValue = new Uri(urlValue).PathAndQuery;
-                            }
-
-
                             sitecoreString = urlValue;
 
                             if (response != null)
                             {
                                 response.Write($"<div>Field Processing from StringSettings to {sitecoreString} </div>");
                                 response.Flush();
+                            }
+
+                            if (urlValue.Contains("www.car.org"))
+                            {
+                                var uri = new Uri(urlValue);
+                                if (!string.IsNullOrEmpty(uri.Query))
+                                {
+                                    //query string present, use external link
+                                    continue;
+                                }
+
+                                var mappedPath = uri.LocalPath;
+                                var mappedMatch = FindItemByPath(database, mappedPath);
+                                if (mappedMatch == null)
+                                {
+                                    //mappedMatch not found, use external link
+                                    continue;
+                                }
+
+                                var formattedId = mappedMatch.ID.ToShortID().ToString();
+                                sitecoreString = $"~/link.aspx?_id={formattedId}&amp;_z=z";
+
+                                if (response != null)
+                                {
+                                    response.Write($"<div>Field Processing from StringSettings mapped to Content Item {sitecoreString} </div>");
+                                    response.Flush();
+                                }
                             }
 
                             updated = true;
@@ -134,7 +156,7 @@ namespace XC.Project.DataImport.Helpers
 
                         if (response != null)
                         {
-                            response.Write($"<div>Field Processing default {sitecoreString} </div");
+                            response.Write($"<div>Field Processing from Content Item {sitecoreString} </div");
                             response.Flush();
                         }
                         updated = true;
