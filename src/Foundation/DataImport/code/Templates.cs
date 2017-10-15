@@ -12,11 +12,11 @@ namespace XC.Foundation.DataImport
         {
             public struct Fields
             {
-                public static readonly string OriginObjectId = "Origin Object Id";
-                public static readonly string OriginParentObjectId = "Origin Parent Object Id";
-                public static readonly string OriginBodyTextId = "Body";
-                public static readonly string OriginShortDescriptionId = "Short Description";
-                public static readonly string OriginPath = "Origin Path";
+                public static readonly string OriginObject_FieldName = "Origin Object Id";
+                public static readonly string OriginParentObject_FieldName = "Origin Parent Object Id";
+                public static readonly string OriginBodyText_FieldName = "Body";
+                public static readonly string OriginShortDescription_FieldName = "Short Description";
+                public static readonly string OriginPath_FieldName = "Origin Path";
             }
         }
 

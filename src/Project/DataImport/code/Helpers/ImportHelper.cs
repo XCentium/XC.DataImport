@@ -255,7 +255,7 @@ namespace XC.Project.DataImport.Helpers
         public static Item FindItem(Database database, string objectId)
         {
             using (new ItemFilteringDisabler())
-                return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginObjectId), objectId));
+                return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginObject_FieldName), objectId));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace XC.Project.DataImport.Helpers
         public static Item FindItemByPath(Database database, string path)
         {
             using (new ItemFilteringDisabler())
-                return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginPath), path));
+                return database.SelectSingleItem(string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginPath_FieldName), path));
         }
 
     }

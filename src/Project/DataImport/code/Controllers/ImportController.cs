@@ -179,8 +179,8 @@ namespace XC.Project.DataImport.Controllers
                     {
                         foreach (var item in items)
                         {
-                            var parentId = item[Templates.ImportedItem.Fields.OriginParentObjectId];
-                            if (!string.IsNullOrEmpty(parentId) && parentId != item.Parent[Templates.ImportedItem.Fields.OriginObjectId])
+                            var parentId = item[Templates.ImportedItem.Fields.OriginParentObject_FieldName];
+                            if (!string.IsNullOrEmpty(parentId) && parentId != item.Parent[Templates.ImportedItem.Fields.OriginObject_FieldName])
                             {
                                 var parentItem = ImportHelper.FindItem(item.Database, parentId);
                                 if (parentItem != null)
@@ -247,7 +247,7 @@ namespace XC.Project.DataImport.Controllers
                                 }
                                 if (!identicalReference)
                                 {
-                                    var notImported = itemGroup.Where(i => string.IsNullOrWhiteSpace(i[ImportedItem.Fields.OriginObjectId]));
+                                    var notImported = itemGroup.Where(i => string.IsNullOrWhiteSpace(i[ImportedItem.Fields.OriginObject_FieldName]));
                                     for (var idx = 1; idx < notImported.Count(); idx++)
                                     {
                                         var item = notImported.ElementAt(idx);
@@ -435,7 +435,7 @@ namespace XC.Project.DataImport.Controllers
 
                         foreach (var item in items)
                         {
-                            var originPath = item[Templates.ImportedItem.Fields.OriginPath];
+                            var originPath = item[Templates.ImportedItem.Fields.OriginPath_FieldName];
                             if (!string.IsNullOrEmpty(originPath))
                             {
                                 var newLink = "";
@@ -454,13 +454,13 @@ namespace XC.Project.DataImport.Controllers
                                 {
                                     if (!onlyStatic)
                                     {
-                                        redirectFileContent.AppendFormat("\t<add key=\"{0}\" value=\"{1}\" />\n", item[Templates.ImportedItem.Fields.OriginPath], newLink);
+                                        redirectFileContent.AppendFormat("\t<add key=\"{0}\" value=\"{1}\" />\n", item[Templates.ImportedItem.Fields.OriginPath_FieldName], newLink);
                                         Response.Write(string.Format("<div>{0} | {1} | {2}</div>", newLink.ToLowerInvariant(), originPath.ToLowerInvariant(), newLink.ToLowerInvariant() != originPath.ToLowerInvariant()));
                                         Response.Flush();
                                     }
                                     else if (originPath.Contains("."))
                                     {
-                                        redirectFileContent.AppendFormat("\t<add key=\"{0}\" value=\"{1}\" />\n", item[Templates.ImportedItem.Fields.OriginPath], newLink);
+                                        redirectFileContent.AppendFormat("\t<add key=\"{0}\" value=\"{1}\" />\n", item[Templates.ImportedItem.Fields.OriginPath_FieldName], newLink);
                                         Response.Write(string.Format("<div>{0} | {1} | {2}</div>", newLink.ToLowerInvariant(), originPath.ToLowerInvariant(), newLink.ToLowerInvariant() != originPath.ToLowerInvariant()));
                                         Response.Flush();
                                     }
@@ -623,8 +623,8 @@ namespace XC.Project.DataImport.Controllers
                             Response.Write(string.Format("<h4>UpdateReferences. Item Path {0} </h4>", item.Paths.FullPath));
                             Response.Flush();
 
-                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginBodyTextId, Response);
-                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginShortDescriptionId, Response);
+                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginBodyText_FieldName, Response);
+                            ImportHelper.UpdateItemReferences(item, Templates.ImportedItem.Fields.OriginShortDescription_FieldName, Response);
                         }
 
                     }
