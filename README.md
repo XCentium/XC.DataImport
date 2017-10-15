@@ -70,6 +70,5 @@ localhost/api/sitecore/Import/\{controller action}
 2. MoveMediaIntoML
 3. RemoveDuplicateMediaReferences
 4. CleanUpMediaReferenceItems
-5. UpdateAbsoluteLinks
-6. UpdateReferences
-7. Generate301RedirectsForIIS
+5. UpdateReferences
+6. Generate301RedirectsForIIS
