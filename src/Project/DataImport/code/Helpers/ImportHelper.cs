@@ -29,6 +29,12 @@ namespace XC.Project.DataImport.Helpers
         {
             using (new EditContext(item))
             {
+                if (response != null)
+                {
+                    response.Write($"<div>Evaluating {fieldName} field for Item :{item.Paths.FullPath}</div>");
+                    response.Flush();
+                }
+
                 var result = ProcessHtmlFieldValue(item[fieldName], item.Database, response);
 
                 if (updateItem && !string.IsNullOrEmpty(result))
@@ -37,7 +43,7 @@ namespace XC.Project.DataImport.Helpers
 
                     if (response != null)
                     {
-                        response.Write($"<div>Item {fieldName} field updated ItemId :{item.Paths.FullPath}</div>");
+                        response.Write($"<div>Updated {fieldName} field for Item :{item.Paths.FullPath}</div>");
                         response.Flush();
                     }
                 }
@@ -68,11 +74,23 @@ namespace XC.Project.DataImport.Helpers
                     var match = FindItem(database, linkId);
                     if (match == null)
                     {
+                        if (response != null)
+                        {
+                            response.Write($"<div>Unable to match link referenced ID: src {att.Value} </div>");
+                            response.Flush();
+                        }
                         continue;
                     }
 
-                    if (!match.Paths.IsContentItem)
+                    if (!match.Paths.IsContentItem && !match.Paths.IsMediaItem)
+                    {
+                        if (response != null)
+                        {
+                            response.Write($"<div>Unable to match valid referenced ID: src {att.Value} <br/> match {match.Paths.FullPath} </div>");
+                            response.Flush();
+                        }
                         continue;
+                    }
 
                     var sitecoreString = "";
                     if (match.IsDerived(StringSettingTemplateId))
@@ -88,7 +106,7 @@ namespace XC.Project.DataImport.Helpers
 
                             if (response != null)
                             {
-                                response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from StringSettings to {0} </div>", sitecoreString));
+                                response.Write($"<div>Field Processing from StringSettings to {sitecoreString} </div>");
                                 response.Flush();
                             }
 
@@ -100,10 +118,10 @@ namespace XC.Project.DataImport.Helpers
                         var fld = (ReferenceField)match.Fields["Content Reference"];
                         if (fld != null && fld.TargetItem != null && (fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || fld.TargetItem.IsDerived(Sitecore.TemplateIDs.UnversionedFile)))
                         {
-                            sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
+                            sitecoreString = $"-/media/{fld.TargetItem.ID.ToShortID()}.ashx";
                             if (response != null)
                             {
-                                response.Write(string.Format("<div>Field Processing UpdateReferences Updating link from MediaReferenceTemplateId to {0} </div", sitecoreString));
+                                response.Write($"<div>Field Processing from Media Reference Item to {sitecoreString} </div");
                                 response.Flush();
                             }
                             updated = true;
@@ -112,11 +130,11 @@ namespace XC.Project.DataImport.Helpers
                     else if (match.IsDerived(Sitecore.TemplateIDs.UnversionedImage) || match.IsDerived(Sitecore.TemplateIDs.UnversionedFile))
                     {
                         var formattedId = match.ID.ToShortID().ToString();
-                        sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
+                        sitecoreString = $"-/media/{formattedId}.ashx";
 
                         if (response != null)
                         {
-                            response.Write(string.Format("<div>UpdateReferences Updating link to media item {0} </div", sitecoreString));
+                            response.Write($"<div>Field Processing from Media Item {sitecoreString} </div");
                             response.Flush();
                         }
                         updated = true;
@@ -124,11 +142,11 @@ namespace XC.Project.DataImport.Helpers
                     else
                     {
                         var formattedId = match.ID.ToShortID().ToString();
-                        sitecoreString = string.Format("~/link.aspx?_id={0}&amp;_z=z", formattedId);
+                        sitecoreString = $"~/link.aspx?_id={formattedId}&amp;_z=z";
 
                         if (response != null)
                         {
-                            response.Write(string.Format("<div>UpdateReferences Updating link from default to {0} </div", sitecoreString));
+                            response.Write($"<div>Field Processing default {sitecoreString} </div");
                             response.Flush();
                         }
                         updated = true;
@@ -140,7 +158,8 @@ namespace XC.Project.DataImport.Helpers
 
                         if (response != null)
                         {
-                            response.Write(string.Format("<div>UpdateReferences Updating link to {0} </div", sitecoreString));
+                            att = link.Attributes["href"];
+                            response.Write($"<div>Updating link to {att.Value} </div");
                             response.Flush();
                         }
                         updated = true;
@@ -150,7 +169,7 @@ namespace XC.Project.DataImport.Helpers
                 {
                     if (response != null)
                     {
-                        response.Write(string.Format("<div>Not Updated: href {0} </div>", att.Value));
+                        response.Write($"<div>Not Updated: href {att.Value} </div>");
                         response.Flush();
                     }
                 }
@@ -182,6 +201,11 @@ namespace XC.Project.DataImport.Helpers
                     var match = FindItem(database, linkId);
                     if (match == null)
                     {
+                        if (response != null)
+                        {
+                            response.Write($"<div>Unable to match image referenced ID: src {att.Value} </div>");
+                            response.Flush();
+                        }
                         continue;
                     }
 
@@ -191,11 +215,11 @@ namespace XC.Project.DataImport.Helpers
                         var fld = (ReferenceField)match.Fields["Content Reference"];
                         if (fld != null && fld.TargetItem != null)
                         {
-                            sitecoreString = string.Format("-/media/{0}.ashx", fld.TargetItem.ID.ToShortID().ToString());
+                            sitecoreString = $"-/media/{fld.TargetItem.ID.ToShortID()}.ashx";
 
                             if (response != null)
                             {
-                                response.Write(string.Format("<div>UpdateReferences Updating media src from MediaReferenceTemplateId to {0} </div>", sitecoreString));
+                                response.Write($"<div>Field Processing from Media Reference Item to {sitecoreString} </div");
                                 response.Flush();
                             }
                             updated = true;
@@ -204,11 +228,11 @@ namespace XC.Project.DataImport.Helpers
                     else
                     {
                         var formattedId = match.ID.ToShortID().ToString();
-                        sitecoreString = string.Format("-/media/{0}.ashx", formattedId);
+                        sitecoreString = $"-/media/{formattedId}.ashx";
 
                         if (response != null)
                         {
-                            response.Write(string.Format("<div>UpdateReferences Updating link media src from default to {0} </div>", sitecoreString));
+                            response.Write($"<div>Field Processing from Media Item {sitecoreString} </div");
                             response.Flush();
                         }
                         updated = true;
@@ -220,7 +244,8 @@ namespace XC.Project.DataImport.Helpers
 
                         if (response != null)
                         {
-                            response.Write(string.Format("<div>UpdateReferences Updating media src to {0} </div>", sitecoreString));
+                            att = link.Attributes["src"];
+                            response.Write($"<div>Updating image to {att.Value} </div");
                             response.Flush();
                         }
                         updated = true;
@@ -230,7 +255,7 @@ namespace XC.Project.DataImport.Helpers
                 {
                     if (response != null)
                     {
-                        response.Write(string.Format("<div>Not Updated: src {0} </div>", att.Value));
+                        response.Write($"<div>Not Updated: src {att.Value} </div>");
                         response.Flush();
                     }
                 }
