@@ -36,7 +36,7 @@ namespace XC.Project.DataImport.Helpers
 
                     if (response != null)
                     {
-                        response.Write(string.Format("<div>Item Body field updated ItemId :{0}</div>", item.Paths.FullPath));
+                        response.Write($"<div>Item {fieldName} field updated ItemId :{item.Paths.FullPath}</div>");
                         response.Flush();
                     }
                 }
