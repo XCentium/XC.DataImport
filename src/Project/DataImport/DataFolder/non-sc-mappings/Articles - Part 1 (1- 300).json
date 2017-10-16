@@ -4,11 +4,11 @@
       "Command": "SELECT [ObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[Title]\n      ,[ShortDescription]\n      ,[BodyText]\n      ,[AuthorName]\n      ,[Date]\n      ,[Searchable]\n\t  ,[ShowNavigation]\n      ,[Keyword]\n      ,[Group]\n      ,[SpecialScript]\n      ,[VideoPlayer]\n      ,[Video]\n      ,[SearchTerms]\n      ,[ThumbNailImage_ObjectID]\n      ,[FeatureImage_ObjectID]\n      ,[ParentObjectID]\n      ,[t_ObjectTypeID]\n      ,[t_ObjectType_Description]\n\t  ,[CreatedBy]\n      ,[CreateDate]\n\t  ,[UpdatedBy]\n      ,[UpdateDate]\n      ,[ScriptLocation]\n\t  ,[RowNum]\nFROM (SELECT [ObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[Title]\n      ,[ShortDescription]\n      ,[BodyText]\n      ,[AuthorName]\n      ,[Date]\n      ,(CASE WHEN [Searchable] = 'Yes' THEN 1 ELSE 0 END) as Searchable\n\t  ,(CASE WHEN [ShowNavigation] = 'Yes' THEN 1 ELSE 0 END) as ShowNavigation\n      ,[Keyword]\n      ,[Group]\n      ,[SpecialScript]\n      ,[VideoPlayer]\n      ,[Video]\n      ,[SearchTerms]\n      ,[ThumbNailImage_ObjectID]\n      ,[FeatureImage_ObjectID]\n      ,[ParentObjectID]\n      ,[t_ObjectTypeID]\n      ,[t_ObjectType_Description]\n      ,[CreatedBy]\n      ,[CreateDate]\n\t  ,[UpdatedBy]\n      ,[UpdateDate]\n      ,[ScriptLocation]\n\t  , ROW_NUMBER() OVER (ORDER BY [ObjectID]) AS RowNum\n  FROM [cmqa].[dbo].[vw_SiteCoreArticle]) as t\nWHERE t.RowNum between 1 and 300",
       "IsStoredProc": false
     },
-    "Target": ""
+    "Target": "sitecore://master/{B33E36C1-6C6C-43FD-B3CE-21B3DD3EBFC7}?lang=en&ver=1"
   },
   "MergeColumnFieldMatch": {
     "Source": "",
-    "Target": null
+    "Target": ""
   },
   "MergeWithExistingItems": false,
   "FieldMapping": [
