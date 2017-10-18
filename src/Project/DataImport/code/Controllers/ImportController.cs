@@ -915,5 +915,83 @@ namespace XC.Project.DataImport.Controllers
             return new ID(new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(_prefix + value))));
         }
 
+        /// <summary>
+        /// Replaces items that were imported with the wrong id with items imported with the correct id and reassigns the children.
+        /// </summary>
+        /// <param name="rootId">id of the location containing items with correct id</param>
+        /// <param name="targetRootId">id of the location contain items with incorrect id</param>
+        /// <returns></returns>
+        public ActionResult UpdateReferencesIssue(string rootId, string targetRootId)
+        {
+            Response.Buffer = true;
+            if (string.IsNullOrEmpty(rootId))
+            {
+                return Content("rootId is not valid");
+            }
+            if (string.IsNullOrEmpty(targetRootId))
+            {
+                return Content("targetRootId is not valid");
+            }
+            var database = Factory.GetDatabase("master");
+            if (database == null)
+            {
+                return Content("master database was not found");
+            }
+            var rootItem = database.GetItem(rootId);
+            if (rootItem == null)
+            {
+                return Content("root item was not found");
+            }
+            var targetRootItem = database.GetItem(targetRootId);
+            if (targetRootItem == null)
+            {
+                return Content("target root item was not found");
+            }
+            try
+            {
+                var items = rootItem.Children;
+
+                if (items != null && items.Any())
+                {
+                    using (new SecurityDisabler())
+                    {
+                        foreach (var item in items.Where(i => i.IsDerived(Templates.ImportedItem.ID)))
+                        {
+                            Response.Write($"<h4>UpdateReferencesIssue. Item Path {item.Paths.FullPath} </h4>");
+                            Response.Flush();
+
+                            var targetItemPath = $"{targetRootItem.Paths.FullPath}/{item[Templates.ImportedItem.Fields.OriginPath_FieldName]}";
+                            var targetItem = database.GetItem(targetItemPath);
+                            if (targetItem == null)
+                            {
+                                Response.Write($"<div>Unable to find item at: {targetItemPath} </div>");
+                                Response.Flush();
+                                continue;
+                            }
+
+                            Response.Write($"<div>Moving chidren of <i>{targetItem.Paths.FullPath}</i> to <i>{item.Paths.FullPath}</i> </div>");
+                            Response.Flush();
+
+                            foreach (Item itemChild in targetItem.Children)
+                            {
+                                itemChild.MoveTo(item);
+                            }
+
+                            Response.Write($"<div>Replacing <span>{targetItem.Paths.FullPath}</span> with <span>{item.Paths.FullPath}</span> </div>");
+                            Response.Flush();
+
+                            item.MoveTo(targetItem.Parent);
+                            targetItem.Delete();
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.StackTrace);
+            }
+            return Content("success");
+        }
     }
 }

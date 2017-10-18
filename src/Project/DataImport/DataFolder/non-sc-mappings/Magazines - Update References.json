@@ -1,10 +1,10 @@
 {
   "Templates": {
     "Source": {
-      "Command": "SELECT [ObjectID]\n      ,[t_ObjectTypeID]\n      ,[t_ObjectType_Description]\n      ,[ParentObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[Title]\n      ,[StartDate]\n      ,[EndDate]\n      ,[BodyText]\n      ,[Keyword]\n      ,[ShortDescription]\n      ,[ExpiryDate]\n      ,[EventType]\n      ,(CASE WHEN [InPerson] = 'Yes' THEN 'In Person' ELSE 'Online' END) as InPerson\n      ,[Location]\n      ,[Topic]\n      ,(CASE WHEN [Searchable] = 'Yes' THEN 1 ELSE 0 END) as Searchable\n      ,(CASE WHEN [ShowNavigation] = 'Yes' THEN 1 ELSE 0 END) as ShowNavigation\n      ,[UpdateDate]\n      ,[CreateDate]\n      ,[UpdatedBy] \n\t  ,[CreatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreEvent]",
+      "Command": "Select t1.[ObjectID] \n\t  ,t1.[t_ObjectTypeID] \n\t  ,t1.[t_ObjectType_Description] \n\t  ,t1.[ParentObjectID] \n\t  ,t1.[Name] \n\t  ,t1.[SimpleName] \n\t  ,t1.[Path]  \n\t  ,t1.[Title] \n\t  ,t1.[ShortDescription] \n\t  ,t1.[IssueSummary] as Body \n\t  ,t2.[NextIssueSummary] as Summary\n\t  ,(t2.[NextIssueMonth] + ' Issue') as IssueName\n\t  ,CAST(SUBSTRING(t1.[Title], 1, 3) + ' 1, ' + t1.[Year] as Date) as IssueDate\n\t  ,t2.[NextIssueArrivalDate] as IssueArrivalDate\n\t  ,t2.[NextIssueMailDate] as IssueMailDate\n\t  ,t1.[LinkOfDigitalEdition] \n\t  ,t1.[ThumbNailImage_ObjectID] \n\t  ,t1.[SpecialScript] \n\t  ,t1.[SearchTerms] \n\t  ,t1.[Keyword]\n\t  ,(CASE WHEN t1.[ShowNavigation] = 'Yes' THEN 1 ELSE 0 END) as ShowNavigation \n\t  ,t1.[CreateDate] \n\t  ,t1.[CreatedBy] \n\t  ,t1.[UpdateDate] \n\t  ,t1.[UpdatedBy] \n\t  ,t1.[Group]\n\t  ,t1.[Date] \n\t  ,t1.[NextIssueMonth] + ' ' + Cast((CASE WHEN t1.[NextIssueMonth] like 'Jan%' THEN t1.[Year]+1 ELSE t1.[YEAR] END) as varchar(4))\n\t  ,t3.ObjectID as NextIssue_ObjectID\n\t  ,t3.Title as NextIssueTitle\nFROM [cmqa].[dbo].[vw_SiteCoreMagazine] as t1\nLEFT OUTER JOIN \n(Select [NextIssueSummary]\n\t  ,[NextIssueMonth]\n\t  ,[NextIssueArrivalDate]\n\t  ,[NextIssueMailDate]\n\t  ,[Year]\n\t  ,(CASE WHEN [NextIssueMonth] like 'Jan%' THEN [Year]+1 ELSE [YEAR] END) as NextIssueYear\nFROM [cmqa].[dbo].[vw_SiteCoreMagazine]\nWHERE [NextIssueMonth] IS NOT NULL) as t2\nON t1.[Title] = t2.[NextIssueMonth] + ' ' + Cast(t2.[NextIssueYear] as varchar(4))\nLEFT OUTER JOIN\n(Select [ObjectID] \n\t   ,[Name] \n\t   ,[Path] \n\t   ,[Title]\nFROM [cmqa].[dbo].[vw_SiteCoreMagazine]\nWHERE [NextIssueMonth] IS NOT NULL) as t3\nOn t1.[NextIssueMonth] + ' ' + Cast((CASE WHEN t1.[NextIssueMonth] like 'Jan%' THEN t1.[Year]+1 ELSE t1.[YEAR] END) as varchar(4)) = t3.Title",
       "IsStoredProc": false
     },
-    "Target": "sitecore://master/{2BD1EA06-B4F0-4216-848E-A261D97501E9}?lang=en&ver=1"
+    "Target": "sitecore://master/{57DF0609-4D1F-4BAD-8D50-CD5C1303E2C7}?lang=en&ver=1"
   },
   "MergeColumnFieldMatch": {
     "Source": "",
@@ -14,7 +14,7 @@
   "FieldMapping": [
     {
       "Exclude": false,
-      "Overwrite": false,
+      "Overwrite": true,
       "SourceFields": "SimpleName",
       "TargetFields": "{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}",
       "IsId": false,
@@ -70,21 +70,19 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "ShortDescription",
-      "TargetFields": "{AC3FD4DB-8266-476D-9635-67814D91E901}",
+      "SourceFields": "Title",
+      "TargetFields": "{C30A013F-3CC8-4961-9837-1C483277084A}",
       "IsId": false,
       "Id": 5,
-      "ProcessingScripts": [
-        "XC.Project.DataImport.Scripts.FieldScript.UpdateReferences, XC.Project.DataImport"
-      ],
+      "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
     },
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "BodyText",
-      "TargetFields": "{D74F396D-5C5E-4916-BD0A-BFD58B6B1967}",
+      "SourceFields": "Summary",
+      "TargetFields": "{AC3FD4DB-8266-476D-9635-67814D91E901}",
       "IsId": false,
       "Id": 6,
       "ProcessingScripts": [
@@ -96,8 +94,8 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "Searchable",
-      "TargetFields": "{683D7237-206A-488F-9DEE-4A4E41FB161D}",
+      "SourceFields": "ShowNavigation",
+      "TargetFields": "{04F82419-1706-4F2A-8E62-22294A0A9221}",
       "IsId": false,
       "Id": 7,
       "ProcessingScripts": [],
@@ -107,13 +105,15 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "Title",
-      "TargetFields": "{C30A013F-3CC8-4961-9837-1C483277084A}",
+      "SourceFields": "Keyword",
+      "TargetFields": "{4B16F930-73C9-4643-BB1B-00F06E60A073}",
       "IsId": false,
       "Id": 8,
-      "ProcessingScripts": [],
-      "ReferenceItemsTemplate": "",
-      "ReferenceItemsField": null
+      "ProcessingScripts": [
+        "XC.Project.DataImport.Scripts.FieldScript.SplitValuesByComma,XC.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": "sitecore://master/{18CDD4CE-CDBE-4BDC-9D5A-6249F7F0EC17}?lang=en&ver=1",
+      "ReferenceItemsField": "Keyword"
     },
     {
       "Exclude": false,
@@ -129,21 +129,10 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "ShowNavigation",
-      "TargetFields": "{04F82419-1706-4F2A-8E62-22294A0A9221}",
-      "IsId": false,
-      "Id": 10,
-      "ProcessingScripts": [],
-      "ReferenceItemsTemplate": "",
-      "ReferenceItemsField": null
-    },
-    {
-      "Exclude": false,
-      "Overwrite": true,
       "SourceFields": "CreatedBy",
       "TargetFields": "{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}",
       "IsId": false,
-      "Id": 11,
+      "Id": 10,
       "ProcessingScripts": [
         "XC.Project.DataImport.Scripts.FieldScript.PrependUserWithDomainName, XC.Project.DataImport"
       ],
@@ -156,7 +145,7 @@
       "SourceFields": "UpdatedBy",
       "TargetFields": "{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}",
       "IsId": false,
-      "Id": 12,
+      "Id": 11,
       "ProcessingScripts": [
         "XC.Project.DataImport.Scripts.FieldScript.PrependUserWithDomainName, XC.Project.DataImport"
       ],
@@ -166,21 +155,34 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "Keyword",
-      "TargetFields": "{4B16F930-73C9-4643-BB1B-00F06E60A073}",
+      "SourceFields": "Group",
+      "TargetFields": "{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}",
       "IsId": false,
-      "Id": 13,
+      "Id": 12,
       "ProcessingScripts": [
-        "XC.Project.DataImport.Scripts.FieldScript.SplitValuesByComma,XC.Project.DataImport"
+        "XC.Project.DataImport.Scripts.FieldScript.ConvertSecuritySettings,XC.Project.DataImport"
       ],
-      "ReferenceItemsTemplate": "sitecore://master/{18CDD4CE-CDBE-4BDC-9D5A-6249F7F0EC17}?lang=en&ver=1",
-      "ReferenceItemsField": "Keyword"
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
     },
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "StartDate",
-      "TargetFields": "{A7BC051E-C49F-4BE7-82DF-5FA721D32523}",
+      "SourceFields": "Body",
+      "TargetFields": "{D74F396D-5C5E-4916-BD0A-BFD58B6B1967}",
+      "IsId": false,
+      "Id": 13,
+      "ProcessingScripts": [
+        "XC.Project.DataImport.Scripts.FieldScript.UpdateReferences, XC.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "IssueDate",
+      "TargetFields": "{0CD9CC9A-6965-4C6F-BB58-80D88101C485}",
       "IsId": false,
       "Id": 14,
       "ProcessingScripts": [],
@@ -190,8 +192,8 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "EndDate",
-      "TargetFields": "{5221994A-69C8-4339-9E15-19B52D68A2BC}",
+      "SourceFields": "LinkOfDigitalEdition",
+      "TargetFields": "{E2FE2B5F-14AE-4709-AC94-7B2D2DE50F7A}",
       "IsId": false,
       "Id": 15,
       "ProcessingScripts": [],
@@ -201,56 +203,43 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "ExpiryDate",
-      "TargetFields": "{7EAD6FD6-6CF1-4ACA-AC6B-B200E7BAFE88}",
+      "SourceFields": "ThumbNailImage_ObjectID",
+      "TargetFields": "{9492E0BB-9DF9-46E7-8188-EC795C4ADE44}",
       "IsId": false,
       "Id": 16,
       "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "sitecore://master/{C97BA923-8009-4858-BDD5-D8BE5FCCECF7}?lang=en&ver=1",
+      "ReferenceItemsField": "Origin Object Id"
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "IssueName",
+      "TargetFields": "{436EAD77-0E49-4F9B-8CBF-4F1EA2192EBC}",
+      "IsId": false,
+      "Id": 17,
+      "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
     },
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "EventType",
-      "TargetFields": "{41B592EE-3434-41AC-BBCA-1146A7F97B4E}",
-      "IsId": false,
-      "Id": 17,
-      "ProcessingScripts": [
-        "XC.Project.DataImport.Scripts.FieldScript.ConvertNullValueToNullString,XC.Project.DataImport"
-      ],
-      "ReferenceItemsTemplate": "sitecore://master/{5EECF4A9-2D1F-44D1-AE33-0B7EE1230055}?lang=en&ver=1",
-      "ReferenceItemsField": "Value"
-    },
-    {
-      "Exclude": false,
-      "Overwrite": true,
-      "SourceFields": "InPerson",
-      "TargetFields": "{592C633E-4A58-48E2-93B4-E7DEADD85ADF}",
+      "SourceFields": "IssueArrivalDate",
+      "TargetFields": "{9C9FAC20-70E8-4245-822E-B0130CF2DCCB}",
       "IsId": false,
       "Id": 18,
       "ProcessingScripts": [],
-      "ReferenceItemsTemplate": "sitecore://master/{5EECF4A9-2D1F-44D1-AE33-0B7EE1230055}?lang=en&ver=1",
-      "ReferenceItemsField": "Value"
-    },
-    {
-      "Exclude": false,
-      "Overwrite": true,
-      "SourceFields": "Location",
-      "TargetFields": "{61FE8FCD-78CE-42FB-BB2F-8020BD3466C4}",
-      "IsId": false,
-      "Id": 19,
-      "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
     },
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "Topic",
-      "TargetFields": "{CFC229AE-664B-4589-87C8-79036C35E233}",
+      "SourceFields": "IssueMailDate",
+      "TargetFields": "{A2744D79-EE7E-4675-A01B-FA68FAD6A99E}",
       "IsId": false,
-      "Id": 20,
+      "Id": 19,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
@@ -261,7 +250,7 @@
       "SourceFields": "Path",
       "TargetFields": "{C413111F-377F-4A8F-BD89-8C37639FFC2A}",
       "IsId": false,
-      "Id": 21,
+      "Id": 20,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
@@ -269,13 +258,13 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "Searchable",
-      "TargetFields": "{8D5C486E-A0E3-4DBE-9A4A-CDFF93594BDA}",
+      "SourceFields": "NextIssue_ObjectID",
+      "TargetFields": "{ECA3BD62-CF48-4E95-B587-097844780A9E}",
       "IsId": false,
-      "Id": 22,
+      "Id": 21,
       "ProcessingScripts": [],
-      "ReferenceItemsTemplate": "sitecore://master/{5EECF4A9-2D1F-44D1-AE33-0B7EE1230055}?lang=en&ver=1",
-      "ReferenceItemsField": "Value"
+      "ReferenceItemsTemplate": "sitecore://master/{57DF0609-4D1F-4BAD-8D50-CD5C1303E2C7}?lang=en&ver=1",
+      "ReferenceItemsField": "Origin Object Id"
     },
     {
       "Exclude": false,
@@ -283,7 +272,7 @@
       "SourceFields": "Title",
       "TargetFields": "{CA0479CE-0BFE-4522-83DE-BA688B380A78}",
       "IsId": false,
-      "Id": 23,
+      "Id": 22,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
@@ -294,7 +283,7 @@
       "SourceFields": "Title",
       "TargetFields": "{1F5B8FC6-7441-478A-9426-A247D0D06971}",
       "IsId": false,
-      "Id": 24,
+      "Id": 23,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
       "ReferenceItemsField": null
@@ -302,18 +291,18 @@
   ],
   "IncrementalUpdate": false,
   "IncrementalUpdateSourceColumn": "",
-  "Name": "Events",
+  "Name": "Magazines - Update References",
   "Databases": {
     "Source": "car",
     "Target": "master"
   },
   "Paths": {
     "Source": null,
-    "Target": "/sitecore/content/Data Import/CAR/Events"
+    "Target": "/sitecore/content/Data Import/CAR/Update References"
   },
   "FullPaths": {
     "Source": null,
-    "Target": "{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{1B86E247-1DEA-4865-968D-ADFBBD872B24}/{A5192D31-2E2E-4E69-B911-B5DC7DBE0D7F}/{2289B528-B02F-49D7-9FC9-52CE2A5AB005}"
+    "Target": "{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{1B86E247-1DEA-4865-968D-ADFBBD872B24}/{A5192D31-2E2E-4E69-B911-B5DC7DBE0D7F}/{4114DA9B-CB69-449D-8AC1-1B0AB5E099C5}"
   },
   "PostImportScripts": []
 }
