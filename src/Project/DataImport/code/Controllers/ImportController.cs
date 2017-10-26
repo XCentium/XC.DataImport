@@ -993,5 +993,74 @@ namespace XC.Project.DataImport.Controllers
             }
             return Content("success");
         }
+
+        /// <summary>
+        /// Iterates thru media items and converts items that contain media items into Media Folder items and removes non-media items
+        /// </summary>
+        /// <param name="rootId">Id of the item to start with</param>
+        /// <returns></returns>
+        public ActionResult HygineMediaItems(string rootId)
+        {
+            var MediaFolderTemplateID = new ID("{FE5DD826-48C6-436D-B87A-7C4210C7413B}");
+            
+            Response.Buffer = true;
+            if (string.IsNullOrEmpty(rootId))
+            {
+                return Content("rootId is not valid");
+            }
+            var database = Factory.GetDatabase("master");
+            if (database == null)
+            {
+                return Content("master database was not found");
+            }
+            var rootItem = database.GetItem(rootId);
+            if (rootItem == null)
+            {
+                return Content("root item was not found");
+            }
+            try
+            {
+                var query = string.Format("fast:/{0}//*", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath));
+                var items = database.SelectItems(query);
+
+                if (items != null && items.Any())
+                {
+                    using (new SecurityDisabler())
+                    {
+                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId)) && i.IsDerived(Templates.ImportedItem.ID)))
+                        {
+                            Response.Write($"<h4>Hygine media item: {item.Paths.FullPath} </h4>");
+                            Response.Flush();
+
+                            if (item.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId)))
+                            {
+                                Response.Write($"<div>Deleteing {item.TemplateName} item </div>");
+                                Response.Flush();
+
+                                item.Delete();
+                            }
+                            else if (item.HasChildren && !item.IsDerived(MediaFolderTemplateID))
+                            {
+                                Response.Write($"<div>Converting {item.TemplateName} to Media Folder item </div>");
+                                Response.Flush();
+
+                                var mediaFolderTemplate = database.GetTemplate(MediaFolderTemplateID);
+                                item.ChangeTemplate(mediaFolderTemplate);
+                            }
+                            else
+                            {
+                                Response.Write($"<div>No action </div>");
+                                Response.Flush();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.StackTrace);
+            }
+            return Content("success");
+        }
     }
 }
