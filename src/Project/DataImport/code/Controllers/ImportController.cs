@@ -921,7 +921,7 @@ namespace XC.Project.DataImport.Controllers
         /// <param name="rootId">id of the location containing items with correct id</param>
         /// <param name="targetRootId">id of the location contain items with incorrect id</param>
         /// <returns></returns>
-        public ActionResult UpdateReferencesIssue(string rootId, string targetRootId)
+        public ActionResult ReplaceItems(string rootId, string targetRootId)
         {
             Response.Buffer = true;
             if (string.IsNullOrEmpty(rootId))
