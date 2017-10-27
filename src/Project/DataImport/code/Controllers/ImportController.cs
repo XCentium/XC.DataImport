@@ -1001,6 +1001,9 @@ namespace XC.Project.DataImport.Controllers
         /// <returns></returns>
         public ActionResult HygineMediaItems(string rootId)
         {
+            var ArticleTempalteID = new ID("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
+            var SectionTempalteID = new ID("{8EE208F9-A6A6-41E2-88A0-C188737A178C}");
+            var CommonFolderTemplateID = new ID("{599EB405-B7C8-4D3E-A838-03FF3D7DB155}");
             var MediaFolderTemplateID = new ID("{FE5DD826-48C6-436D-B87A-7C4210C7413B}");
             
             Response.Buffer = true;
@@ -1027,19 +1030,22 @@ namespace XC.Project.DataImport.Controllers
                 {
                     using (new SecurityDisabler())
                     {
-                        foreach (var item in items.Where(i => !i.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId)) && i.IsDerived(Templates.ImportedItem.ID)))
+                        foreach (var item in items.Where(i => i.IsDerived(Templates.ImportedItem.ID)))
                         {
                             Response.Write($"<h4>Hygine media item: {item.Paths.FullPath} </h4>");
                             Response.Flush();
 
-                            if (item.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId)))
+                            if (item.IsDerived(ID.Parse(ImportHelper.MediaReferenceTemplateId)) ||
+                                item.IsDerived(ArticleTempalteID))
                             {
                                 Response.Write($"<div>Deleteing {item.TemplateName} item </div>");
                                 Response.Flush();
 
                                 item.Delete();
                             }
-                            else if (item.HasChildren && !item.IsDerived(MediaFolderTemplateID))
+                            else if ((item.HasChildren && !item.IsDerived(MediaFolderTemplateID)) || 
+                                item.IsDerived(CommonFolderTemplateID) ||
+                                item.IsDerived(SectionTempalteID))
                             {
                                 Response.Write($"<div>Converting {item.TemplateName} to Media Folder item </div>");
                                 Response.Flush();
