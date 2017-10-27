@@ -1001,9 +1001,9 @@ namespace XC.Project.DataImport.Controllers
         /// <returns></returns>
         public ActionResult HygineMediaItems(string rootId)
         {
-            var ArticleTempalteID = new ID("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
+            var ArticleTempalteID = new ID("{94A8C8E9-690B-4E65-98E7-F95800222767}");
             var SectionTempalteID = new ID("{8EE208F9-A6A6-41E2-88A0-C188737A178C}");
-            var CommonFolderTemplateID = new ID("{599EB405-B7C8-4D3E-A838-03FF3D7DB155}");
+            var CommonFolderTemplateID = new ID("{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}");
             var MediaFolderTemplateID = new ID("{FE5DD826-48C6-436D-B87A-7C4210C7413B}");
             
             Response.Buffer = true;
