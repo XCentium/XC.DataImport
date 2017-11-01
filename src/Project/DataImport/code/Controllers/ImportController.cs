@@ -1068,5 +1068,56 @@ namespace XC.Project.DataImport.Controllers
             }
             return Content("success");
         }
+
+        public ActionResult RevertTemplatesToBeforeImport(string rootId)
+        {
+            Response.Buffer = true;
+            if (string.IsNullOrEmpty(rootId))
+            {
+                return Content("rootId is not valid");
+            }
+            var database = Factory.GetDatabase("master");
+            if (database == null)
+            {
+                return Content("master database was not found");
+            }
+            var rootItem = database.GetItem(rootId);
+            if (rootItem == null)
+            {
+                return Content("root item was not found");
+            }
+            try
+            {
+                var query = string.Format("fast:/{0}//*", FastQueryUtility.EscapeDashes(rootItem.Paths.FullPath));
+                var items = database.SelectItems(query);
+
+                if (items != null && items.Any())
+                {
+                    using (new SecurityDisabler())
+                    {
+                        foreach (var item in items.Where(i => i.IsDerived(Templates.ImportedItem.ID)))
+                        {
+                            Response.Write($"<h4>Evaluating item: {item.Paths.FullPath} </h4>");
+                            Response.Flush();
+
+                            var templates = item.Template.BaseTemplates;
+                            var preImportTemplate = templates.FirstOrDefault(t => t.Name == item.TemplateName);
+                            if (preImportTemplate != null)
+                            {
+                                Response.Write($"<div>Changing {item.Template.FullName} to {preImportTemplate.FullName}</div>");
+                                Response.Flush();
+
+                                item.ChangeTemplate(preImportTemplate);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.StackTrace);
+            }
+            return Content("success");
+        }
     }
 }
