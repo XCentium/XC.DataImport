@@ -152,7 +152,6 @@ namespace XC.DataImport.Repositories.Repositories
                 var template = ItemUri.Parse(_mapping.Templates.Target);
                 var templateId = new TemplateID(template.ItemID);
 
-                using (new ProxyDisabler(true))
                 using (new ItemFilteringDisabler())
                 {
                     var existingItem = parentItem.Database.GetItem(item.ID);

@@ -61,7 +61,6 @@ namespace XC.DataImport.Repositories.Repositories
             }
             try
             {
-                using (new ProxyDisabler(true))
                 using (new ItemFilteringDisabler())
                 {
                     var idFieldFromMapping = _mapping.FieldMapping.FirstOrDefault(f => f.IsId);
