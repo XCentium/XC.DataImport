@@ -1,0 +1,24 @@
+﻿---
+ID: "8dcd479f-4260-4b5e-8fb7-e71dad0701a3"
+Parent: "dc720f5f-bb74-48b0-aaed-2234aa4a6232"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Project/Data Import/Media/Unversioned/File
+DB: master
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: applications/32x32/document_text.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Type: tree list
+  Value: |
+    {962B53C4-F93B-4DF9-9821-415C867B8903}
+    {DFBD9FA6-D6DD-4181-BB9C-BB6890F6F457}
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171008T175104Z

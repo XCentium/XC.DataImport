@@ -1,0 +1,24 @@
+﻿---
+ID: "062a2608-68eb-4cd0-95f8-dcab789fa331"
+Parent: "dc720f5f-bb74-48b0-aaed-2234aa4a6232"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Project/Data Import/Media/Unversioned/Flash
+DB: master
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Applications/32x32/flash.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Type: tree list
+  Value: |
+    {9867C0B9-A7BE-4D96-AD7E-4AD18109ED20}
+    {DFBD9FA6-D6DD-4181-BB9C-BB6890F6F457}
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171008T174915Z

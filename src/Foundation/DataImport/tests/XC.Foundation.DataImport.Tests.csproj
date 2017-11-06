@@ -63,7 +63,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
@@ -83,39 +83,35 @@
     </Reference>
     <Reference Include="Sitecore.Analytics, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Analytics.NoReferences.8.2.161221\lib\NET452\Sitecore.Analytics.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.FakeDb, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.FakeDb.1.3.5\lib\net45\Sitecore.FakeDb.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.FakeDb.AutoFixture, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.FakeDb.AutoFixture.1.3.5\lib\net45\Sitecore.FakeDb.AutoFixture.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.FakeDb.NSubstitute, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.FakeDb.NSubstitute.1.3.5\lib\net45\Sitecore.FakeDb.NSubstitute.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Sitecore.Foundation.Testing">
-      <HintPath>..\..\..\..\lib\Sitecore\Sitecore.Foundation.Testing.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.8.2.161221\lib\NET452\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Logging.NoReferences.8.2.161221\lib\NET452\Sitecore.Logging.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Mvc.NoReferences.8.2.161221\lib\NET452\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Nexus, Version=1.0.4425.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Nexus.NoReferences.8.2.161221\lib\NET452\Sitecore.Nexus.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -178,6 +174,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Testing\code\Sitecore.Foundation.Testing.csproj">
+      <Project>{7cc3d72b-4518-4b78-be48-630a263c0f5b}</Project>
+      <Name>Sitecore.Foundation.Testing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

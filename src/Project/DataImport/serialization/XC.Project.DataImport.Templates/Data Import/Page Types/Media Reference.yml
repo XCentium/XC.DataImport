@@ -1,0 +1,24 @@
+﻿---
+ID: "b4288721-e29c-40a9-bee9-d475b91eadfd"
+Parent: "5d746139-2e61-4e37-8ac6-4fda2e62f599"
+Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
+Path: /sitecore/templates/Project/Data Import/Page Types/Media Reference
+DB: master
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: People/32x32/carabiner.png
+- ID: "12c33f3f-86c5-43a5-aeb4-5598cec45116"
+  Hint: __Base template
+  Type: tree list
+  Value: |
+    {170EDED0-DB36-4FC8-98F8-EFF1D6CC65F5}
+    {DFBD9FA6-D6DD-4181-BB9C-BB6890F6F457}
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171008T174013Z

@@ -33,7 +33,7 @@ namespace XC.Project.DataImport.Scripts.FieldScript
                 {
                     foreach(var role in sourceSecurityRoles)
                     {
-                        convertedRoles.AppendFormat(accessPattern, role);
+                        convertedRoles.AppendFormat(accessPattern, role.TrimStart());
                     }
                 }
                 args.Result = convertedRoles.ToString();

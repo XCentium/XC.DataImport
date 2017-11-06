@@ -236,9 +236,8 @@ _Pvt_Extensions
 **/ConnectionStrings.config
 **/Unicorn.CustomSerializationFolder.config
 !/Unicorn/
-Web/Neb.Mvc/App_Config/Include/Unicorn/Unicorn.DataProvider.config
-*.xcore
-*.sitecore
-/packages
-/Web/Neb.Mvc/images
-/Core/Neb.SitecoreExtensions
+packages/
+lib/license.xml
+gulp-config.js
+publishsettings.targets
+zzz.*.DevSettings.config

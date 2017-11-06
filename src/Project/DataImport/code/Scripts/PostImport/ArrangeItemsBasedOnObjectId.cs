@@ -22,7 +22,7 @@ namespace XC.Project.DataImport.Scripts.PostImport
             {
                 foreach (var item in args.MigratedItems)
                 {
-                    var parentId = item[Templates.ImportedItem.Fields.OriginParentObjectId];
+                    var parentId = item[Templates.ImportedItem.Fields.OriginParentObject_FieldName];
                     if (!string.IsNullOrEmpty(parentId))
                     {
                         var parent = GetParentItem(parentId);
@@ -47,7 +47,7 @@ namespace XC.Project.DataImport.Scripts.PostImport
 
         private Item GetParentItem(string parentId)
         {
-            var query = string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginObjectId), parentId);
+            var query = string.Format("fast://sitecore//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(Templates.ImportedItem.Fields.OriginObject_FieldName), parentId);
             var db = Factory.GetDatabase("master");
             if (db == null)
                 return null;

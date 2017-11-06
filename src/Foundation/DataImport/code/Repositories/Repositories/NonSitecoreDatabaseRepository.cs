@@ -523,6 +523,10 @@ namespace XC.DataImport.Repositories.Repositories
                             {
                                 ProcessReferenceField(row, item, statusMethod, statusFilepath, field, targetField);
                             }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("droplist") && !string.IsNullOrEmpty(field.ReferenceItemsTemplate) && !string.IsNullOrWhiteSpace(field.ReferenceItemsField) && (string.IsNullOrWhiteSpace(item[field.TargetFields]) || field.Overwrite))
+                            {
+                                ProcessNameReferenceField(row, item, statusMethod, statusFilepath, field, targetField);
+                            }
                             else if ((item.Fields[field.TargetFields].TypeKey.Contains("tristate") || item.Fields[field.TargetFields].TypeKey.Contains("checkbox")) && (string.IsNullOrWhiteSpace(item[field.TargetFields]) || field.Overwrite))
                             {
                                 ProcessTristateCheckboxField(row, item, statusMethod, statusFilepath, field, targetField);
@@ -681,11 +685,18 @@ namespace XC.DataImport.Repositories.Repositories
                 }
                 else if (processedValue is string)
                 {
-                    var boolValue = false;
-                    fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
-                    if (bool.TryParse((string)processedValue, out boolValue))
+                    if ((string)processedValue == "0" || (string)processedValue == "1")
                     {
-                        fieldValue = boolValue ? "1" : "0";
+                        fieldValue = (string)processedValue;
+                    }
+                    else
+                    {
+                        var boolValue = false;
+                        fieldValue = item.Fields[field.TargetFields].ContainsStandardValue ? item.Fields[field.TargetFields].Value : "0";
+                        if (bool.TryParse((string)processedValue, out boolValue))
+                        {
+                            fieldValue = boolValue ? "1" : "0";
+                        }
                     }
                 }
                 if (item.Fields[field.TargetFields].Value != fieldValue)
@@ -771,6 +782,81 @@ namespace XC.DataImport.Repositories.Repositories
                     }
                     DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:red\">[FAILURE] Field \"{0}\" NOT Updated, because matching reference item was not found. ({1})</span>", targetField.DisplayName, _mapping != null ? _mapping.Name : "Unknown mapping"));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Processes the reference field.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        /// <param name="field">The field.</param>
+        /// <param name="targetField">The target field.</param>
+        private void ProcessNameReferenceField(DataRow row, Item item, Action<string, string> statusMethod, string statusFilepath, NonScFieldMapping field, Field targetField)
+        {
+            var matchingColumnValue = row[field.SourceFields] != DBNull.Value ? row[field.SourceFields].ToString() : null;
+            var processedValue = RunFieldProcessingScripts(matchingColumnValue, field.ProcessingScripts);
+            if (string.IsNullOrEmpty((string) processedValue))
+            {
+                return;
+            }
+
+            var itemField = (Field)item.Fields[field.TargetFields];
+            var startPath = itemField.Source;
+            if (string.IsNullOrEmpty(startPath))
+            {
+                var message = $" --- <span style=\"color:red\">[FAILURE] Field \"{targetField.DisplayName}\" NOT Updated, because droplist source path was not specified. ({(_mapping != null ? _mapping.Name : "Unknown mapping")})</span>";
+                if (DetailedLogging)
+                {
+                    statusMethod(message, statusFilepath);
+                }
+                DataImportLogger.Log.Info(message);
+                return;
+            }
+
+            Item matchingItem = null;
+            var referenceFieldName = ResolveFieldName(field.ReferenceItemsField);
+            if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
+            {
+                var template = ItemUri.Parse(field.ReferenceItemsTemplate);
+                matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, template.ItemID, FastQueryUtility.EscapeDashes(startPath))) ??
+                               Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), processedValue, FastQueryUtility.EscapeDashes(startPath)));
+
+                var message = $" --- <span style=\"color:blue\">[INFO][{item.ID}] Looking for field \"{referenceFieldName}\" match \"{processedValue}\" under \"{startPath}\" </span>";
+                if (DetailedLogging)
+                {
+                    statusMethod(message, statusFilepath);
+                }
+                DataImportLogger.Log.Info(message);
+            }
+
+            if (matchingItem != null && itemField != null)
+            {
+                if (itemField.Value != matchingItem.ID.ToString())
+                {
+                    using (new EditContext(item, false, true))
+                    {
+                        itemField.Value = matchingItem.Name;
+                    }
+                }
+
+                var message = $" --- <span style=\"color:green\">[SUCCESS][{item.ID}] Field \"{targetField.DisplayName}\" Updated to \"{item.Fields[field.TargetFields].Value}\" </span>";
+                if (DetailedLogging)
+                {
+                    statusMethod(message, statusFilepath);
+                }
+                DataImportLogger.Log.Info(message);
+            }
+            else
+            {
+                var message = $" --- <span style=\"color:red\">[FAILURE] Field \"{targetField.DisplayName}\" NOT Updated, because matching reference item was not found. ({(_mapping != null ? _mapping.Name : "Unknown mapping")})</span>";
+                if (DetailedLogging)
+                {
+                    statusMethod(message, statusFilepath);
+                }
+                DataImportLogger.Log.Info(message);
             }
         }
 
@@ -912,6 +998,10 @@ namespace XC.DataImport.Repositories.Repositories
                             else if ((item.Fields[field.TargetFields].TypeKey.Contains("droplink") || item.Fields[field.TargetFields].TypeKey.Contains("reference") || item.Fields[field.TargetFields].TypeKey.Contains("droptree")))
                             {
                                 ProcessReferenceField(row, item, statusMethod, statusFilepath, field, targetField);
+                            }
+                            else if (item.Fields[field.TargetFields].TypeKey.Contains("droplist") && !string.IsNullOrEmpty(field.ReferenceItemsTemplate) && !string.IsNullOrWhiteSpace(field.ReferenceItemsField))
+                            {
+                                ProcessNameReferenceField(row, item, statusMethod, statusFilepath, field, targetField);
                             }
                             else if ((item.Fields[field.TargetFields].TypeKey.Contains("tristate") || item.Fields[field.TargetFields].TypeKey.Contains("checkbox")))
                             {

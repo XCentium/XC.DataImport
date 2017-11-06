@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" ?>
+<connectionStrings xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+    <!-- 
+      Sitecore Active Directory Module require this connection to be added. 
+      The Active Directory module supports the LDAP format of the connection strings:  
+      Each string starts with the prefix LDAP:// 
+      The prefix is followed by the server name, which the component should connect to. 
+      The slash / must follow the domain name.  The last part of the connection string 
+      must contain the full path to the Active Directory container that the users and groups should be extracted from.     
+
+      *Important*
+      To avoid some exceptions and for greater stability, specify the Active Directory server name as a Fully Qualified Domain Name (FQDN) 
+      with the port number. It should look like this: ADServer.domain.name:389.  
+
+      The connection string is a path that looks like this:
+      LDAP://ADServer.domain.name:389/OU=Managers,DC=ADDomain,DC=company,DC=com 
+
+      In this example, we assume that you have an Organization Unit called Managers in your organization and you wish to make the members
+      of this unit available in Sitecore CMS. We also assume that the Active Directory server name is ADServer and that it is located in 
+      the ADDomain.company.com domain. 
+      In this case the connection string looks like this: 
+          LDAP://ADServer/OU=Managers,DC=ADDomain,DC=company,DC=com
+
+      If you want to use a sub unit, for example, Support Managers, the connection string is: 
+          LDAP://ADServer/OU=Support Managers,OU=Managers,DC=ADDomain,DC=company,DC=com
+
+      If you want to use the entire domain, specify the following connection string: 
+          LDAP://ADServer/DC=ADDomain,DC=company,DC=com
+    -->
+
+    <add name="car" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing"
+         connectionString="Data Source=la-acm-qa;Initial Catalog=cmqa;Integrated Security=False;User ID=xcentium;Password=xcentium;Connect Timeout=1" />
+
+</connectionStrings>

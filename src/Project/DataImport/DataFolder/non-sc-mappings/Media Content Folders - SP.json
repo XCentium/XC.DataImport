@@ -1,0 +1,148 @@
+{
+  "Templates": {
+    "Source": {
+      "Command": "SELECT [t_ObjectID]\n      ,[t_ParentObjectID]\n      ,[Name]\n      ,[SimpleName]\n      ,[Path]\n      ,[CreateDate]\n      ,[UpdateDate]\n      ,[BlobSize]\n      ,[BlobData]\n      ,[Extension]\n      ,[Title]\n      ,[ObjectTypeID]\n      ,[ObjectType_Description]\n      ,[Group]\n      ,[AuthorName]\n      ,[CreatedBy]\n      ,[UpdatedBy]\nFROM [cmqa].[dbo].[vw_SiteCoreMedia_SP]\nWHERE [BlobData] is null ",
+      "IsStoredProc": false
+    },
+    "Target": "sitecore://master/{8532C7AD-40D1-4AFC-83EF-49317FD75C35}?lang=en&ver=1"
+  },
+  "MergeColumnFieldMatch": {
+    "Source": "",
+    "Target": ""
+  },
+  "MergeWithExistingItems": false,
+  "FieldMapping": [
+    {
+      "Exclude": false,
+      "Overwrite": false,
+      "SourceFields": "SimpleName",
+      "TargetFields": "{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}",
+      "IsId": false,
+      "Id": 0,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "t_ParentObjectID",
+      "TargetFields": "{ED0283A9-C8D7-4B26-B4E5-D49242471226}",
+      "IsId": false,
+      "Id": 1,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": false,
+      "SourceFields": "t_ObjectID",
+      "TargetFields": "{3FAFC95D-33FC-4EEA-986C-E71254B48DA5}",
+      "IsId": true,
+      "Id": 2,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "Name",
+      "TargetFields": "{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}",
+      "IsId": false,
+      "Id": 3,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "CreatedBy",
+      "TargetFields": "{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}",
+      "IsId": false,
+      "Id": 4,
+      "ProcessingScripts": [
+        "XC.Project.DataImport.Scripts.FieldScript.PrependUserWithDomainName, XC.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "UpdatedBy",
+      "TargetFields": "{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}",
+      "IsId": false,
+      "Id": 5,
+      "ProcessingScripts": [
+        "XC.Project.DataImport.Scripts.FieldScript.PrependUserWithDomainName, XC.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "Group",
+      "TargetFields": "{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}",
+      "IsId": false,
+      "Id": 6,
+      "ProcessingScripts": [
+        "XC.Project.DataImport.Scripts.FieldScript.ConvertSecuritySettings,XC.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "Path",
+      "TargetFields": "{C413111F-377F-4A8F-BD89-8C37639FFC2A}",
+      "IsId": false,
+      "Id": 7,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "CreateDate",
+      "TargetFields": "{25BED78C-4957-4165-998A-CA1B52F67497}",
+      "IsId": false,
+      "Id": 8,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "UpdateDate",
+      "TargetFields": "{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}",
+      "IsId": false,
+      "Id": 9,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": "",
+      "ReferenceItemsField": null
+    }
+  ],
+  "IncrementalUpdate": false,
+  "IncrementalUpdateSourceColumn": "",
+  "Name": "Media Content Folders - SP",
+  "Databases": {
+    "Source": "car",
+    "Target": "master"
+  },
+  "Paths": {
+    "Source": null,
+    "Target": "/sitecore/media library/Data Import/CAR/Media Folders"
+  },
+  "FullPaths": {
+    "Source": null,
+    "Target": "{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}/{F83D561E-E56A-451E-893E-72D410595589}/{2C9AA540-F96C-454B-B6E0-3A7D538472C5}/{640D7BA3-A556-42D4-AE25-8D6A48F5B40E}"
+  },
+  "PostImportScripts": []
+}

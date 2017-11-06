@@ -308,7 +308,7 @@ namespace XC.Foundation.DataImport.Controllers
                         }
                         mappingObject.FieldMapping = processedMappings.ToArray();
                     }
-                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
                 messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
@@ -361,7 +361,7 @@ namespace XC.Foundation.DataImport.Controllers
                 {
                     var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.PostProcessingScriptsFolder), fileName);
-                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
                 messages.Add(new MessageModel { text = Messages.ScriptHasBeenSaved, type = MessageType.Notification.ToString() });
 
@@ -413,7 +413,7 @@ namespace XC.Foundation.DataImport.Controllers
                 {
                     var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.FieldProcessingScriptsFolder), fileName);
-                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
                 messages.Add(new MessageModel { text = Messages.ScriptHasBeenSaved, type = MessageType.Notification.ToString() });
 
@@ -545,7 +545,7 @@ namespace XC.Foundation.DataImport.Controllers
                 {
                     var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
                     var filePath = Path.Combine(DataImportConfigurations.BatchMappingsFolder, fileName);
-                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
                 messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
@@ -597,7 +597,7 @@ namespace XC.Foundation.DataImport.Controllers
                 {
                     var fileName = !string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name + ".json" : "unknown" + ".json";
                     var filePath = Path.Combine(DataImportConfigurations.BatchNonScMappingsFolder, fileName);
-                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject));
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
                 messages.Add(new MessageModel { text = Messages.MappingHasBeenSaved, type = MessageType.Notification.ToString() });
 
