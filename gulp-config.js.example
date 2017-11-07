@@ -1,10 +1,10 @@
 module.exports = function () {
-    var instanceRoot = "C:\\Websites\\Car";
+    var instanceRoot = "C:\\Websites\\Aha.Poc";
     var config = {
         websiteRoot: instanceRoot + "\\Website",
         sitecoreLibraries: instanceRoot + "\\Website\\bin",
         licensePath: instanceRoot + "\\Data\\license.xml",
-        solutionName: "Car",
+        solutionName: "Aha.Poc",
         buildConfiguration: "Debug",
         runCleanBuilds: false
     };

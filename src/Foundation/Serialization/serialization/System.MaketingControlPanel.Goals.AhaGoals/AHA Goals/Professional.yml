@@ -1,0 +1,42 @@
+﻿---
+ID: "2f2630c7-1af2-42ea-946a-c212812b7024"
+Parent: "04a2855c-9fda-45cd-ab88-a186f3b29efe"
+Template: "475e9026-333f-432d-a4dc-52e03b75cb6b"
+Path: /sitecore/system/Marketing Control Panel/Goals/AHA Goals/Professional
+DB: master
+SharedFields:
+- ID: "33ae0e84-74a0-437f-ab2b-859dfa96f6c9"
+  Hint: Points
+  Value: 10
+- ID: "71ebdebd-9560-48c6-a66f-e17fc018232c"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule
+        uid="{CDB48DA7-980C-4877-8CD1-BE45CA09217C}">
+        <conditions>
+          <condition
+            id="{BE334DF8-9A0F-4FF3-A6D8-C396EC713809}"
+            uid="4E031A0D7D80410E8CD8B6F988A700DB"
+            PageId="{B41E9110-945A-42CF-8EFC-64F237E2DE52}" />
+        </conditions>
+      </rule>
+    </ruleset>
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{689E2994-4656-4C58-9112-7826CB46EE69}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171006T152314Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}"
+    - ID: "ac6ba888-4213-43bd-b787-d8da2b6b881f"
+      Hint: Name
+      Value: Professional

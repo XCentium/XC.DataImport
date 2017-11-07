@@ -1,0 +1,42 @@
+﻿---
+ID: "eaf1976b-c67f-46c2-bc58-3a3bb66de2e3"
+Parent: "2441aa18-26b6-4fe3-9dc7-ef67bac71cf4"
+Template: "059cfbdf-49fc-4f14-a4e5-b63e1e1afb1e"
+Path: /sitecore/system/Settings/Analytics/Page Events/AHA Navigation Event/Professional
+DB: master
+SharedFields:
+- ID: "33ae0e84-74a0-437f-ab2b-859dfa96f6c9"
+  Hint: Points
+  Value: 10
+- ID: "71ebdebd-9560-48c6-a66f-e17fc018232c"
+  Hint: Rule
+  Type: Rules
+  Value: |
+    <ruleset>
+      <rule
+        uid="{90A753DF-4C5E-433A-ADD9-5535CD075436}">
+        <conditions>
+          <condition
+            id="{BE334DF8-9A0F-4FF3-A6D8-C396EC713809}"
+            uid="0B0A21BCAEC04226999535EB9A751BD9"
+            PageId="{B41E9110-945A-42CF-8EFC-64F237E2DE52}" />
+        </conditions>
+      </rule>
+    </ruleset>
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{689E2994-4656-4C58-9112-7826CB46EE69}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171006T162621Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}"
+    - ID: "ac6ba888-4213-43bd-b787-d8da2b6b881f"
+      Hint: Name
+      Value: Professional
