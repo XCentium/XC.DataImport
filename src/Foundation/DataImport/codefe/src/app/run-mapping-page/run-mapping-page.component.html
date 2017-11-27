@@ -1,0 +1,96 @@
+<sc-page [showNav]="isNavigationShown">
+    <div scPageHeader>
+      <sc-global-header [appName]="'APP_NAME' | translate" [(show)]="isNavigationShown">
+        <a href="#" scGlobalLogo></a>
+        <!-- AccountInformation gets accountName and accountImageUrl automatically from Sitecore context which is configured in AppModule -->
+        <sc-account-information (logout)="logoutService.logout()"></sc-account-information>
+      </sc-global-header>
+    </div>
+    <aside scPageNav>
+        <xc-main-navigation></xc-main-navigation>
+    </aside>
+    <div scPageAppHeader>
+      <sc-application-header [text]="'DASHBOARD_PAGE' | translate"></sc-application-header>
+    </div>
+    <article scPageContent>
+        <sc-action-bar >
+            <sc-action-bar-left>              
+              <h3>Import</h3>
+            </sc-action-bar-left>
+            <sc-action-bar-right>
+              <sc-back-button>Back</sc-back-button>
+              <form (ngSubmit)="runImport()" #itemForm="ngForm">
+                <a [routerLink]="['/edit-mapping']" [queryParams]="{ mappingId: mapping.Id }" scButton>{{ 'EDIT_MAPPING' | translate }}</a>
+                <button type="submit" class="btn btn-primary" [disabled]="isImportRunning" *ngIf="mapping">{{ 'RUN_IMPORT' | translate }}</button>
+              </form>
+            </sc-action-bar-right>
+          </sc-action-bar> 
+
+          <div *ngIf="messages">
+              <div class="p-3 bg-tomato-xxx-light" *ngFor="let message of messages">{{message}}</div>
+          </div>
+      <div class="p-3" *ngIf="mapping">
+        <div class="section">
+            <strong>Mapping:</strong> {{ mapping.Name }} ({{ mapping.Id}})
+        </div>
+        <p></p>
+        <sc-tab-group *ngIf="mapping">
+          <sc-tab label="Source">     
+              <div class="section">
+                <div class="label">Source Type: </div>
+                <div>{{ mapping.SourceType?.Name }} ({{ mapping.SourceType?.DataSourceType }}) </div>
+                <div class="label">File Path: </div>
+                <div>{{ mapping.Source?.FilePath }}</div>
+                <div class="label">Source Processing: </div>
+                <ol>
+                  <li *ngFor="let script of mapping.SourceProcessingScripts">{{ script }}</li>
+                </ol>
+              </div>  
+            </sc-tab>
+            <sc-tab label="Target">
+              <div  class="section">
+                  <div class="label">Database: </div><div>{{ mapping.Target?.DatabaseName }}</div>
+                  <div class="label">Template: </div><div>{{ mapping.Target?.TemplateId }}</div>
+                  <div class="label">Sitecore Path: </div><div>{{ mapping.Target?.ItemPath }}</div>
+              </div>
+            </sc-tab>              
+            <sc-tab label="Field Mappings">
+              <div class="section">
+                <table width="100%" >
+                  <thead>
+                    <th>Is Id?</th>
+                    <th>Source</th>
+                    <th>Target Field</th>
+                    <th>Overwrite</th>
+                    <th>Exclude</th>
+                    <th>Reference Item Template</th>
+                    <th>Reference Item Field</th>
+                  </thead>
+                  <tr *ngFor="let field of mapping.FieldMappings">
+                    <td>{{ field.IsId }}</td>
+                    <td>{{ field.SourceFields }}</td>
+                    <td>{{ field.TargetFields }}</td>
+                    <td>{{ field.Overwrite }}</td>
+                    <td>{{ field.Exclude }}</td>
+                    <td>{{ field.ReferenceItemsTemplate }}</td>
+                    <td>{{ field.ReferenceItemsField }}</td>
+                  </tr>
+                </table>
+              </div>
+            </sc-tab>
+            <sc-tab label="Post Import Scripts">
+              <div  class="section">
+                <ol>
+                  <li *ngFor="let script of mapping.PostImportScripts">{{ script }}</li>
+                </ol>
+              </div>
+            </sc-tab>
+          </sc-tab-group>
+      </div>
+      <div class="p-3">
+        <div id="importResult" [innerHTML]="results">                   
+        </div>
+      </div>
+    </article>
+  </sc-page>
+  

@@ -1,0 +1,42 @@
+<sc-page [showNav]="isNavigationShown">
+    <div scPageHeader>
+      <sc-global-header [appName]="'APP_NAME' | translate" [(show)]="isNavigationShown">
+        <a href="#" scGlobalLogo></a>
+        <!-- AccountInformation gets accountName and accountImageUrl automatically from Sitecore context which is configured in AppModule -->
+        <sc-account-information (logout)="logoutService.logout()"></sc-account-information>
+      </sc-global-header>
+    </div>
+    <aside scPageNav>
+        <xc-main-navigation></xc-main-navigation>
+    </aside>
+    <div scPageAppHeader>
+      <sc-application-header [text]="'EXISTING_MAPPINGS_PAGE' | translate"></sc-application-header>
+    </div>
+    <article scPageContent>
+      <table scTable>
+        <thead scSort (sortChange)="onSortChange($event)" sortBehavior="multi">
+          <tr>
+            <th scSortHeader="Name">Name</th>
+            <th scSortHeader="LastRun">LastRun</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of mappings">
+            <td>{{ data.Name }}</td>
+            <td>{{ data.LastRun }}</td>
+            <td>
+              <a [routerLink]="['/edit-mapping']" [queryParams]="{ mappingId: data.Id }" scButton>{{ 'EDIT_MAPPING' | translate }}</a> |
+              <a [routerLink]="['/run-mapping']" [queryParams]="{ mappingId: data.Id }" scButton>{{ 'RUN_MAPPING' | translate }}</a> |
+              <input type="button" scButton value="{{ 'DELETE_MAPPING' | translate }}" (click)="openDeleteDialog(data)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      
+    </article>
+  </sc-page>
+
+  <xc-delete-mapping-dialog id="deleteDialog" name="deleteDialog" xcModal></xc-delete-mapping-dialog>
+  

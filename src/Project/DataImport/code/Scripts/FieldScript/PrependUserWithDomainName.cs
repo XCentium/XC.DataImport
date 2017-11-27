@@ -25,11 +25,11 @@ namespace XC.Project.DataImport.Scripts.FieldScript
 
             if (!string.IsNullOrEmpty((string)args.SourceValue))
             {
-                args.Result = "car\\" + ((string)args.SourceValue).Replace(" ", "").ToLowerInvariant();
+                args.SourceValue = "aha\\" + ((string)args.SourceValue).Replace(" ", "").ToLowerInvariant();
             }
             else
             {
-                args.Result = "sitecore\\dataimport";
+                args.SourceValue = "sitecore\\dataimport";
             }
 
             DataImportLogger.Log.Info("#################Field Processing PrependUserWithDomainName ended ##################");

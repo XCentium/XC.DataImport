@@ -1,0 +1,37 @@
+module.exports = {
+    'GET /sitecore/api/ssc/dataimport/mappings/-/getsourcetypes': function (req, res) {
+      res.json(
+        {"data":[
+          {
+            "Name":"FolderDataSource",
+            "ModelType":"XC.Foundation.DataImport.Models.DataSources.FolderDataSourceModel",
+            "DataSourceType":"XC.Foundation.DataImport.Repositories.DataSources.FolderDataSource"
+          },
+          {
+            "Name":"FileDataSource",
+            "ModelType":"XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel",
+            "DataSourceType":"XC.Foundation.DataImport.Repositories.DataSources.FileDataSource"
+          },
+          {
+            "Name":"SitecoreQueryDataSource",
+            "ModelType":"XC.Foundation.DataImport.Models.DataSources.SitecoreQueryDataSourceModel",
+            "DataSourceType":"XC.Foundation.DataImport.Repositories.DataSources.SitecoreQueryDataSource"
+          },
+          {
+            "Name":"SitecoreDataSource",
+            "ModelType":"XC.Foundation.DataImport.Models.DataSources.SitecoreDataSourceModel",
+            "DataSourceType":"XC.Foundation.DataImport.Repositories.DataSources.SitecoreDataSource"
+          },
+          {
+            "Name":"SqlDataSource",
+            "ModelType":"XC.Foundation.DataImport.Models.DataSources.SqlDataSourceModel",
+            "DataSourceType":"System.Web.UI.WebControls.SqlDataSource"
+          },
+          {
+            "Name":"WebDataSource",
+            "ModelType":"XC.Foundation.DataImport.Models.DataSources.WebDataSourceModel",
+            "DataSourceType":"XC.Foundation.DataImport.Repositories.DataSources.WebDataSource"
+          }
+        ],"messages":[]});
+  }
+}

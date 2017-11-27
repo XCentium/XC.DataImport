@@ -16,7 +16,7 @@ namespace XC.Project.DataImport.Scripts.FieldScript
 
             if (args.SourceValue == null || string.IsNullOrEmpty((string)args.SourceValue))
             {
-                args.Result = "NULL";
+                args.SourceValue = "NULL";
             }
 
             DataImportLogger.Log.Info("#################Field Processing ConvertYesToValue ended ##################");

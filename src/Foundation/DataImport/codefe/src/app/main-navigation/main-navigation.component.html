@@ -1,0 +1,6 @@
+<sc-menu scMenu>
+    <sc-menu-category text="Mappings" open="true">
+        <sc-menu-item scMenuItem><a routerLink="" class="navlink">{{ 'EXISTING_MAPPINGS' | translate }}</a></sc-menu-item>
+        <sc-menu-item scMenuItem><a routerLink="/edit-mapping" [queryParams]="{ mappingId: '-' }" class="navlink">{{ 'CREATE_MAPPING' | translate }}</a></sc-menu-item>
+    </sc-menu-category>   
+</sc-menu>

@@ -1,0 +1,23 @@
+{
+  "Name": "Test",
+  "Id": "30ac56b8-1b0f-4db4-bd58-4f85ff9f3dd7",
+  "SourceType": {
+    "Name": "FileDataSource",
+    "ModelType": null,
+    "DataSourceType": null
+  },
+  "Source": {
+    "FilePath": "C:\\Users\\Julia.Gavrilova\\Downloads\\xcentium-samplefiles\\xcentium-testfiles\\XCentium-TestFiles-17-nov-10_11.57.39_295_01-17314115739-1.xml"
+  },
+  "SourceProcessingScripts": [],
+  "PostImportScripts": [],
+  "Target": {
+    "DatabaseName": "master",
+    "ItemPath": "/sitecore/content/data import/articles",
+    "TemplateId": "sitecore://master/{AD386352-ACAF-42CF-9DFC-0EB3700BAAA8}?lang=en&ver=1",
+    "FullPath": null
+  },
+  "FieldMappings": [],
+  "MergeWithExistingItems": false,
+  "MergeColumnFieldMatch": null
+}

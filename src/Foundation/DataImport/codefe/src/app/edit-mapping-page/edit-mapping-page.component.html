@@ -1,0 +1,64 @@
+<sc-page [showNav]="isNavigationShown">
+    <div scPageHeader>
+      <sc-global-header [appName]="'APP_NAME' | translate" [(show)]="isNavigationShown">
+        <a href="#" scGlobalLogo></a>
+        <!-- AccountInformation gets accountName and accountImageUrl automatically from Sitecore context which is configured in AppModule -->
+        <sc-account-information (logout)="logoutService.logout()"></sc-account-information>
+      </sc-global-header>
+    </div>
+    <aside scPageNav>
+      <xc-main-navigation></xc-main-navigation>
+    </aside>
+    <div scPageAppHeader>
+      <sc-application-header [text]="'EDIT_MAPPING_PAGE' | translate"></sc-application-header>
+    </div>
+
+    <article scPageContent>
+        <div>
+            <form (ngSubmit)="saveMapping()" #itemForm="ngForm">
+              <sc-action-bar >
+                <sc-action-bar-left><h3>Edit/Create Mapping</h3>
+                </sc-action-bar-left>
+                <sc-action-bar-right>
+                  <sc-back-button>Back</sc-back-button>
+                  <a [routerLink]="['/run-mapping']" [queryParams]="{ mappingId: mapping.Id }" scButton>{{ 'RUN_MAPPING' | translate }}</a>
+                  <button type="submit" class="btn btn-primary" [disabled]="!itemForm.form.valid" *ngIf="mapping">{{ 'SAVE_CHANGES' | translate }}</button>                  
+                </sc-action-bar-right>
+              </sc-action-bar>  
+              <div *ngIf="messages">
+                <div class="p-3 bg-tomato-xxx-light" *ngFor="let message of messages">{{message}}</div>
+              </div> 
+            <!-- Anti-CSRF -->
+            <div class="p-3"  *ngIf="mapping">
+              <div class="form-group section ">
+                <label for="name">{{ 'MAPPING_NAME' | translate }}</label>
+                <input type="text" class="form-control" id="name" [(ngModel)]="mapping.Name" name="name">
+                <input type="hidden" class="form-control" id="mappingId" [(ngModel)]="mapping.Id" name="mappingId">
+              </div>
+              <sc-tab-group scTabGroup id="mappingTabs">
+                <sc-tab scTab label="Source">     
+                  <xc-datasources [mapping]="mapping"></xc-datasources>
+                  <xc-processing-scripts  [scriptProperty]="mapping.SourceProcessingScripts" [title]="'SOURCE_PROCESSING_SCRIPTS' | translate"></xc-processing-scripts>                     
+                </sc-tab>
+                <sc-tab scTab label="Target">
+                  <xc-target-system [mapping]="mapping"></xc-target-system>
+                </sc-tab>              
+                <sc-tab scTab label="Field Mappings">
+                  <div scEditableTable [mapping]="mapping"></div>
+                </sc-tab>
+                <sc-tab scTab label="Post Import Scripts">
+                  <xc-processing-scripts [scriptProperty]="mapping.PostImportScripts" [title]="'POST_IMPORT_PROCESSING_SCRIPTS' | translate"></xc-processing-scripts>  
+                </sc-tab>
+              </sc-tab-group> 
+                
+
+              
+              <div class="p-3 bg-tomato-xxx-light" *ngIf="!mapping">
+                  Something went wrong: The item to edit is not defined. Try to fetch the item again.
+              </div>
+            </div>
+          </form>
+        </div>
+      </article>
+  </sc-page>
+  

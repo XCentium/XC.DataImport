@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "run-mapping-page.component.scss"
+    ],
+    "names": [],
+    "file": "run-mapping-page.component.css"
+}

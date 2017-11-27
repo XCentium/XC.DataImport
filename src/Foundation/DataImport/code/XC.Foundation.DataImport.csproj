@@ -23,6 +23,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +49,6 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -139,6 +139,9 @@
       <HintPath>..\..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.171002\lib\NET462\Sitecore.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Services.Client, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Client.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Services.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Services.Core.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Core.dll</HintPath>
       <Private>True</Private>
@@ -147,6 +150,9 @@
       <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Services.Infrastructure.Sitecore, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.Sitecore.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Speak.Client, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Speak.Client.NoReferences.9.0.171002\lib\NET462\Sitecore.Speak.Client.dll</HintPath>
       <Private>True</Private>
@@ -154,6 +160,9 @@
     <Reference Include="Sitecore.Speak.Components, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Speak.Components.NoReferences.9.0.171002\lib\NET462\Sitecore.Speak.Components.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Sitecore.Web, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.Web.NoReferences.9.0.171002\lib\NET462\Sitecore.Web.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Zip, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Zip.9.0.171002\lib\NET462\Sitecore.Zip.dll</HintPath>
@@ -225,6 +234,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Xc.DataImport\xc.DataImport.Controller" />
     <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config" />
@@ -269,79 +279,69 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
-    <Compile Include="Controllers\BatchImportProcessingController.cs" />
-    <Compile Include="Controllers\BatchNonScImportProcessingController.cs" />
-    <Compile Include="Controllers\DataImportController.cs" />
+    <Compile Include="Attributes\DataSourceNameAttribute.cs" />
     <Compile Include="Controllers\BaseImportController.cs" />
-    <Compile Include="Controllers\ScImportProcessingController.cs" />
-    <Compile Include="Controllers\NonScImportProcessingController.cs" />
+    <Compile Include="Controllers\ImportConfigurationController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Disablers\ItemFilteringDisabler.cs" />
     <Compile Include="ConfigSettings.cs" />
+    <Compile Include="Models\DatabaseEntity.cs" />
+    <Compile Include="Models\DataSources\DataSourceModel.cs" />
+    <Compile Include="Models\DataSources\FolderDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\FileDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\IDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\SitecoreQueryDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\SitecoreDataSourceModel.cs" />
+    <Compile Include="Models\Entities\SourceType.cs" />
+    <Compile Include="Models\DataSources\TargetDataSourceModel.cs" />
+    <Compile Include="Models\MappingInfo.cs" />
+    <Compile Include="Models\MessageModel.cs" />
+    <Compile Include="Models\ScFieldMapping.cs" />
+    <Compile Include="Models\ScriptReference.cs" />
+    <Compile Include="Models\SourceTargetPair.cs" />
+    <Compile Include="Models\TemplateEntity.cs" />
+    <Compile Include="Models\TemplateFieldEntity.cs" />
+    <Compile Include="Models\Tree\TreeNode.cs" />
+    <Compile Include="Pipelines\SourceProcesssing\ProcessingPipelineArgs.cs" />
+    <Compile Include="Pipelines\SourceProcesssing\RunSourceProcessingScripts.cs" />
+    <Compile Include="Repositories\DataSources\FileDataSource.cs" />
+    <Compile Include="Repositories\DataSources\FolderDataSource.cs" />
+    <Compile Include="Repositories\DataSources\IDataSource.cs" />
+    <Compile Include="Repositories\DataSources\SitecoreDataSource.cs" />
+    <Compile Include="Repositories\DataSources\SitecoreQueryDataSource.cs" />
+    <Compile Include="Repositories\DataSources\SqlDataSource.cs" />
+    <Compile Include="Repositories\DataSources\WebDataSource.cs" />
+    <Compile Include="Repositories\Migration\ImportManager.cs" />
+    <Compile Include="Repositories\Repositories\SitecoreRepository.cs" />
+    <Compile Include="Utilities\IOExtensions.cs" />
+    <Compile Include="Utilities\SourceTypeHelper.cs" />
+    <Compile Include="Models\DataSources\SqlDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\WebDataSourceModel.cs" />
     <Compile Include="Labels.cs" />
     <Compile Include="MappingPages.cs" />
     <Compile Include="Messages.cs" />
-    <Compile Include="Models\ScriptInfo.cs" />
-    <Compile Include="Models\ScriptReference.cs" />
+    <Compile Include="Models\Mappings\ImportMappingModel.cs" />
     <Compile Include="Pipelines\FieldProcessing\FieldProcessingPipelineArgs.cs" />
     <Compile Include="Pipelines\FieldProcessing\RunFieldProcessingScripts.cs" />
     <Compile Include="Pipelines\PostProcessing\ProcessingPipelineArgs.cs" />
     <Compile Include="Pipelines\PostProcessing\RunPostProcessingScripts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Cache\ItemCacheDependency.cs" />
     <Compile Include="Configurations\DataImportConfigurations.cs" />
     <Compile Include="Diagnostics\DataImportLogger.cs" />
     <Compile Include="Repositories\FileSystem\FileSystemRepository.cs" />
     <Compile Include="Repositories\FileSystem\IFileSystemRepository.cs" />
     <Compile Include="Repositories\History\HistoryLogging.cs" />
-    <Compile Include="Repositories\HtmlExtensions.cs" />
-    <Compile Include="Repositories\Migration\BatchNonSitecoreImportManager.cs" />
-    <Compile Include="Repositories\Migration\BatchNonSitecoreImportManagerGrouped.cs" />
-    <Compile Include="Repositories\Migration\BatchSitecoreImportManager.cs" />
-    <Compile Include="Repositories\Migration\IBatchSitecoreImportManager.cs" />
-    <Compile Include="Repositories\Migration\INonSitecoreImportManager.cs" />
-    <Compile Include="Repositories\Migration\ISitecoreImportManager.cs" />
-    <Compile Include="Repositories\Migration\ISitecoreImportManagerBase.cs" />
-    <Compile Include="Repositories\Migration\NonSitecoreImportManager.cs" />
-    <Compile Include="Repositories\Migration\NonSitecoreImportManagerGrouped.cs" />
-    <Compile Include="Repositories\Migration\SitecoreImportManager.cs" />
-    <Compile Include="Models\BaseMappingModel.cs" />
-    <Compile Include="Models\BatchMappingInfo.cs" />
-    <Compile Include="Models\BatchMappingModel.cs" />
-    <Compile Include="Models\DatabaseEntity.cs" />
-    <Compile Include="Models\FieldGridRenderingModel.cs" />
-    <Compile Include="Models\ScFieldMapping.cs" />
-    <Compile Include="Models\IBatchMappingModel.cs" />
-    <Compile Include="Models\IMapping.cs" />
-    <Compile Include="Models\IMappingModel.cs" />
-    <Compile Include="Models\INonSitecoreMappingModel.cs" />
-    <Compile Include="Models\MappingInfo.cs" />
-    <Compile Include="Models\MappingModel.cs" />
-    <Compile Include="Models\MessageModel.cs" />
-    <Compile Include="Models\NonScFieldMapping.cs" />
-    <Compile Include="Models\NonSitecoreCommand.cs" />
-    <Compile Include="Models\NonSitecoreMappingModel.cs" />
-    <Compile Include="Models\NonSitecoreSourceTargetPair.cs" />
-    <Compile Include="Models\SourceTargetPair.cs" />
-    <Compile Include="Models\TemplateEntity.cs" />
-    <Compile Include="Models\TemplateFieldEntity.cs" />
-    <Compile Include="Models\XcDataSourceRenderingModel.cs" />
-    <Compile Include="Models\XcImportDataSourceRenderingModel.cs" />
-    <Compile Include="Models\XcItemTreeViewRenderingModel.cs" />
-    <Compile Include="Repositories\Repositories\IMigrationRepository.cs" />
-    <Compile Include="Repositories\Repositories\INonSitecoreDatabaseRepository.cs" />
-    <Compile Include="Repositories\Repositories\ISitecoreDatabaseRepository.cs" />
-    <Compile Include="Repositories\Repositories\NonSitecoreDatabaseRepository.cs" />
-    <Compile Include="Repositories\Repositories\NonSitecoreDatabaseRepositoryGrouped.cs" />
-    <Compile Include="Repositories\Repositories\SitecoreDatabaseRepository.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="UI\Controls\ScriptListControl.cs" />
     <Compile Include="UI\Controls\FieldListControl.cs" />
     <Compile Include="UI\Controls\SelectableListControl.cs" />
     <Compile Include="Utilities\FastQueryUtility.cs" />
     <Compile Include="Utilities\ItemExtensions.cs" />
+    <Compile Include="Utilities\StringExtentions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Import\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

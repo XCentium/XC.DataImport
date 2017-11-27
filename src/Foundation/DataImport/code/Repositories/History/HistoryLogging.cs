@@ -8,6 +8,10 @@ using System.Web;
 using XC.Foundation.DataImport.Configurations;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Models;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using System.Collections.Generic;
+using XC.Foundation.DataImport.Models.Mappings;
 
 namespace XC.DataImport.Repositories.History
 {
@@ -133,6 +137,31 @@ namespace XC.DataImport.Repositories.History
                 DataImportLogger.Log.Error(ex.Message, ex);
             }
         }
+
+        internal static void ItemMigrated(Dictionary<ID, object> values, Item existingItem, DateTime importStartDate, string mappingName)
+        {
+            try
+            {
+                var mappingFolderName = EnsureMappingFolder(mappingName);
+                if (!string.IsNullOrEmpty(mappingFolderName))
+                {
+                    var fileName = importStartDate.ToString("yyyy-dd-M--HH-mm-ss") + ".xcimport";
+                    var currentImportFilePath = Path.Combine(mappingFolderName, fileName);
+                    if (File.Exists(currentImportFilePath))
+                    {
+                        using (var file = File.AppendText(currentImportFilePath))
+                        {
+                            file.WriteLine(string.Format("Target Item: {0};", existingItem.Paths.Path));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+            }
+        }
+
         /// <summary>
         /// Ensures the mapping folder.
         /// </summary>
@@ -150,61 +179,61 @@ namespace XC.DataImport.Repositories.History
         }
 
 
-        /// <summary>
-        /// Gets the latest run date string.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns></returns>
-        public static string SitecoreGetLatestRunDateString(string path)
-        {
-            try
-            {
-                if (File.Exists(path))
-                {
-                    var mappingContent = File.ReadAllText(path);
-                    var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ScMappingModel));
+        ///// <summary>
+        ///// Gets the latest run date string.
+        ///// </summary>
+        ///// <param name="path">The path.</param>
+        ///// <returns></returns>
+        //public static string SitecoreGetLatestRunDateString(string path)
+        //{
+        //    try
+        //    {
+        //        if (File.Exists(path))
+        //        {
+        //            var mappingContent = File.ReadAllText(path);
+        //            var mappingObject = (ScMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ScMappingModel));
 
-                    if (mappingObject != null)
-                    {
-                        var mappingPath = Path.Combine(DataImportConfigurations.HistoryFolder, mappingObject.Name);
-                        var directory = new DirectoryInfo(mappingPath);
-                        if (directory != null)
-                        {
-                            var latestFile = directory.GetFiles()
-                                 .OrderByDescending(f => f.LastWriteTime)
-                                 .First();
-                            if (latestFile != null)
-                            {
-                                return latestFile.LastWriteTime.ToString();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                DataImportLogger.Log.Error(ex.Message, ex);
-            }
-            return string.Empty;
-        }
+        //            if (mappingObject != null)
+        //            {
+        //                var mappingPath = Path.Combine(DataImportConfigurations.HistoryFolder, mappingObject.Name);
+        //                var directory = new DirectoryInfo(mappingPath);
+        //                if (directory != null)
+        //                {
+        //                    var latestFile = directory.GetFiles()
+        //                         .OrderByDescending(f => f.LastWriteTime)
+        //                         .First();
+        //                    if (latestFile != null)
+        //                    {
+        //                        return latestFile.LastWriteTime.ToString();
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        DataImportLogger.Log.Error(ex.Message, ex);
+        //    }
+        //    return string.Empty;
+        //}
 
         /// <summary>
         /// Nons the sitecore get latest run date string.
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
-        public static string NonSitecoreGetLatestRunDateString(string path)
+        public static string GetLatestRunDateString(string path)
         {
             try
             {
                 if (File.Exists(path))
                 {
                     var mappingContent = File.ReadAllText(path);
-                    var mappingObject = (NonSitecoreMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(NonSitecoreMappingModel));
+                    var mappingObject = (ImportMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ImportMappingModel));
 
                     if (mappingObject != null)
                     {
-                        var mappingPath = Path.Combine(DataImportConfigurations.HistoryFolder, "nonsitecore-" + mappingObject.Name);
+                        var mappingPath = Path.Combine(DataImportConfigurations.HistoryFolder, "mapping-" + mappingObject.Name);
                         if (Directory.Exists(mappingPath))
                         {
                             var directory = new DirectoryInfo(mappingPath);
@@ -231,43 +260,43 @@ namespace XC.DataImport.Repositories.History
             return string.Empty;
         }
 
-        /// <summary>
-        /// Nons the sitecore get latest run date string.
-        /// </summary>
-        /// <param name="_mapping">The _mapping.</param>
-        /// <returns></returns>
-        internal static string NonSitecoreGetLatestRunDateString(INonSitecoreMappingModel _mapping)
-        {
-            if (_mapping == null)
-            {
-                return DateTime.MinValue.ToString();
-            }
-            try
-            {
-                var mappingHistoryPath = Path.Combine(DataImportConfigurations.HistoryFolder, "nonsitecore-" + _mapping.Name);
-                if (Directory.Exists(mappingHistoryPath))
-                {
-                    var directory = new DirectoryInfo(mappingHistoryPath);
-                    var latestFile = directory.GetFiles()
-                         .OrderByDescending(f => f.LastWriteTime)
-                         .First();
-                    if (latestFile != null)
-                    {
-                        return latestFile.LastWriteTime.ToString();
-                    }
-                }
-                else
-                {
-                    return DateTime.MinValue.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                DataImportLogger.Log.Error(ex.Message, ex);
-            }
-            return string.Empty;
-        }
-        
+        ///// <summary>
+        ///// Nons the sitecore get latest run date string.
+        ///// </summary>
+        ///// <param name="_mapping">The _mapping.</param>
+        ///// <returns></returns>
+        //internal static string NonSitecoreGetLatestRunDateString(INonSitecoreMappingModel _mapping)
+        //{
+        //    if (_mapping == null)
+        //    {
+        //        return DateTime.MinValue.ToString();
+        //    }
+        //    try
+        //    {
+        //        var mappingHistoryPath = Path.Combine(DataImportConfigurations.HistoryFolder,  HistoryLogging.GetMappingFileName(_mapping.Id.ToString()));
+        //        if (Directory.Exists(mappingHistoryPath))
+        //        {
+        //            var directory = new DirectoryInfo(mappingHistoryPath);
+        //            var latestFile = directory.GetFiles()
+        //                 .OrderByDescending(f => f.LastWriteTime)
+        //                 .First();
+        //            if (latestFile != null)
+        //            {
+        //                return latestFile.LastWriteTime.ToString();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return DateTime.MinValue.ToString();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        DataImportLogger.Log.Error(ex.Message, ex);
+        //    }
+        //    return string.Empty;
+        //}
+
         /// <summary>
         /// Gets the status file path.
         /// </summary>
@@ -286,7 +315,24 @@ namespace XC.DataImport.Repositories.History
                 {
                     Directory.CreateDirectory(statusPath);
                 }
-                var filePath = Path.Combine(statusPath, "nonsitecore-" + FileUtil.GetFileName(mapping) + ".html");
+                return Path.Combine(statusPath, GetMappingFileName(mapping) + ".html");
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+            }
+            return string.Empty;
+        }
+
+        public static string RefreshStatusFilePath(string mapping)
+        {
+            if (mapping == null)
+            {
+                return string.Empty;
+            }
+            try
+            {
+                var filePath = GetStatusFilePath(mapping);
                 if (File.Exists(filePath))
                 {
                     File.Delete(filePath);
@@ -298,6 +344,11 @@ namespace XC.DataImport.Repositories.History
                 DataImportLogger.Log.Error(ex.Message, ex);
             }
             return string.Empty;
+        }
+
+        public static string GetMappingFileName(string id)
+        {
+            return "mapping-" + FileUtil.GetFileName(id);
         }
 
         /// <summary>

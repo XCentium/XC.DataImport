@@ -1,0 +1,14 @@
+<ng-template #modalTemplate>
+  <sc-dialog-window >
+      <sc-dialog id="scriptModal" name="scriptModal">
+          <sc-dialog-header>Field Scripts</sc-dialog-header>
+          <sc-dialog-body>
+            <xc-processing-scripts  [scriptProperty]="scripts" [title]="'FIELD_PROCESSING_SCRIPTS' | translate"></xc-processing-scripts>
+          </sc-dialog-body>
+          <sc-dialog-footer>
+            <input type="button" value="OK" scButton  class="btn-primary" (click)="onClick($event.target)" />
+            <input type="button" value="Cancel" scButton scDialogClose />
+          </sc-dialog-footer>
+      </sc-dialog>     
+  </sc-dialog-window>
+</ng-template>

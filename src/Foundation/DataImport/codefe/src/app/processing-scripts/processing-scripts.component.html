@@ -1,0 +1,25 @@
+<div class="section">
+  <div class="form-group ">
+    <div class="form-group">
+      <h5 for="sourceProcessingScripts">{{ title | translate }}</h5>
+      <table scTable>
+        <tr *ngFor="let scr of scriptProperty">
+          <td  (dblclick)="editRow($event.target)" class="script-definition">
+            {{scr}}
+            <input type="text" class="form-control" name="src" value="{{scr}}" hidden (clickOutside)="saveRow($event.target)"  />
+          </td>
+          <td align="right"><input class="form-control" type="button" scButton value="{{ 'REMOVE' | translate }}" (click)="removeRow(scr)" /></td>
+        </tr>
+        <tr *ngIf="sourceScriptAdditionVisible">
+            <td colspan="2">
+              <label for="newSourceScript">{{ 'SCRIPT_TYPE' | translate }}</label>
+              <input type="text" class="form-control" id="newSourceScript" />
+              <input type="button" scButton value="{{ 'ADD_SCRIPT' | translate }}" (click)="addScript($event.target)" />
+            </td>
+        </tr>
+        <tr *ngIf="!sourceScriptAdditionVisible">
+          <td colspan="2"><input type="button" scButton value="{{ 'ADD_NEW_SCRIPT' | translate }}" scButton (click)="showScriptAddition($event.target,'this.sourceScriptAdditionVisible')" /></td>
+        </tr>
+      </table>
+  </div>
+</div>

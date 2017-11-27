@@ -1,10 +1,10 @@
 {
-    "name": "CAR",
+    "name": "Xc.DataImport",
     "version": "1.0.0",
     "description": "Sitecore Corporation Node Dependencies",
     "main": "gulpfile.js",
     "dependencies": {
-        "async": "^2.5.0",
+        "async": "^2.6.0",
         "glob": "^7.1.2",
         "gulp": "^3.9.0",
         "gulp-autoprefixer": "^4.0.0",
@@ -12,7 +12,7 @@
         "gulp-exec": "^2.1.2",
         "gulp-foreach": "^0.1.0",
         "gulp-load-plugins": "^1.0.0",
-        "gulp-msbuild": "^0.5.1",
+        "gulp-msbuild": "^0.5.4",
         "gulp-newer": "^1.0.0",
         "gulp-rename": "^1.2.2",
         "gulp-rimraf": "^0.2.0",
@@ -21,7 +21,7 @@
         "gulp-watch": "^4.3.5",
         "merge-stream": "^1.0.0",
         "rimraf": "^2.4.3",
-        "run-sequence": "^2.0.0",
+        "run-sequence": "^2.2.0",
         "vinyl": "^2.1.0",
         "xml2js": "^0.4.16",
         "xmlpoke": "^0.1.12",
@@ -35,12 +35,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/carealtors/xc-car.git"
+        "url": "git+https://github.com/xcentium/xc.dataimport"
     },
-    "author": "XCentium and CAR",
+    "author": "XCentium and Xc.DataImport",
     "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Sitecore/Habitat/issues"
-  },
-    "homepage": "https://github.com/xcentium/aha.poc#readme"
+    "bugs": {
+        "url": "https://github.com/xcentium/xc.dataimport"
+    },
+    "homepage": "https://github.com/xcentium/xc.dataimport#readme"
 }

@@ -1,0 +1,27 @@
+<div class="section" *ngIf="mapping">
+    <div class="form-group">                    
+        <div class="form-group">
+          <label for="targetDatabase">{{ 'DATABASE_NAME' | translate }}</label>
+          <select class="form-control" id="targetDatabase" [(ngModel)]="mapping.Target.DatabaseName" name="targetDatabase" (change)="loadTemplates()">
+              <option scDropdownItem *ngFor="let Database of databases" [ngValue]="Database.ConnectionString" >{{Database.Name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="targetTemplate">{{ 'TEMPLATE_NAME' | translate }}</label>
+            <select class="form-control" id="targetTemplate" [(ngModel)]="mapping.Target.TemplateId" name="targetTemplate">
+                <option scDropdownItem *ngFor="let Template of targetTemplates" [ngValue]="Template.Id" >{{Template.Name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="targetItemPath">{{ 'SITECORE_PATH' | translate }}</label>
+            <!--<tree-root [nodes]="sitecoreTree" [options]="sitecoreTreeOptions" [(state)]="sitecoreTreeState">
+                <ng-template #treeNodeTemplate let-node let-index="index">
+                    <span><img width="16" src="{{node.data.mediaUrl}}" class="tree-icon" />{{ node.data.name }}</span>
+                </ng-template>
+            </tree-root>-->
+            <div>
+            <input  class="form-control" type="text" [(ngModel)]="mapping.Target.ItemPath" />
+            </div>
+        </div>
+    </div>
+</div>

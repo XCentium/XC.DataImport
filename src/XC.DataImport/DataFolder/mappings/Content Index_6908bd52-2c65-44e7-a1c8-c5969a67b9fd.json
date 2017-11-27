@@ -1,0 +1,59 @@
+{
+  "Name": "Content Index",
+  "Id": "6908bd52-2c65-44e7-a1c8-c5969a67b9fd",
+  "SourceType": {
+    "Name": "FileDataSource",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource"
+  },
+  "Source": {
+    "FilePath": "C:\\Users\\Julia.Gavrilova\\Downloads\\xcentium-samplefiles\\stiecore_contentindex\\17-nov-08_15.17.16_529_01\\1\\vault\\contentindex\\@wcm\\@hcm\\852857.xml"
+  },
+  "SourceProcessingScripts": [
+    "Aha.Project.DataImport.Scripts.Source.WebReferenceXmlParsing, Aha.Project.DataImport"
+  ],
+  "PostImportScripts": [],
+  "Target": {
+    "DatabaseName": "master",
+    "ItemPath": "/sitecore/content/Data Import/Encyclopedia",
+    "TemplateId": "sitecore://master/{9BE78108-898C-4C66-8A9C-F71DD6181E50}?lang=en&ver=1",
+    "FullPath": null
+  },
+  "FieldMappings": [
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "term",
+      "TargetFields": "{10AF29F4-F512-4AD2-A194-556A8AE3853D}",
+      "IsId": true,
+      "Id": 0,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "definition",
+      "TargetFields": "{F4C9A206-CCB3-4413-BD0F-E679F331F536}",
+      "IsId": false,
+      "Id": 1,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "relatedItems",
+      "TargetFields": "{D4844CC9-9782-447D-91FC-73B3103DEBE2}",
+      "IsId": false,
+      "Id": 2,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    }
+  ],
+  "MergeWithExistingItems": false,
+  "MergeColumnFieldMatch": null
+}

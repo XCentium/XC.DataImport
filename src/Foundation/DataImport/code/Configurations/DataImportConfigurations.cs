@@ -80,6 +80,19 @@ namespace XC.Foundation.DataImport.Configurations
             }
         }
 
+        public static string MappingFolder
+        {
+            get
+            {
+                var path = Path.Combine(GetFolderPath, "mappings");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
+
         /// <summary>
         /// Gets the post processing scripts folder.
         /// </summary>

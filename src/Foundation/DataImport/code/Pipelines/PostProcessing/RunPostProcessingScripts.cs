@@ -14,8 +14,6 @@ namespace XC.Foundation.DataImport.Pipelines.PostProcessing
     {
         /// <summary>The processor list cache.</summary>
         private readonly Hashtable processorListCache = new Hashtable();
-        /// <summary>The _use caching.</summary>
-        private bool useCaching = true;
 
         public void Process(ProcessingPipelineArgs args)
         {

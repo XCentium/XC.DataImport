@@ -1,0 +1,54 @@
+<table scTable>
+  <tr>
+    <th scSortHeader width="5%">Is Id?</th>
+    <th scSortHeader width="20%">Source Field</th>
+    <th scSortHeader width="50%">Target Field</th>
+    <th scSortHeader width="15%">Field Scripts</th>
+    <th scSortHeader width="10%" ></th>
+  </tr>
+  <tr class="bottomBorder" *ngFor="let Field of mapping.FieldMappings">
+    <td colspan="5" class="no-padding">
+      <table width="100%">
+        <tr>
+            <td width="5%"><input type="checkbox" id="isId" name="isId" [(ngModel)]="Field.IsId" /></td>
+            <td width="20%"><input class="form-control" type="text" [(ngModel)]="Field.SourceFields" id="name" name="name" /></td>
+            <td width="50%">
+                <select class="form-control" class="form-control" id="targetField" [(ngModel)]="Field.TargetFields" name="targetField">
+                    <option scDropdownItem *ngFor="let Field of targetFields" [ngValue]="Field.Id" >{{Field.Name}}</option>
+                </select>
+            </td>
+            <td width="15%">
+                <input type="checkbox" id="hasFieldScripts" name="hasFieldScripts" [checked]="isFieldScriptsChecked(Field)" disabled />
+                <input type="button" scButton value="Scripts" (click)="openScriptList('fieldScripts',Field)"/>
+            </td>
+            <td width="10%">
+                <div><input type="checkbox" id="overwrite" [(ngModel)]="Field.Overwrite" name="overwrite" /> Overwrite</div>
+                <div *ngIf="isSitecoreDatasource()"><input type="checkbox"  id="exclude" [(ngModel)]="Field.Exclude" name="exclude" /> Exclude</div>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="button" scButton value="delete" (click)="deleteMapping(Field)" /></td>
+            <td colspan="6">
+              <div class="left">
+                Reference Item Template:
+                <select class="form-control" id="targetReferenceTemplate" [(ngModel)]="Field.ReferenceItemsTemplate" name="targetReferenceTemplate" (change)="onTemplateChange($event.target)">
+                    <option scDropdownItem *ngFor="let Template of targetTemplates" [value]="Template.Id" >{{Template.Name}}</option>
+                </select>
+              </div>
+              <div class="left">
+                Reference Item Field:
+                <select class="form-control" id="targetReferenceField" [(ngModel)]="Field.ReferenceItemsField" name="targetReferenceField">
+                    <option scDropdownItem *ngFor="let targetField of getFields(Field.ReferenceItemsTemplate)" [value]="targetField.Name" >{{targetField.Name}}</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+      </table>
+    </td>   
+  </tr>
+</table>
+<input type="button" scButton value="Add Field Mapping" (click)="showAddFieldMapping()"/>
+
+<xc-script-editing-dialog id="fieldScripts" name="fieldScripts" xcModal></xc-script-editing-dialog>
+
+

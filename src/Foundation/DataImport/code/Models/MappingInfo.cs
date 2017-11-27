@@ -8,16 +8,12 @@ namespace XC.Foundation.DataImport.Models
 {
     public class MappingInfo
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Path { get; set; }
-        public string RunLabel { get; set; }
-        public string EditLabel { get; set; }
-        public string RunLink { get; set; }
-        public string EditLink { get; set; }
+        public string Path { get; set; }        
         public string LastRun { get; set; }
         public string NumberOfItemsProcessed { get; set; }
         public string FileName { get; set; }
-        public string DeleteLink { get; set; }
-        public string DeleteLabel { get; set; }
+
     }
 }

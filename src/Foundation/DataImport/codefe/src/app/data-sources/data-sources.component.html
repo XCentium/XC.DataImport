@@ -1,0 +1,80 @@
+<div class="section" *ngIf="mapping">
+<div class="form-group">
+    <h5 for="sourcetype">{{ 'SOURCE_TYPE' | translate }}</h5>
+    <select scDropdown class="form-control" id="sourcetype" [(ngModel)]="mapping.SourceType.Name" name="sourcetype" (change)="showSource($event.target)">
+        <option class="dropdown-item" *ngFor="let SourceType of sourceTypes" scDropdownItem [ngValue]="SourceType.Name">{{SourceType.Name}}</option>                        
+    </select>
+  </div>
+
+  <div class="form-group ">
+    <div *ngIf="mapping.SourceType.Name==='FileDataSource'">
+        <h5>{{ 'FILE_DATA_SOURCE' | translate }}</h5>
+        <div class="form-group">
+          <label for="filePath">{{ 'FILE_PATH' | translate }}</label>
+          <input type="text"  class="form-control" id="filePath" name="filePath" [(ngModel)]="mapping.Source.FilePath" />
+        </div>
+    </div>
+
+    <div *ngIf="mapping.SourceType.Name==='SitecoreDataSource'">
+        <h4>{{ 'SITECORE_DATA_SOURCE' | translate }}</h4>
+        <div class="form-group">
+          <label for="database">{{ 'DATABASE_NAME' | translate }}</label>
+          <select class="form-control" id="database" [(ngModel)]="mapping.Source['DatabaseName']" name="database">
+              <option scDropdownItem *ngFor="let Database of databases" [ngValue]="Database.ConnectionString" >{{Database.Name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="template">{{ 'TEMPLATE_NAME' | translate }}</label>
+            <select class="form-control" id="template" [(ngModel)]="mapping.Source['Template']" name="template">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="path">{{ 'SITECORE_PATH' | translate }}</label>
+            <select class="form-control" id="path" [(ngModel)]="mapping.Source['Path']" name="path"></select>
+        </div>
+    </div>
+
+    <div *ngIf="mapping.SourceType.Name==='SitecoreQueryDataSource'">
+        <h4>{{ 'SITECORE_QUERY_DATA_SOURCE' | translate }}</h4>
+        <div class="form-group">
+          <label for="database">{{ 'DATABASE_NAME' | translate }}</label>
+          <select class="form-control" id="database" [(ngModel)]="mapping.Source['DatabaseName']" name="database">
+              <option scDropdownItem *ngFor="let Database of databases" [ngValue]="Database.ConnectionString" >{{Database.Name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="template">{{ 'TEMPLATE_NAME' | translate }}</label>
+            <select class="form-control" id="template" [(ngModel)]="mapping.Source['Template']" name="template">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="path">{{ 'SITECORE_PATH' | translate }}</label>
+            <select class="form-control" id="path" [(ngModel)]="mapping.Source['Path']" name="path"></select>
+        </div>
+        <div class="form-group">
+            <label for="query">{{ 'SITECORE_QUERY' | translate }}</label>
+            <textarea class="form-control" id="query" rows="7" [(ngModel)]="mapping.Source['Query']" name="query"></textarea>
+        </div>
+    </div>
+
+    <div *ngIf="mapping.SourceType.Name==='SqlDataSource'">
+        <h4>{{ 'SQL_DATA SOURCE' | translate }}</h4>
+        <div class="form-group">
+          <label for="connectionString">{{ 'CONNECTION_STRING' | translate }}</label>
+          <textarea class="form-control" id="connectionString" rows="2" [(ngModel)]="mapping.Source['ConnectionString']" name="connectionString"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="query">{{ 'SQL_QUERY' | translate }}</label>
+            <textarea class="form-control" id="query" rows="7" [(ngModel)]="mapping.Source['Query']" name="query"></textarea>
+        </div>
+    </div>
+
+    <div *ngIf="mapping.SourceType.Name==='FolderDataSource'">
+        FolderDataSource
+    </div>
+
+    <div *ngIf="mapping.SourceType.Name==='WebDataSource'">
+        WebDataSource
+    </div>
+  </div>
+</div>

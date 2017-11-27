@@ -1,9 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using Sitecore.Services.Infrastructure.Web.Http;
+using System.Web.Mvc;
 using XC.Foundation.DataImport.Diagnostics;
 
 namespace XC.Foundation.DataImport.Controllers
 {
-    public abstract class BaseImportController : Controller
+    public abstract class BaseImportController : ServicesApiController
     {
         /// <summary>
         /// Writes the status.

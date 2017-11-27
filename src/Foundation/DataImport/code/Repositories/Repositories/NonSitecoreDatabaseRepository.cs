@@ -1155,7 +1155,7 @@ namespace XC.DataImport.Repositories.Repositories
         {
             var pipelineArgs = new FieldProcessingPipelineArgs(value, processingScript, Database);
             CorePipeline.Run("xc.dataimport.fieldprocessing", pipelineArgs);
-            return pipelineArgs.Result;
+            return pipelineArgs.SourceValue;
         }
 
         /// <summary>

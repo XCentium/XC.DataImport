@@ -36,7 +36,7 @@ namespace XC.Project.DataImport.Scripts.FieldScript
                         convertedRoles.AppendFormat(accessPattern, role.TrimStart());
                     }
                 }
-                args.Result = convertedRoles.ToString();
+                args.SourceValue = convertedRoles.ToString();
             }
 
             DataImportLogger.Log.Info("#################Field Processing ConvertSecuritySettings ended ##################");
