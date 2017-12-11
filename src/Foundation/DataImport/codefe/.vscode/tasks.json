@@ -12,6 +12,14 @@
             "type": "npm",
             "script": "start:disconnected",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

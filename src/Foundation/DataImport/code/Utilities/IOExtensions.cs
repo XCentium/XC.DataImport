@@ -32,5 +32,15 @@ namespace XC.Foundation.DataImport.Utilities
             }
             return string.Empty;
         }
+
+        public static string FindFile(string rootFolder, string uid, string pattern)
+        {
+            if (Directory.Exists(rootFolder))
+            {
+                var files = Directory.GetFiles(rootFolder, pattern, SearchOption.AllDirectories);
+                return files.Any(f => f.Contains(uid)) ? Path.Combine(rootFolder, files.FirstOrDefault(f => f.Contains(uid))) : string.Empty ;
+            }
+            return string.Empty;
+        }
     }
 }

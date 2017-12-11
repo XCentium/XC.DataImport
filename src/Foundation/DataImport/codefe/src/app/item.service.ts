@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
-  
+    
+
 
 @Injectable()
 export class ItemService {
@@ -37,6 +38,15 @@ export class ItemService {
     }
     return this.http.get("/sitecore/api/ssc/dataimport/mappings/"+database+"/getsitecoretree?itemId=" + id);
   }
+  fetchSitecoreTreeOptions(baseurl,id){
+    if(!id){
+      return this.http.get(baseurl);
+    }
+    return this.http.get(baseurl+"?itemId=" + id);
+  }
+  fetchChildNodes(database,id){
+    return this.http.get("/sitecore/api/ssc/dataimport/mappings/"+database+"/getsitecoretreechildnodes?itemId=" + id);
+  }
   fetchFields(database,id){
     return this.http.get("/sitecore/api/ssc/dataimport/mappings/"+database+"/getfields?fieldId=" + id);
   }
@@ -54,5 +64,8 @@ export class ItemService {
   }
   startImport(id: any): any {
     return this.http.get("/sitecore/api/ssc/dataimport/run/"+id+"/startimport");
+  }
+  fetchSourceOptions(url: string): any {
+    return this.http.get(url);
   }
 }

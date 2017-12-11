@@ -22,3 +22,4 @@ ng test
 npm run-script postbuild 
 npm run-script start:disconnected
 
+copyfiles -f dist/* "C:\inetpub\wwwroot\sxa.sc\sitecore\shell\client\Applications\XcMigrationTool"

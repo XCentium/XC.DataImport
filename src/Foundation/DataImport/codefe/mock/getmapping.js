@@ -19,8 +19,8 @@ module.exports = {
         "Target": { 
         "DatabaseName": "master",
         "TemplateId": "sitecore://master/{AD386352-ACAF-42CF-9DFC-0EB3700BAAA8}?lang=en&ver=0",
-        "ItemPath": "/sitecore/content/Data Import/Articles",
-        "FullPath": "{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{1B86E247-1DEA-4865-968D-ADFBBD872B24}/{537A9C8D-5F03-4AA9-A756-4D1759A3AFCF}"},
+        "ItemPath": "/sitecore/content/Data Import/News",
+        "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{1B86E247-1DEA-4865-968D-ADFBBD872B24}/{90002DEA-EE90-4313-91EB-6460A80DF553}"},
         "FieldMappings": [
           {"ReferenceItemsTemplate":"","ReferenceItemsField":"","Exclude":false,"Overwrite":true,"SourceFields":"dDocTitle","TargetFields":"{DFCC317E-E90C-4FEA-A8E3-0304E0A3986F}","IsId":false,"ProcessingScripts":[]},
         {"ReferenceItemsTemplate":"","ReferenceItemsField":"","Exclude":false,"Overwrite":true,"SourceFields":"contentID","TargetFields":"{3FAFC95D-33FC-4EEA-986C-E71254B48DA5}","IsId":true,"ProcessingScripts":[]},

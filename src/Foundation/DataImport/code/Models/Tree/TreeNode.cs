@@ -17,5 +17,8 @@ namespace XC.Foundation.DataImport.Models.Tree
         public bool showCheckbox { get; set; }
         public string longId { get; set; }
         public string path { get; set; }
+        public bool isRoot { get; set; }
+        public bool isActive { get; set; }
+        public bool isFocused { get; set; }
     }
 }

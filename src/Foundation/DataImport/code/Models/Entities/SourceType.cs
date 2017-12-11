@@ -10,5 +10,6 @@ namespace XC.Foundation.DataImport.Models.Entities
         public string Name { get; set; }
         public string ModelType { get; set; }
         public string DataSourceType { get; set; }
+        public List<SourceTypeField> Fields { get; set; }
     }
 }

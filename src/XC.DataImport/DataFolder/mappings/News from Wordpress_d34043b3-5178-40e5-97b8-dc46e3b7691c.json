@@ -1,0 +1,138 @@
+{
+  "Name": "News from Wordpress",
+  "Id": "d34043b3-5178-40e5-97b8-dc46e3b7691c",
+  "SourceType": {
+    "Name": "FileDataSource",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource"
+  },
+  "Source": {
+    "FilePath": "C:\\Users\\Julia.Gavrilova\\Downloads\\AHA\\newsonheartorg.wordpress.2017-11-29.xml"
+  },
+  "SourceProcessingScripts": [
+    "Aha.Project.DataImport.Scripts.Source.XmlWordPress,Aha.Project.DataImport"
+  ],
+  "PostImportScripts": [],
+  "Target": {
+    "DatabaseName": "master",
+    "ItemPath": "/sitecore/content/Data Import/News",
+    "TemplateId": "sitecore://master/{437533E2-EAE2-4D2E-A975-35E1FCDD8BE2}?lang=en&ver=1",
+    "FullPath": null
+  },
+  "FieldMappings": [
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "wp:post_name",
+      "TargetFields": "{E931C58B-DFBB-4208-A62E-7316B202BB0C}",
+      "IsId": false,
+      "Id": 0,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": false,
+      "SourceFields": "wp:post_id",
+      "TargetFields": "{3FAFC95D-33FC-4EEA-986C-E71254B48DA5}",
+      "IsId": true,
+      "Id": 1,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "link",
+      "TargetFields": "{C413111F-377F-4A8F-BD89-8C37639FFC2A}",
+      "IsId": false,
+      "Id": 2,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "content:encoded",
+      "TargetFields": "{59FA92E1-A188-4B60-A622-48761563E063}",
+      "IsId": false,
+      "Id": 3,
+      "ProcessingScripts": [
+        "Aha.Project.DataImport.Scripts.Fields.ImportMediaAndReplaceReferences,Aha.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "category",
+      "TargetFields": "{63409481-8150-4FF0-8471-9A4148F30336}",
+      "IsId": false,
+      "Id": 4,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "wp:post_date",
+      "TargetFields": "{25BED78C-4957-4165-998A-CA1B52F67497}",
+      "IsId": false,
+      "Id": 5,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "dc:creator",
+      "TargetFields": "{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}",
+      "IsId": false,
+      "Id": 6,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "dc:creator",
+      "TargetFields": "{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}",
+      "IsId": false,
+      "Id": 7,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "wp:post_date",
+      "TargetFields": "{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}",
+      "IsId": false,
+      "Id": 8,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "title",
+      "TargetFields": "{E931C58B-DFBB-4208-A62E-7316B202BB0C}",
+      "IsId": false,
+      "Id": 9,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    }
+  ],
+  "MergeWithExistingItems": false,
+  "MergeColumnFieldMatch": null
+}

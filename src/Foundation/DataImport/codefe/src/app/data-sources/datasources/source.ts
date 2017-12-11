@@ -1,3 +1,3 @@
 export interface Source {
-    SourceProcessingScripts:string[];
+    SourceProcessingScripts:string[];    
 }

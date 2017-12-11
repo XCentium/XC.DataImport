@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ViewChildren, QueryList, Input, Output } from '@angular/core';
 import { ScDialogService } from '@speak/ng-bcl/dialog';
 import { ItemService } from '../item.service';
 import { MappingItem } from '../existing-mappings/mapping-item';
@@ -10,10 +10,11 @@ import { DeleteModalDirective } from './modal.directive';
   styleUrls: ['./delete-mapping-dialog.component.scss']
 })
 export class DeleteMappingDialogComponent implements OnInit {
-  messages: string[];
+  @Output() messages: string[] = [];
   isErrorResponse: boolean;
   isLoading: boolean;
   @Input() mapping: MappingItem = {} as MappingItem;
+  @Output() deleted:boolean = false;
 
   @ViewChild('modalTemplate')
   templateRef: TemplateRef<any>;
@@ -34,7 +35,7 @@ export class DeleteMappingDialogComponent implements OnInit {
       this.modalService.close();
   }
   onClick(target){
-    this.modalService.close(this.mapping.Id);
+    this.deleteMapping();
   }
 
   deleteMapping() {
@@ -42,7 +43,9 @@ export class DeleteMappingDialogComponent implements OnInit {
     this.isErrorResponse = false;
     this.itemService.deleteMapping(this.mapping.Id).subscribe({
       next: data => {
-        this.messages = data["messages"];
+        this.messages = data["messages"] as string[];
+        this.deleted = true;
+        this.modalService.close(this.messages);        
       },
       error: error => {
         this.isErrorResponse = true;

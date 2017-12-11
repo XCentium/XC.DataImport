@@ -23,7 +23,7 @@ namespace XC.Foundation.DataImport.Models.Mappings
         public List<string> SourceProcessingScripts { get; set; }
         public List<string> PostImportScripts { get; set; }
 
-        public TargetDataSourceModel Target { get; set; }
+        public TargetSitecoreDataSourceModel Target { get; set; }
 
         public ScFieldMapping[] FieldMappings { get; set; }
         public bool MergeWithExistingItems { get; internal set; }

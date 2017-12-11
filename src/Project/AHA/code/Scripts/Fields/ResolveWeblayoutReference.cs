@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using XC.Foundation.DataImport.Diagnostics;
+using XC.Foundation.DataImport.Exceptions;
 using XC.Foundation.DataImport.Pipelines.FieldProcessing;
 using XC.Foundation.DataImport.Utilities;
 
@@ -70,6 +71,7 @@ namespace Aha.Project.DataImport.Scripts.Fields
             catch (Exception ex)
             {
                 DataImportLogger.Log.Info("#################Field Processing ResolveWeblayoutReference error ##################: " + ex.Message);
+                throw new FieldProcessingException(ex.Message, ex);
             }
             DataImportLogger.Log.Info("#################Field Processing ResolveWeblayoutReference ended ##################");
         }

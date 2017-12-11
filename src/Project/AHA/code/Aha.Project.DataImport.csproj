@@ -105,10 +105,13 @@
     <Compile Include="Helpers\ImportHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Fields\ConvertUrlIntoRelativePath.cs" />
+    <Compile Include="Scripts\Fields\ImportMediaAndReplaceReferences.cs" />
     <Compile Include="Scripts\Fields\RemoveFileExtension.cs" />
     <Compile Include="Scripts\Fields\RemoveLegacyMarkup.cs" />
     <Compile Include="Scripts\Fields\ResolveMediaReference.cs" />
+    <Compile Include="Scripts\Fields\RenderedHtmlReference.cs" />
     <Compile Include="Scripts\Fields\ResolveWeblayoutReference.cs" />
+    <Compile Include="Scripts\Fields\UpdateRenderedReferences.cs" />
     <Compile Include="Scripts\Fields\UpdateReferences.cs" />
     <Compile Include="Scripts\PostImport\ArrangeItemsBasedOnObjectId.cs" />
     <Compile Include="Scripts\PostImport\UpdateReferencesInHtml.cs" />
@@ -118,6 +121,7 @@
     <Compile Include="Scripts\Source\XmlFilterImageList.cs" />
     <Compile Include="Scripts\Source\XmlFilterSubHomePageList.cs" />
     <Compile Include="Scripts\Source\XmlFilterArticleList.cs" />
+    <Compile Include="Scripts\Source\XmlWordPress.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

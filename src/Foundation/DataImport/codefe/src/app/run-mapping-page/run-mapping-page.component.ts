@@ -64,6 +64,7 @@ export class RunMappingPageComponent implements OnInit,  AfterViewInit, OnDestro
 
   runImport(){
     this.isImportRunning = true;
+    this.messages = [];
     this.itemService.startImport(this.mappingId).subscribe({
       next: data => {
         this.interval = setInterval(() => {

@@ -181,6 +181,20 @@
       ],
       "ReferenceItemsTemplate": null,
       "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "contentID",
+      "TargetFields": "{B07A6D05-D5E5-440F-A9A0-C7C13CC76649}",
+      "IsId": false,
+      "Id": 14,
+      "ProcessingScripts": [
+        " Aha.Project.DataImport.Scripts.Fields.RenderedHtmlReference, Aha.Project.DataImport",
+        "Aha.Project.DataImport.Scripts.Fields.UpdateRenderedReferences,Aha.Project.DataImport"
+      ],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
     }
   ],
   "MergeWithExistingItems": false,

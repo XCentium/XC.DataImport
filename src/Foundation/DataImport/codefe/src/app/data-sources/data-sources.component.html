@@ -7,30 +7,69 @@
   </div>
 
   <div class="form-group ">
-    <div *ngIf="mapping.SourceType.Name==='FileDataSource'">
-        <h5>{{ 'FILE_DATA_SOURCE' | translate }}</h5>
-        <div class="form-group">
-          <label for="filePath">{{ 'FILE_PATH' | translate }}</label>
-          <input type="text"  class="form-control" id="filePath" name="filePath" [(ngModel)]="mapping.Source.FilePath" />
-        </div>
-    </div>
+      <div class="dataSource" *ngFor="let source of sourceTypes">
+        <div *ngIf="mapping.SourceType.Name===source.Name"><!--  -->
+            <h5>{{ source.Name | translate }}</h5>
 
+            <div *ngFor="let field of source.Fields">
+                <div *ngIf="field.InputType === 'text'">
+                    <div class="form-group">
+                        <label for="{{field.Name}}">{{ field.Name | translate }}</label>
+                        <input type="text"  class="form-control" id="{{field.Name}}" name="{{field.Name}}" [(ngModel)]="mapping.Source[field.Name]" />
+                    </div>
+                </div>
+                <div *ngIf="field.InputType === 'select'">
+                    <div class="form-group">
+                        <label for="{{field.Name}}">{{ field.Name | translate }}</label>
+                        <select class="form-control" id="{{field.Name}}" [(ngModel)]="mapping.Source[field.Name]" name="{{field.Name}}" (change)="triggerFields(field.TriggerFields)">
+                            <option scDropdownItem *ngFor="let option of optionsDic[field.OptionsSource]" [ngValue]="option.Value" >{{option.Name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf="field.InputType === 'textarea'">
+                    <div class="form-group">
+                        <label for="{{field.Name}}">{{ field.Name | translate }}</label>
+                        <textarea class="form-control" id="{{field.Name}}" rows="4" [(ngModel)]="mapping.Source[field.Name]" name="{{field.Name}}"></textarea>
+                    </div>
+                </div>
+                <div class="form-group tree-wrap" *ngIf="field.InputType === 'tree'">
+                    <label for="{{field.Name}}">{{ field.Name | translate }}</label>
+                    <tree-root [nodes]="optionsDic[field.OptionsSource]" [options]="sitecoreTreeOptions" [(state)]="sitecoreTreeState" (activate)="onActivate($event)" 
+                    #treesource (stateChange)="setState($event)">
+                        <ng-template #treeNodeTemplate let-node let-index="index">
+                            <span><img width="16" src="{{node.data.mediaUrl}}" class="tree-icon" />{{ node.data.name }}</span>
+                        </ng-template>
+                    </tree-root>
+                </div>
+            </div>
+        </div>
+      </div>
+    
+<!--
     <div *ngIf="mapping.SourceType.Name==='SitecoreDataSource'">
         <h4>{{ 'SITECORE_DATA_SOURCE' | translate }}</h4>
         <div class="form-group">
           <label for="database">{{ 'DATABASE_NAME' | translate }}</label>
-          <select class="form-control" id="database" [(ngModel)]="mapping.Source['DatabaseName']" name="database">
-              <option scDropdownItem *ngFor="let Database of databases" [ngValue]="Database.ConnectionString" >{{Database.Name}}</option>
+          <select class="form-control" id="database" [(ngModel)]="mapping.Source['DatabaseName']" name="database" (change)="fetchTemplates()">
+            <option scDropdownItem *ngFor="let Database of databases" [ngValue]="Database.ConnectionString" >{{Database.Name}}</option>
           </select>
         </div>
         <div class="form-group">
             <label for="template">{{ 'TEMPLATE_NAME' | translate }}</label>
             <select class="form-control" id="template" [(ngModel)]="mapping.Source['Template']" name="template">
+                <option scDropdownItem *ngFor="let Template of sourceTemplates" [ngValue]="Template.Id" >{{Template.Name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label for="path">{{ 'SITECORE_PATH' | translate }}</label>
-            <select class="form-control" id="path" [(ngModel)]="mapping.Source['Path']" name="path"></select>
+            <div>
+                <tree-root [nodes]="sitecoreTree" [options]="sitecoreTreeOptions" [(state)]="sitecoreTreeState" (activate)="onActivate($event)" #tree
+                    (stateChange)="setState($event)">
+                    <ng-template #treeNodeTemplate let-node let-index="index">
+                        <span><img width="16" src="{{node.data.mediaUrl}}" class="tree-icon" />{{ node.data.name }}</span>
+                    </ng-template>
+                </tree-root>
+            </div> 
         </div>
     </div>
 
@@ -38,18 +77,21 @@
         <h4>{{ 'SITECORE_QUERY_DATA_SOURCE' | translate }}</h4>
         <div class="form-group">
           <label for="database">{{ 'DATABASE_NAME' | translate }}</label>
-          <select class="form-control" id="database" [(ngModel)]="mapping.Source['DatabaseName']" name="database">
+          <select class="form-control" id="database" [(ngModel)]="mapping.Source['DatabaseName']" name="database"  (change)="fetchTemplates()">
               <option scDropdownItem *ngFor="let Database of databases" [ngValue]="Database.ConnectionString" >{{Database.Name}}</option>
           </select>
         </div>
         <div class="form-group">
             <label for="template">{{ 'TEMPLATE_NAME' | translate }}</label>
             <select class="form-control" id="template" [(ngModel)]="mapping.Source['Template']" name="template">
+            <option scDropdownItem *ngFor="let Template of sourceTemplates" [ngValue]="Template.Id" >{{Template.Name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label for="path">{{ 'SITECORE_PATH' | translate }}</label>
-            <select class="form-control" id="path" [(ngModel)]="mapping.Source['Path']" name="path"></select>
+            <div>
+                <input  class="form-control" id="path" type="text" [(ngModel)]="mapping.Source['Path']" />
+            </div>            
         </div>
         <div class="form-group">
             <label for="query">{{ 'SITECORE_QUERY' | translate }}</label>
@@ -68,13 +110,13 @@
             <textarea class="form-control" id="query" rows="7" [(ngModel)]="mapping.Source['Query']" name="query"></textarea>
         </div>
     </div>
-
-    <div *ngIf="mapping.SourceType.Name==='FolderDataSource'">
+-->
+    <!--<div *ngIf="mapping.SourceType.Name==='FolderDataSource'">
         FolderDataSource
     </div>
 
     <div *ngIf="mapping.SourceType.Name==='WebDataSource'">
         WebDataSource
-    </div>
+    </div>-->
   </div>
 </div>

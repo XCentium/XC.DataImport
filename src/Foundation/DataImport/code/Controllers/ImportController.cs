@@ -78,7 +78,14 @@ namespace XC.Foundation.DataImport.Controllers
             var statusFileName = HistoryLogging.GetStatusFilePath(id);
             if (System.IO.File.Exists(statusFileName))
             {
-                return Ok(System.IO.File.ReadAllText(statusFileName));
+                try
+                {
+                    return Ok(System.IO.File.ReadAllText(statusFileName));
+                }
+                catch
+                {
+                    return Ok(string.Empty);
+                }
             }
             return Ok(string.Empty);
         }

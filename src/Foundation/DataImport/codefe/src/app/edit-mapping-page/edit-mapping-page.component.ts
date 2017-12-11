@@ -98,6 +98,7 @@ export class EditMappingPageComponent {
   }
   
   saveMapping() {
+    this.messages = [];
     this.itemService.saveMapping(this.mapping).subscribe({
       next: data => {
         this.mapping = data["data"] as Mapping;
@@ -108,7 +109,7 @@ export class EditMappingPageComponent {
       error: error => {
         this.isErrorResponse = true;
         this.isLoading = false;
-        this.messages.push("Mapping wasn't found");
+        this.messages.push("An error occured");
       }
     });
   }

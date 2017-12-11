@@ -24,7 +24,6 @@ namespace Aha.Project.DataImport.Scripts.Fields
 
             DataImportLogger.Log.Info("#################Field Processing UpdateReferences ended ##################");
             Sitecore.Diagnostics.Log.Info("#################Field Processing UpdateReferences ended ##################", this);
-
         }
     }
 }

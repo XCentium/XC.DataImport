@@ -12,16 +12,17 @@
                 <option scDropdownItem *ngFor="let Template of targetTemplates" [ngValue]="Template.Id" >{{Template.Name}}</option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group tree-wrap">
             <label for="targetItemPath">{{ 'SITECORE_PATH' | translate }}</label>
-            <!--<tree-root [nodes]="sitecoreTree" [options]="sitecoreTreeOptions" [(state)]="sitecoreTreeState">
+            <!--<div>
+                <input  class="form-control" id="sitecoreItemPath"  name="sitecoreItemPath" type="text" [(ngModel)]="mapping.Target.ItemPath" />
+            </div>-->
+            <tree-root [nodes]="sitecoreTree" [options]="sitecoreTreeOptions" [(state)]="sitecoreTreeState" (activate)="onActivate($event)" #tree
+             (stateChange)="setState($event)">
                 <ng-template #treeNodeTemplate let-node let-index="index">
                     <span><img width="16" src="{{node.data.mediaUrl}}" class="tree-icon" />{{ node.data.name }}</span>
                 </ng-template>
-            </tree-root>-->
-            <div>
-            <input  class="form-control" type="text" [(ngModel)]="mapping.Target.ItemPath" />
-            </div>
+            </tree-root>
         </div>
     </div>
 </div>

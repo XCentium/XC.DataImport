@@ -234,7 +234,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Xc.DataImport\xc.DataImport.Controller" />
     <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config" />
@@ -279,21 +278,23 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\DataSourceNameAttribute.cs" />
+    <Compile Include="Configurations\DataImportContainer.cs" />
     <Compile Include="Controllers\BaseImportController.cs" />
     <Compile Include="Controllers\ImportConfigurationController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Disablers\ItemFilteringDisabler.cs" />
     <Compile Include="ConfigSettings.cs" />
+    <Compile Include="Exceptions\FieldProcessingException.cs" />
     <Compile Include="Models\DatabaseEntity.cs" />
     <Compile Include="Models\DataSources\DataSourceModel.cs" />
-    <Compile Include="Models\DataSources\FolderDataSourceModel.cs" />
     <Compile Include="Models\DataSources\FileDataSourceModel.cs" />
     <Compile Include="Models\DataSources\IDataSourceModel.cs" />
     <Compile Include="Models\DataSources\SitecoreQueryDataSourceModel.cs" />
     <Compile Include="Models\DataSources\SitecoreDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\TargetSitecoreFormsDataSourceModel.cs" />
     <Compile Include="Models\Entities\SourceType.cs" />
-    <Compile Include="Models\DataSources\TargetDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\TargetSitecoreDataSourceModel.cs" />
+    <Compile Include="Models\Entities\SourceTypeField.cs" />
     <Compile Include="Models\MappingInfo.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\ScFieldMapping.cs" />
@@ -305,18 +306,15 @@
     <Compile Include="Pipelines\SourceProcesssing\ProcessingPipelineArgs.cs" />
     <Compile Include="Pipelines\SourceProcesssing\RunSourceProcessingScripts.cs" />
     <Compile Include="Repositories\DataSources\FileDataSource.cs" />
-    <Compile Include="Repositories\DataSources\FolderDataSource.cs" />
     <Compile Include="Repositories\DataSources\IDataSource.cs" />
     <Compile Include="Repositories\DataSources\SitecoreDataSource.cs" />
     <Compile Include="Repositories\DataSources\SitecoreQueryDataSource.cs" />
     <Compile Include="Repositories\DataSources\SqlDataSource.cs" />
-    <Compile Include="Repositories\DataSources\WebDataSource.cs" />
     <Compile Include="Repositories\Migration\ImportManager.cs" />
     <Compile Include="Repositories\Repositories\SitecoreRepository.cs" />
     <Compile Include="Utilities\IOExtensions.cs" />
     <Compile Include="Utilities\SourceTypeHelper.cs" />
     <Compile Include="Models\DataSources\SqlDataSourceModel.cs" />
-    <Compile Include="Models\DataSources\WebDataSourceModel.cs" />
     <Compile Include="Labels.cs" />
     <Compile Include="MappingPages.cs" />
     <Compile Include="Messages.cs" />

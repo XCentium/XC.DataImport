@@ -73,12 +73,13 @@ namespace XC.Foundation.DataImport.Controllers
                 {
                     Name = "Test Mapping",
                     Id = id,
-                    SourceType = new SourceType() { Name = SourceTypeHelper.GetDatasourceName(typeof(FileDataSourceModel)), ModelType = typeof(FileDataSourceModel).FullName, DataSourceType = typeof(FileDataSource).FullName },
+                    SourceType = new SourceType() { Name = DataImportContainer.SourceProviders.GetDatasourceName(typeof(FileDataSourceModel)), ModelType = typeof(FileDataSourceModel).FullName, DataSourceType = typeof(FileDataSource).FullName },
                     Source = new FileDataSourceModel { FilePath = @"C:\Users\Julia.Gavrilova\Downloads\xcentium-samplefiles\XCentium-TestFiles-17-nov-10_11.57.39_295_01-17314115739-1.xml" },
                     SourceProcessingScripts = new List<string>() { "Aha.Project.DataImport.Scripts.Source.XmlReferenceList, Aha.Project.DataImport" },
                     PostImportScripts = new List<string>(),
                     FieldMappings = processedMappings.ToArray(),
-                    Target = new TargetDataSourceModel {
+                    Target = new TargetSitecoreDataSourceModel
+                    {
                         DatabaseName = "master",
                         ItemPath = "/sitecore/content/Data Import/Articles",
                         TemplateId = "{AD386352-ACAF-42CF-9DFC-0EB3700BAAA8}",
@@ -116,7 +117,7 @@ namespace XC.Foundation.DataImport.Controllers
             var databases = new List<DatabaseEntity>();
             foreach (ConnectionStringSettings connection in ConfigurationManager.ConnectionStrings)
             {
-                databases.Add(new DatabaseEntity { Name = connection.Name, ConnectionString = connection.ConnectionString, Id = connection.Name });
+                databases.Add(new DatabaseEntity { Name = connection.Name, Value = connection.ConnectionString, Id = connection.Name });
             }
 
             return Ok(new
@@ -136,7 +137,7 @@ namespace XC.Foundation.DataImport.Controllers
                 databases.AddRange(
                     dbs.Select(
                         d =>
-                            new DatabaseEntity { Name = d.Name, ConnectionString = d.ConnectionStringName, Id = d.Name }));
+                            new DatabaseEntity { Name = d.Name, Value = d.ConnectionStringName, Id = d.Name }));
             }
 
             return Ok(new
@@ -161,11 +162,11 @@ namespace XC.Foundation.DataImport.Controllers
             var dbTemplates = db.Templates.GetTemplates(Sitecore.Context.Language).Where(t => !t.InnerItem.Name.Contains("__")).OrderBy(t => t.Name);
             if (dbTemplates.Any())
             {
-                templates.Add(new TemplateEntity { Name = "Select Template", Id = "", Database = "", Path = "" });
+                templates.Add(new TemplateEntity { Name = "Select Template", Value = "", Database = "", Path = "" });
                 templates.AddRange(
                     dbTemplates.Select(
                         t =>
-                            new TemplateEntity { Name = t.Name + " (" + t.InnerItem.Paths.Path + ")", Id = t.InnerItem.Uri.ToString(), Database = t.Database.Name, Path = t.InnerItem.Paths.Path }));
+                            new TemplateEntity { Name = t.Name + " (" + t.InnerItem.Paths.Path + ")", Value = t.InnerItem.Uri.ToString(), Database = t.Database.Name, Path = t.InnerItem.Paths.Path }));
             }
             return Ok(new
             {
@@ -175,7 +176,7 @@ namespace XC.Foundation.DataImport.Controllers
         }
 
         [HttpGet, HttpPost]
-        public System.Web.Http.IHttpActionResult GetFields(string id = "", string fieldId="")
+        public System.Web.Http.IHttpActionResult GetFields(string id = "", string fieldId = "")
         {
             var fields = new List<TemplateFieldEntity>();
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(fieldId))
@@ -308,7 +309,7 @@ namespace XC.Foundation.DataImport.Controllers
         [HttpPost]
         public System.Web.Http.IHttpActionResult EditMapping(ImportMappingModel mappingObject)
         {
-            
+
             var messages = new List<string>();
             if (mappingObject == null)
             {
@@ -326,9 +327,15 @@ namespace XC.Foundation.DataImport.Controllers
 
                 if (mappingObject != null)
                 {
-                    if(mappingObject.Id == Guid.Empty)
+                    var fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ".json";
+                    if (mappingObject.Id == Guid.Empty)
                     {
                         mappingObject.Id = Guid.NewGuid();
+                        fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ".json";
+                    }
+                    else
+                    {
+                        fileName = _fileSystemRepository.FindMappingById(mappingObject.Id.ToString());
                     }
 
                     if (mappingObject.SourceType != null && !string.IsNullOrEmpty(mappingObject.SourceType.Name) && string.IsNullOrEmpty(mappingObject.SourceType.ModelType))
@@ -337,7 +344,6 @@ namespace XC.Foundation.DataImport.Controllers
                         mappingObject.SourceType = datasource;
                     }
 
-                    var fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ".json";
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.MappingFolder), fileName);
                     mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMappings != null)
@@ -377,7 +383,7 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = messages
             });
         }
-        
+
         [HttpGet]
         public System.Web.Http.IHttpActionResult GetPostProcessingScript(string id = "")
         {
@@ -462,7 +468,7 @@ namespace XC.Foundation.DataImport.Controllers
             {
                 return Ok(new
                 {
-                    data = SourceTypeHelper.GetDatasourceTypes(),
+                    data = DataImportContainer.SourceProviders.GetDatasourceTypes(),
                     messages = messages
                 });
             }
@@ -480,6 +486,32 @@ namespace XC.Foundation.DataImport.Controllers
         }
 
         [HttpGet, HttpPost]
+        public System.Web.Http.IHttpActionResult GetTargetTypes()
+        {
+            var messages = new List<string>();
+            try
+            {
+                return Ok(new
+                {
+                    data = DataImportContainer.SourceProviders.GetTargetTypes(),
+                    messages = messages
+                });
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(ex.StackTrace);
+            }
+
+            return Ok(new
+            {
+                data = new List<string>(),
+                messages = messages
+            });
+        }
+
+
+        [HttpGet, HttpPost]
         public System.Web.Http.IHttpActionResult GetSitecoreTree(string id = "master", string itemId = "")
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -489,10 +521,12 @@ namespace XC.Foundation.DataImport.Controllers
             if (db == null)
                 return BadRequest("Database with the name provided doesn't exist");
 
-            var rootItem = string.IsNullOrEmpty(itemId) ? db.GetRootItem() : db.GetItem(itemId);
+            var rootItem = db.GetRootItem();
             if (rootItem != null)
             {
+                itemId = itemId.Trim();
                 var node = PopulateTreeNode(rootItem);
+                node.isExpanded = true;
 
                 var items = rootItem.GetChildren();
                 if (items.Any())
@@ -500,9 +534,20 @@ namespace XC.Foundation.DataImport.Controllers
                     node.children = new List<TreeNode>();
                     foreach (Item item in items)
                     {
-                        node.children.Add(PopulateTreeNode(item));
+                        var childNode = PopulateTreeNode(item);
+                        if (!string.IsNullOrWhiteSpace(itemId) && itemId.Contains(item.Paths.LongID) && item.HasChildren)
+                        {
+                            childNode.children = PopulateTreeNodes(item, itemId);
+                            childNode.isExpanded = true;
+                        }
+                        if (itemId == item.Paths.LongID)
+                        {
+                            childNode.isActive = true;
+                        }
+                        node.children.Add(childNode);
                     }
                 }
+
                 return Ok(new
                 {
                     data = new List<TreeNode>() { node },
@@ -514,6 +559,57 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = ""
             });
         }
+
+        private List<TreeNode> PopulateTreeNodes(Item item, string itemId)
+        {
+            var nodes = new List<TreeNode>();
+            if (item != null && item.HasChildren)
+            {
+                foreach (Item childItem in item.Children)
+                {
+                    var childNode = PopulateTreeNode(childItem);
+                    if (!string.IsNullOrEmpty(itemId) && itemId.Contains(childItem.Paths.LongID))
+                    {
+                        if (itemId == childItem.Paths.LongID)
+                        {
+                            childNode.isActive = true;
+                            childNode.isFocused = true;
+                        }
+                        if (childItem.HasChildren && itemId != childItem.Paths.LongID)
+                        {
+                            childNode.children = PopulateTreeNodes(childItem, itemId);
+                            childNode.isExpanded = true;
+                        }
+                    }
+                    nodes.Add(childNode);
+                }
+            }
+            return nodes;
+        }
+
+        public System.Web.Http.IHttpActionResult GetSitecoreTreeChildNodes(string itemId, string id = "master")
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                return BadRequest("Database name is empty");
+
+            var db = Factory.GetDatabase(id);
+            if (db == null)
+                return BadRequest("Database with the name provided doesn't exist");
+
+            var rootItem = string.IsNullOrEmpty(itemId) ? db.GetRootItem() : db.GetItem(itemId);
+            if (rootItem != null)
+            {
+                if (!string.IsNullOrEmpty(itemId))
+                {
+                    return Ok(rootItem.HasChildren ? rootItem.GetChildren().Select(i => PopulateTreeNode(i)).ToList() : new List<TreeNode>());
+                }
+            }
+            return Ok(new
+            {
+                messages = ""
+            });
+        }
+
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet, HttpPost]
         public System.Web.Http.IHttpActionResult DeleteMapping(string id)
@@ -563,7 +659,7 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = messages
             });
         }
-        
+
         private static MappingInfo PopulateMappingModel(string filePath)
         {
             if (File.Exists(filePath))
@@ -587,14 +683,14 @@ namespace XC.Foundation.DataImport.Controllers
         private string FindFileForMappingId(string id)
         {
             var file = Directory.GetFiles(DataImportConfigurations.MappingFolder, "*" + id + ".json", SearchOption.TopDirectoryOnly);
-            if(file != null)
+            if (file != null)
             {
                 return file.FirstOrDefault();
             }
             return string.Empty;
         }
 
-        private TreeNode PopulateTreeNode(Sitecore.Data.Items.Item rootItem)
+        private TreeNode PopulateTreeNode(Item rootItem)
         {
             return new TreeNode
             {
