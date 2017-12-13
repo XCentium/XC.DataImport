@@ -16,6 +16,7 @@ module.exports = {
           "Aha.Project.DataImport.Scripts.Source.XmlFilterArticleList, Aha.Project.DataImport",
           "Aha.Project.DataImport.Scripts.Source.XmlFilterPageList, Aha.Project.DataImport"
         ],
+        "TargetType": { "Name":"SitecoreDataSource", "ModelType":"XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport", "DataSourceType":"XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport" },
         "Target": { 
         "DatabaseName": "master",
         "TemplateId": "sitecore://master/{AD386352-ACAF-42CF-9DFC-0EB3700BAAA8}?lang=en&ver=0",

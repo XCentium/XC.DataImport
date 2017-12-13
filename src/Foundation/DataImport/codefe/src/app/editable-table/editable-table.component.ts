@@ -13,7 +13,6 @@ import { Field } from '../edit-mapping-page/models/field';
 import { Dictionary } from '@speak/ng-bcl';
 import { DictionaryObject } from '../edit-mapping-page/models/dictionary';
 import { ScriptEditingDialogComponent } from '../script-editing-dialog/script-editing-dialog.component';
-import { LoadService } from '../edit-mapping-page/load.service';
 
 @Component({
   selector: '[scEditableTable]',
@@ -41,25 +40,20 @@ export class ScEditableTable implements OnInit {
     constructor(public authService: SciAuthService,
       public logoutService: SciLogoutService,
       public itemService: ItemService,
-      private route: ActivatedRoute,
-      private loadService: LoadService
+      private route: ActivatedRoute
     ) { 
-      this.loadService.listen().subscribe((m:any) => {
-        console.log(m);
-        this.fetchData();
-      });
+
+    }
+    ngOnChanges() {
+      this.fetchFields();
+      this.fetchTemplates();
     }
 
-    fetchData(){    
-      this.fetchFields();
-      this.fetchTemplates();      
-    }
-    
     fetchTemplates(){
-      if(this.mapping && this.mapping.Target && this.mapping.Target.DatabaseName){
+      if(this.mapping && this.mapping.Target && this.mapping.Target["DatabaseName"]){
         this.isLoading = true;
         this.isErrorResponse = false;
-        this.itemService.fetchTemplates(this.mapping.Target.DatabaseName).subscribe({
+        this.itemService.fetchTemplates(this.mapping.Target["DatabaseName"]).subscribe({
           next: data => {
             this.targetTemplates = data["data"] as Template[];
             this.isLoading = false;
@@ -74,10 +68,10 @@ export class ScEditableTable implements OnInit {
       }
     }
     fetchFields(){
-      if(this.mapping && this.mapping.Target && this.mapping.Target.DatabaseName){
+      if(this.mapping && this.mapping.Target && this.mapping.Target["DatabaseName"]){
         this.isLoading = true;
         this.isErrorResponse = false;
-        this.itemService.fetchFields(this.mapping.Target.DatabaseName,this.mapping.Target.TemplateId).subscribe({
+        this.itemService.fetchFields(this.mapping.Target["DatabaseName"],this.mapping.Target["TemplateId"]).subscribe({
           next: data => {
             this.targetFields = data["data"] as Field[];
             this.isLoading = false;
@@ -99,7 +93,7 @@ export class ScEditableTable implements OnInit {
     }
     onTemplateChange(target){
       var targetTemplateId = target.value;
-      this.itemService.fetchFields(this.mapping.Target.DatabaseName,targetTemplateId).subscribe({
+      this.itemService.fetchFields(this.mapping.Target["DatabaseName"],targetTemplateId).subscribe({
         next: data => {
           var dicEntry = { Key:targetTemplateId, Value: data["data"] as DictionaryObject};          
           this.fields.push(dicEntry);

@@ -9,7 +9,9 @@ using System.Web;
 using System.Xml;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Exceptions;
+using XC.Foundation.DataImport.Models.DataSources;
 using XC.Foundation.DataImport.Pipelines.FieldProcessing;
+using XC.Foundation.DataImport.Repositories.Migration;
 using XC.Foundation.DataImport.Utilities;
 
 namespace Aha.Project.DataImport.Scripts.Fields
@@ -20,23 +22,29 @@ namespace Aha.Project.DataImport.Scripts.Fields
         {
             DataImportLogger.Log.Info("#################Field Processing RenderedHtmlReference started ##################");
 
-            if (args.SourceValue == null)
+            if (args.SourceValue == null || args.Mapping == null)
             {
                 DataImportLogger.Log.Info("RenderedHtmlReference Field Processing: no SourceValue");
                 return;
             }
 
-            var folderWithAssets = Settings.GetSetting("Aha.DataImport.AssetFolder");
+            FileDataSourceModel sourceModel = ImportManager.ConvertToDatasourceModel(args.Mapping.Source, args.Mapping.SourceType);
+            if(sourceModel == null)
+            {
+                DataImportLogger.Log.Info("RenderedHtmlReference Field Processing: no source model");
+                return;
+            }
+            var folderWithAssets = IOExtensions.GetFolderForFile(sourceModel.FilePath);
             if (string.IsNullOrEmpty(folderWithAssets))
             {
                 DataImportLogger.Log.Info("RenderedHtmlReference Field Processing: no folderWithAssets");
                 return;
             }
-            var uid = (string)args.SourceValue;
-            var htmlFile = IOExtensions.FindFile(folderWithAssets, uid, "*.html");
-            if (string.IsNullOrWhiteSpace(htmlFile))
+
+            var htmlFile = Path.Combine(folderWithAssets, (string)args.SourceValue);
+            if (htmlFile == null || !File.Exists(htmlFile))
             {
-                DataImportLogger.Log.Info("RenderedHtmlReference Field Processing: no htmlFile");
+                DataImportLogger.Log.Info("RenderedHtmlReference Field Processing: no file");
                 return;
             }
             try

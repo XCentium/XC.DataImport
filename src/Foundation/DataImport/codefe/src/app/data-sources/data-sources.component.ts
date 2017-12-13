@@ -26,7 +26,6 @@ import { InputField } from '../edit-mapping-page/models/inputfield';
   styleUrls: ['./data-sources.component.scss']
 })
 export class DataSourcesComponent implements OnInit {
-  
   activeId: any;
   databases: any[];
   sourceTemplates: any[];
@@ -39,10 +38,9 @@ export class DataSourcesComponent implements OnInit {
   mappingId:string = '';
   sourceType:string = '';
   fileInputVisible:boolean = true;
-  optionsDic: any[];
-  sitecoreTree: TreeNode[];
-  sitecoreTreeOptions: ITreeOptions = {};
-  sitecoreTreeState: ITreeState;
+  optionsDic: any[] = [];
+  sitecoreSourceTreeOptions: ITreeOptions = {};
+  sitecoreSourceTreeState: ITreeState;
 
   @ViewChild(TreeComponent)
   private tree: TreeComponent;
@@ -55,16 +53,8 @@ export class DataSourcesComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
-    this.fetchSourceTypes();
-    if(this.mapping.Source  as FileDataSource) {
-      if(this.mapping.Source as FileDataSource && !(this.mapping.Source as FileDataSource).FilePath){
-        this.fileInputVisible = false;
-      } 
-    } 
-    this.optionsDic = [];
-
-    this.sitecoreTreeOptions = {
+  ngOnInit() {    
+    this.sitecoreSourceTreeOptions = {
       getChildren: (node:TreeNode) => {
         let promise = new Promise((resolve, reject) => {
           this.itemService.fetchChildNodes(this.mapping.Source["DatabaseName"],node.id)
@@ -80,6 +70,10 @@ export class DataSourcesComponent implements OnInit {
     }    
   }
 
+  ngOnChanges(){
+    this.fetchSourceTypes();
+  }
+
   fetchSourceTypes(){
     this.isLoading = true;
     this.isErrorResponse = false;
@@ -93,8 +87,10 @@ export class DataSourcesComponent implements OnInit {
             if(src.Fields){
               src.Fields.forEach((fld) => {
                 if(fld.OptionsSource){
-                  var sourceUrl = this.processOptionsUrl(fld.OptionsSource);
-                  this.getOptions(sourceUrl);
+                  this.fetchDependentOptions(fld);
+                  if(fld.TriggerField){
+                    this.loadDependentFields(fld.TriggerField, src);
+                  }
                 }
               });
             }
@@ -110,7 +106,6 @@ export class DataSourcesComponent implements OnInit {
   }
   
   getOptions(optionsSourceUrl:string, key:string="") {
-    console.log(optionsSourceUrl);
     if(!key){
       key = optionsSourceUrl;
     }
@@ -122,7 +117,7 @@ export class DataSourcesComponent implements OnInit {
             this.optionsDic[key] = (data["data"] as any[]);
             this.isLoading = false;
             this.messages = data["messages"];
-            console.log(this.optionsDic[key]);
+            //console.log("source: " + key + ":" + this.optionsDic[key]);
           },
           error: error => {
             this.optionsDic[key] = [];
@@ -145,10 +140,6 @@ export class DataSourcesComponent implements OnInit {
     return url;
   }
 
-  showSource(sourceSelection){
-    this.sourceType = sourceSelection.selectedOptions[0].label;
-  }
-
   showFileInput(){
     this.fileInputVisible = true;
   }
@@ -160,16 +151,20 @@ export class DataSourcesComponent implements OnInit {
         if(src.Fields){
           src.Fields.forEach((fld) => {
             if(fields.find(f=> f === fld.Name)) {
-              var sourceUrl = this.processOptionsUrl(fld.OptionsSource);
-              if(fld.InputType === 'tree'){
-                this.fetchSitecoreTree(sourceUrl, fld.OptionsSource);
-              } else{
-                this.getOptions(sourceUrl, fld.OptionsSource);              
-              }
+              this.fetchDependentOptions(fld);
             }
           });
         }
       });
+    }
+  }
+
+  fetchDependentOptions(fld){
+    var sourceUrl = this.processOptionsUrl(fld.OptionsSource);
+    if(fld.InputType === 'tree'){
+      this.fetchSitecoreTree(sourceUrl, fld.OptionsSource);
+    } else{
+      this.getOptions(sourceUrl, fld.OptionsSource);              
     }
   }
 
@@ -179,7 +174,7 @@ export class DataSourcesComponent implements OnInit {
       this.mapping.Source["FullPath"] = evt.node.data.longId;
       this.activeId = evt.node.data.id;
     }
-    console.log(this.tree.treeModel.getActiveNodes());
+    //console.log(this.tree.treeModel.getActiveNodes());
   }
   setState(e){
     if(this.activeId){
@@ -204,11 +199,10 @@ export class DataSourcesComponent implements OnInit {
       this.itemService.fetchSitecoreTreeOptions(optionsSourceUrl,this.mapping.Source["FullPath"]).subscribe({
         next: data => {
           this.optionsDic[key] = data["data"] as TreeNode[];
-          this.sitecoreTree = data["data"] as TreeNode[];
           this.isLoading = false;
           this.messages = data["messages"]; 
           this.cd.detectChanges();  
-          console.log(key + " " + this.optionsDic[key]); 
+          //console.log("source: " + key + ":" + this.optionsDic[key]); 
         },
         error: error => {
           this.isErrorResponse = true;
@@ -216,5 +210,15 @@ export class DataSourcesComponent implements OnInit {
         }
       });
     }
+  }
+
+  loadDependentFields(fields: string, source:SourceType) {
+    var dependentFieldNames = fields.trim().split(",");
+    dependentFieldNames.forEach((field)=> {
+      var fld = source.Fields.find(f=>f.Name === field);
+      if(fld){
+        this.fetchDependentOptions(fld);
+      }
+    });    
   }
 }

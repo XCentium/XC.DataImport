@@ -21,28 +21,42 @@ using Sitecore;
 using XC.Foundation.DataImport.Pipelines.FieldProcessing;
 using Sitecore.Pipelines;
 using XC.Foundation.DataImport.Utilities;
+using Newtonsoft.Json;
+using XC.Foundation.DataImport.Models.Entities;
 
 namespace XC.Foundation.DataImport.Repositories.Repositories
 {
-    public class SitecoreRepository
-    {
-        private ImportMappingModel _mapping;
-
-        public SitecoreRepository(ImportMappingModel mapping)
+    public class SitecoreRepository : BaseTargetRepository, ITargetRepository
+    {        
+        public SitecoreRepository(ImportMappingModel mapping):base(mapping)
         {
-            _mapping = mapping;
         }
         public Database Database
         {
             get
             {
-                return Factory.GetDatabase(_mapping.Target.DatabaseName);
+                return Factory.GetDatabase(SitecoreTarget.DatabaseName);
+            }
+        }        
+        private Item ParentItem
+        {
+            get
+            {
+                return Database.GetItem(SitecoreTarget.ItemPath);
             }
         }
 
-        internal Item ImportItem(ID itemId, Dictionary<ID, object> values, Item parentItem, int index, Action<string, string> statusMethod, string statusFilepath)
+        private TargetSitecoreDataSourceModel SitecoreTarget
         {
-            if (_mapping == null || _mapping.Target == null || parentItem == null)
+            get
+            {
+                return (TargetSitecoreDataSourceModel)Target;
+            }
+        }
+
+        public Item ImportItem(ID itemId, Dictionary<ID, object> values, int index, Action<string, string> statusMethod, string statusFilepath)
+        {
+            if (_mapping == null || Target == null || ParentItem == null)
             {
                 statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] Not Imported or Updated: either item, _mapping, parentItem is null or item is not a content item. ({0})</span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
                 return null;
@@ -59,13 +73,13 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                     }
                     else
                     {
-                        return CreateNewItem(itemId, values, parentItem, index, statusMethod, statusFilepath);
+                        return CreateNewItem(itemId, values, ParentItem, index, statusMethod, statusFilepath);
                     }
                 }
             }
             catch (Exception ex)
             {
-                statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0}</strong> {1} ({2})</span>", parentItem.Paths.Path, ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0}</strong> {1} ({2})</span>", ParentItem.Paths.Path, ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
                 DataImportLogger.Log.Error(ex.Message, ex);
             }
             return null;
@@ -130,9 +144,9 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(_mapping.Target.TemplateId))
+                        if (!string.IsNullOrEmpty(itemName) && !string.IsNullOrEmpty(SitecoreTarget.TemplateId))
                         {
-                            var template = ItemUri.Parse(_mapping.Target.TemplateId);
+                            var template = ItemUri.Parse(SitecoreTarget.TemplateId);
                             var templateId = template.ItemID;
                             var newItem = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(itemName), parentItem, templateId, itemId);
                             if (newItem == null) return null;
@@ -171,7 +185,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
 
         private void ChangeTemplateIfNeeded(Item item, Action<string, string> statusMethod, string statusFilepath)
         {
-            var template = ItemUri.Parse(_mapping.Target.TemplateId);
+            var template = ItemUri.Parse(SitecoreTarget.TemplateId);
             var templateItem = Database.GetItem(template);
             var oldTemplateName = item.TemplateName;
 
@@ -812,7 +826,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="fieldMapping">The field mapping.</param>
         private object RunFieldProcessingScripts(object value, IEnumerable<string> processingScript)
         {
-            var pipelineArgs = new FieldProcessingPipelineArgs(value, processingScript, Database);
+            var pipelineArgs = new FieldProcessingPipelineArgs(value, processingScript, Database, _mapping);
             CorePipeline.Run("xc.dataimport.fieldprocessing", pipelineArgs);
             return pipelineArgs.SourceValue;
         }
@@ -877,9 +891,9 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             if (string.IsNullOrEmpty(matchingColumnValue))
                 return null;
 
-            if (!string.IsNullOrEmpty(_mapping.Target.TemplateId))
+            if (!string.IsNullOrEmpty(SitecoreTarget.TemplateId))
             {
-                var template = ItemUri.Parse(_mapping.Target.TemplateId);
+                var template = ItemUri.Parse(SitecoreTarget.TemplateId);
                 return Database.SelectSingleItem(string.Format("fast://sitecore/content//*[@{0}='{1}' and @@templateid='{2}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue, template.ItemID));
             }
             else

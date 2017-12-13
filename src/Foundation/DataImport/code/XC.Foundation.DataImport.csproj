@@ -289,6 +289,10 @@
     <Compile Include="Models\DataSources\DataSourceModel.cs" />
     <Compile Include="Models\DataSources\FileDataSourceModel.cs" />
     <Compile Include="Models\DataSources\IDataSourceModel.cs" />
+    <Compile Include="Models\DataSources\WebDataSourceModel.cs" />
+    <Compile Include="Repositories\DataSources\WebDataSource.cs" />
+    <Compile Include="Repositories\Repositories\BaseTargetRepository.cs" />
+    <Compile Include="Repositories\Repositories\ITargetRepository.cs" />
     <Compile Include="Models\DataSources\SitecoreQueryDataSourceModel.cs" />
     <Compile Include="Models\DataSources\SitecoreDataSourceModel.cs" />
     <Compile Include="Models\DataSources\TargetSitecoreFormsDataSourceModel.cs" />
@@ -311,6 +315,7 @@
     <Compile Include="Repositories\DataSources\SitecoreQueryDataSource.cs" />
     <Compile Include="Repositories\DataSources\SqlDataSource.cs" />
     <Compile Include="Repositories\Migration\ImportManager.cs" />
+    <Compile Include="Repositories\Repositories\SitecoreFormsRepository.cs" />
     <Compile Include="Repositories\Repositories\SitecoreRepository.cs" />
     <Compile Include="Utilities\IOExtensions.cs" />
     <Compile Include="Utilities\SourceTypeHelper.cs" />

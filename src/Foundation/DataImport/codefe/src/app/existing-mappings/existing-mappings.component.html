@@ -26,8 +26,8 @@
             <td>{{ data.Name }}</td>
             <td>{{ data.LastRun }}</td>
             <td>
-              <a [routerLink]="['/edit-mapping']" [queryParams]="{ mappingId: data.Id }" scButton>{{ 'EDIT_MAPPING' | translate }}</a> |
-              <a [routerLink]="['/run-mapping']" [queryParams]="{ mappingId: data.Id }" scButton>{{ 'RUN_MAPPING' | translate }}</a> |
+              <a [routerLink]="['/edit-mapping/'+ data.Id]" scButton>{{ 'EDIT_MAPPING' | translate }}</a> |
+              <a [routerLink]="['/run-mapping/'+ data.Id]" scButton>{{ 'RUN_MAPPING' | translate }}</a> |
               <input type="button" scButton value="{{ 'DELETE_MAPPING' | translate }}" (click)="openDeleteDialog(data)" />
             </td>
           </tr>

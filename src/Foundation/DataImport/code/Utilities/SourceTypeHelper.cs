@@ -19,6 +19,15 @@ namespace XC.Foundation.DataImport.Utilities
             }            
             return null;
         }
-        
+
+        internal static SourceType GetDatasourceTargetType(string datasourceName)
+        {
+            var types = DataImportContainer.SourceProviders.GetTargetTypes();
+            if (types != null)
+            {
+                return types.FirstOrDefault(t => t.Name == datasourceName);
+            }
+            return null;
+        }
     }
 }

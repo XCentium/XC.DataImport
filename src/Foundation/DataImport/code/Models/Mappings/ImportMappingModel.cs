@@ -18,12 +18,13 @@ namespace XC.Foundation.DataImport.Models.Mappings
         public string Name { get; set; }
         public Guid Id { get; set; }
         public SourceType SourceType { get; set; }
+        public SourceType TargetType { get; set; }
         public dynamic Source { get; set; }
 
         public List<string> SourceProcessingScripts { get; set; }
         public List<string> PostImportScripts { get; set; }
 
-        public TargetSitecoreDataSourceModel Target { get; set; }
+        public dynamic Target { get; set; }
 
         public ScFieldMapping[] FieldMappings { get; set; }
         public bool MergeWithExistingItems { get; internal set; }

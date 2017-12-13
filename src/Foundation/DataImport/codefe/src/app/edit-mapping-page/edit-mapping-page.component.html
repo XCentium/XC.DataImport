@@ -21,7 +21,7 @@
                 </sc-action-bar-left>
                 <sc-action-bar-right>
                   <sc-back-button>Back</sc-back-button>
-                  <a [routerLink]="['/run-mapping']" [queryParams]="{ mappingId: mapping.Id }" scButton>{{ 'RUN_MAPPING' | translate }}</a>
+                  <a [routerLink]="['/run-mapping/' + mapping.Id]" scButton>{{ 'RUN_MAPPING' | translate }}</a>
                   <button type="submit" class="btn btn-primary" [disabled]="!itemForm.form.valid" *ngIf="mapping">{{ 'SAVE_CHANGES' | translate }}</button>                  
                 </sc-action-bar-right>
               </sc-action-bar>  
@@ -56,6 +56,16 @@
               <div class="p-3 bg-tomato-xxx-light" *ngIf="!mapping">
                   Something went wrong: The item to edit is not defined. Try to fetch the item again.
               </div>
+            </div>
+            <div>
+              <sc-action-bar >
+                <sc-action-bar-left>
+                </sc-action-bar-left>
+                <sc-action-bar-right>                  
+                  <a [routerLink]="['/run-mapping/' + mapping.Id]" scButton>{{ 'RUN_MAPPING' | translate }}</a>
+                  <button type="submit" class="btn btn-primary" [disabled]="!itemForm.form.valid" *ngIf="mapping">{{ 'SAVE_CHANGES' | translate }}</button>                  
+                </sc-action-bar-right>
+              </sc-action-bar>  
             </div>
           </form>
         </div>

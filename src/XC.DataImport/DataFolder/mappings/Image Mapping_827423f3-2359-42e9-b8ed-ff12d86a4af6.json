@@ -4,7 +4,33 @@
   "SourceType": {
     "Name": "FileDataSource",
     "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport"
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport",
+    "Fields": null
+  },
+  "TargetType": {
+    "Name": "SitecoreRepository",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository",
+    "Fields": [
+      {
+        "Name": "DatabaseName",
+        "InputType": "select",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/-/getdatabases",
+        "TriggerFields": "TemplateId,Path"
+      },
+      {
+        "Name": "TemplateId",
+        "InputType": "select",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/gettemplates",
+        "TriggerFields": null
+      },
+      {
+        "Name": "Path",
+        "InputType": "tree",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/getsitecoretree",
+        "TriggerFields": null
+      }
+    ]
   },
   "Source": {
     "FilePath": "C:\\Users\\Julia.Gavrilova\\Downloads\\xcentium-samplefiles\\xcentium-testfileassets\\XCentium-TestFileAssets-17-nov-10_12.24.55_026_03-17314122455_1.xml"
@@ -17,9 +43,9 @@
   ],
   "Target": {
     "DatabaseName": "master",
-    "ItemPath": "/sitecore/media library/Project/AHA/HeartOrg/Images",
-    "TemplateId": "sitecore://master/{F1828A2C-7E5D-4BBD-98CA-320474871548}?lang=en&ver=0",
-    "FullPath": "{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}.{90AE357F-6171-4EA9-808C-5600B678F726}/{D69808D2-6785-4967-AE6F-9877DC2D953D}/{4E1C5261-B5EA-462C-99E9-C6CA9DE1023D}/{1D182050-88D6-4015-8C34-0BCAC24B8246}"
+    "ItemPath": "/sitecore/media library/Data Import",
+    "TemplateId": "sitecore://master/{DAF085E8-602E-43A6-8299-038FF171349F}?lang=en&ver=1",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}/{F83D561E-E56A-451E-893E-72D410595589}"
   },
   "FieldMappings": [
     {

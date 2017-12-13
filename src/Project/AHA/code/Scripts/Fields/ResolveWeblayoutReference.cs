@@ -7,7 +7,9 @@ using System.Web;
 using System.Xml;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Exceptions;
+using XC.Foundation.DataImport.Models.DataSources;
 using XC.Foundation.DataImport.Pipelines.FieldProcessing;
+using XC.Foundation.DataImport.Repositories.Migration;
 using XC.Foundation.DataImport.Utilities;
 
 namespace Aha.Project.DataImport.Scripts.Fields
@@ -18,33 +20,27 @@ namespace Aha.Project.DataImport.Scripts.Fields
         {
             DataImportLogger.Log.Info("#################Field Processing ResolveWeblayoutReference started ##################");
 
-            if (args.SourceValue == null)
+            if (args.SourceValue == null || args.Mapping == null)
             {
                 DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no SourceValue");
                 return;
             }
 
-            var folderWithAssets = Settings.GetSetting("Aha.DataImport.AssetFolder");
+            FileDataSourceModel sourceModel = ImportManager.ConvertToDatasourceModel(args.Mapping.Source, args.Mapping.SourceType);
+            if (sourceModel == null)
+            {
+                DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no source model");
+                return;
+            }
+            var folderWithAssets = IOExtensions.GetFolderForFile(sourceModel.FilePath);
             if (string.IsNullOrEmpty(folderWithAssets))
             {
                 DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no folderWithAssets");
                 return;
             }
-            var rootDirectory = IOExtensions.GetRootFolder((string)args.SourceValue);
-            if (rootDirectory == null)
-            {
-                DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no rootDirecotry");
-                return;
-            }
-            var referencedFolder = Directory.GetDirectories(folderWithAssets, rootDirectory, SearchOption.AllDirectories)?.FirstOrDefault();
-            if (referencedFolder == null)
-            {
-                DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no referencedFolder");
-                return;
-            }
 
-            var file = Directory.GetFiles(referencedFolder.Replace(rootDirectory,string.Empty), (string)args.SourceValue, SearchOption.AllDirectories)?.FirstOrDefault();
-            if(file == null)
+            var file = Path.Combine(folderWithAssets, (string)args.SourceValue);
+            if (file == null || !File.Exists(file))
             {
                 DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no file");
                 return;

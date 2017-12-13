@@ -23,12 +23,29 @@ namespace XC.Foundation.DataImport.Repositories.Migration
     {
         private ImportMappingModel _mapping { get; set; }
         public Dictionary<ID, Dictionary<ID, object>> Items2Import;
-        public SitecoreRepository TargetRepository;
+        public ITargetRepository TargetRepository;
 
         public ImportManager(ImportMappingModel model)
         {
             _mapping = model;
-            TargetRepository = new SitecoreRepository(model);
+            TargetRepository = CreateTargetRepository(model);
+        }
+
+        private ITargetRepository CreateTargetRepository(ImportMappingModel model)
+        {
+            try
+            {
+                var targetDatasourceType = model?.TargetType?.DataSourceType;
+                if (!string.IsNullOrEmpty(targetDatasourceType))
+                {
+                    return (ITargetRepository)Activator.CreateInstance(Type.GetType(targetDatasourceType), model);
+                }
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);                
+            }
+            return null;
         }
 
         public void GatherSourceData(string id, Action<string, string> statusMethod, string statusFilepath)
@@ -78,7 +95,7 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             return;
         }
 
-        private IDataSourceModel ConvertToDatasourceModel(dynamic source, SourceType sourceType)
+        public static IDataSourceModel ConvertToDatasourceModel(dynamic source, SourceType sourceType)
         {
             return Convert.ChangeType(JsonConvert.DeserializeObject(source.ToString(), Type.GetType(sourceType.ModelType)),Type.GetType(sourceType.ModelType));
         }
@@ -119,13 +136,6 @@ namespace XC.Foundation.DataImport.Repositories.Migration
 
                 using (new SecurityDisabler())
                 {
-                    var parentItem = TargetRepository.Database.GetItem(_mapping.Target.ItemPath);
-                    if (parentItem == null)
-                    {
-                        statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] parentItem is null ({0})</span>", _mapping.Name), statusFilepath);
-                        return;
-                    }
-
                     using (new DatabaseCacheDisabler())
                     using (new EventDisabler())
                     {
@@ -135,7 +145,7 @@ namespace XC.Foundation.DataImport.Repositories.Migration
                             for (var i = 0; i < Items2Import.Count; i++)
                             {
                                 statusMethod(string.Format(" <h4 style=\"color:blue\">[INFO] {0}</h4>", i + 1), statusFilepath);
-                                var migratedItem = TargetRepository.ImportItem(Items2Import.ElementAt(i).Key, Items2Import.ElementAt(i).Value, parentItem, i, statusMethod, statusFilepath);
+                                var migratedItem = TargetRepository.ImportItem(Items2Import.ElementAt(i).Key, Items2Import.ElementAt(i).Value, i, statusMethod, statusFilepath);
                                 migratedItems.Add(migratedItem);
                             }
 

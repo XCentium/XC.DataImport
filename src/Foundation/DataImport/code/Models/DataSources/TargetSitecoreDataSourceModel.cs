@@ -5,7 +5,7 @@ using System.Web;
 
 namespace XC.Foundation.DataImport.Models.DataSources
 {
-    public class TargetSitecoreDataSourceModel
+    public class TargetSitecoreDataSourceModel : IDataSourceModel
     {
         public string DatabaseName { get; set; }
         public string ItemPath { get; set; }

@@ -42,5 +42,14 @@ namespace XC.Foundation.DataImport.Utilities
             }
             return string.Empty;
         }
+
+        public static string GetFolderForFile(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                return string.Empty;
+            }
+            return Path.GetDirectoryName(filePath);
+        }
     }
 }

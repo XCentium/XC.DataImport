@@ -1,0 +1,30 @@
+{
+  "Name": "JotForms",
+  "Id": "723b0042-d051-442f-a8cf-175a15a50281",
+  "SourceType": {
+    "Name": "WebDataSource",
+    "ModelType": "XC.Foundation.DataImport.Repositories.DataSources.WebDataSource",
+    "DataSourceType": "XC.Foundation.DataImport.Models.DataSources.WebDataSourceModel",
+    "Fields": [
+      {
+        "Name": "Url",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      }
+    ]
+  },
+  "TargetType": {
+    "Name": null,
+    "ModelType": null,
+    "DataSourceType": null,
+    "Fields": null
+  },
+  "Source": {},
+  "SourceProcessingScripts": [],
+  "PostImportScripts": [],
+  "Target": {},
+  "FieldMappings": [],
+  "MergeWithExistingItems": false,
+  "MergeColumnFieldMatch": null
+}

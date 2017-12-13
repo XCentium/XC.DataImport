@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
-    
-
 
 @Injectable()
 export class ItemService {
@@ -67,5 +65,8 @@ export class ItemService {
   }
   fetchSourceOptions(url: string): any {
     return this.http.get(url);
+  }
+  fetchTargetTypes(): any {
+    return this.http.get(`/sitecore/api/ssc/dataimport/mappings/-/gettargettypes`);
   }
 }

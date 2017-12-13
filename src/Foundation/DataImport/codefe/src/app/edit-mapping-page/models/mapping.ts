@@ -11,7 +11,8 @@ export interface Mapping {
     SourceProcessingScripts: string[],
     Target: Target,
     PostImportProcessingScripts: string[],
-    FieldMappings: FieldMapping[]
+    FieldMappings: FieldMapping[],
+    TargetType: SourceType;
   }
 
 

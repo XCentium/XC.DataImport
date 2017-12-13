@@ -1,7 +1,7 @@
 <div class="section" *ngIf="mapping">
 <div class="form-group">
     <h5 for="sourcetype">{{ 'SOURCE_TYPE' | translate }}</h5>
-    <select scDropdown class="form-control" id="sourcetype" [(ngModel)]="mapping.SourceType.Name" name="sourcetype" (change)="showSource($event.target)">
+    <select scDropdown class="form-control" id="sourcetype" [(ngModel)]="mapping.SourceType.Name" name="sourcetype">
         <option class="dropdown-item" *ngFor="let SourceType of sourceTypes" scDropdownItem [ngValue]="SourceType.Name">{{SourceType.Name}}</option>                        
     </select>
   </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group tree-wrap" *ngIf="field.InputType === 'tree'">
                     <label for="{{field.Name}}">{{ field.Name | translate }}</label>
-                    <tree-root [nodes]="optionsDic[field.OptionsSource]" [options]="sitecoreTreeOptions" [(state)]="sitecoreTreeState" (activate)="onActivate($event)" 
+                    <tree-root [nodes]="optionsDic[field.OptionsSource]" [options]="sitecoreSourceTreeOptions" [(state)]="sitecoreSourceTreeState" (activate)="onActivate($event)" 
                     #treesource (stateChange)="setState($event)">
                         <ng-template #treeNodeTemplate let-node let-index="index">
                             <span><img width="16" src="{{node.data.mediaUrl}}" class="tree-icon" />{{ node.data.name }}</span>

@@ -340,8 +340,12 @@ namespace XC.Foundation.DataImport.Controllers
 
                     if (mappingObject.SourceType != null && !string.IsNullOrEmpty(mappingObject.SourceType.Name) && string.IsNullOrEmpty(mappingObject.SourceType.ModelType))
                     {
-                        var datasource = SourceTypeHelper.GetDatasourceSourceType(mappingObject.SourceType.Name);
-                        mappingObject.SourceType = datasource;
+                        mappingObject.SourceType = SourceTypeHelper.GetDatasourceSourceType(mappingObject.SourceType.Name);
+                    }
+
+                    if (mappingObject.TargetType != null && !string.IsNullOrEmpty(mappingObject.TargetType.Name) && string.IsNullOrEmpty(mappingObject.TargetType.ModelType))
+                    {
+                        mappingObject.TargetType = SourceTypeHelper.GetDatasourceTargetType(mappingObject.TargetType.Name);
                     }
 
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.MappingFolder), fileName);

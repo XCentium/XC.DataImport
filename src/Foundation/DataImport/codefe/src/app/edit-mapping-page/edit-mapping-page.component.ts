@@ -13,7 +13,6 @@ import { TreeNode } from 'angular-tree-component';
 import { ITreeState } from 'angular-tree-component/dist/defs/api';
 import { Source } from '../data-sources/datasources/source';
 import { Target } from './models/target';
-import { LoadService } from './load.service';
 
 @Component({
   selector: 'app-edit-mapping-page',
@@ -30,9 +29,10 @@ export class EditMappingPageComponent {
     FieldMappings: [],
     Source: {} as Source,
     Target: {} as Target,
-    SourceType: {} as SourceType
+    SourceType: {} as SourceType,
+    TargetType: {} as SourceType
   } as Mapping;
-  ;
+  
   sourceTypes: SourceType[] = [];
   messages: string[] = [];
   databases: Database[] = [];
@@ -50,7 +50,7 @@ export class EditMappingPageComponent {
 
   sitecoreTreeOptions = {
     getChildren: (node:TreeNode) => {
-      this.itemService.fetchSitecoreTree(this.mapping.Target.DatabaseName,node.id).subscribe({
+      this.itemService.fetchSitecoreTree(this.mapping.Target["DatabaseName"],node.id).subscribe({
         next: data => {
           return data["data"];
         },
@@ -58,7 +58,7 @@ export class EditMappingPageComponent {
           this.isErrorResponse = true;
           this.isLoading = false;
         }
-      });;
+      });
     }
   }
 
@@ -67,14 +67,25 @@ export class EditMappingPageComponent {
     public authService: SciAuthService,
     public logoutService: SciLogoutService,
     public itemService: ItemService,
-    private route: ActivatedRoute,
-    private loadService: LoadService
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     // get param
-    this.mappingId = this.route.snapshot.queryParams["mappingId"];
-    this.fetchMapping();    
+    this.mappingId = this.route.snapshot.params["mappingId"];
+    if(this.mappingId == "-"){
+      this.mapping =  {
+        SourceProcessingScripts: [],
+        PostImportProcessingScripts:[],
+        FieldMappings: [],
+        Source: {} as Source,
+        Target: {} as Target,
+        SourceType: {} as SourceType,
+        TargetType: {} as SourceType
+      } as Mapping;
+    } else{
+      this.fetchMapping();    
+    }
   }
 
   fetchMapping() {

@@ -20,7 +20,7 @@
             <sc-action-bar-right>
               <sc-back-button>Back</sc-back-button>
               <form (ngSubmit)="runImport()" #itemForm="ngForm">
-                <a [routerLink]="['/edit-mapping']" [queryParams]="{ mappingId: mapping.Id }" scButton>{{ 'EDIT_MAPPING' | translate }}</a>
+                <a [routerLink]="['/edit-mapping/' + mapping.Id]" scButton>{{ 'EDIT_MAPPING' | translate }}</a>
                 <button type="submit" class="btn btn-primary" [disabled]="isImportRunning" *ngIf="mapping">{{ 'RUN_IMPORT' | translate }}</button>
               </form>
             </sc-action-bar-right>
@@ -49,6 +49,8 @@
             </sc-tab>
             <sc-tab label="Target">
               <div  class="section">
+                  <div class="label">Target Type: </div>
+                  <div>{{ mapping.TargetType?.Name }} ({{ mapping.TargetType?.DataSourceType }}) </div>
                   <div class="label">Database: </div><div>{{ mapping.Target?.DatabaseName }}</div>
                   <div class="label">Template: </div><div>{{ mapping.Target?.TemplateId }}</div>
                   <div class="label">Sitecore Path: </div><div>{{ mapping.Target?.ItemPath }}</div>

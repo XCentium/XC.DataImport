@@ -40,7 +40,6 @@ import { MainNavigationComponent } from './main-navigation/main-navigation.compo
 import { DeleteModalDirective } from './delete-mapping-dialog/modal.directive';
 import { ResultsDirective } from './run-mapping-page/results.directive';
 import { ModalDirective } from './script-editing-dialog/modal.directive';
-import { LoadService } from './edit-mapping-page/load.service';
 import { ClickOutsideModule } from 'ng4-click-outside';
 
 @NgModule({
@@ -68,9 +67,10 @@ import { ClickOutsideModule } from 'ng4-click-outside';
     RouterModule.forRoot([
       { path: '',   redirectTo: '/existing-mappings', pathMatch: 'full' },
       { path: 'existing-mappings', component: ExistingMappingsComponent },
-      { path: 'edit-mapping', component: EditMappingPageComponent },
+      { path: 'edit-mapping/:mappingId', component: EditMappingPageComponent  },
+      { path: 'create-mapping/:mappingId', component: EditMappingPageComponent  },
       { path: 'field-scripts', component: ScriptEditingDialogComponent },
-      { path: 'run-mapping', component: RunMappingPageComponent },
+      { path: 'run-mapping/:mappingId', component: RunMappingPageComponent },
       { path: 'delete-mapping', component: DeleteMappingDialogComponent }
     ]),
     ScAccountInformationModule,
@@ -100,8 +100,7 @@ import { ClickOutsideModule } from 'ng4-click-outside';
   ],
   providers: [
     ItemService,
-    ScDialogService,
-    LoadService
+    ScDialogService
   ],
   bootstrap: [AppComponent]
 })

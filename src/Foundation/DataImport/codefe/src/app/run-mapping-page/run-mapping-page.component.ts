@@ -38,7 +38,7 @@ export class RunMappingPageComponent implements OnInit,  AfterViewInit, OnDestro
 
   ngOnInit() {
     // get param
-    this.mappingId = this.route.snapshot.queryParams["mappingId"];
+    this.mappingId = this.route.snapshot.params["mappingId"];
     this.fetchMapping();    
   }
   ngOnDestroy() {
