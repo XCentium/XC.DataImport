@@ -1,6 +1,10 @@
 <sc-menu scMenu>
     <sc-menu-category text="Mappings" open="true">
-        <sc-menu-item scMenuItem><a routerLink="" class="navlink">{{ 'EXISTING_MAPPINGS' | translate }}</a></sc-menu-item>
-        <sc-menu-item scMenuItem><a routerLink="/create-mapping/-"  class="navlink">{{ 'CREATE_MAPPING' | translate }}</a></sc-menu-item>
+        <sc-menu-item scMenuItem><a scMenuItemLink [active]="isActive('existing-mappings')" routerLink="" class="navlink">{{ 'EXISTING_MAPPINGS' | translate }}</a></sc-menu-item>
+        <sc-menu-item scMenuItem><a scMenuItemLink [active]="isActive('create-mapping')" routerLink="/create-mapping/-"  class="navlink">{{ 'CREATE_MAPPING' | translate }}</a></sc-menu-item>
     </sc-menu-category>   
+    <sc-menu-category text="Batched Mappings" open="true">
+        <sc-menu-item scMenuItem><a scMenuItemLink [active]="isActive('existing-batch-mappings')" routerLink="/existing-batch-mappings/" class="navlink">{{ 'EXISTING_MAPPINGS' | translate }}</a></sc-menu-item>
+        <sc-menu-item scMenuItem><a scMenuItemLink [active]="isActive('create-batch-mapping')" routerLink="/create-batch-mapping/-"  class="navlink">{{ 'CREATE_MAPPING' | translate }}</a></sc-menu-item>
+    </sc-menu-category> 
 </sc-menu>

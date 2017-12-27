@@ -127,6 +127,15 @@
       <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.Linq.NoReferences.9.0.171002\lib\NET462\Sitecore.ContentSearch.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.ExperienceForms, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.NoReferences.9.0.171002\lib\NET462\Sitecore.ExperienceForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms.Client, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.Client.NoReferences.9.0.171002\lib\NET462\Sitecore.ExperienceForms.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.Mvc.NoReferences.9.0.171002\lib\NET462\Sitecore.ExperienceForms.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171002\lib\NET462\Sitecore.Kernel.dll</HintPath>
       <Private>True</Private>
@@ -290,12 +299,20 @@
     <Compile Include="Models\DataSources\FileDataSourceModel.cs" />
     <Compile Include="Models\DataSources\IDataSourceModel.cs" />
     <Compile Include="Models\DataSources\WebDataSourceModel.cs" />
+    <Compile Include="Models\Entities\ISitecoreFieldModel.cs" />
+    <Compile Include="Models\Entities\MappingReference.cs" />
+    <Compile Include="Models\Entities\SitecoreFieldModel.cs" />
+    <Compile Include="Models\Entities\SitecoreFormModel.cs" />
+    <Compile Include="Models\Mappings\IMappingModel.cs" />
+    <Compile Include="Models\Mappings\ImportBatchMappingModel.cs" />
     <Compile Include="Repositories\DataSources\WebDataSource.cs" />
+    <Compile Include="Repositories\FileSystem\IMappingRepository.cs" />
+    <Compile Include="Repositories\FileSystem\MappingRepository.cs" />
+    <Compile Include="Repositories\Migration\BatchImportManager.cs" />
     <Compile Include="Repositories\Repositories\BaseTargetRepository.cs" />
     <Compile Include="Repositories\Repositories\ITargetRepository.cs" />
     <Compile Include="Models\DataSources\SitecoreQueryDataSourceModel.cs" />
     <Compile Include="Models\DataSources\SitecoreDataSourceModel.cs" />
-    <Compile Include="Models\DataSources\TargetSitecoreFormsDataSourceModel.cs" />
     <Compile Include="Models\Entities\SourceType.cs" />
     <Compile Include="Models\DataSources\TargetSitecoreDataSourceModel.cs" />
     <Compile Include="Models\Entities\SourceTypeField.cs" />
@@ -317,11 +334,10 @@
     <Compile Include="Repositories\Migration\ImportManager.cs" />
     <Compile Include="Repositories\Repositories\SitecoreFormsRepository.cs" />
     <Compile Include="Repositories\Repositories\SitecoreRepository.cs" />
+    <Compile Include="Items.cs" />
     <Compile Include="Utilities\IOExtensions.cs" />
     <Compile Include="Utilities\SourceTypeHelper.cs" />
     <Compile Include="Models\DataSources\SqlDataSourceModel.cs" />
-    <Compile Include="Labels.cs" />
-    <Compile Include="MappingPages.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\Mappings\ImportMappingModel.cs" />
     <Compile Include="Pipelines\FieldProcessing\FieldProcessingPipelineArgs.cs" />
@@ -342,9 +358,7 @@
     <Compile Include="Utilities\ItemExtensions.cs" />
     <Compile Include="Utilities\StringExtentions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Import\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

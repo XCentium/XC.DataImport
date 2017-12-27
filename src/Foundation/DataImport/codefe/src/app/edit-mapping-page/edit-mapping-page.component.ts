@@ -62,7 +62,6 @@ export class EditMappingPageComponent {
     }
   }
 
-
   constructor(
     public authService: SciAuthService,
     public logoutService: SciLogoutService,

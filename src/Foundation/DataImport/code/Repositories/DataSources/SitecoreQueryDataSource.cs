@@ -9,7 +9,7 @@ namespace XC.Foundation.DataImport.Repositories.DataSources
 {
     public class SitecoreQueryDataSource : IDataSource
     {
-        public Dictionary<ID, Dictionary<ID, object>> GetSourceItemsForImport(IEnumerable<string> sourceProcessingScripts, ScFieldMapping[] fieldMappings, Action<string, string> statusMethod, string statusFilepath)
+        public object GetSource(Action<string, string> statusMethod, string statusFilepath)
         {
             throw new NotImplementedException();
         }

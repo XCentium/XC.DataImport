@@ -65,7 +65,7 @@ namespace XC.Foundation.DataImport.Controllers
             try
             {
                 var id = Guid.NewGuid();
-                var fileName = "myTestMapping_" + id.ToString() + ".json";
+                var fileName = "myTestMapping_" + id.ToString() + ConfigSettings.MappingFileExtension;
                 var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.MappingFolder), fileName);
                 var processedMappings = new List<ScFieldMapping>();
 
@@ -274,7 +274,53 @@ namespace XC.Foundation.DataImport.Controllers
             };
         }
 
+        [HttpGet, HttpPost]
+        public object GetBatchMapping(string id = "")
+        {
+            var messages = new List<string>();
+            if (id == null)
+            {
+                messages.Add(Messages.MappingIsNull);
+                return new
+                {
+                    data = new ImportBatchMappingModel(),
+                    messages = messages
+                };
+            }
 
+            try
+            {
+                var filePath = _fileSystemRepository.FindBatchMappingById(id);
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    messages.Add(Messages.MappingIsNull);
+                    return new
+                    {
+                        data = new ImportBatchMappingModel(),
+                        messages = messages
+                    };
+                }
+                var mappingContent = File.ReadAllText(filePath);
+                var mappingObject = (ImportBatchMappingModel)JsonConvert.DeserializeObject(mappingContent, typeof(ImportBatchMappingModel));
+
+                return new
+                {
+                    data = mappingObject,
+                    messages = messages
+                };
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(ex.Message);
+            }
+
+            return new
+            {
+                data = new ImportMappingModel(),
+                messages = messages
+            };
+        }
         [HttpGet, HttpPost]
         public System.Web.Http.IHttpActionResult GetMappings()
         {
@@ -283,6 +329,37 @@ namespace XC.Foundation.DataImport.Controllers
             {
                 var files =
                     Directory.GetFiles(DataImportConfigurations.MappingFolder, "*.json")
+                        .Select(
+                            f =>
+                                PopulateMappingModel(f));
+
+                return Ok(new
+                {
+                    data = files,
+                    messages = messages
+                });
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(ex.Message);
+            }
+
+            return Ok(new
+            {
+                data = new List<string>(),
+                messages = messages
+            });
+        }
+
+        [HttpGet, HttpPost]
+        public System.Web.Http.IHttpActionResult GetBatchMappings()
+        {
+            var messages = new List<string>();
+            try
+            {
+                var files =
+                    Directory.GetFiles(DataImportConfigurations.BatchMappingFolder, "*.json")
                         .Select(
                             f =>
                                 PopulateMappingModel(f));
@@ -323,33 +400,30 @@ namespace XC.Foundation.DataImport.Controllers
 
             try
             {
-                //var mappingObject = (ImportMappingModel)JsonConvert.DeserializeObject(mapping, typeof(ImportMappingModel));
-
                 if (mappingObject != null)
                 {
-                    var fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ".json";
+                    var fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ConfigSettings.MappingFileExtension;
                     if (mappingObject.Id == Guid.Empty)
                     {
                         mappingObject.Id = Guid.NewGuid();
-                        fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ".json";
+                        fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ConfigSettings.MappingFileExtension;
                     }
                     else
                     {
                         fileName = _fileSystemRepository.FindMappingById(mappingObject.Id.ToString());
                     }
 
-                    if (mappingObject.SourceType != null && !string.IsNullOrEmpty(mappingObject.SourceType.Name) && string.IsNullOrEmpty(mappingObject.SourceType.ModelType))
+                    if (mappingObject.SourceType != null && !string.IsNullOrEmpty(mappingObject.SourceType.Name))
                     {
                         mappingObject.SourceType = SourceTypeHelper.GetDatasourceSourceType(mappingObject.SourceType.Name);
                     }
 
-                    if (mappingObject.TargetType != null && !string.IsNullOrEmpty(mappingObject.TargetType.Name) && string.IsNullOrEmpty(mappingObject.TargetType.ModelType))
+                    if (mappingObject.TargetType != null && !string.IsNullOrEmpty(mappingObject.TargetType.Name))
                     {
                         mappingObject.TargetType = SourceTypeHelper.GetDatasourceTargetType(mappingObject.TargetType.Name);
                     }
 
                     var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.MappingFolder), fileName);
-                    mappingObject.ConvertPathsToLongIds();
                     if (mappingObject.FieldMappings != null)
                     {
                         var processedMappings = new List<ScFieldMapping>();
@@ -365,6 +439,59 @@ namespace XC.Foundation.DataImport.Controllers
                         }
                         mappingObject.FieldMappings = processedMappings.ToArray();
                     }
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
+                }
+                messages.Add(Messages.MappingHasBeenSaved);
+
+                return Ok(new
+                {
+                    data = mappingObject,
+                    messages = messages
+                });
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(ex.Message);
+            }
+
+            return Ok(new
+            {
+                data = new List<string>(),
+                messages = messages
+            });
+        }
+
+        [HttpPost]
+        public System.Web.Http.IHttpActionResult EditBatchMapping(ImportBatchMappingModel mappingObject)
+        {
+            var messages = new List<string>();
+            if (mappingObject == null)
+            {
+                messages.Add(Messages.MappingIsNull);
+                return Ok(new
+                {
+                    data = new ImportBatchMappingModel(),
+                    messages = messages
+                });
+            }
+
+            try
+            {
+                if (mappingObject != null)
+                {
+                    var fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ConfigSettings.MappingFileExtension;
+                    if (mappingObject.Id == Guid.Empty)
+                    {
+                        mappingObject.Id = Guid.NewGuid();
+                        fileName = (!string.IsNullOrEmpty(mappingObject.Name) ? mappingObject.Name : "unknown") + "_" + mappingObject.Id.ToString() + ConfigSettings.MappingFileExtension;
+                    }
+                    else
+                    {
+                        fileName = _fileSystemRepository.FindBatchMappingById(mappingObject.Id.ToString());
+                    }
+
+                    var filePath = Path.Combine(_fileSystemRepository.EnsureFolder(DataImportConfigurations.BatchMappingFolder), fileName);
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(mappingObject, Formatting.Indented));
                 }
                 messages.Add(Messages.MappingHasBeenSaved);
@@ -686,10 +813,15 @@ namespace XC.Foundation.DataImport.Controllers
 
         private string FindFileForMappingId(string id)
         {
-            var file = Directory.GetFiles(DataImportConfigurations.MappingFolder, "*" + id + ".json", SearchOption.TopDirectoryOnly);
-            if (file != null)
+            var files = Directory.GetFiles(DataImportConfigurations.MappingFolder, "*" + id + ConfigSettings.MappingFileExtension, SearchOption.TopDirectoryOnly);
+            if (files != null && files.Any())
             {
-                return file.FirstOrDefault();
+                return files.FirstOrDefault();
+            }
+            files = Directory.GetFiles(DataImportConfigurations.BatchMappingFolder, "*" + id + ConfigSettings.MappingFileExtension, SearchOption.TopDirectoryOnly);
+            if (files != null && files.Any())
+            {
+                return files.FirstOrDefault();
             }
             return string.Empty;
         }

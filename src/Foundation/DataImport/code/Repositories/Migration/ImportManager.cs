@@ -10,10 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using XC.DataImport.Repositories.History;
 using XC.Foundation.DataImport.Diagnostics;
+using XC.Foundation.DataImport.Models;
 using XC.Foundation.DataImport.Models.DataSources;
 using XC.Foundation.DataImport.Models.Entities;
 using XC.Foundation.DataImport.Models.Mappings;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
+using XC.Foundation.DataImport.Pipelines.SourceProcessing;
 using XC.Foundation.DataImport.Repositories.DataSources;
 using XC.Foundation.DataImport.Repositories.Repositories;
 
@@ -22,7 +24,7 @@ namespace XC.Foundation.DataImport.Repositories.Migration
     public class ImportManager
     {
         private ImportMappingModel _mapping { get; set; }
-        public Dictionary<ID, Dictionary<ID, object>> Items2Import;
+        public Dictionary<ID, Dictionary<string, object>> Items2Import;
         public ITargetRepository TargetRepository;
 
         public ImportManager(ImportMappingModel model)
@@ -73,7 +75,8 @@ namespace XC.Foundation.DataImport.Repositories.Migration
                     using (new DatabaseCacheDisabler())
                     using (new EventDisabler())
                     {
-                        Items2Import = sourceDatasource.GetSourceItemsForImport(_mapping.SourceProcessingScripts, _mapping.FieldMappings, statusMethod, statusFilepath);
+                        var source = sourceDatasource.GetSource(statusMethod, statusFilepath);
+                        Items2Import = ProcessSource(source, _mapping.SourceProcessingScripts, _mapping.FieldMappings, statusMethod, statusFilepath);
                         if (Items2Import == null)
                         {
                             statusMethod(string.Format(" <span style=\"color:blue\">[FAILURE] Couldn't produce items to import ({0})</span>", _mapping.Name), statusFilepath);
@@ -99,7 +102,7 @@ namespace XC.Foundation.DataImport.Repositories.Migration
         {
             return Convert.ChangeType(JsonConvert.DeserializeObject(source.ToString(), Type.GetType(sourceType.ModelType)),Type.GetType(sourceType.ModelType));
         }
-
+        
         /// <summary>
         /// Starts the job.
         /// </summary>
@@ -190,6 +193,17 @@ namespace XC.Foundation.DataImport.Repositories.Migration
                 statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] {0} ({1}) ({2})</span>", ex.Message, ex.StackTrace, _mapping.Name), statusFilepath);
             }
             return null;
+        }
+        public Dictionary<ID, Dictionary<string, object>> ProcessSource(object fileContent, IEnumerable<string> sourceProcessingScripts, ScFieldMapping[] fieldMappings, Action<string, string> statusMethod, string statusFilepath)
+        {
+            return RunSourceProcessingScripts(fileContent, fieldMappings, sourceProcessingScripts);
+        }
+
+        public Dictionary<ID, Dictionary<string, object>> RunSourceProcessingScripts(object fileContent, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts)
+        {
+            var pipelineArgs = new SourceProcessingPipelineArgs(fileContent, fieldMappings, sourceProcessingScripts);
+            CorePipeline.Run("xc.dataimport.sourceprocessing", pipelineArgs);
+            return pipelineArgs.Items2Import;
         }
 
         private void ClearCache()

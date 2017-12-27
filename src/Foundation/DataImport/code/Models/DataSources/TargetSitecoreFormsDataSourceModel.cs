@@ -7,6 +7,9 @@ namespace XC.Foundation.DataImport.Models.DataSources
 {
     public class TargetSitecoreFormsDataSourceModel : IDataSourceModel
     {
-        public string ConnectionStringName { get; set; }
+        public string DatabaseName { get; set; }
+        public string ItemPath { get; set; }
+        public string TemplateId { get; set; }
+        public string FullPath { get; set; }
     }
 }

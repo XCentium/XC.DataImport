@@ -39,8 +39,17 @@
               <div class="section">
                 <div class="label">Source Type: </div>
                 <div>{{ mapping.SourceType?.Name }} ({{ mapping.SourceType?.DataSourceType }}) </div>
-                <div class="label">File Path: </div>
-                <div>{{ mapping.Source?.FilePath }}</div>
+                
+                  <div><!--  -->
+                      <div *ngFor="let key of objectKeys(mapping.Source)">
+                        <div class="form-group">
+                          <div class="label">{{ key | translate }}</div>
+                          <div>{{ mapping.Source[key] }}</div>
+                        </div>                         
+                      </div>
+                  </div>
+
+                
                 <div class="label">Source Processing: </div>
                 <ol>
                   <li *ngFor="let script of mapping.SourceProcessingScripts">{{ script }}</li>

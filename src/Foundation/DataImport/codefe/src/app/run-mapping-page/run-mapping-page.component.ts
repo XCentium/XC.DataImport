@@ -5,6 +5,7 @@ import { ItemService } from '../item.service';
 import { ActivatedRoute } from '@angular/router';
 import { Mapping } from '../edit-mapping-page/models/mapping';
 import { ResultsDirective } from './results.directive';
+import { retry } from 'rxjs/operator/retry';
 
 @Component({
   selector: 'app-run-mapping-page',
@@ -14,7 +15,7 @@ import { ResultsDirective } from './results.directive';
 export class RunMappingPageComponent implements OnInit,  AfterViewInit, OnDestroy {
   interval: NodeJS.Timer;  
   messages: any;
-  mapping: Mapping = {} as Mapping;
+  mapping: Mapping;
   isErrorResponse: boolean;
   isLoading: boolean;
   mappingId: string;
@@ -86,7 +87,7 @@ export class RunMappingPageComponent implements OnInit,  AfterViewInit, OnDestro
       next: data => {
         this.results = data;
         this.isLoading = false;        
-        if(this.results.indexOf("Import is done") > -1){
+        if(this.results.indexOf("Import is done") > -1 || this.results.indexOf("[DONE]") > -1){
           clearInterval(this.interval);
           this.isImportRunning = false;
         }
@@ -97,5 +98,11 @@ export class RunMappingPageComponent implements OnInit,  AfterViewInit, OnDestro
         this.messages.push("Mapping wasn't found");
       }
     }); 
+  }
+  objectKeys(obj) {
+    if(obj){
+      return Object.keys(obj);
+    }
+    return [];
   }
 }

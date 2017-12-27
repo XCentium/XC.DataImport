@@ -8,7 +8,7 @@ using XC.Foundation.DataImport.Models.Entities;
 
 namespace XC.Foundation.DataImport.Models.Mappings
 {
-    public class ImportMappingModel
+    public class ImportMappingModel : IMappingModel
     {
         public ImportMappingModel()
         {

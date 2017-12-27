@@ -10,10 +10,8 @@ namespace XC.Foundation.DataImport.Models.DataSources
 {
     public interface ITargetRepository
     {
-        //Database Database { get; }
         IDataSourceModel Target { get; }
+        Item ImportItem(ID itemId, Dictionary<string, object> values, int index, Action<string, string> statusMethod, string statusFilepath);
         Database Database { get; }
-
-        Item ImportItem(ID itemId, Dictionary<ID, object> values, int index, Action<string, string> statusMethod, string statusFilepath);
     }
 }

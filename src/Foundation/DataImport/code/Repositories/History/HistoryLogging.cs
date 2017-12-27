@@ -138,7 +138,7 @@ namespace XC.DataImport.Repositories.History
             }
         }
 
-        internal static void ItemMigrated(Dictionary<ID, object> values, Item existingItem, DateTime importStartDate, string mappingName)
+        internal static void ItemMigrated(Item existingItem, DateTime importStartDate, string mappingName)
         {
             try
             {

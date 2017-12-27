@@ -49,10 +49,7 @@
                 <sc-tab scTab label="Post Import Scripts">
                   <xc-processing-scripts [scriptProperty]="mapping.PostImportScripts" [title]="'POST_IMPORT_PROCESSING_SCRIPTS' | translate"></xc-processing-scripts>  
                 </sc-tab>
-              </sc-tab-group> 
-                
-
-              
+              </sc-tab-group>                 
               <div class="p-3 bg-tomato-xxx-light" *ngIf="!mapping">
                   Something went wrong: The item to edit is not defined. Try to fetch the item again.
               </div>

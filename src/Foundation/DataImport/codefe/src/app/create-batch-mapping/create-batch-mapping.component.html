@@ -1,0 +1,81 @@
+<sc-page [showNav]="isNavigationShown">
+  <div scPageHeader>
+    <sc-global-header [appName]="'APP_NAME' | translate" [(show)]="isNavigationShown">
+      <a href="#" scGlobalLogo></a>
+      <!-- AccountInformation gets accountName and accountImageUrl automatically from Sitecore context which is configured in AppModule -->
+      <sc-account-information (logout)="logoutService.logout()"></sc-account-information>
+    </sc-global-header>
+  </div>
+  <aside scPageNav>
+      <xc-main-navigation></xc-main-navigation>
+  </aside>
+  <div scPageAppHeader>
+    <sc-application-header [text]="'CREATE_BATCH_MAPPING' | translate"></sc-application-header>
+  </div>
+  <article scPageContent>
+    <div>
+        <form (ngSubmit)="saveMapping()" #itemForm="ngForm">
+          <sc-action-bar >
+            <sc-action-bar-left><h3>Edit/Create Mapping</h3>
+            </sc-action-bar-left>
+            <sc-action-bar-right>
+              <sc-back-button>Back</sc-back-button>
+              <a [routerLink]="['/run-batch-mapping/' + mapping.Id]" scButton>{{ 'RUN_MAPPING' | translate }}</a>
+              <button type="submit" class="btn btn-primary" [disabled]="!itemForm.form.valid" *ngIf="mapping">{{ 'SAVE_CHANGES' | translate }}</button>                  
+            </sc-action-bar-right>
+          </sc-action-bar>  
+          <div *ngIf="messages">
+            <div class="p-3 bg-tomato-xxx-light" *ngFor="let message of messages">{{message}}</div>
+          </div> 
+        <!-- Anti-CSRF -->
+        <div class="p-3"  *ngIf="mapping">
+          <div class="form-group ">
+            <label for="name">{{ 'MAPPING_NAME' | translate }}</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="mapping.Name" name="name">
+            <input type="hidden" class="form-control" id="mappingId" [(ngModel)]="mapping.Id" name="mappingId">
+          </div>
+          <div class="form-group ">
+              <input type="checkbox" id="runInParallel" [(ngModel)]="mapping.RunInParallel" name="runInParallel">    
+              <label for="name">{{ 'RUN_IN_PARALLEL' | translate }}</label>
+          </div>
+          <h5>{{ 'SELECTED_MAPPINGS' | translate }}</h5>
+          <div class=" section">
+            <ol>
+              <li *ngFor="let mp of mapping.Mappings">
+                <div>
+                  <div class="form-group ">    
+                    <input type="checkbox" id="mId" [checked]="isChecked(mp.Id)" name="mId" value="{{ mp.Id }}" (change)="updateCheckedOptions(mp, $event)">
+                    <label for="mId">{{ mp.Name | translate }}</label>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <h5>{{ 'AVAILABLE_MAPPINGS' | translate }}</h5>
+          <div class=" section">
+            <div *ngFor="let data of mappings">
+              <div class="form-group "  [hidden]="isChecked(data.Id)">    
+                <input type="checkbox" id="mappingIds" [checked]="isChecked(data.Id)" name="mappingIds" value="{{ data.Id }}" (change)="updateCheckedOptions(data, $event)">
+                <label for="mappingIds">{{ data.Name | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-tomato-xxx-light" *ngIf="!mapping">
+              Something went wrong: The item to edit is not defined. Try to fetch the item again.
+          </div>
+        </div>
+        <div>
+          <sc-action-bar >
+            <sc-action-bar-left>
+            </sc-action-bar-left>
+            <sc-action-bar-right>                  
+              <a [routerLink]="['/run-batch-mapping/' + mapping.Id]" scButton>{{ 'RUN_MAPPING' | translate }}</a>
+              <button type="submit" class="btn btn-primary" [disabled]="!itemForm.form.valid" *ngIf="mapping">{{ 'SAVE_CHANGES' | translate }}</button>                  
+            </sc-action-bar-right>
+          </sc-action-bar>  
+        </div>
+      </form>
+    </div>
+  </article>
+</sc-page>
+

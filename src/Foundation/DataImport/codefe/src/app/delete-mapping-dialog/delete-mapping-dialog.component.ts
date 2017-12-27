@@ -45,7 +45,8 @@ export class DeleteMappingDialogComponent implements OnInit {
       next: data => {
         this.messages = data["messages"] as string[];
         this.deleted = true;
-        this.modalService.close(this.messages);        
+        this.modalService.close(this.messages);    
+        window.location.reload();    
       },
       error: error => {
         this.isErrorResponse = true;

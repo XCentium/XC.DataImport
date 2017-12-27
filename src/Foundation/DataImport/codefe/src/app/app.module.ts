@@ -41,6 +41,9 @@ import { DeleteModalDirective } from './delete-mapping-dialog/modal.directive';
 import { ResultsDirective } from './run-mapping-page/results.directive';
 import { ModalDirective } from './script-editing-dialog/modal.directive';
 import { ClickOutsideModule } from 'ng4-click-outside';
+import { ExistingBatchMappingsComponent } from './existing-batch-mappings/existing-batch-mappings.component';
+import { CreateBatchMappingComponent } from './create-batch-mapping/create-batch-mapping.component';
+import { RunBatchMappingComponent } from './run-batch-mapping/run-batch-mapping.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { ClickOutsideModule } from 'ng4-click-outside';
     MainNavigationComponent,
     DeleteModalDirective,
     ResultsDirective,
-    ModalDirective
+    ModalDirective,
+    ExistingBatchMappingsComponent,
+    CreateBatchMappingComponent,
+    RunBatchMappingComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +77,11 @@ import { ClickOutsideModule } from 'ng4-click-outside';
       { path: 'create-mapping/:mappingId', component: EditMappingPageComponent  },
       { path: 'field-scripts', component: ScriptEditingDialogComponent },
       { path: 'run-mapping/:mappingId', component: RunMappingPageComponent },
-      { path: 'delete-mapping', component: DeleteMappingDialogComponent }
+      { path: 'delete-mapping', component: DeleteMappingDialogComponent },
+      { path: 'edit-batch-mapping/:mappingId', component: CreateBatchMappingComponent  },
+      { path: 'create-batch-mapping/:mappingId', component: CreateBatchMappingComponent  },
+      { path: 'existing-batch-mappings', component: ExistingBatchMappingsComponent },
+      { path: 'run-batch-mapping/:mappingId', component: RunBatchMappingComponent },
     ]),
     ScAccountInformationModule,
     ScActionBarModule,

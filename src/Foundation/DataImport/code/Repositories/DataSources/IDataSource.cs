@@ -10,6 +10,6 @@ namespace XC.Foundation.DataImport.Repositories.DataSources
 {
     public interface IDataSource
     {
-        Dictionary<ID, Dictionary<ID, object>> GetSourceItemsForImport(IEnumerable<string> sourceProcessingScripts, ScFieldMapping[] fieldMappings, Action<string, string> statusMethod, string statusFilepath);
+        object GetSource(Action<string, string> statusMethod, string statusFilepath);  
     }
 }

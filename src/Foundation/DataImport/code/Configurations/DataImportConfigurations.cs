@@ -155,7 +155,7 @@ namespace XC.Foundation.DataImport.Configurations
         /// <value>
         /// The batch mappings folder.
         /// </value>
-        public static string BatchMappingsFolder
+        public static string BatchMappingFolder
         {
             get
             {

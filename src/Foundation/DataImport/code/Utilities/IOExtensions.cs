@@ -32,7 +32,16 @@ namespace XC.Foundation.DataImport.Utilities
             }
             return string.Empty;
         }
-
+        public static string FindBatchMappingById(this IFileSystemRepository fileSystemRepository, string mappingId)
+        {
+            var folderPath = fileSystemRepository.EnsureFolder(DataImportConfigurations.BatchMappingFolder);
+            if (Directory.Exists(folderPath))
+            {
+                var files = Directory.GetFiles(folderPath);
+                return files.FirstOrDefault(f => f.Contains(mappingId));
+            }
+            return string.Empty;
+        }
         public static string FindFile(string rootFolder, string uid, string pattern)
         {
             if (Directory.Exists(rootFolder))

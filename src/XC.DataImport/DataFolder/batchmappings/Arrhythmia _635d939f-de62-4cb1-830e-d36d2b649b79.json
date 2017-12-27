@@ -1,0 +1,15 @@
+{
+  "Name": "Arrhythmia ",
+  "Id": "635d939f-de62-4cb1-830e-d36d2b649b79",
+  "Mappings": [
+    {
+      "Id": "34640c58-8467-4cdb-97e2-0eae6b641791",
+      "Name": "Article Mapping"
+    },
+    {
+      "Id": "8e63916d-01f6-4b6e-a25c-d9e6fc244975",
+      "Name": "SubHomePage Mapping"
+    }
+  ],
+  "RunInParallel": false
+}

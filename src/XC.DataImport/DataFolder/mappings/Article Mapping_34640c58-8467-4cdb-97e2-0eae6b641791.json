@@ -5,12 +5,19 @@
     "Name": "FileDataSource",
     "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport",
     "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport",
-    "Fields": null
+    "Fields": [
+      {
+        "Name": "FilePath",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      }
+    ]
   },
   "TargetType": {
     "Name": "SitecoreRepository",
-    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository,XC.Foundation.DataImport",
     "Fields": [
       {
         "Name": "DatabaseName",

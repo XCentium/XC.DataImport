@@ -1,0 +1,47 @@
+<sc-page [showNav]="isNavigationShown">
+  <div scPageHeader>
+    <sc-global-header [appName]="'APP_NAME' | translate" [(show)]="isNavigationShown">
+      <a href="#" scGlobalLogo></a>
+      <!-- AccountInformation gets accountName and accountImageUrl automatically from Sitecore context which is configured in AppModule -->
+      <sc-account-information (logout)="logoutService.logout()"></sc-account-information>
+    </sc-global-header>
+  </div>
+  <aside scPageNav>
+      <xc-main-navigation></xc-main-navigation>
+  </aside>
+  <div scPageAppHeader>
+    <sc-application-header [text]="'DASHBOARD_PAGE' | translate"></sc-application-header>
+  </div>
+  <article scPageContent>
+      <sc-action-bar >
+          <sc-action-bar-left>              
+            <h3>Import</h3>
+          </sc-action-bar-left>
+          <sc-action-bar-right>
+            <sc-back-button>Back</sc-back-button>
+            <form (ngSubmit)="runImport()" #itemForm="ngForm">
+              <a [routerLink]="['/edit-batch-mapping/' + mapping.Id]" scButton>{{ 'EDIT_MAPPING' | translate }}</a>
+              <button type="submit" class="btn btn-primary" [disabled]="isImportRunning" *ngIf="mapping">{{ 'RUN_IMPORT' | translate }}</button>
+            </form>
+          </sc-action-bar-right>
+        </sc-action-bar> 
+
+        <div *ngIf="messages">
+            <div class="p-3 bg-tomato-xxx-light" *ngFor="let message of messages">{{message}}</div>
+        </div>
+    <div class="p-3" *ngIf="mapping">
+      <div class="section">
+          <strong>Mapping:</strong> {{ mapping.Name }} ({{ mapping.Id }})
+      </div>
+      <div class="section">
+        <ol> 
+          <li *ngFor="let m of mapping.Mappings">{{ m.Name }}</li> 
+        </ol>
+      </div>
+    </div>
+    <div class="p-3">
+      <div id="importResult" [innerHTML]="results">                   
+      </div>
+    </div>
+  </article>
+</sc-page>

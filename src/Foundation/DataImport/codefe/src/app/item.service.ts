@@ -15,14 +15,26 @@ export class ItemService {
   fetchMappings() {
     return this.http.get(`/sitecore/api/ssc/dataimport/mappings/-/getmappings`);
   }
+  fetchBatchMappings() {
+    return this.http.get(`/sitecore/api/ssc/dataimport/mappings/-/getbatchmappings`);
+  }
   fetchMapping(id){
     if(!id){
       id="-";
     }
     return this.http.get("/sitecore/api/ssc/dataimport/mappings/"+id+"/getmapping");
   }
+  fetchBatchMapping(id){
+    if(!id){
+      id="-";
+    }
+    return this.http.get("/sitecore/api/ssc/dataimport/mappings/"+id+"/getbatchmapping");
+  }
   saveMapping(mapping){
     return this.http.post("/sitecore/api/ssc/dataimport/mappings/-/editmapping", mapping);
+  }
+  saveBatchMapping(mapping){
+    return this.http.post("/sitecore/api/ssc/dataimport/mappings/-/editbatchmapping", mapping);
   }
   fetchSourceTypes(){
     return this.http.get(`/sitecore/api/ssc/dataimport/mappings/-/getsourcetypes`);
@@ -57,11 +69,14 @@ export class ItemService {
   fetchImportResults(id: any): any {
     return this.http.get("/sitecore/api/ssc/dataimport/run/"+id+"/getimportresults");
   }
-  uploadFile(file: any): any {
-    return this.http.post(`/sitecore/api/ssc/dataimport/mappings/-/uploadfile`,file);
+  fetchBatchImportResults(id: any): any {
+    return this.http.get("/sitecore/api/ssc/dataimport/run/"+id+"/getbatchimportresults");
   }
   startImport(id: any): any {
     return this.http.get("/sitecore/api/ssc/dataimport/run/"+id+"/startimport");
+  }
+  startBatchImport(id: any): any {
+    return this.http.get("/sitecore/api/ssc/dataimport/run/"+id+"/startbatchimport");
   }
   fetchSourceOptions(url: string): any {
     return this.http.get(url);

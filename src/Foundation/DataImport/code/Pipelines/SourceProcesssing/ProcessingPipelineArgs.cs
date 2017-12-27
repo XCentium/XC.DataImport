@@ -14,25 +14,33 @@ namespace XC.Foundation.DataImport.Pipelines.SourceProcessing
     public class SourceProcessingPipelineArgs : PipelineArgs
     {
         private IEnumerable<string> _sourceProcessingScripts;
-        public Dictionary<ID, Dictionary<ID, object>> Items2Import;
-        private string _content = string.Empty;
+        public Dictionary<ID, Dictionary<string, object>> Items2Import;
+        private object _content = string.Empty;
         private ScFieldMapping[] _fieldMappings;
 
-        public SourceProcessingPipelineArgs(string content, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts)
+        public SourceProcessingPipelineArgs(object content, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts)
         {
             _sourceProcessingScripts = sourceProcessingScripts;
             _content = content;
             _fieldMappings = fieldMappings;
-            Items2Import = new Dictionary<ID, Dictionary<ID, object>>();
+            if (content is Dictionary<ID, Dictionary<string, object>>)
+            {
+                Items2Import = (Dictionary<ID, Dictionary<string, object>>)content;
+            }
+            else
+            {
+                Items2Import = new Dictionary<ID, Dictionary<string, object>>();
+            }
         }
 
         public IEnumerable<string> SourceProcessingScripts
         {
-            get {
+            get
+            {
                 return _sourceProcessingScripts;
             }
         }
-        public string Content
+        public object Content
         {
             get
             {
