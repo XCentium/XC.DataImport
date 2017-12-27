@@ -134,12 +134,13 @@ namespace Aha.Project.DataImport.DataSources
                 {
                     for (var i = 1; i <= emailActions.Count(); i++)
                     {
-                        var emailAction = emailActions.ElementAt(i-1);
+                        var emailAction = emailActions.ElementAt(i - 1);
                         var name = "Email " + i;
 
                         var emailProperties = new Dictionary<string, object>();
-                        emailProperties.Add(XC.Foundation.DataImport.Templates.Fields.SubmitActionParameters, 
-                            JsonConvert.SerializeObject(new {
+                        emailProperties.Add(XC.Foundation.DataImport.Templates.Fields.SubmitActionParameters,
+                            JsonConvert.SerializeObject(new
+                            {
                                 body = (string)emailAction.Properties().FirstOrDefault(a => a.Name == JotForm.Properties.Body).Value,
                                 from = (string)emailAction.Properties().FirstOrDefault(a => a.Name == JotForm.Properties.From).Value,
                                 replyTo = (string)emailAction.Properties().FirstOrDefault(a => a.Name == JotForm.Properties.ReplyTo).Value,
@@ -300,9 +301,17 @@ namespace Aha.Project.DataImport.DataSources
                     if (fieldName.ToLowerInvariant().Contains("country"))
                     {
                         model.Properties.Add(Templates.Fields.Datasource, Items.ItemIds.CountriesLookup);
-                    } else if (fieldName.ToLowerInvariant().Contains("state"))
+                        model.Properties.Add(Templates.Fields.IsDynamic, "1");
+                        model.Properties.Add(Templates.Fields.DisplayFieldName, "__ItemName");
+                        model.Properties.Add(Templates.Fields.ValueFieldName, "__ID");
+                        model.Properties.Add(Templates.Fields.DefaultSelection, "{DB1DB3F1-AC6D-450D-80A6-67573641DFEF}");// usa
+                    }
+                    else if (fieldName.ToLowerInvariant().Contains("state"))
                     {
                         model.Properties.Add(Templates.Fields.Datasource, JotForms.ConfigSettings.StatesLookup);
+                        model.Properties.Add(Templates.Fields.IsDynamic, "1");
+                        model.Properties.Add(Templates.Fields.DisplayFieldName, "__ItemName");
+                        model.Properties.Add(Templates.Fields.ValueFieldName, "__ID");
                     }
                     break;
                 case JotForm.QuestionType.Radio:
@@ -312,7 +321,7 @@ namespace Aha.Project.DataImport.DataSources
                     break;
             }
 
-            if(question[JotForm.QuestionProperty.Options] != null)
+            if (question[JotForm.QuestionProperty.Options] != null)
             {
                 var optionValues = (question[JotForm.QuestionProperty.Options] as JValue).Value as string;
                 model.Properties.Add(Templates.Fields.Options, optionValues.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries));

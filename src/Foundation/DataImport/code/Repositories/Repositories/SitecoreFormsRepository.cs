@@ -439,7 +439,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                 case SitecoreFieldModel.FormFieldType.Email:
                     return ID.Parse(Templates.FormTemplates.Email);
                 case SitecoreFieldModel.FormFieldType.Radio:
-                    return ID.Parse(Templates.FormTemplates.Input);
+                    return ID.Parse(Templates.FormTemplates.List);
                 case SitecoreFieldModel.FormFieldType.Section:
                     return ID.Parse(Templates.FormTemplates.Section);
                 case SitecoreFieldModel.FormFieldType.Action:
@@ -513,11 +513,10 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             {
                 foreach(var option in options)
                 {
-                    var optionPath = string.Concat(fieldItem.Paths.FullPath, option);
+                    var optionPath = string.Concat(datasourceFolderItem.Paths.FullPath,"/", ItemUtil.ProposeValidItemName(option));
                     var optionItem = Database.GetItem(PathUtils.UnifyPathSeparators(optionPath));
                     if (optionItem != null)
                     {
-                        statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Updating </strong></span>", optionItem.Paths.Path), statusFilepath);
                         UpdateOptionItem(optionItem, option, statusMethod, statusFilepath);
                     }
                     else

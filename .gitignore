@@ -241,3 +241,4 @@ lib/license.xml
 gulp-config.js
 publishsettings.targets
 zzz.*.DevSettings.config
+/src/XC.DataImport/DataFolder/history/mapping-JotForms

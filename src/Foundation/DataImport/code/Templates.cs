@@ -58,8 +58,11 @@ namespace XC.Foundation.DataImport
             public const string SubmitAction = "Submit Action";
             public const string SubmitActionParameters = "Parameters";
             public const string Datasource = "Datasource";
-            public const string IsDynamic = "Is Dinamic";
+            public const string IsDynamic = "Is Dynamic";
             public const string Options = "_Options_";
+            public const string DisplayFieldName = "Display Field Name";
+            public const string ValueFieldName = "Value Field Name";
+            public const string DefaultSelection = "Default Selection";
         }
 
     }
