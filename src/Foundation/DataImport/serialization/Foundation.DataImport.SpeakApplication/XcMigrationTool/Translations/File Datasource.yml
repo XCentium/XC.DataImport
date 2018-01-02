@@ -1,0 +1,22 @@
+﻿---
+ID: "7fe1d62a-3c16-4652-98e2-adfff26114db"
+Parent: "8e159d2d-e688-4638-964d-e3b20ddc2247"
+Template: "36d55ae2-934a-4fd4-9ebe-d8dd2d8becb9"
+Path: /sitecore/client/Applications/XcMigrationTool/Translations/File Datasource
+DB: core
+SharedFields:
+- ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
+  Hint: Key
+  Value: FileDataSource
+Languages:
+- Language: en
+  Fields:
+  - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
+    Hint: Phrase
+    Value: File Datasource
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171123T174326Z

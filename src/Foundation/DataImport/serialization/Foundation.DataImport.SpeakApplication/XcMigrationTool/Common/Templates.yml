@@ -1,13 +1,13 @@
 ﻿---
-ID: "90ae357f-6171-4ea9-808c-5600b678f726"
-Parent: "3d6658d8-a0bf-4e75-b3e2-d050fabcf4e1"
-Template: "fe5dd826-48c6-436d-b87a-7c4210c7413b"
-Path: /sitecore/media library/Project
-DB: master
+ID: "a617e723-bad9-48ab-9aa4-a21858e91bbd"
+Parent: "98953fff-5c28-4cc0-ac7e-e025a38212c9"
+Template: "0437fee2-44c9-46a6-abe9-28858d9fee8c"
+Path: /sitecore/client/Applications/XcMigrationTool/Common/Templates
+DB: core
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
-  Value: applications/32x32/folder_window.png
+  Value: Applications/16x16/form_blue.png
 Languages:
 - Language: en
   Versions:
@@ -15,7 +15,7 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20160427T080526Z
+      Value: 20171109T204322Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |

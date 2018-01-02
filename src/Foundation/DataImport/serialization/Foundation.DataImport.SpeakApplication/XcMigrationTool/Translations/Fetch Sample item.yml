@@ -1,0 +1,23 @@
+﻿---
+ID: "c2c91901-4ee2-44bc-8b07-8eee40c6a111"
+Parent: "8e159d2d-e688-4638-964d-e3b20ddc2247"
+Template: "36d55ae2-934a-4fd4-9ebe-d8dd2d8becb9"
+Path: /sitecore/client/Applications/XcMigrationTool/Translations/Fetch Sample item
+DB: core
+SharedFields:
+- ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
+  Hint: Key
+  Value: FETCH_SAMPLE_ITEM
+Languages:
+- Language: en
+  Fields:
+  - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
+    Hint: Phrase
+    Value: |
+      Fetch "Sample" item
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171109T204323Z

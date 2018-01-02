@@ -1,0 +1,18 @@
+﻿---
+ID: "98953fff-5c28-4cc0-ac7e-e025a38212c9"
+Parent: "6736d738-81fa-4c97-81f2-e0b68c3862fc"
+Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
+Path: /sitecore/client/Applications/XcMigrationTool/Common
+DB: core
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Applications/16x16/gear.png
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171109T204323Z

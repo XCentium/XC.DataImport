@@ -1,5 +1,5 @@
 module.exports = function () {
-    var instanceRoot = "C:\\inetpub\\wwwroot\\sxa.sc";
+    var instanceRoot = "C:\\inetpub\\wwwroot\\heart.sc";
     var config = {
         websiteRoot: instanceRoot,
         sitecoreLibraries: instanceRoot + "\\bin",

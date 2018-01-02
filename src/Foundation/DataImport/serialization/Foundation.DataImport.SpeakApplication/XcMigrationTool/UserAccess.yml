@@ -1,0 +1,18 @@
+﻿---
+ID: "ca0e53ef-d1d2-43f4-9750-3bb24a9d2936"
+Parent: "6736d738-81fa-4c97-81f2-e0b68c3862fc"
+Template: "7545d746-41c2-4eb7-a682-55895eab30ad"
+Path: /sitecore/client/Applications/XcMigrationTool/UserAccess
+DB: core
+SharedFields:
+- ID: "dec8d2d5-e3cf-48b6-a653-8e69e2716641"
+  Hint: __Security
+  Value: 
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171109T204323Z

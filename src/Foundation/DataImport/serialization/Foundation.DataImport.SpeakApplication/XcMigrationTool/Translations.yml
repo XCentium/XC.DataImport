@@ -1,0 +1,14 @@
+﻿---
+ID: "8e159d2d-e688-4638-964d-e3b20ddc2247"
+Parent: "6736d738-81fa-4c97-81f2-e0b68c3862fc"
+Template: "36dd4494-a899-45ae-b1e1-689e4f2d663a"
+Path: /sitecore/client/Applications/XcMigrationTool/Translations
+DB: core
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171109T204323Z

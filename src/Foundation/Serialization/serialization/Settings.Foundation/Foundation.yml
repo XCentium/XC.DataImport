@@ -1,5 +1,5 @@
 ﻿---
-ID: "4ec5fda0-4579-4a5f-86d9-89497217dd0f"
+ID: "31c85853-d86d-46b0-a418-86df28f7294f"
 Parent: "087e1ea5-6280-4575-9e70-85b588db91b2"
 Template: "a87a00b1-e6db-45ab-8b54-636fec3b5523"
 Path: /sitecore/system/Settings/Foundation
@@ -9,13 +9,28 @@ SharedFields:
   Hint: __Icon
   Value: applications/32x32/folder_gear.png
 Languages:
+- Language: da
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: Fundament
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20171025T164242Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\virtualssuser
 - Language: en
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20160322T222042Z
+      Value: 20160210T142053Z
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
