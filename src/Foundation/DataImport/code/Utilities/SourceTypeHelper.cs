@@ -8,8 +8,6 @@ namespace XC.Foundation.DataImport.Utilities
 {
     public static class SourceTypeHelper
     {
-
-
         public static SourceType GetDatasourceSourceType(string datasourceName)
         {
             var types = DataImportContainer.SourceProviders.GetDatasourceTypes();

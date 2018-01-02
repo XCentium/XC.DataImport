@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
 using System.Xml;
+using XC.Foundation.DataImport.Models.DataSources;
 using XC.Foundation.DataImport.Models.Entities;
 
 namespace XC.Foundation.DataImport.Configurations
@@ -60,6 +61,11 @@ namespace XC.Foundation.DataImport.Configurations
                     }
                 }
                 return types;
+            }
+
+            internal static object GetMethods()
+            {
+                return Enum.GetNames(typeof(Method)).Select(i=> new { Id = i, Name = i, Value = i });
             }
         }
     }

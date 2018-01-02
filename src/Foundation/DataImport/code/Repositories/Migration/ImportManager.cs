@@ -17,14 +17,13 @@ using XC.Foundation.DataImport.Models.Mappings;
 using XC.Foundation.DataImport.Pipelines.PostProcessing;
 using XC.Foundation.DataImport.Pipelines.SourceProcessing;
 using XC.Foundation.DataImport.Repositories.DataSources;
-using XC.Foundation.DataImport.Repositories.Repositories;
 
 namespace XC.Foundation.DataImport.Repositories.Migration
 {
     public class ImportManager
     {
         private ImportMappingModel _mapping { get; set; }
-        public Dictionary<ID, Dictionary<string, object>> Items2Import;
+        public List<ImportDataItem> Items2Import;
         public ITargetRepository TargetRepository;
 
         public ImportManager(ImportMappingModel model)
@@ -33,6 +32,11 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             TargetRepository = CreateTargetRepository(model);
         }
 
+        /// <summary>
+        /// Creates the target repository.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         private ITargetRepository CreateTargetRepository(ImportMappingModel model)
         {
             try
@@ -50,8 +54,17 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             return null;
         }
 
+        /// <summary>
+        /// Gathers the source data.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
         public void GatherSourceData(string id, Action<string, string> statusMethod, string statusFilepath)
         {
+            DataImportLogger.Log.Info("XC.DataImport - Mapping: " + _mapping.Name + " gathering data ");
+            statusMethod(string.Format(" <span style=\"color:blue\">[INFO] gathering data: {0} </span>", _mapping.Name), statusFilepath);
+
             try
             {
                 if (_mapping == null || _mapping.Source == null || _mapping.Target == null)
@@ -72,8 +85,8 @@ namespace XC.Foundation.DataImport.Repositories.Migration
 
                 using (new SecurityDisabler())
                 {
-                    using (new DatabaseCacheDisabler())
-                    using (new EventDisabler())
+                    //using (new DatabaseCacheDisabler())
+                    //using (new EventDisabler())
                     {
                         var source = sourceDatasource.GetSource(statusMethod, statusFilepath);
                         Items2Import = ProcessSource(source, _mapping.SourceProcessingScripts, _mapping.FieldMappings, statusMethod, statusFilepath);
@@ -98,6 +111,12 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             return;
         }
 
+        /// <summary>
+        /// Converts to datasource model.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="sourceType">Type of the source.</param>
+        /// <returns></returns>
         public static IDataSourceModel ConvertToDatasourceModel(dynamic source, SourceType sourceType)
         {
             return Convert.ChangeType(JsonConvert.DeserializeObject(source.ToString(), Type.GetType(sourceType.ModelType)),Type.GetType(sourceType.ModelType));
@@ -121,14 +140,29 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             JobManager.Start(options);
         }
 
+        /// <summary>
+        /// Runs the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilename">The status filename.</param>
         public void Run(string id, Action<string, string> statusMethod, string statusFilename)
         {
             GatherSourceData(id, statusMethod, statusFilename);
             ImportSourceItems(id,statusMethod, statusFilename);
         }
 
+        /// <summary>
+        /// Imports the source items.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
         private void ImportSourceItems(string id, Action<string, string> statusMethod, string statusFilepath)
         {
+            statusMethod(string.Format(" <span style=\"color:blue\">[INFO] importing data: {0} </span>", _mapping.Name), statusFilepath);
+            DataImportLogger.Log.Info("XC.DataImport - Mapping: " + _mapping.Name + " importing data ");
+
             try
             {
                 if (_mapping == null || _mapping.Source == null || _mapping.Target == null)
@@ -148,7 +182,7 @@ namespace XC.Foundation.DataImport.Repositories.Migration
                             for (var i = 0; i < Items2Import.Count; i++)
                             {
                                 statusMethod(string.Format(" <h4 style=\"color:blue\">[INFO] {0}</h4>", i + 1), statusFilepath);
-                                var migratedItem = TargetRepository.ImportItem(Items2Import.ElementAt(i).Key, Items2Import.ElementAt(i).Value, i, statusMethod, statusFilepath);
+                                var migratedItem = TargetRepository.ImportItem(Items2Import.ElementAt(i), i, statusMethod, statusFilepath);
                                 migratedItems.Add(migratedItem);
                             }
 
@@ -175,12 +209,25 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             return;
         }
 
+        /// <summary>
+        /// Runs the post processing scripts.
+        /// </summary>
+        /// <param name="migratedItems">The migrated items.</param>
+        /// <param name="postProcessingScripts">The post processing scripts.</param>
         private void RunPostProcessingScripts(IEnumerable<Item> migratedItems, IEnumerable<string> postProcessingScripts)
         {
             var pipelineArgs = new ProcessingPipelineArgs(migratedItems, postProcessingScripts);
             CorePipeline.Run("xc.dataimport.postprocessing", pipelineArgs);
         }
 
+        /// <summary>
+        /// Creates the datasource.
+        /// </summary>
+        /// <param name="dataSourceType">Type of the data source.</param>
+        /// <param name="model">The model.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        /// <returns></returns>
         private IDataSource CreateDatasource(string dataSourceType, IDataSourceModel model, Action<string, string> statusMethod, string statusFilepath)
         {
             try
@@ -194,25 +241,43 @@ namespace XC.Foundation.DataImport.Repositories.Migration
             }
             return null;
         }
-        public Dictionary<ID, Dictionary<string, object>> ProcessSource(object fileContent, IEnumerable<string> sourceProcessingScripts, ScFieldMapping[] fieldMappings, Action<string, string> statusMethod, string statusFilepath)
+        /// <summary>
+        /// Processes the source.
+        /// </summary>
+        /// <param name="fileContent">Content of the file.</param>
+        /// <param name="sourceProcessingScripts">The source processing scripts.</param>
+        /// <param name="fieldMappings">The field mappings.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        /// <returns></returns>
+        public List<ImportDataItem> ProcessSource(object fileContent, IEnumerable<string> sourceProcessingScripts, ScFieldMapping[] fieldMappings, Action<string, string> statusMethod, string statusFilepath)
         {
             return RunSourceProcessingScripts(fileContent, fieldMappings, sourceProcessingScripts);
         }
 
-        public Dictionary<ID, Dictionary<string, object>> RunSourceProcessingScripts(object fileContent, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts)
+        /// <summary>
+        /// Runs the source processing scripts.
+        /// </summary>
+        /// <param name="fileContent">Content of the file.</param>
+        /// <param name="fieldMappings">The field mappings.</param>
+        /// <param name="sourceProcessingScripts">The source processing scripts.</param>
+        /// <returns></returns>
+        public List<ImportDataItem> RunSourceProcessingScripts(object fileContent, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts)
         {
             var pipelineArgs = new SourceProcessingPipelineArgs(fileContent, fieldMappings, sourceProcessingScripts);
             CorePipeline.Run("xc.dataimport.sourceprocessing", pipelineArgs);
             return pipelineArgs.Items2Import;
         }
 
+        /// <summary>
+        /// Clears the cache.
+        /// </summary>
         private void ClearCache()
         {
             TargetRepository.Database.Caches.DataCache.Clear();
             TargetRepository.Database.Caches.ItemCache.Clear();
             TargetRepository.Database.Caches.ItemPathsCache.Clear();
             TargetRepository.Database.Caches.StandardValuesCache.Clear();
-
             Sitecore.Caching.CacheManager.ClearAllCaches();
         }
     }

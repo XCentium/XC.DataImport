@@ -7,7 +7,9 @@ using System.Web;
 using System.Xml;
 using XC.Foundation.DataImport.Diagnostics;
 using XC.Foundation.DataImport.Exceptions;
+using XC.Foundation.DataImport.Models.DataSources;
 using XC.Foundation.DataImport.Pipelines.FieldProcessing;
+using XC.Foundation.DataImport.Repositories.Migration;
 using XC.Foundation.DataImport.Utilities;
 
 namespace Aha.Project.DataImport.Scripts.Fields
@@ -24,7 +26,13 @@ namespace Aha.Project.DataImport.Scripts.Fields
                 return;
             }
 
-            var folderWithAssets = Settings.GetSetting("Aha.DataImport.AssetFolder");
+            FileDataSourceModel sourceModel = ImportManager.ConvertToDatasourceModel(args.Mapping.Source, args.Mapping.SourceType);
+            if (sourceModel == null)
+            {
+                DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no source model");
+                return;
+            }
+            var folderWithAssets = IOExtensions.GetFolderForFile(sourceModel.FilePath);
             if (string.IsNullOrEmpty(folderWithAssets))
             {
                 DataImportLogger.Log.Info("ResolveMediaReference Field Processing: no folderWithAssets");

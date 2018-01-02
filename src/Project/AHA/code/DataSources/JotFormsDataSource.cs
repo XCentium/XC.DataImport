@@ -40,7 +40,7 @@ namespace Aha.Project.DataImport.DataSources
             {
                 if (!string.IsNullOrWhiteSpace(_model.ApiKey) && _model.FormIds != null && !string.IsNullOrWhiteSpace(_model.FormIds))
                 {
-                    var forms = new Dictionary<ID, Dictionary<string, object>>();
+                    var forms = new List<ImportDataItem>();
                     var api = new JotFormClient(_model.ApiKey);
                     foreach (var formEntry in _model.FormIds.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
                     {
@@ -56,15 +56,16 @@ namespace Aha.Project.DataImport.DataSources
                             {
                                 var itemId = formId?.StringToID();
 
-                                var formDicModel = new Dictionary<string, object>();
-                                forms.Add(itemId, formDicModel);
+
+                                var formDicModel = new ImportDataItem() { ItemId = itemId };
+                                forms.Add(formDicModel);
 
                                 var formModel = new SitecoreFormModel
                                 {
                                     ItemId = itemId.ToString()
                                 };
 
-                                formDicModel.Add(formIds[0], formModel);
+                                formDicModel.Fields.Add(formIds[0], formModel);
                                 formModel.Properties.Add("ucm_id", formIds[0]);
 
                                 var formProps = formProperties[JotForm.Properties.Content]?.Children<JProperty>();

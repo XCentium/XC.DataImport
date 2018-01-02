@@ -55,7 +55,31 @@ namespace XC.Foundation.DataImport.Controllers
         {
             return Ok("This is default action of DataImportController");
         }
+        [System.Web.Http.AcceptVerbs("GET")]
+        [HttpGet]
+        public System.Web.Http.IHttpActionResult GetMethods()
+        {
+            var messages = new List<string>();
+            try
+            {
+                return Ok(new
+                {
+                    data = DataImportContainer.SourceProviders.GetMethods(),
+                    messages = messages
+                });
+            }
+            catch (Exception ex)
+            {
+                DataImportLogger.Log.Error(ex.Message, ex);
+                messages.Add(ex.StackTrace);
+            }
 
+            return Ok(new
+            {
+                data = new List<string>(),
+                messages = messages
+            });
+        }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [HttpGet]
         public System.Web.Http.IHttpActionResult CreateTestMapping()
@@ -590,7 +614,7 @@ namespace XC.Foundation.DataImport.Controllers
                 messages = messages
             });
         }
-
+        
         [HttpGet, HttpPost]
         public System.Web.Http.IHttpActionResult GetSourceTypes()
         {

@@ -4,5 +4,7 @@
     {
         public string DatabaseName { get; set; }
         public string Query { get; set; }
+        public bool MigrateAllFields { get; set; }
+        public bool IncludeDescendants { get; set; }
     }
 }

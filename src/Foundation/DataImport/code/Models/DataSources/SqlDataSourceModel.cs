@@ -2,8 +2,7 @@
 {
     public class SqlDataSourceModel : DataSourceModel
     {
-        public string ConnectionStringName { get; set; }
+        public string ConnectionString { get; set; }
         public string SqlStatement { get; set; }
-
     }
 }

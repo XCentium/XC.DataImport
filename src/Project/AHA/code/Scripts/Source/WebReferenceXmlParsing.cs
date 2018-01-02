@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using XC.Foundation.DataImport.Diagnostics;
+using XC.Foundation.DataImport.Models.Entities;
 using XC.Foundation.DataImport.Pipelines.SourceProcessing;
 using XC.Foundation.DataImport.Utilities;
 
@@ -20,6 +21,7 @@ namespace Aha.Project.DataImport.Scripts.Source
             if (string.IsNullOrWhiteSpace((string)args.Content))
             {
                 DataImportLogger.Log.Info("Source Processing WebReferenceXmlParsing: content is empty");
+                return;
             }
 
             using (new SecurityDisabler())
@@ -39,7 +41,7 @@ namespace Aha.Project.DataImport.Scripts.Source
                     if (!string.IsNullOrEmpty(node))
                     {
                         var itemId = node.StringToID();
-                        args.Items2Import.Add(itemId, new Dictionary<string, object>());
+                        args.Items2Import.Add(new ImportDataItem { ItemId = itemId });
                         DataImportLogger.Log.Info("#################Source Processing WebReferenceXmlParsing item ##################" + itemId);
 
                         foreach (var field in args.FieldMappings)
@@ -52,14 +54,14 @@ namespace Aha.Project.DataImport.Scripts.Source
                             {
                                 sourceValue = xmlNode.InnerText;
                             }
-
-                            if (args.Items2Import.ContainsKey(itemId))
+                            var existingDataItem = args.Items2Import.FirstOrDefault(i => i.ItemId == itemId);
+                            if (existingDataItem != null && existingDataItem.Fields.ContainsKey(field.TargetFields))
                             {
-                                args.Items2Import[itemId][field.TargetFields] = sourceValue;
+                                existingDataItem.Fields[field.TargetFields] = sourceValue;
                             }
                             else
                             {
-                                args.Items2Import[itemId].Add(field.TargetFields, sourceValue);
+                                existingDataItem.Fields.Add(field.TargetFields, sourceValue);
                             }
                             DataImportLogger.Log.Info(string.Format("#################Source Processing item {0} field {1} ##################", itemId, field.TargetFields));
                         }

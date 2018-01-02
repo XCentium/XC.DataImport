@@ -1,0 +1,83 @@
+{
+  "Name": "webb",
+  "Id": "ac69ea83-4f47-4480-bcb8-53c8e991d8b0",
+  "SourceType": {
+    "Name": "WebDataSource",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.WebDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.WebDataSource,XC.Foundation.DataImport",
+    "Fields": [
+      {
+        "Name": "Url",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "Method",
+        "InputType": "select",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/-/getmethods",
+        "TriggerFields": null
+      },
+      {
+        "Name": "ApiKey",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "Username",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "Password",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      }
+    ]
+  },
+  "TargetType": {
+    "Name": "SitecoreRepository",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository,XC.Foundation.DataImport",
+    "Fields": [
+      {
+        "Name": "DatabaseName",
+        "InputType": "select",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/-/getdatabases",
+        "TriggerFields": "TemplateId,Path"
+      },
+      {
+        "Name": "TemplateId",
+        "InputType": "select",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/gettemplates",
+        "TriggerFields": null
+      },
+      {
+        "Name": "OverwriteFieldValues",
+        "InputType": "checkbox",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "ItemPath",
+        "InputType": "tree",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/getsitecoretree",
+        "TriggerFields": null
+      }
+    ]
+  },
+  "Source": {
+    "Url": "http://eee",
+    "Method": "GET"
+  },
+  "SourceProcessingScripts": [],
+  "PostImportScripts": [],
+  "Target": {},
+  "FieldMappings": [],
+  "ExcludeFieldMappingFields": false,
+  "MergeWithExistingItems": false,
+  "MergeColumnFieldMatch": null
+}

@@ -8,13 +8,14 @@ using XC.Foundation.DataImport.Models;
 using System.IO;
 using Newtonsoft.Json;
 using Sitecore.Data;
+using XC.Foundation.DataImport.Models.Entities;
 
 namespace XC.Foundation.DataImport.Pipelines.SourceProcessing
 {
     public class SourceProcessingPipelineArgs : PipelineArgs
     {
         private IEnumerable<string> _sourceProcessingScripts;
-        public Dictionary<ID, Dictionary<string, object>> Items2Import;
+        public List<ImportDataItem> Items2Import;
         private object _content = string.Empty;
         private ScFieldMapping[] _fieldMappings;
 
@@ -23,13 +24,13 @@ namespace XC.Foundation.DataImport.Pipelines.SourceProcessing
             _sourceProcessingScripts = sourceProcessingScripts;
             _content = content;
             _fieldMappings = fieldMappings;
-            if (content is Dictionary<ID, Dictionary<string, object>>)
+            if (content is List<ImportDataItem>)
             {
-                Items2Import = (Dictionary<ID, Dictionary<string, object>>)content;
-            }
+                Items2Import = (List<ImportDataItem>)content;
+            } 
             else
             {
-                Items2Import = new Dictionary<ID, Dictionary<string, object>>();
+                Items2Import = new List<ImportDataItem>();
             }
         }
 

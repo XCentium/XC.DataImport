@@ -58,6 +58,93 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
 
         internal virtual void UpdateFields(Dictionary<string, object> values, Item item, Action<string, string> statusMethod, string statusFilepath)
         {
+            if (_mapping.FieldMappings.Any() && !_mapping.ExcludeFieldMappingFields)
+            {
+                UpdateFieldsBasedOnFieldMappings(values, item, statusMethod, statusFilepath);
+            }
+            else
+            {                
+                UpdateFieldsBasedOnValues(values, item, statusMethod, statusFilepath);
+            }
+        }
+
+        /// <summary>
+        /// Updates the fields based on values.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void UpdateFieldsBasedOnValues(Dictionary<string, object> values, Item item, Action<string, string> statusMethod, string statusFilepath)
+        {
+            if (item == null)
+            {
+                statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] UpdateFieldsBasedOnValues item is null. ({0})</span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                return;
+            }
+            foreach (var fieldName in values.Keys)
+            {
+                try
+                {
+                    var field = item.Fields[fieldName];
+                    if (field != null)
+                    {
+                        if (_mapping.FieldMappings != null && _mapping.FieldMappings.Any() && _mapping.ExcludeFieldMappingFields)
+                        {
+                            if ((string.IsNullOrWhiteSpace(field.Value) || SitecoreTarget.OverwriteFieldValues) && _mapping.FieldMappings.Any(f=>f.SourceFields == fieldName))
+                            {
+                                ProcessGenericField((string)values[fieldName], item, statusMethod, statusFilepath, field);
+                            }
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(field.Value) || SitecoreTarget.OverwriteFieldValues || IsAllowedSystemField(field.Name))
+                            {
+                                ProcessGenericField((string)values[fieldName], item, statusMethod, statusFilepath, field);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0} ({1})</strong></span>", ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                    DataImportLogger.Log.Error(ex.Message, ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Processes the generic field.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        /// <param name="field">The field.</param>
+        private void ProcessGenericField(string value, Item item, Action<string, string> statusMethod, string statusFilepath, Field field)
+        {
+            using (new EditContext(item, false, true))
+            {
+                field.Value = value;
+            }
+            statusMethod(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", field.DisplayName, field.Value, item.ID), statusFilepath);
+            DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:green\">[SUCCESS][{2}] Field \"{0}\" Updated to \"{1}\" </span>", field.DisplayName, field.Value, item.ID));
+        }
+
+        /// <summary>
+        /// Updates the fields based on field mappings.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void UpdateFieldsBasedOnFieldMappings(Dictionary<string, object> values, Item item, Action<string, string> statusMethod, string statusFilepath)
+        {
+            if(item == null)
+            {
+                statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] UpdateFieldsBasedOnFieldMappings item is null. ({0})</span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                return;
+            }
             foreach (var field in _mapping.FieldMappings)
             {
                 try
@@ -553,6 +640,10 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="matchingColumnValue">The matching column value.</param>
         internal void UpdateMultilistField(Item item, Action<string, string> statusMethod, string statusFilepath, ScFieldMapping field, Field targetField, string matchingColumnValue)
         {
+            if (string.IsNullOrWhiteSpace(field.ReferenceItemsField))
+            {
+                return;
+            }
             var multilistField = (MultilistField)item.Fields[field.TargetFields];
             var startPath = "sitecore";
             var source = GetFieldSource(multilistField.InnerField.Source);
@@ -719,7 +810,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <returns></returns>
         internal string ResolveFieldName(string fieldName)
         {
-            if (fieldName.StartsWith("_"))
+            if (!string.IsNullOrWhiteSpace(fieldName) && fieldName.StartsWith("_"))
             {
                 return ReplaceFirst(fieldName, "_", "@").ToLower();
             }
@@ -782,16 +873,54 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                 return Database.SelectSingleItem(string.Format("fast://sitecore/content//*[@{0}='{1}']", FastQueryUtility.EscapeDashes(targetFieldItem.Name), matchingColumnValue));
             }
         }
-        internal virtual string GetItemName(Dictionary<string, object> values, string defaultValue)
+        internal virtual string GetItemName(ImportDataItem values, string defaultValue)
         {
             var name = defaultValue;
             if (_mapping != null && _mapping.FieldMappings != null && _mapping.FieldMappings.Any())
             {
                 var fieldNameforItemName = _mapping.FieldMappings.FirstOrDefault().SourceFields;
-                name = (string)values.FirstOrDefault(i => i.Key == fieldNameforItemName).Value;
+                name = (string)values.Fields.FirstOrDefault(i => i.Key == fieldNameforItemName).Value;
             }
             return name;
         }
 
+
+        /// <summary>
+        /// Determines whether [is allowed system field] [the specified field name].
+        /// </summary>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns>
+        ///   <c>true</c> if [is allowed system field] [the specified field name]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsAllowedSystemField(string fieldName)
+        {
+            var allowedSystemFields = GetAllowedSystemFields();
+            if (allowedSystemFields.Contains(fieldName))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the allowed system fields.
+        /// </summary>
+        /// <returns></returns>
+        internal static List<string> GetAllowedSystemFields()
+        {
+            return new List<string>() {
+                "__Created",
+                "__Updated",
+                "__Updated by",
+                "__Created by",
+                "__Lock",
+                "__Display name",
+                "__Valid from",
+                "__Valid to",
+                "__Hide version",
+                "__Publish",
+                "__Unpublish",
+                "__Publishing groups",
+                "__Never publish"
+            };
+        }
     }
 }

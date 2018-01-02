@@ -18,6 +18,12 @@
                         <input type="text"  class="form-control" id="{{field.Name}}" name="{{field.Name}}" [(ngModel)]="mapping.Source[field.Name]" />
                     </div>
                 </div>
+                <div *ngIf="field.InputType === 'checkbox'">
+                    <div class="form-group">                        
+                        <input type="checkbox" id="{{field.Name}}" name="{{field.Name}}" [(ngModel)]="mapping.Source[field.Name]" />
+                        <label for="{{field.Name}}">{{ field.Name | translate }}</label>
+                    </div>
+                </div>
                 <div *ngIf="field.InputType === 'select'">
                     <div class="form-group">
                         <label for="{{field.Name}}">{{ field.Name | translate }}</label>

@@ -60,9 +60,14 @@
               <div  class="section">
                   <div class="label">Target Type: </div>
                   <div>{{ mapping.TargetType?.Name }} ({{ mapping.TargetType?.DataSourceType }}) </div>
-                  <div class="label">Database: </div><div>{{ mapping.Target?.DatabaseName }}</div>
-                  <div class="label">Template: </div><div>{{ mapping.Target?.TemplateId }}</div>
-                  <div class="label">Sitecore Path: </div><div>{{ mapping.Target?.ItemPath }}</div>
+                  <div><!--  -->
+                    <div *ngFor="let key of objectKeys(mapping.Target)">
+                      <div class="form-group">
+                        <div class="label">{{ key | translate }}</div>
+                        <div>{{ mapping.Target[key] }}</div>
+                      </div>                         
+                    </div>
+                </div>
               </div>
             </sc-tab>              
             <sc-tab label="Field Mappings">

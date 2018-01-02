@@ -27,8 +27,10 @@ namespace XC.Foundation.DataImport.Models.Mappings
         public dynamic Target { get; set; }
 
         public ScFieldMapping[] FieldMappings { get; set; }
-        public bool MergeWithExistingItems { get; internal set; }
-        public SourceTargetPair MergeColumnFieldMatch { get; internal set; }
+        public bool ExcludeFieldMappingFields { get; set; }
+
+        public bool MergeWithExistingItems { get; set; }
+        public SourceTargetPair MergeColumnFieldMatch { get; set; }
 
         public void ConvertPathsToLongIds()
         {

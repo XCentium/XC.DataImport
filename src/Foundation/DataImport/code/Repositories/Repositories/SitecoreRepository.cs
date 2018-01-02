@@ -23,12 +23,13 @@ using Sitecore.Pipelines;
 using XC.Foundation.DataImport.Utilities;
 using Newtonsoft.Json;
 using XC.Foundation.DataImport.Models.Entities;
+using Sitecore.Globalization;
 
 namespace XC.Foundation.DataImport.Repositories.Repositories
 {
     public class SitecoreRepository : BaseTargetRepository, ITargetRepository
-    {        
-        public SitecoreRepository(ImportMappingModel mapping):base(mapping)
+    {
+        public SitecoreRepository(ImportMappingModel mapping) : base(mapping)
         {
         }
 
@@ -41,7 +42,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="statusMethod">The status method.</param>
         /// <param name="statusFilepath">The status filepath.</param>
         /// <returns></returns>
-        public Item ImportItem(ID itemId, Dictionary<string, object> values, int index, Action<string, string> statusMethod, string statusFilepath)
+        public Item ImportItem(ImportDataItem dataItem, int index, Action<string, string> statusMethod, string statusFilepath)
         {
             if (_mapping == null || Target == null || ParentItem == null)
             {
@@ -52,15 +53,13 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             {
                 using (new ItemFilteringDisabler())
                 {
-                    var sitecoreId = itemId;
-
                     if (_mapping.MergeWithExistingItems)
                     {
-                        return UpdateExistingItem(itemId, values, index, statusMethod, statusFilepath);
+                        return UpdateExistingItem(dataItem, index, statusMethod, statusFilepath);
                     }
                     else
                     {
-                        return CreateNewItem(itemId, values, ParentItem, index, statusMethod, statusFilepath);
+                        return CreateNewItem(dataItem, ParentItem, index, statusMethod, statusFilepath);
                     }
                 }
             }
@@ -81,10 +80,10 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="statusMethod">The status method.</param>
         /// <param name="statusFilepath">The status filepath.</param>
         /// <returns></returns>
-        private Item UpdateExistingItem(ID itemId, Dictionary<string, object> values, int index, Action<string, string> statusMethod, string statusFilepath)
+        private Item UpdateExistingItem(ImportDataItem dataItem, int index, Action<string, string> statusMethod, string statusFilepath)
         {
             var fieldId = _mapping.MergeColumnFieldMatch.Source;
-            var matchingColumnValue = values.ContainsKey(fieldId) ? values[_mapping.MergeColumnFieldMatch.Source] as string : null; 
+            var matchingColumnValue = dataItem.Fields.ContainsKey(fieldId) ? dataItem.Fields[_mapping.MergeColumnFieldMatch.Source] as string : null;
 
             if (string.IsNullOrEmpty(matchingColumnValue))
             {
@@ -109,7 +108,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                 {
                     statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Updated </strong></span>", existingItem.Paths.Path), statusFilepath);
 
-                    UpdateFields(values, existingItem, statusMethod, statusFilepath);
+                    UpdateFields(dataItem.Fields, existingItem, statusMethod, statusFilepath);
 
                     DataImportLogger.Log.Info("XC.DataImport - item processed: Target path - " + existingItem.Paths.FullPath);
                     HistoryLogging.ItemMigrated(existingItem, DateTime.Now, HistoryLogging.GetMappingFileName(_mapping.Id.ToString()));
@@ -128,21 +127,23 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="statusMethod">The status method.</param>
         /// <param name="statusFilepath">The status filepath.</param>
         /// <returns></returns>
-        private Item CreateNewItem(ID itemId, Dictionary<string, object> values, Item parentItem, int index, Action<string, string> statusMethod, string statusFilepath)
+        private Item CreateNewItem(ImportDataItem dataItem, Item parentItem, int index, Action<string, string> statusMethod, string statusFilepath)
         {
+            //using (new DatabaseCacheDisabler())
             using (new SecurityDisabler())
             {
                 try
                 {
-                    var existingItem = Database.GetItem(itemId);
-                    if (existingItem == null)
+                    var targetItem = Database.GetItem(dataItem.ItemId);
+                    if (targetItem == null)
                     {
-                        var itemName = _mapping.Name + " " + index;
+                        var itemName = dataItem.Name;
                         var itemNameMapping = _mapping.FieldMappings.FirstOrDefault();
-                        var fieldId = itemNameMapping.TargetFields;
+
                         if (itemNameMapping != null)
                         {
-                            itemName = values.ContainsKey(fieldId) ? values[fieldId].ToString() : "";
+                            var fieldId = itemNameMapping.TargetFields;
+                            itemName = dataItem.Fields.ContainsKey(fieldId) ? dataItem.Fields[fieldId].ToString() : "";
                             var processedValue = (string)RunFieldProcessingScripts(itemName, itemNameMapping.ProcessingScripts);
                             if (!string.IsNullOrEmpty(processedValue))
                             {
@@ -154,13 +155,12 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                         {
                             var template = ItemUri.Parse(SitecoreTarget.TemplateId);
                             var templateId = template.ItemID;
-                            var newItem = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(itemName), parentItem, templateId, itemId);
-                            if (newItem == null) return null;
+                            targetItem = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(itemName), parentItem, templateId, dataItem.ItemId);
+                            if (targetItem == null) return null;
 
-                            statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Created </strong></span>", newItem.Paths.Path), statusFilepath);
+                            statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Created </strong></span>", targetItem.Paths.Path), statusFilepath);
 
-                            UpdateFields(values, newItem, statusMethod, statusFilepath);
-                            existingItem = newItem;
+                            UpdateFields(dataItem.Fields, targetItem, statusMethod, statusFilepath);
                         }
                         else
                         {
@@ -169,16 +169,20 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                     }
                     else
                     {
-                        statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] Updating Fields on {0} </strong></span>", existingItem.Paths.Path), statusFilepath);
+                        statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] Updating Fields on {0} </strong></span>", targetItem.Paths.Path), statusFilepath);
 
-                        ChangeTemplateIfNeeded(existingItem, statusMethod, statusFilepath);
-                        UpdateFields(values, existingItem, statusMethod, statusFilepath);
+                        ChangeTemplateIfNeeded(targetItem, statusMethod, statusFilepath);
+                        UpdateFields(dataItem.Fields, targetItem, statusMethod, statusFilepath);
                     }
 
-                    DataImportLogger.Log.Info("XC.DataImport - item processed: Target path - " + existingItem.Paths.FullPath);
-                    HistoryLogging.ItemMigrated(existingItem, DateTime.Now, HistoryLogging.GetMappingFileName(_mapping.Id.ToString()));
+                    DataImportLogger.Log.Info("XC.DataImport - item processed: Target path - " + targetItem.Paths.FullPath);
+                    HistoryLogging.ItemMigrated(targetItem, DateTime.Now, HistoryLogging.GetMappingFileName(_mapping.Id.ToString()));
 
-                    return existingItem;
+                    ProcessLanguageVersions(dataItem, targetItem, statusMethod, statusFilepath);
+                    ProcessVersions(dataItem, targetItem, statusMethod, statusFilepath);
+                    ProcessChildren(dataItem, targetItem, statusMethod, statusFilepath);
+
+                    return targetItem;
                 }
                 catch (Exception ex)
                 {
@@ -188,5 +192,100 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             }
             return null;
         }
+
+        /// <summary>
+        /// Processes the children.
+        /// </summary>
+        /// <param name="dataItem">The item.</param>
+        /// <param name="targetItem">The target item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void ProcessChildren(ImportDataItem dataItem, Item targetItem, Action<string, string> statusMethod, string statusFilepath)
+        {
+            if (dataItem.Children != null && dataItem.Children.Any())
+            {
+                foreach (var child in dataItem.Children)
+                {
+                    try
+                    {
+                        var childItem = Database.GetItem(child.ItemId);
+                        if (childItem == null && !string.IsNullOrWhiteSpace(child.TemplateId))
+                        {
+                            var templateId = new TemplateID(ID.Parse(child.TemplateId));
+                            childItem = ItemManager.CreateItem(child.Name, targetItem, templateId, child.ItemId);
+                            statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Created</strong></span>", targetItem.Paths.Path), statusFilepath);
+                        }
+                        statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] Updating fields on {0}</strong></span>", targetItem.Paths.Path), statusFilepath);
+                        UpdateFields(child.Fields, childItem, statusMethod, statusFilepath);
+
+                        ProcessLanguageVersions(child, childItem, statusMethod, statusFilepath);
+                        ProcessVersions(child, childItem, statusMethod, statusFilepath);
+                        ProcessChildren(child, childItem, statusMethod, statusFilepath);
+                    }
+                    catch (Exception ex)
+                    {
+                        statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] ProcessChildren {0}</strong> {1} ({2})</span>", targetItem.Paths.Path, ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                        DataImportLogger.Log.Error(ex.Message, ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Processes the versions.
+        /// </summary>
+        /// <param name="dataItem">The data item.</param>
+        /// <param name="targetItem">The target item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void ProcessVersions(ImportDataItem dataItem, Item targetItem, Action<string, string> statusMethod, string statusFilepath)
+        {
+            if (dataItem == null || dataItem.Versions == null || !dataItem.Versions.Any())
+            {
+                statusMethod(string.Format(" <span style=\"color:red\"><strong>[INFO] No Versions to process. ({0})</strong></span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                return;
+            }
+            foreach (var version in dataItem.Versions)
+            {
+                var versionItem = targetItem.Versions[version.Version];
+                if (versionItem == null)
+                {
+                    versionItem = targetItem.Versions.AddVersion();
+                }
+                UpdateFields(version.Fields, versionItem, statusMethod, statusFilepath);
+            }
+        }
+
+        /// <summary>
+        /// Processes the language versions.
+        /// </summary>
+        /// <param name="dataItem">The item.</param>
+        /// <param name="targetItem">The target item.</param>
+        /// <param name="statusMethod">The status method.</param>
+        /// <param name="statusFilepath">The status filepath.</param>
+        private void ProcessLanguageVersions(ImportDataItem dataItem, Item targetItem, Action<string, string> statusMethod, string statusFilepath)
+        {
+            if (dataItem == null || dataItem.LanguageVersions == null || !dataItem.LanguageVersions.Any())
+            {
+                statusMethod(string.Format(" <span style=\"color:red\"><strong>[INFO] No Language Versions to process. ({0})</strong></span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                return;
+            }
+            foreach (var version in dataItem.LanguageVersions)
+            {
+                var versionItem = Database.GetItem(dataItem.ItemId, version.Language);
+                if (versionItem == null)
+                {
+                    using (new LanguageSwitcher(version.Language))
+                    {
+                        versionItem = targetItem.Versions.AddVersion();
+                        statusMethod(string.Format(" <span style=\"color:blue\"><strong>[INFO] Add new language version. ({0})</strong></span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                    }
+                }
+                statusMethod(string.Format(" <span style=\"color:blue\"><strong>[INFO] Updating fields on language version. ({0})</strong></span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+
+                UpdateFields(version.Fields, versionItem, statusMethod, statusFilepath);
+            }
+        }
+
     }
 }

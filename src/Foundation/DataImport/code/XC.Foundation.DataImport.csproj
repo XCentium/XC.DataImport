@@ -246,36 +246,6 @@
     <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewBatchMapping.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\CreateNewMapping.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\Styles\xcdataimport.css" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Behaviors\CustomMultiSelectList.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Behaviors\Required.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\SelectableListControl.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\ScriptList.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\AsyncServiceDatasource.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\ServiceDatasource.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\DataImport.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\EditMapping.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\ExistingMappings.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\DeleteMapping.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\ScMapping.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\PostProcessingScript.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\NonScMapping.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\PageCodes\RunImport.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\TreeViews\ItemTreeView.js" />
-    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\CallComponentFunction.js" />
-    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToComplexProperty.js" />
-    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\SetPropertyToOtherProperty.js" />
-    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Actions\ShowNotification.js" />
-    <Content Include="Sitecore\Shell\Client\Speak\Layouts\Renderings\Resources\Rules\ConditionsAndActions\Conditions\ComponentHasComplexValue.js" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\ServiceDatasource.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\FieldList.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\TreeViews\ItemTreeView.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Datasources\AsyncServiceDatasource.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\ScriptList.cshtml" />
-    <Content Include="Sitecore\Shell\Client\Applications\XCDataImport\version 1\Controls\SelectableListControl.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -299,6 +269,7 @@
     <Compile Include="Models\DataSources\FileDataSourceModel.cs" />
     <Compile Include="Models\DataSources\IDataSourceModel.cs" />
     <Compile Include="Models\DataSources\WebDataSourceModel.cs" />
+    <Compile Include="Models\Entities\ImportDataItem.cs" />
     <Compile Include="Models\Entities\ISitecoreFieldModel.cs" />
     <Compile Include="Models\Entities\MappingReference.cs" />
     <Compile Include="Models\Entities\SitecoreFieldModel.cs" />
@@ -351,9 +322,6 @@
     <Compile Include="Repositories\FileSystem\IFileSystemRepository.cs" />
     <Compile Include="Repositories\History\HistoryLogging.cs" />
     <Compile Include="Templates.cs" />
-    <Compile Include="UI\Controls\ScriptListControl.cs" />
-    <Compile Include="UI\Controls\FieldListControl.cs" />
-    <Compile Include="UI\Controls\SelectableListControl.cs" />
     <Compile Include="Utilities\FastQueryUtility.cs" />
     <Compile Include="Utilities\ItemExtensions.cs" />
     <Compile Include="Utilities\StringExtentions.cs" />

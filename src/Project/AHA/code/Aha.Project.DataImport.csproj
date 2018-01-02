@@ -112,6 +112,7 @@
   <ItemGroup>
     <Content Include="App_Config\Include\Project\Aha.DataImport.config" />
     <Content Include="Views\FormBuilder\FieldTemplates\Address.cshtml" />
+    <Content Include="App_Config\Include\xc.DataImport.OldAha.config" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

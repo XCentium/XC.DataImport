@@ -5,6 +5,11 @@ namespace XC.Foundation.DataImport
 {
     public struct Templates
     {
+        public struct DataImport
+        {
+            public const string ItemImporting = "_item_";
+        }
+
         public struct ImportedItem
         {
             public static readonly ID ID = new ID("{3459622E-66CD-4878-8811-1C2F0EC17570}");
@@ -63,6 +68,8 @@ namespace XC.Foundation.DataImport
             public const string DisplayFieldName = "Display Field Name";
             public const string ValueFieldName = "Value Field Name";
             public const string DefaultSelection = "Default Selection";
+            public const string ItemName = "__Item name";
+            public const string ItemDisplayName = "__Display name";
         }
 
     }

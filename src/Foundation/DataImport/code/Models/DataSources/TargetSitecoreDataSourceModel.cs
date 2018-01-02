@@ -11,5 +11,6 @@ namespace XC.Foundation.DataImport.Models.DataSources
         public string ItemPath { get; set; }
         public string TemplateId { get; set; }
         public string FullPath { get; set; }
+        public bool OverwriteFieldValues { get; set; }
     }
 }

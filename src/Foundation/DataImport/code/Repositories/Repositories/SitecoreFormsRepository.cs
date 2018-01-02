@@ -43,7 +43,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="statusMethod">The status method.</param>
         /// <param name="statusFilepath">The status filepath.</param>
         /// <returns></returns>
-        public Item ImportItem(ID itemId, Dictionary<string, object> values, int index, Action<string, string> statusMethod, string statusFilepath)
+        public Item ImportItem(ImportDataItem dataItem, int index, Action<string, string> statusMethod, string statusFilepath)
         {
             if (_mapping == null || Target == null || ParentItem == null)
             {
@@ -54,15 +54,13 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             {
                 using (new ItemFilteringDisabler())
                 {
-                    var sitecoreId = itemId;
-
                     if (_mapping.MergeWithExistingItems)
                     {
-                        return UpdateExistingItem(itemId, values, index, statusMethod, statusFilepath);
+                        return UpdateExistingItem(dataItem, index, statusMethod, statusFilepath);
                     }
                     else
                     {
-                        return CreateNewItem(itemId, values, ParentItem, index, statusMethod, statusFilepath);
+                        return CreateNewItem(dataItem, ParentItem, index, statusMethod, statusFilepath);
                     }
                 }
             }
@@ -94,15 +92,15 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// Updates the existing item.
         /// </summary>
         /// <param name="itemId">The item identifier.</param>
-        /// <param name="values">The values.</param>
+        /// <param name="dataItem">The values.</param>
         /// <param name="index">The index.</param>
         /// <param name="statusMethod">The status method.</param>
         /// <param name="statusFilepath">The status filepath.</param>
         /// <returns></returns>
-        private Item UpdateExistingItem(ID itemId, Dictionary<string, object> values, int index, Action<string, string> statusMethod, string statusFilepath)
+        private Item UpdateExistingItem(ImportDataItem dataItem, int index, Action<string, string> statusMethod, string statusFilepath)
         {
             var fieldId = ConvertToId(_mapping.MergeColumnFieldMatch.Source);
-            var matchingColumnValue = values.ContainsKey(fieldId.ToString()) ? values[ConvertToId(_mapping.MergeColumnFieldMatch.Source).ToString()] as string : null;
+            var matchingColumnValue = dataItem.Fields.ContainsKey(fieldId.ToString()) ? dataItem.Fields[ConvertToId(_mapping.MergeColumnFieldMatch.Source).ToString()] as string : null;
 
             if (string.IsNullOrEmpty(matchingColumnValue))
             {
@@ -127,7 +125,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                 {
                     statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Updated </strong></span>", existingItem.Paths.Path), statusFilepath);
 
-                    UpdateFields(values, existingItem, statusMethod, statusFilepath);
+                    UpdateFields(dataItem.Fields, existingItem, statusMethod, statusFilepath);
 
                     DataImportLogger.Log.Info("XC.DataImport - item processed: Target path - " + existingItem.Paths.FullPath);
                     HistoryLogging.ItemMigrated(existingItem, DateTime.Now, HistoryLogging.GetMappingFileName(_mapping.Id.ToString()));
@@ -238,20 +236,19 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="statusMethod">The status method.</param>
         /// <param name="statusFilepath">The status filepath.</param>
         /// <returns></returns>
-        private Item CreateNewItem(ID itemId, Dictionary<string, object> values, Item parentItem, int index, Action<string, string> statusMethod, string statusFilepath)
+        private Item CreateNewItem(ImportDataItem dataItem, Item parentItem, int index, Action<string, string> statusMethod, string statusFilepath)
         {
             using (new SecurityDisabler())
             {
                 try
                 {
-                    var itemName = GetItemName(values, _mapping.Name + " " + index);
+                    var itemName = GetItemName(dataItem, _mapping.Name + " " + index);
 
-                    var formModel = values.FirstOrDefault().Value as SitecoreFormModel;
-                    var formPropertyFields = formModel?.Properties;
+                    var formModel = dataItem.Fields.FirstOrDefault().Value as SitecoreFormModel;
                     var formFieldProperties = formModel?.Fields;
 
                     var formData = new Collection<ModelWrapper<string>>();
-                    var existingItem = Database.GetItem(itemId);
+                    var existingItem = Database.GetItem(dataItem.ItemId);
                     if (existingItem == null)
                     {
                         var itemNameMapping = _mapping.FieldMappings.FirstOrDefault();
@@ -270,7 +267,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                             var templateId = template.ItemID;
 
                             // creating form item
-                            var newForm = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(itemName), parentItem, templateId, itemId);
+                            var newForm = ItemManager.CreateItem(ItemUtil.ProposeValidItemName(itemName), parentItem, templateId, dataItem.ItemId);
                             if (newForm == null) return null;
                             statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Created </strong></span>", newForm.Paths.Path), statusFilepath);
 
@@ -280,7 +277,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                             if (formPage == null) return null;
                             statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] {0} Created </strong></span>", formPage.Paths.Path), statusFilepath);
 
-                            UpdateFields(formPropertyFields, newForm, statusMethod, statusFilepath);
+                            UpdateFields(dataItem.Fields, newForm, statusMethod, statusFilepath);
 
                             UpdateChildFields(formFieldProperties, formPage, statusMethod, statusFilepath);
                             UpdateSubmitActions(formModel, formPage, statusMethod, statusFilepath);
@@ -296,7 +293,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                         statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] Updating Fields on {0} </strong></span>", existingItem.Paths.Path), statusFilepath);
                         var formPage = existingItem.Children.FirstOrDefault(i => i.TemplateID == ID.Parse(Templates.FormTemplates.Page));
 
-                        UpdateFields(formPropertyFields, existingItem, statusMethod, statusFilepath);
+                        UpdateFields(dataItem.Fields, existingItem, statusMethod, statusFilepath);
                         UpdateChildFields(formFieldProperties, formPage, statusMethod, statusFilepath);
                         UpdateSubmitActions(formModel, formPage, statusMethod, statusFilepath);
                     }
@@ -653,16 +650,16 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="values">The values.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        internal override string GetItemName(Dictionary<string, object> values, string defaultValue)
+        internal override string GetItemName(ImportDataItem values, string defaultValue)
         {
             var name = defaultValue;
             if (_mapping != null && _mapping.FieldMappings != null && _mapping.FieldMappings.Any())
             {
                 var fieldNameforItemName = _mapping.FieldMappings.FirstOrDefault().SourceFields;
-                name = (string)values.FirstOrDefault(i => i.Key == fieldNameforItemName).Value;
-                if (name == null && values.FirstOrDefault().Value is ISitecoreFieldModel)
+                name = (string)values.Fields.FirstOrDefault(i => i.Key == fieldNameforItemName).Value;
+                if (name == null && values.Fields.FirstOrDefault().Value is ISitecoreFieldModel)
                 {
-                    var model = values.FirstOrDefault().Value as ISitecoreFieldModel;
+                    var model = values.Fields.FirstOrDefault().Value as ISitecoreFieldModel;
                     name = (string)model?.Properties?.FirstOrDefault(i => i.Key == fieldNameforItemName).Value;
                 }
             }
