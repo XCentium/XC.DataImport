@@ -5,12 +5,19 @@
     "Name": "FileDataSource",
     "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport",
     "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport",
-    "Fields": null
+    "Fields": [
+      {
+        "Name": "FilePath",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      }
+    ]
   },
   "TargetType": {
     "Name": "SitecoreRepository",
-    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository,XC.Foundation.DataImport",
     "Fields": [
       {
         "Name": "DatabaseName",
@@ -25,7 +32,13 @@
         "TriggerFields": null
       },
       {
-        "Name": "Path",
+        "Name": "OverwriteFieldValues",
+        "InputType": "checkbox",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "ItemPath",
         "InputType": "tree",
         "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/getsitecoretree",
         "TriggerFields": null
@@ -88,7 +101,7 @@
       "Overwrite": true,
       "SourceFields": "dWebExtension",
       "TargetFields": "{C06867FE-9A43-4C7D-B739-48780492D06F}",
-      "IsId": true,
+      "IsId": false,
       "Id": 3,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
@@ -99,7 +112,7 @@
       "Overwrite": true,
       "SourceFields": "primaryFile_format",
       "TargetFields": "{ABA5CE58-6D8F-43A4-B4FA-B181651347DD}",
-      "IsId": true,
+      "IsId": false,
       "Id": 4,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": "",
@@ -209,6 +222,7 @@
       "ReferenceItemsField": null
     }
   ],
+  "ExcludeFieldMappingFields": false,
   "MergeWithExistingItems": false,
   "MergeColumnFieldMatch": null
 }

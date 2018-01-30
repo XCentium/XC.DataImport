@@ -1,39 +1,39 @@
 {
-  "Name": "webb",
-  "Id": "ac69ea83-4f47-4480-bcb8-53c8e991d8b0",
+  "Name": "Cookbooks",
+  "Id": "e7352d14-e5b4-445c-b1d6-38c0287e5bda",
   "SourceType": {
-    "Name": "WebDataSource",
-    "ModelType": "XC.Foundation.DataImport.Models.DataSources.WebDataSourceModel,XC.Foundation.DataImport",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.WebDataSource,XC.Foundation.DataImport",
+    "Name": "SitecoreDataSource",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.SitecoreDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.SitecoreDataSource,XC.Foundation.DataImport",
     "Fields": [
       {
-        "Name": "Url",
-        "InputType": "text",
-        "OptionsSource": null,
-        "TriggerFields": null
-      },
-      {
-        "Name": "Method",
+        "Name": "DatabaseName",
         "InputType": "select",
-        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/-/getmethods",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/-/getdatabases",
+        "TriggerFields": "TemplateId,Path"
+      },
+      {
+        "Name": "TemplateId",
+        "InputType": "select",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/gettemplates",
         "TriggerFields": null
       },
       {
-        "Name": "ApiKey",
-        "InputType": "text",
+        "Name": "IncludeDescendants",
+        "InputType": "checkbox",
         "OptionsSource": null,
         "TriggerFields": null
       },
       {
-        "Name": "Username",
-        "InputType": "text",
+        "Name": "MigrateAllFields",
+        "InputType": "checkbox",
         "OptionsSource": null,
         "TriggerFields": null
       },
       {
-        "Name": "Password",
-        "InputType": "text",
-        "OptionsSource": null,
+        "Name": "ItemPath",
+        "InputType": "tree",
+        "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/getsitecoretree",
         "TriggerFields": null
       }
     ]
@@ -70,12 +70,19 @@
     ]
   },
   "Source": {
-    "Url": "http://eee",
-    "Method": "GET"
+    "DatabaseName": "oldaha",
+    "TemplateId": "sitecore://oldaha/{C657126B-A8A6-46BD-A9BB-1AA3A21DDBB4}?lang=en&ver=1",
+    "IncludeDescendants": true,
+    "MigrateAllFields": true,
+    "ItemPath": "/sitecore/content/AHA/Recipe/Shared Content/Cookbooks",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{5EF17C4E-9337-4D60-9854-026256611A51}/{FD1BA09C-7406-43DB-87F2-4821F6EB6837}/{27E7CC24-C222-4B10-9A99-9AF668F33937}/{58F23252-3527-4DA4-9B75-1A3FCA7DB55C}"
   },
   "SourceProcessingScripts": [],
   "PostImportScripts": [],
-  "Target": {},
+  "Target": {
+    "DatabaseName": "master",
+    "TemplateId": "sitecore://master/{C657126B-A8A6-46BD-A9BB-1AA3A21DDBB4}?lang=en&ver=1"
+  },
   "FieldMappings": [],
   "ExcludeFieldMappingFields": false,
   "MergeWithExistingItems": false,

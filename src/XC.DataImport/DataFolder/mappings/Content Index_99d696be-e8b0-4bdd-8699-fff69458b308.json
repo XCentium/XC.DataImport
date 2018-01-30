@@ -3,14 +3,21 @@
   "Id": "99d696be-e8b0-4bdd-8699-fff69458b308",
   "SourceType": {
     "Name": "FileDataSource",
-    "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource",
-    "Fields": null
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport",
+    "Fields": [
+      {
+        "Name": "FilePath",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      }
+    ]
   },
   "TargetType": {
     "Name": "SitecoreRepository",
-    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository,XC.Foundation.DataImport",
     "Fields": [
       {
         "Name": "DatabaseName",
@@ -25,7 +32,13 @@
         "TriggerFields": null
       },
       {
-        "Name": "Path",
+        "Name": "OverwriteFieldValues",
+        "InputType": "checkbox",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "ItemPath",
         "InputType": "tree",
         "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/getsitecoretree",
         "TriggerFields": null
@@ -41,16 +54,16 @@
   "PostImportScripts": [],
   "Target": {
     "DatabaseName": "master",
-    "ItemPath": "/sitecore/content/Data Import/Content Index",
-    "TemplateId": "sitecore://master/{9BE78108-898C-4C66-8A9C-F71DD6181E50}?lang=en&ver=1",
-    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{1B86E247-1DEA-4865-968D-ADFBBD872B24}/{155B0AD2-7C42-49DD-B483-9E1F3CDAE5FD}"
+    "ItemPath": "/sitecore/content/Shared Content/Content Index",
+    "TemplateId": "sitecore://master/{8AF34AE5-63FB-4BB4-93B3-7A448288D1D4}?lang=en&ver=1",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{9083DDEF-1378-49D0-88D2-896F2A1F372E}/{BD42BB84-36A0-4D71-B1A6-EF9D23A5C82B}"
   },
   "FieldMappings": [
     {
       "Exclude": false,
-      "Overwrite": true,
+      "Overwrite": false,
       "SourceFields": "term",
-      "TargetFields": "{10AF29F4-F512-4AD2-A194-556A8AE3853D}",
+      "TargetFields": "{BA9CA275-9DF9-4E9F-AB16-0961A15A6F96}",
       "IsId": true,
       "Id": 0,
       "ProcessingScripts": [],
@@ -59,9 +72,9 @@
     },
     {
       "Exclude": false,
-      "Overwrite": true,
+      "Overwrite": false,
       "SourceFields": "definition",
-      "TargetFields": "{F4C9A206-CCB3-4413-BD0F-E679F331F536}",
+      "TargetFields": "{B6419A2E-D44A-4827-A279-622BD8C63DE4}",
       "IsId": false,
       "Id": 1,
       "ProcessingScripts": [],
@@ -70,9 +83,9 @@
     },
     {
       "Exclude": false,
-      "Overwrite": true,
+      "Overwrite": false,
       "SourceFields": "relatedItems",
-      "TargetFields": "{D4844CC9-9782-447D-91FC-73B3103DEBE2}",
+      "TargetFields": "{F55E8F6B-1232-4F61-9FC1-0B076C4250D1}",
       "IsId": false,
       "Id": 2,
       "ProcessingScripts": [],
@@ -80,6 +93,7 @@
       "ReferenceItemsField": null
     }
   ],
+  "ExcludeFieldMappingFields": false,
   "MergeWithExistingItems": false,
   "MergeColumnFieldMatch": null
 }

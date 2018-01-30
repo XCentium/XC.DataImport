@@ -1,6 +1,6 @@
 {
-  "Name": "Recipes",
-  "Id": "5de2f009-bc76-4c10-952f-f9544bf45ac9",
+  "Name": "Recipes Landing Pages",
+  "Id": "2b72bc70-8f52-4401-810c-5811c58934cc",
   "SourceType": {
     "Name": "SitecoreDataSource",
     "ModelType": "XC.Foundation.DataImport.Models.DataSources.SitecoreDataSourceModel,XC.Foundation.DataImport",
@@ -71,20 +71,19 @@
   },
   "Source": {
     "DatabaseName": "oldaha",
-    "TemplateId": "sitecore://oldaha/{C84D5D93-0B9F-4518-8896-2AD16F2AFDA8}?lang=en&ver=1",
-    "ItemPath": "/sitecore/content/AHA/Recipe/Shared Content/Recipes",
-    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{5EF17C4E-9337-4D60-9854-026256611A51}/{FD1BA09C-7406-43DB-87F2-4821F6EB6837}/{27E7CC24-C222-4B10-9A99-9AF668F33937}/{0358C256-E23D-4788-A35E-DA5C7DE75A3A}",
     "IncludeDescendants": true,
     "MigrateAllFields": true,
-    "OverwriteFieldValues": true
+    "TemplateId": "sitecore://oldaha/{DE33DF05-43E0-4110-89A9-CCB5860FC99F}?lang=en&ver=1",
+    "ItemPath": "/sitecore/content/AHA/Recipe",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{5EF17C4E-9337-4D60-9854-026256611A51}/{FD1BA09C-7406-43DB-87F2-4821F6EB6837}"
   },
   "SourceProcessingScripts": [],
   "PostImportScripts": [],
   "Target": {
     "DatabaseName": "master",
-    "TemplateId": "sitecore://master/{C84D5D93-0B9F-4518-8896-2AD16F2AFDA8}?lang=en&ver=1",
-    "ItemPath": "/sitecore/content/Shared Content/Recipes",
-    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{9083DDEF-1378-49D0-88D2-896F2A1F372E}/{BE5E2061-C2E9-410F-B3A9-5D73764AE1C7}"
+    "TemplateId": "sitecore://master/{DE33DF05-43E0-4110-89A9-CCB5860FC99F}?lang=en&ver=1",
+    "ItemPath": "/sitecore/content/Recipes/Home",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{FD1BA09C-7406-43DB-87F2-4821F6EB6837}/{E8DF0CF5-5AFB-43E7-BD13-09D088F451E6}"
   },
   "FieldMappings": [],
   "ExcludeFieldMappingFields": false,
