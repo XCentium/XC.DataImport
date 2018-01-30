@@ -87,7 +87,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Foundation.Testing">
-      <HintPath>..\..\..\..\lib\Sitecore\Sitecore.Foundation.Testing.dll</HintPath>
+      <HintPath>..\..\Testing\code\bin\Sitecore.Foundation.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171002\lib\NET462\Sitecore.Kernel.dll</HintPath>
