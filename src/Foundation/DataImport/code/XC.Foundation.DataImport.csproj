@@ -244,8 +244,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config" />
-    <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config" />
+    <Content Include="App_Config\Include\Foundation\Foundation.DataImport.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Config\Include\Foundation\Foundation.DataImport.Serialization.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
