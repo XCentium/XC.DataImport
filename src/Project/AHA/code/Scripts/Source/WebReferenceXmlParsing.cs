@@ -34,7 +34,7 @@ namespace Aha.Project.DataImport.Scripts.Source
 
                 var idFieldMapping = args.FieldMappings.FirstOrDefault(f => f.IsId)?.SourceFields;
 
-                foreach (XmlNode item in xmlDoc.DocumentElement.SelectNodes("//*[@name='group1']/*"))
+                foreach (XmlNode item in xmlDoc.DocumentElement.SelectNodes("//*[starts-with(@name, 'group')]/*"))
                 {
                     var childNodes = item.ChildNodes.Cast<XmlNode>();
                     var node = childNodes.FirstOrDefault(i => i.Attributes.Cast<XmlAttribute>().Any(a => a.Value == idFieldMapping))?.InnerText;

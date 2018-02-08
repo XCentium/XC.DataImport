@@ -1,5 +1,5 @@
 {
-  "Name": "Cookbooks",
+  "Name": "Recipe Cookbooks",
   "Id": "e7352d14-e5b4-445c-b1d6-38c0287e5bda",
   "SourceType": {
     "Name": "SitecoreDataSource",
@@ -81,7 +81,9 @@
   "PostImportScripts": [],
   "Target": {
     "DatabaseName": "master",
-    "TemplateId": "sitecore://master/{C657126B-A8A6-46BD-A9BB-1AA3A21DDBB4}?lang=en&ver=1"
+    "TemplateId": "sitecore://master/{C657126B-A8A6-46BD-A9BB-1AA3A21DDBB4}?lang=en&ver=1",
+    "ItemPath": "/sitecore/content/Recipes/Common/Cookbooks",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{FD1BA09C-7406-43DB-87F2-4821F6EB6837}/{27E7CC24-C222-4B10-9A99-9AF668F33937}/{58F23252-3527-4DA4-9B75-1A3FCA7DB55C}"
   },
   "FieldMappings": [],
   "ExcludeFieldMappingFields": false,
