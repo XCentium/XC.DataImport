@@ -4,6 +4,10 @@ Parent: "3459622e-66cd-4878-8811-1c2f0ec17570"
 Template: "e269fbb5-3750-427a-9149-7aa950b49301"
 Path: /sitecore/templates/Foundation/Data Import/_ImportedItem/Data Import
 DB: master
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 900
 Languages:
 - Language: en
   Versions:

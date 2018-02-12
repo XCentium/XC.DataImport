@@ -178,7 +178,10 @@ namespace XC.Foundation.DataImport.Repositories.DataSources
             {
                 if (!string.IsNullOrWhiteSpace(field.Name))
                 {
-                    fields.Add(field.ID.ToString(), item[field.ID]);
+                    if (!fields.ContainsKey(field.Name))
+                    {
+                        fields.Add(field.Name, item[field.ID]);
+                    }
                 }
                 else
                 {

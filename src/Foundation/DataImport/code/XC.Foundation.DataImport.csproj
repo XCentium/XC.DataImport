@@ -67,14 +67,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Extensions.DependencyInjection.1.0.0\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
       <Private>True</Private>
@@ -119,63 +111,56 @@
       <HintPath>..\..\..\..\packages\RazorGenerator.Mvc.2.4.9\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Abstractions, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Sitecore.Abstractions.NoReferences.9.0.171219\lib\NET462\Sitecore.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.ContentSearch, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.NoReferences.9.0.171002\lib\NET462\Sitecore.ContentSearch.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.NoReferences.9.0.171219\lib\NET462\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch.Linq, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.Linq.NoReferences.9.0.171002\lib\NET462\Sitecore.ContentSearch.Linq.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.ContentSearch.Linq.NoReferences.9.0.171219\lib\NET462\Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ExperienceForms, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.NoReferences.9.0.171002\lib\NET462\Sitecore.ExperienceForms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.NoReferences.9.0.171219\lib\NET462\Sitecore.ExperienceForms.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ExperienceForms.Client, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.Client.NoReferences.9.0.171002\lib\NET462\Sitecore.ExperienceForms.Client.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.Client.NoReferences.9.0.171219\lib\NET462\Sitecore.ExperienceForms.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ExperienceForms.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.Mvc.NoReferences.9.0.171002\lib\NET462\Sitecore.ExperienceForms.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.ExperienceForms.Mvc.NoReferences.9.0.171219\lib\NET462\Sitecore.ExperienceForms.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171002\lib\NET462\Sitecore.Kernel.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171219\lib\NET462\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Logging.NoReferences.9.0.171002\lib\NET462\Sitecore.Logging.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Logging.NoReferences.9.0.171219\lib\NET462\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.171002\lib\NET462\Sitecore.Mvc.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.171219\lib\NET462\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Client, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Services.Client.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Client.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Client.NoReferences.9.0.171219\lib\NET462\Sitecore.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Services.Core.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Core.NoReferences.9.0.171219\lib\NET462\Sitecore.Services.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Infrastructure, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Infrastructure.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.NoReferences.9.0.171219\lib\NET462\Sitecore.Services.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Infrastructure.Sitecore, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.Sitecore.NoReferences.9.0.171002\lib\NET462\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.Sitecore.NoReferences.9.0.171219\lib\NET462\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Speak.Client, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Speak.Client.NoReferences.9.0.171002\lib\NET462\Sitecore.Speak.Client.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Speak.Client.NoReferences.9.0.171219\lib\NET462\Sitecore.Speak.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Speak.Components, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Speak.Components.NoReferences.9.0.171002\lib\NET462\Sitecore.Speak.Components.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Speak.Components.NoReferences.9.0.171219\lib\NET462\Sitecore.Speak.Components.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Web, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Web.NoReferences.9.0.171002\lib\NET462\Sitecore.Web.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Web.NoReferences.9.0.171219\lib\NET462\Sitecore.Web.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Zip, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Zip.9.0.171002\lib\NET462\Sitecore.Zip.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\packages\Sitecore.Zip.9.0.171219\lib\NET462\Sitecore.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
