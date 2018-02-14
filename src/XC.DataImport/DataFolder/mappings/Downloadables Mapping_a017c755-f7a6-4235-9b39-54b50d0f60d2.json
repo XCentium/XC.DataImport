@@ -5,12 +5,19 @@
     "Name": "FileDataSource",
     "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport",
     "DataSourceType": "XC.Foundation.DataImport.Repositories.DataSources.FileDataSource,XC.Foundation.DataImport",
-    "Fields": null
+    "Fields": [
+      {
+        "Name": "FilePath",
+        "InputType": "text",
+        "OptionsSource": null,
+        "TriggerFields": null
+      }
+    ]
   },
   "TargetType": {
     "Name": "SitecoreRepository",
-    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel",
-    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository",
+    "ModelType": "XC.Foundation.DataImport.Models.DataSources.TargetSitecoreDataSourceModel,XC.Foundation.DataImport",
+    "DataSourceType": "XC.Foundation.DataImport.Repositories.Repositories.SitecoreRepository,XC.Foundation.DataImport",
     "Fields": [
       {
         "Name": "DatabaseName",
@@ -25,7 +32,13 @@
         "TriggerFields": null
       },
       {
-        "Name": "Path",
+        "Name": "OverwriteFieldValues",
+        "InputType": "checkbox",
+        "OptionsSource": null,
+        "TriggerFields": null
+      },
+      {
+        "Name": "ItemPath",
         "InputType": "tree",
         "OptionsSource": "/sitecore/api/ssc/dataimport/mappings/[DatabaseName]/getsitecoretree",
         "TriggerFields": null
@@ -33,7 +46,7 @@
     ]
   },
   "Source": {
-    "FilePath": "C:\\Users\\Julia.Gavrilova\\Downloads\\xcentium-samplefiles\\xcentium-testfileassets\\XCentium-TestFileAssets-17-nov-10_12.24.55_026_03-17314122455_1.xml"
+    "FilePath": "C:\\Projects\\AHA\\archive\\data\\TestFileAssets\\18-jan-29_21.11.36_182_01\\XCentium-TestFileAssets-18-jan-29_21.11.36_182_01-1829211136~2.xml"
   },
   "SourceProcessingScripts": [
     "Aha.Project.DataImport.Scripts.Source.XmlFilterDownloadableList, Aha.Project.DataImport"
@@ -218,6 +231,7 @@
       "ReferenceItemsField": null
     }
   ],
+  "ExcludeFieldMappingFields": false,
   "MergeWithExistingItems": false,
   "MergeColumnFieldMatch": null
 }
