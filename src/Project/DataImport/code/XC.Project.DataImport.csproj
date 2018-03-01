@@ -121,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\zzz\zzz.DisableMediaCache.config" />
-    <Content Include="App_Config\Include\Project\XC.Project.DataImport.Serialization.config" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +141,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Config\Include\Project\" />
     <Folder Include="Views\Import\" />
   </ItemGroup>
   <ItemGroup>
