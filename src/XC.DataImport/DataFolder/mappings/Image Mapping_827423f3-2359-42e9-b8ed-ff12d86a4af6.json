@@ -46,7 +46,7 @@
     ]
   },
   "Source": {
-    "FilePath": "C:\\Users\\Julia.Gavrilova\\Downloads\\xcentium-samplefiles\\xcentium-testfileassets\\XCentium-TestFileAssets-17-nov-10_12.24.55_026_03-17314122455_1.xml"
+    "FilePath": "C:\\Projects\\AHA\\archive\\data\\TestFileAssets\\18-jan-29_21.11.36_182_01\\XCentium-TestFileAssets-18-jan-29_21.11.36_182_01-1829211136~1.xml"
   },
   "SourceProcessingScripts": [
     "Aha.Project.DataImport.Scripts.Source.XmlFilterImageList, Aha.Project.DataImport"

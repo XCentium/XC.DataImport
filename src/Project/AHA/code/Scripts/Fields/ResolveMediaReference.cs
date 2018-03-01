@@ -32,7 +32,8 @@ namespace Aha.Project.DataImport.Scripts.Fields
                 DataImportLogger.Log.Info("ResolveWeblayoutReference Field Processing: no source model");
                 return;
             }
-            var folderWithAssets = IOExtensions.GetFolderForFile(sourceModel.FilePath);
+            //var folderWithAssets = IOExtensions.GetFolderForFile(sourceModel.FilePath);
+            var folderWithAssets = IOExtensions.GetParentFolderForFile(sourceModel.FilePath);
             if (string.IsNullOrEmpty(folderWithAssets))
             {
                 DataImportLogger.Log.Info("ResolveMediaReference Field Processing: no folderWithAssets");
