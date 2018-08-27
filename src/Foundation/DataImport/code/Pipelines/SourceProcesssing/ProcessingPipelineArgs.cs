@@ -8,22 +8,21 @@ using XC.Foundation.DataImport.Models;
 using System.IO;
 using Newtonsoft.Json;
 using Sitecore.Data;
+using XC.Foundation.DataImport.Models.DataSources;
 using XC.Foundation.DataImport.Models.Entities;
 
 namespace XC.Foundation.DataImport.Pipelines.SourceProcessing
 {
     public class SourceProcessingPipelineArgs : PipelineArgs
     {
-        private IEnumerable<string> _sourceProcessingScripts;
         public List<ImportDataItem> Items2Import;
-        private object _content = string.Empty;
-        private ScFieldMapping[] _fieldMappings;
 
-        public SourceProcessingPipelineArgs(object content, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts)
+        public SourceProcessingPipelineArgs(object content, ScFieldMapping[] fieldMappings, IEnumerable<string> sourceProcessingScripts, string mappingName)
         {
-            _sourceProcessingScripts = sourceProcessingScripts;
-            _content = content;
-            _fieldMappings = fieldMappings;
+            SourceProcessingScripts = sourceProcessingScripts;
+            Content = content;
+            FieldMappings = fieldMappings;
+            MappingName = mappingName;
             if (content is List<ImportDataItem>)
             {
                 Items2Import = (List<ImportDataItem>)content;
@@ -34,27 +33,12 @@ namespace XC.Foundation.DataImport.Pipelines.SourceProcessing
             }
         }
 
-        public IEnumerable<string> SourceProcessingScripts
-        {
-            get
-            {
-                return _sourceProcessingScripts;
-            }
-        }
-        public object Content
-        {
-            get
-            {
-                return _content;
-            }
-        }
+        public IEnumerable<string> SourceProcessingScripts { get; }
 
-        public ScFieldMapping[] FieldMappings
-        {
-            get
-            {
-                return _fieldMappings;
-            }
-        }
+        public object Content { get; }
+
+        public ScFieldMapping[] FieldMappings { get; }
+
+        public string MappingName { get; }
     }
 }

@@ -242,3 +242,5 @@ gulp-config.js
 publishsettings.targets
 zzz.*.DevSettings.config
 /src/XC.DataImport/DataFolder/history/mapping-JotForms
+/src/XC.DataImport/DataFolder/history/mapping-Symposium 2018 Sessions
+/src/XC.DataImport/DataFolder/history/mapping-Symposium 2018 Speakers

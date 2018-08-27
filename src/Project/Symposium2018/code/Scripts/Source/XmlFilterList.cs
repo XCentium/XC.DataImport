@@ -30,36 +30,58 @@ namespace XC.Symposium2018.Website.Scripts.Source
 
                 var idFieldMapping = args.FieldMappings.FirstOrDefault(f => f.IsId)?.SourceFields;
 
-                foreach (XmlNode item in xmlDoc.DocumentElement.SelectNodes("//*[local-name()='speaker']"))
+                if (xmlDoc.DocumentElement?.ChildNodes != null)
                 {
-                    var itemId = item.Attributes[idFieldMapping]?.Value?.StringToID();
-                    args.Items2Import.Add(new ImportDataItem { ItemId = itemId });
-                    DataImportLogger.Log.Info("#################Source Processing item ##################" + itemId);
-
-                    foreach (var field in args.FieldMappings)
+                    var idx = 0;
+                    foreach (XmlNode item in xmlDoc.DocumentElement?.ChildNodes)
                     {
-                        var sourceField = field.SourceFields;
-                        var sourceValue = string.Empty;
+                        if (item.Attributes != null)
+                        {
+                            var valueForId = args.MappingName + (item.Attributes[idFieldMapping] != null && !string.IsNullOrWhiteSpace(item.Attributes[idFieldMapping].Value)? item.Attributes[idFieldMapping].Value : idx.ToString());
+                            var itemId = valueForId.StringToID();
+                            args.Items2Import.Add(new ImportDataItem { ItemId = itemId });
+                            DataImportLogger.Log.Info("#################Source Processing item ##################" +
+                                                      itemId);
 
-                        var attr = item.Attributes[sourceField];
-                        if (attr != null)
-                        {
-                            sourceValue = attr.Value;
+                            foreach (var field in args.FieldMappings)
+                            {
+                                var sourceField = field.SourceFields;
+                                var sourceValue = string.Empty;
+
+                                if (item.Attributes != null)
+                                {
+                                    var attr = item.Attributes[sourceField];
+                                    if (attr != null)
+                                    {
+                                        sourceValue = attr.Value;
+                                    }
+                                    else
+                                    {
+                                        sourceValue = item.SelectSingleNode(".//*[local-name()='" + sourceField + "']")
+                                            ?.InnerText;
+                                    }
+                                }
+
+                                if (field.TargetFields != null)
+                                {
+                                    var existingDataItem = args.Items2Import.FirstOrDefault(i => i.ItemId == itemId);
+                                    if (existingDataItem != null &&
+                                        existingDataItem.Fields.ContainsKey(field.TargetFields))
+                                    {
+                                        existingDataItem.Fields[field.TargetFields] = sourceValue;
+                                    }
+                                    else
+                                    {
+                                        existingDataItem?.Fields.Add(field.TargetFields, sourceValue);
+                                    }
+                                }
+
+                                DataImportLogger.Log.Info(
+                                    $"#################Source Processing item {itemId} field {field.TargetFields} ##################");
+                            }
                         }
-                        else
-                        {
-                            sourceValue = item.SelectSingleNode(".//*[local-name()='" + sourceField + "']")?.InnerText;
-                        }
-                        var existingDataItem = args.Items2Import.FirstOrDefault(i => i.ItemId == itemId);
-                        if (existingDataItem != null && existingDataItem.Fields.ContainsKey(field.TargetFields))
-                        {
-                            existingDataItem.Fields[field.TargetFields] = sourceValue;
-                        }
-                        else
-                        {
-                            existingDataItem.Fields.Add(field.TargetFields, sourceValue);
-                        }
-                        DataImportLogger.Log.Info(string.Format("#################Source Processing item {0} field {1} ##################", itemId, field.TargetFields));
+
+                        ++idx;
                     }
                 }
             }

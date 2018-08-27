@@ -46,7 +46,8 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         {
             if (_mapping == null || Target == null || ParentItem == null)
             {
-                statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] Not Imported or Updated: either item, _mapping, parentItem is null or item is not a content item. ({0})</span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                statusMethod(
+                    $" <span style=\"color:red\">[FAILURE] Not Imported or Updated: either item, _mapping, parentItem is null or item is not a content item. ({(_mapping != null ? _mapping.Name : "Unknown mapping")})</span>", statusFilepath);
                 return null;
             }
             try
@@ -65,7 +66,8 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             }
             catch (Exception ex)
             {
-                statusMethod(string.Format("<span style=\"color:red\"><strong>[FAILURE] {0}</strong> {1} ({2})</span>", ParentItem.Paths.Path, ex.Message, _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
+                statusMethod(
+                    $"<span style=\"color:red\"><strong>[FAILURE] {ParentItem.Paths.Path}</strong> {ex.Message} ({(_mapping != null ? _mapping.Name : "Unknown mapping")})</span>", statusFilepath);
                 DataImportLogger.Log.Error(ex.Message, ex);
             }
             return null;

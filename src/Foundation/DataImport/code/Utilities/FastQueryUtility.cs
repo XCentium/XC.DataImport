@@ -15,14 +15,16 @@ namespace XC.Foundation.DataImport.Utilities
         public static string EscapeDashes(string path)
         {
             var newPath = new List<string>();
-            var pathSegments = path.Split('/');
+            var pathSegments = path.Split(new[]{
+                '/'
+            }, StringSplitOptions.RemoveEmptyEntries);
             lock (pathSegments)
             {
                 foreach (var segment in pathSegments)
                 {
                     if (segment.Contains(" ") || segment.Contains("-"))
                     {
-                        newPath.Add(string.Format("#{0}#", segment));
+                        newPath.Add($"#{segment}#");
                     }
                     else
                     {

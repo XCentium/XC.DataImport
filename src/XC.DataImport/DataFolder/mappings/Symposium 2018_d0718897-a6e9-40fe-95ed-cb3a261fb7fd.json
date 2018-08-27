@@ -48,7 +48,9 @@
   "Source": {
     "FilePath": "C:\\inetpub\\wwwroot\\symposium2018.sc\\App_Data\\Data Import\\Sessions.xml"
   },
-  "SourceProcessingScripts": [],
+  "SourceProcessingScripts": [
+    "XC.Symposium2018.Website.Scripts.Source.XmlFilterList,XC.Symposium2018.Website"
+  ],
   "PostImportScripts": [],
   "Target": {
     "DatabaseName": "master",
@@ -60,9 +62,9 @@
     {
       "Exclude": false,
       "Overwrite": false,
-      "SourceFields": "id",
-      "TargetFields": null,
-      "IsId": true,
+      "SourceFields": "title",
+      "TargetFields": "{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}",
+      "IsId": false,
       "Id": 0,
       "ProcessingScripts": [],
       "ReferenceItemsTemplate": null,
@@ -93,7 +95,7 @@
     {
       "Exclude": false,
       "Overwrite": true,
-      "SourceFields": "speakers",
+      "SourceFields": "speaker",
       "TargetFields": "{B6DEB62C-E79F-4FC4-8686-E8F1A99FCDE0}",
       "IsId": false,
       "Id": 3,
@@ -101,7 +103,29 @@
         "XC.Project.DataImport.Scripts.FieldScript.SplitValuesByComma,XC.Project.DataImport"
       ],
       "ReferenceItemsTemplate": "sitecore://master/{52358E3B-5EA7-4CD7-A7ED-0B85A8BDE6A1}?lang=en&ver=1",
-      "ReferenceItemsField": "{47E91D44-22D9-44FB-B393-A5CB489E088B}"
+      "ReferenceItemsField": "{CD3CDB63-1C1B-4B24-BFCF-23E2A63F263F}"
+    },
+    {
+      "Exclude": false,
+      "Overwrite": false,
+      "SourceFields": "id",
+      "TargetFields": null,
+      "IsId": true,
+      "Id": 4,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
+    },
+    {
+      "Exclude": false,
+      "Overwrite": true,
+      "SourceFields": "date",
+      "TargetFields": "{F681C8EE-3FFD-4F67-B9CF-DA4E4D5D150C}",
+      "IsId": false,
+      "Id": 5,
+      "ProcessingScripts": [],
+      "ReferenceItemsTemplate": null,
+      "ReferenceItemsField": null
     }
   ],
   "ExcludeFieldMappingFields": false,

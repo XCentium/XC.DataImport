@@ -30,13 +30,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             _mapping = mapping;
         }
 
-        public IDataSourceModel Target
-        {
-            get
-            {
-                return ConvertToTargetRepository(_mapping.Target, _mapping.TargetType);
-            }
-        }
+        public IDataSourceModel Target => ConvertToTargetRepository(_mapping.Target, _mapping.TargetType);
 
         internal IDataSourceModel ConvertToTargetRepository(dynamic target, SourceType targetType)
         {
@@ -52,7 +46,8 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             if (item.TemplateID != template.ItemID)
             {
                 item.ChangeTemplate(templateItem);
-                statusMethod(string.Format(" <span style=\"color:green\"><strong>[SUCCESS] Changed Template on {0} from {1} to {2} </strong></span>", item.Paths.Path, oldTemplateName, item.TemplateName), statusFilepath);
+                statusMethod(
+                    $" <span style=\"color:green\"><strong>[SUCCESS] Changed Template on {item.Paths.Path} from {oldTemplateName} to {item.TemplateName} </strong></span>", statusFilepath);
             }
         }
 
@@ -63,7 +58,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                 UpdateFieldsBasedOnFieldMappings(values, item, statusMethod, statusFilepath);
             }
             else
-            {                
+            {
                 UpdateFieldsBasedOnValues(values, item, statusMethod, statusFilepath);
             }
         }
@@ -91,7 +86,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
                     {
                         if (_mapping.FieldMappings != null && _mapping.FieldMappings.Any() && _mapping.ExcludeFieldMappingFields)
                         {
-                            if ((string.IsNullOrWhiteSpace(field.Value) || SitecoreTarget.OverwriteFieldValues) && _mapping.FieldMappings.Any(f=>f.SourceFields == fieldName))
+                            if ((string.IsNullOrWhiteSpace(field.Value) || SitecoreTarget.OverwriteFieldValues) && _mapping.FieldMappings.Any(f => f.SourceFields == fieldName))
                             {
                                 ProcessGenericField((string)values[fieldName], item, statusMethod, statusFilepath, field);
                             }
@@ -140,7 +135,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <param name="statusFilepath">The status filepath.</param>
         private void UpdateFieldsBasedOnFieldMappings(Dictionary<string, object> values, Item item, Action<string, string> statusMethod, string statusFilepath)
         {
-            if(item == null)
+            if (item == null)
             {
                 statusMethod(string.Format(" <span style=\"color:red\">[FAILURE] UpdateFieldsBasedOnFieldMappings item is null. ({0})</span>", _mapping != null ? _mapping.Name : "Unknown mapping"), statusFilepath);
                 return;
@@ -357,7 +352,7 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
 
         internal virtual string GetFieldValue(Dictionary<string, object> values, ScFieldMapping field)
         {
-            return values.ContainsKey(field.TargetFields) ? values[field.TargetFields].ToString() : string.Empty;
+            return values.ContainsKey(field.TargetFields) && values[field.TargetFields] != null ? values[field.TargetFields].ToString() : string.Empty;
         }
 
         internal static ID ConvertToId(string field)
@@ -660,11 +655,8 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
             if (!string.IsNullOrEmpty(field.ReferenceItemsTemplate))
             {
                 var template = ItemUri.Parse(field.ReferenceItemsTemplate);
-                matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}=\"{1}\" and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, template.ItemID, FastQueryUtility.EscapeDashes(startPath)));
-                if (matchingItem == null)
-                {
-                    matchingItem = Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
-                }
+                matchingItem = Database.SelectSingleItem(string.Format("fast:/{3}//*[@{0}=\"{1}\" and @@templateid='{2}']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, template.ItemID, FastQueryUtility.EscapeDashes(startPath))) ??
+                               Database.SelectSingleItem(string.Format("fast:/{2}//*[@{0}='%{1}%']", FastQueryUtility.EscapeDashes(referenceFieldName), matchingColumnValue, FastQueryUtility.EscapeDashes(startPath)));
                 statusMethod(string.Format(" --- <span style=\"color:blue\">[INFO][{2}] Looking for field \"{0}\" match \"{1}\" under \"{3}\" </span>", referenceFieldName, matchingColumnValue, item.ID, startPath), statusFilepath);
                 DataImportLogger.Log.Info(string.Format(" --- <span style=\"color:blue\">[INFO][{2}]  Looking for field \"{0}\" match \"{1}\" under \"{3}\"  </span>", referenceFieldName, matchingColumnValue, item.ID, startPath));
             }
@@ -806,15 +798,21 @@ namespace XC.Foundation.DataImport.Repositories.Repositories
         /// <summary>
         /// Resolves the name of the field.
         /// </summary>
-        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="fieldId"></param>
+        /// <param name="templateId"></param>
         /// <returns></returns>
-        internal string ResolveFieldName(string fieldName)
+        internal string ResolveFieldName(string fieldId)
         {
-            if (!string.IsNullOrWhiteSpace(fieldName) && fieldName.StartsWith("_"))
+            if (string.IsNullOrWhiteSpace(fieldId))
             {
-                return ReplaceFirst(fieldName, "_", "@").ToLower();
+                return string.Empty;
             }
-            return fieldName;
+            if (fieldId.StartsWith("_"))
+            {
+                return ReplaceFirst(fieldId, "_", "@").ToLower();
+            }
+            var fieldItem = Database.GetItem(fieldId);
+            return fieldItem != null ? fieldItem.Name : string.Empty;
         }
 
         /// <summary>
