@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
   <sitecore>
-    <sc.variable name="sourceFolder" value="C:\Projects\XC\DataImport\src" />
-    <sc.variable name="rootHostName" value="aha.local" />
+    <sc.variable name="sourceFolder" value="C:\Git\XC.DataImport\src" />
+    <sc.variable name="rootHostName" value="symposium2018.sc" />
   </sitecore>
 </configuration>

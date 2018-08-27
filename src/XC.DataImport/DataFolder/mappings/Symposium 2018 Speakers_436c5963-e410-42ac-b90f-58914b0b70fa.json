@@ -1,6 +1,6 @@
 {
-  "Name": "Encyclopedia",
-  "Id": "6908bd52-2c65-44e7-a1c8-c5969a67b9fd",
+  "Name": "Symposium 2018 Speakers",
+  "Id": "436c5963-e410-42ac-b90f-58914b0b70fa",
   "SourceType": {
     "Name": "FileDataSource",
     "ModelType": "XC.Foundation.DataImport.Models.DataSources.FileDataSourceModel,XC.Foundation.DataImport",
@@ -46,55 +46,19 @@
     ]
   },
   "Source": {
-    "FilePath": "C:\\Projects\\AHA\\archive\\data\\Encyclopedia\\1\\vault\\contentindex\\@wcm\\@hcm\\866512.xml",
-    "OverwriteFieldValues": true
+    "FilePath": "C:\\inetpub\\wwwroot\\symposium2018.sc\\App_Data\\Data Import\\Speakers.xml"
   },
   "SourceProcessingScripts": [
-    "Aha.Project.DataImport.Scripts.Source.WebReferenceXmlParsing, Aha.Project.DataImport"
+    "XC.Symposium2018.Website.Scripts.Source.XmlFilterList,XC.Symposium2018.Website"
   ],
   "PostImportScripts": [],
   "Target": {
     "DatabaseName": "master",
-    "ItemPath": "/sitecore/content/Shared Content/Content Index",
-    "TemplateId": "sitecore://master/{8AF34AE5-63FB-4BB4-93B3-7A448288D1D4}?lang=en&ver=1",
-    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{9083DDEF-1378-49D0-88D2-896F2A1F372E}/{BD42BB84-36A0-4D71-B1A6-EF9D23A5C82B}",
-    "OverwriteFieldValues": true
+    "TemplateId": "sitecore://master/{52358E3B-5EA7-4CD7-A7ED-0B85A8BDE6A1}?lang=en&ver=1",
+    "ItemPath": "/sitecore/content/Home/Speakers",
+    "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}/{84CFA030-4A72-46C1-9A36-CA7AEE6328F7}"
   },
-  "FieldMappings": [
-    {
-      "Exclude": false,
-      "Overwrite": true,
-      "SourceFields": "term",
-      "TargetFields": "{BA9CA275-9DF9-4E9F-AB16-0961A15A6F96}",
-      "IsId": true,
-      "Id": 0,
-      "ProcessingScripts": [],
-      "ReferenceItemsTemplate": null,
-      "ReferenceItemsField": null
-    },
-    {
-      "Exclude": false,
-      "Overwrite": true,
-      "SourceFields": "definition",
-      "TargetFields": "{B6419A2E-D44A-4827-A279-622BD8C63DE4}",
-      "IsId": false,
-      "Id": 1,
-      "ProcessingScripts": [],
-      "ReferenceItemsTemplate": null,
-      "ReferenceItemsField": null
-    },
-    {
-      "Exclude": false,
-      "Overwrite": true,
-      "SourceFields": "relatedItems",
-      "TargetFields": "{F55E8F6B-1232-4F61-9FC1-0B076C4250D1}",
-      "IsId": false,
-      "Id": 2,
-      "ProcessingScripts": [],
-      "ReferenceItemsTemplate": null,
-      "ReferenceItemsField": null
-    }
-  ],
+  "FieldMappings": [],
   "ExcludeFieldMappingFields": false,
   "MergeWithExistingItems": false,
   "MergeColumnFieldMatch": null

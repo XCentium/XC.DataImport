@@ -83,6 +83,13 @@ export class ScEditableTable implements OnInit {
             this.isLoading = false;
           }
         });
+        if(this.mapping.FieldMappings != null){
+          this.mapping.FieldMappings.forEach(fieldMapping => {
+            if(fieldMapping.ReferenceItemsTemplate){
+              this.loadReferenceTemplateFields(fieldMapping.ReferenceItemsTemplate);
+            }
+          });
+        }
       }
     }
     isFieldScriptsChecked(field:FieldMapping){
@@ -91,6 +98,20 @@ export class ScEditableTable implements OnInit {
       }
       return false;
     }
+    loadReferenceTemplateFields(targetTemplateId){
+      this.itemService.fetchFields(this.mapping.Target["DatabaseName"],targetTemplateId).subscribe({
+        next: data => {
+          var dicEntry = { Key:targetTemplateId, Value: data["data"] as DictionaryObject};          
+          this.fields.push(dicEntry);
+          this.isLoading = false;
+          this.messages = data["messages"];      
+        },
+        error: error => {
+          this.isErrorResponse = true;
+          this.isLoading = false;
+        }
+      });
+    }
     onTemplateChange(target){
       var targetTemplateId = target.value;
       this.itemService.fetchFields(this.mapping.Target["DatabaseName"],targetTemplateId).subscribe({
@@ -98,7 +119,7 @@ export class ScEditableTable implements OnInit {
           var dicEntry = { Key:targetTemplateId, Value: data["data"] as DictionaryObject};          
           this.fields.push(dicEntry);
           this.isLoading = false;
-          this.messages = data["messages"];          
+          this.messages = data["messages"];      
         },
         error: error => {
           this.isErrorResponse = true;

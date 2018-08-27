@@ -35,14 +35,14 @@
             <td colspan="6">
               <div class="left">
                 Reference Item Template:
-                <select class="form-control" id="targetReferenceTemplate" [(ngModel)]="Field.ReferenceItemsTemplate" name="targetReferenceTemplate" (change)="onTemplateChange($event.target)">
-                    <option scDropdownItem *ngFor="let Template of targetTemplates" [value]="Template.Id" >{{Template.Name}}</option>
+                <select class="form-control" id="targetReferenceTemplate" [(ngModel)]="Field.ReferenceItemsTemplate" name="targetReferenceTemplate" (change)="onTemplateChange($event.target)" >
+                    <option scDropdownItem *ngFor="let Template of targetTemplates" [value]="Template.Value" >{{Template.Name}}</option>
                 </select>
               </div>
               <div class="left">
                 Reference Item Field:
                 <select class="form-control" id="targetReferenceField" [(ngModel)]="Field.ReferenceItemsField" name="targetReferenceField">
-                    <option scDropdownItem *ngFor="let targetField of getFields(Field.ReferenceItemsTemplate)" [value]="targetField.Name" >{{targetField.Name}}</option>
+                    <option scDropdownItem *ngFor="let targetField of getFields(Field.ReferenceItemsTemplate)" [value]="targetField.Id" >{{targetField.Name}}</option>
                 </select>
               </div>
             </td>

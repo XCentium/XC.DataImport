@@ -90,25 +90,25 @@
       <HintPath>..\..\Testing\code\bin\Sitecore.Foundation.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171219\lib\NET462\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.180604\lib\NET462\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Logging.NoReferences.9.0.171219\lib\NET462\Sitecore.Logging.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Logging.NoReferences.9.0.180604\lib\NET462\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.171219\lib\NET462\Sitecore.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.180604\lib\NET462\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Nexus, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Nexus.NoReferences.9.0.171219\lib\NET462\Sitecore.Nexus.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Nexus.NoReferences.9.0.180604\lib\NET462\Sitecore.Nexus.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Services.Core.NoReferences.9.0.171219\lib\NET462\Sitecore.Services.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Core.NoReferences.9.0.180604\lib\NET462\Sitecore.Services.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Infrastructure, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.NoReferences.9.0.171219\lib\NET462\Sitecore.Services.Infrastructure.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Services.Infrastructure.NoReferences.9.0.180604\lib\NET462\Sitecore.Services.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Speak.Client, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Sitecore.Speak.Client.NoReferences.9.0.171219\lib\NET462\Sitecore.Speak.Client.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Sitecore.Speak.Client.NoReferences.9.0.180604\lib\NET462\Sitecore.Speak.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

@@ -23,7 +23,7 @@ module.exports = {
         "ItemPath": "/sitecore/content/Data Import/News",
         "FullPath": "/{11111111-1111-1111-1111-111111111111}/{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}/{1B86E247-1DEA-4865-968D-ADFBBD872B24}/{90002DEA-EE90-4313-91EB-6460A80DF553}"},
         "FieldMappings": [
-          {"ReferenceItemsTemplate":"","ReferenceItemsField":"","Exclude":false,"Overwrite":true,"SourceFields":"dDocTitle","TargetFields":"{DFCC317E-E90C-4FEA-A8E3-0304E0A3986F}","IsId":false,"ProcessingScripts":[]},
+          {"ReferenceItemsTemplate":"sitecore://master/{CA64FCD7-7CA9-415A-824B-28B0FEAC1EF7}?lang=en&ver=1","ReferenceItemsField":"{3F4B20E9-36E6-4D45-A423-C86567373F82}","Exclude":false,"Overwrite":true,"SourceFields":"dDocTitle","TargetFields":"{DFCC317E-E90C-4FEA-A8E3-0304E0A3986F}","IsId":false,"ProcessingScripts":[]},
         {"ReferenceItemsTemplate":"","ReferenceItemsField":"","Exclude":false,"Overwrite":true,"SourceFields":"contentID","TargetFields":"{3FAFC95D-33FC-4EEA-986C-E71254B48DA5}","IsId":true,"ProcessingScripts":[]},
         {"ReferenceItemsTemplate":"","ReferenceItemsField":"","Exclude":false,"Overwrite":true,"SourceFields":"webViewableFile","TargetFields":"{B07A6D05-D5E5-440F-A9A0-C7C13CC76649}","IsId":false,"ProcessingScripts":["Aha.Project.DataImport.Scripts.Fields.ResolveWeblayoutReference,Aha.Project.DataImport","Aha.Project.DataImport.Scripts.Fields.UpdateReferences,Aha.Project.DataImport","Aha.Project.DataImport.Scripts.Fields.RemoveLegacyMarkup,Aha.Project.DataImport"]},
         {"ReferenceItemsTemplate":"","ReferenceItemsField":"","Exclude":false,"Overwrite":true,"SourceFields":"dReleaseDate","TargetFields":"{366882F0-B954-4F09-B881-0C229DDDE2E2}","IsId":false,"ProcessingScripts":[]},
