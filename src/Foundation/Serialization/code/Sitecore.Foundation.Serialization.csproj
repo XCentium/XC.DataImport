@@ -164,6 +164,7 @@
     <Content Include="App_Config\Include\Unicorn\Unicorn.Users.DataProvider.config" />
     <Content Include="App_Config\Include\Unicorn.Helix.config" />
     <Content Include="App_Config\Include\Unicorn.SharedSecret.config" />
+    <Content Include="Properties\PublishProfiles\Local.pubxml.user" />
     <None Include="packages.config" />
     <Content Include="App_Config\Include\Foundation\Foundation.Serialization.Settings.config" />
     <Content Include="App_Config\Include\Unicorn\Unicorn.UI.config" />
